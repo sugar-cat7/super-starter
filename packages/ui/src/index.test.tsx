@@ -13,6 +13,28 @@ const adapter = (): NotesAdapter => ({
 });
 
 describe('platform-independent note UI', () => {
+  it('keeps initial input read-only until the adapter is ready, then retains typed text', async () => {
+    const actions = adapter();
+    let ready: ((notes: (typeof note)[]) => void) | undefined;
+    vi.mocked(actions.list).mockImplementation(
+      () =>
+        new Promise((resolve) => {
+          ready = resolve;
+        }),
+    );
+    render(<NotesPanel adapter={actions} storage="Volatile sample storage" />);
+    const input = screen.getByLabelText<HTMLTextAreaElement>('New note');
+    const user = userEvent.setup();
+    expect(input.readOnly).toBe(true);
+    await user.type(input, 'Too early');
+    expect(input.value).toBe('');
+    if (!ready) throw new Error('Adapter readiness was not requested');
+    ready([]);
+    await screen.findByText('No notes yet. Add your first note.');
+    expect(input.readOnly).toBe(false);
+    await user.type(input, 'Retained text');
+    expect(input.value).toBe('Retained text');
+  });
   it('shows loading, empty, validation, add, export and delete states', async () => {
     const actions = adapter();
     render(<NotesPanel adapter={actions} storage="Volatile sample storage" />);

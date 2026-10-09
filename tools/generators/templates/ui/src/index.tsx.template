@@ -52,7 +52,7 @@ export function NotesPanel({ adapter, storage }: { adapter: NotesAdapter; storag
       });
     }}>
       <label htmlFor="note-text" className="block font-medium">New note</label>
-      <textarea id="note-text" name="text" value={text} onChange={(event) => setText(event.target.value)} maxLength={1000} aria-describedby="note-hint" className="my-2 w-full rounded border p-2" />
+      <textarea id="note-text" name="text" readOnly={loading} value={text} onChange={(event) => setText(event.target.value)} maxLength={1000} aria-describedby="note-hint" className="my-2 w-full rounded border p-2" />
       <p id="note-hint" className="text-sm">Up to 1000 characters. Data is private to this local sample.</p>
       <button type="submit" disabled={loading || busy} className="my-3 rounded bg-slate-900 px-4 py-2 text-white disabled:opacity-50">Add note</button>
     </form>

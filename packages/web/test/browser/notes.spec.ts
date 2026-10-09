@@ -3,6 +3,45 @@ import AxeBuilder from '@axe-core/playwright';
 import { readFile } from 'node:fs/promises';
 import { notesSchema } from '@starter/contracts';
 
+test('styled SSR and safe input remain available while hydration is loading', async ({ page }) => {
+  let release: (() => void) | undefined;
+  const waiting = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  let requested = false;
+  await page.route('**/src/hydrate.tsx*', async (route) => {
+    requested = true;
+    await waiting;
+    await route.continue();
+  });
+  const errors: string[] = [];
+  page.on('pageerror', (error) => errors.push(error.message));
+  try {
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    await expect.poll(() => requested).toBe(true);
+    const input = page.getByLabel('New note');
+    await expect(input).toBeVisible();
+    await expect(input).toHaveJSProperty('readOnly', true);
+    await expect(page.getByRole('heading', { name: 'Notes', exact: true })).toHaveCSS(
+      'font-size',
+      '30px',
+    );
+    await input.click();
+    await page.keyboard.type('Too early');
+    await expect(input).toHaveValue('');
+    if (!release) throw new Error('Hydration release missing');
+    release();
+    await expect(input).toBeEditable();
+    await input.fill('Retained text');
+    await expect(input).toHaveValue('Retained text');
+    await page.getByRole('link', { name: 'About' }).click();
+    await expect(page.getByRole('heading', { name: 'About this sample' })).toBeVisible();
+    expect(errors).toEqual([]);
+  } finally {
+    release?.();
+  }
+});
+
 test('SSR, hydration, CRUD, same-origin export, routes and accessibility', async ({
   page,
   request,

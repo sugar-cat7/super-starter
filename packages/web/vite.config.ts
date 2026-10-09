@@ -15,10 +15,7 @@ export default defineConfig({
       },
       experimental: { newConfig: { cfBuildOutput: true } },
     }),
-    tanstackStart({
-      router: { quoteStyle: 'single', semicolons: true },
-      server: { build: { inlineCss: true } },
-    }),
+    tanstackStart({ router: { quoteStyle: 'single', semicolons: true } }),
     react(),
     tailwind(),
   ],
@@ -31,7 +28,8 @@ export default defineConfig({
           output: {
             codeSplitting: {
               groups: [
-                { name: 'react', test: /[\\/]node_modules[\\/](?:react|react-dom|scheduler)[\\/]/ },
+                { name: 'react', test: /[\\/]node_modules[\\/]react[\\/]/ },
+                { name: 'react-dom', test: /[\\/]node_modules[\\/](?:react-dom|scheduler)[\\/]/ },
               ],
             },
           },

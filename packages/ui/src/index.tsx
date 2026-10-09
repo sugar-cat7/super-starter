@@ -85,6 +85,7 @@ export function NotesPanel({ adapter, storage }: { adapter: NotesAdapter; storag
         <textarea
           id="note-text"
           name="text"
+          readOnly={loading}
           value={text}
           onChange={(event) => setText(event.target.value)}
           maxLength={1000}
