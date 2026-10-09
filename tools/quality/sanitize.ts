@@ -1,0 +1,56 @@
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import path from 'node:path';
+import { spawnSync } from 'node:child_process';
+import { walk } from '../generators/files.ts';
+import { contentId } from './gate.ts';
+
+type Rule = { id: string; pattern: string; allow?: { file: string; reason: string }[] };
+export function sanitize(root: string, rules: Rule[]): { file: string; rule: string }[] {
+  const compiled = rules.map((rule) => {
+    if (!rule.id || !rule.pattern || rule.allow?.some((entry) => !entry.file || !entry.reason))
+      throw new Error('Every sanitization rule and exact-file exception needs an ID and rationale');
+    return { ...rule, expression: new RegExp(rule.pattern, 'u') };
+  });
+  const ignored = new Set([
+    'node_modules',
+    '.git',
+    '.state',
+    'target',
+    '.template-cache',
+    'artifacts',
+    'test-results',
+    'playwright-report',
+    'generated',
+    '.env',
+    '.env.local',
+    '.dev.vars',
+  ]);
+  const failures: { file: string; rule: string }[] = [];
+  for (const file of walk(root, '', ignored)) {
+    if (file.endsWith('.png') || file.endsWith('.ico')) continue;
+    const contents = readFileSync(path.join(root, file), 'utf8');
+    for (const rule of compiled)
+      if (rule.expression.test(contents) && !rule.allow?.some((entry) => entry.file === file))
+        failures.push({ file, rule: rule.id });
+  }
+  return failures;
+}
+
+if (process.argv[1]?.endsWith(`${path.sep}sanitize.ts`)) {
+  const args = process.argv.slice(2);
+  if (args.length !== 2 || args[0] !== '--rules' || !existsSync(args[1]!))
+    throw new Error('Usage: node tools/quality/sanitize.ts --rules <external-rules.json>');
+  const rules = JSON.parse(readFileSync(args[1]!, 'utf8')) as Rule[];
+  const failures = sanitize(process.cwd(), rules);
+  const state = JSON.parse(readFileSync('.template.json', 'utf8')) as { origin?: unknown };
+  mkdirSync('artifacts', { recursive: true });
+  writeFileSync(
+    'artifacts/sanitization.json',
+    `${JSON.stringify({ schema: 1, sha: spawnSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).stdout.trim() || null, origin: state.origin, contentId: contentId(process.cwd()), rules, failures, status: failures.length ? 'failed' : 'passed' }, null, 2)}\n`,
+  );
+  if (failures.length)
+    throw new Error(failures.map((entry) => `${entry.file}: ${entry.rule}`).join('\n'));
+  console.log(
+    'Sanitization passed for source, dependency manifests, configuration, docs and build output',
+  );
+}

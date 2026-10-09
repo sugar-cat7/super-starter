@@ -11,8 +11,17 @@ export const config: Options.Testrunner & { capabilities: TauriCapabilities[] } 
   specs: ['./test/**/*.e2e.ts'],
   maxInstances: 1,
   framework: 'mocha',
-  mochaOpts: { timeout: 30_000 },
-  reporters: ['spec'],
+  mochaOpts: { timeout: 30_000, forbidOnly: true },
+  reporters: [
+    'spec',
+    [
+      'json',
+      {
+        outputDir: process.env.STARTER_NATIVE_REPORT_DIR ?? '../../artifacts/native-results',
+        outputFileFormat: (options) => `results-${options.cid}.json`,
+      },
+    ],
+  ],
   connectionRetryCount: 0,
   connectionRetryTimeout: 30_000,
   services: [

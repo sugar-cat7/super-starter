@@ -3,6 +3,7 @@ packages:
 catalog:
   '@wdio/types': 9.31.2
   '@wdio/spec-reporter': 9.32.0
+  '@wdio/json-reporter': 9.32.0
   knip: 6.40.0
   '@types/mocha': 10.0.10
   oxc-parser: 0.153.0

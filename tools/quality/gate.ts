@@ -7,6 +7,8 @@ import { pnpm } from '../process.ts';
 import { walk } from '../generators/files.ts';
 import { affectedPackages, workspacePackages } from './graph.ts';
 import { globalChecks, packageChecks, type Check } from './definitions.ts';
+import { artifactSizes, toolVersions } from './evidence.ts';
+import { baselineDifferences } from '../generators/baseline.ts';
 
 export function contentId(root: string): string {
   const hash = createHash('sha256');
@@ -25,6 +27,7 @@ export function contentId(root: string): string {
         'artifacts',
         'playwright-report',
         'test-results',
+        'routeTree.gen.ts',
         'desktop/src-tauri/icons',
         ...workspacePackages(root)
           .filter((pkg) => pkg.runtime === 'desktop')
@@ -51,6 +54,12 @@ export function contentId(root: string): string {
     'vite.config.ts',
     '.template.json',
     'AGENTS.md',
+    'README.md',
+    'CLAUDE.md',
+    'knip.ts',
+    '.gitignore',
+    'renovate.json',
+    'LICENSE',
   ])
     if (existsSync(path.join(root, filename))) {
       hash.update(filename);
@@ -61,15 +70,16 @@ export function contentId(root: string): string {
 
 export async function gate(
   root: string,
-  mode: 'pre-pr' | 'push' | 'full' | 'test' | 'build',
+  mode: 'pre-pr' | 'push' | 'ci' | 'full' | 'test' | 'build',
   base?: string,
+  variant: 'all' | 'javascript' | 'native' | 'worker' = 'all',
 ): Promise<void> {
   const git = (args: string[]) =>
     spawnSync('git', args, { cwd: root, encoding: 'utf8', timeout: 10_000 });
   const head = git(['rev-parse', 'HEAD']).stdout.trim() || 'uncommitted';
   let changed: string[] | undefined;
   let selectionReason = 'Full selected configuration (unknown base or explicit full gate)';
-  if ((mode === 'pre-pr' || mode === 'push') && base && base !== 'unknown') {
+  if (['pre-pr', 'push', 'ci'].includes(mode) && base && base !== 'unknown') {
     const diff = git(['diff', '--no-renames', '--name-only', '-z', `${base}...HEAD`]);
     if (diff.status === 0) {
       changed = diff.stdout.split('\0').filter(Boolean);
@@ -88,7 +98,7 @@ export async function gate(
   }
   const packages = workspacePackages(root);
   const selected = affectedPackages(packages, changed);
-  const checks: Check[] = [
+  let checks: Check[] = [
     ...(mode === 'build' ? [] : globalChecks),
     ...selected.flatMap((pkg) =>
       packageChecks(
@@ -97,6 +107,29 @@ export async function gate(
       ),
     ),
   ];
+  if (variant === 'native')
+    checks = checks.filter((check) => /\/(?:rust|native|release)$/u.test(check.id));
+  if (variant === 'worker')
+    checks = checks.filter(
+      (check) =>
+        !check.package ||
+        (selected.find((pkg) => pkg.name === check.package)?.runtime === 'worker' &&
+          !check.id.endsWith('/browser')),
+    );
+  if (variant === 'javascript')
+    checks = checks
+      .filter((check) => !/\/(?:rust|native|release)$/u.test(check.id))
+      .map((check) => {
+        const pkg = selected.find((value) => value.name === check.package);
+        return pkg?.runtime === 'desktop' && check.id.endsWith('/build')
+          ? {
+              ...check,
+              command: ['--filter', pkg.name, 'build:renderer'],
+              reason: 'Renderer build; native checks are required separately on each native OS',
+            }
+          : check;
+      });
+  if (!checks.length) throw new Error(`Required ${variant} gate selected zero checks`);
   const before = contentId(root);
   const report = {
     schema: 1,
@@ -105,6 +138,23 @@ export async function gate(
     contentId: before,
     os: `${process.platform}/${process.arch}`,
     node: process.version,
+    tools: toolVersions(root),
+    origin: existsSync(path.join(root, '.template.json'))
+      ? ((
+          JSON.parse(readFileSync(path.join(root, '.template.json'), 'utf8')) as {
+            origin?: unknown;
+          }
+        ).origin ?? null)
+      : null,
+    variant,
+    configuration: existsSync(path.join(root, '.template.json'))
+      ? (
+          JSON.parse(readFileSync(path.join(root, '.template.json'), 'utf8')) as {
+            options: unknown;
+          }
+        ).options
+      : null,
+    workspace: packages,
     cpus: os.availableParallelism(),
     memoryBytes: os.totalmem(),
     selected: selected.map((pkg) => pkg.name),
@@ -123,8 +173,20 @@ export async function gate(
       status: 'passed' | 'failed' | 'blocked';
       reason: string;
     }[],
+    artifacts: [] as ReturnType<typeof artifactSizes>,
+    status: 'failed' as 'passed' | 'failed',
   };
   let failure: unknown;
+  const receipt = {
+    schema: 1,
+    sha: head,
+    origin: report.origin,
+    configuration: report.configuration,
+    contentId: before,
+    os: report.os,
+    status: 'running' as 'running' | 'passed' | 'failed',
+    baselineDifferences: baselineDifferences(root),
+  };
   for (const check of checks) {
     const start = performance.now();
     console.log(`CHECK ${check.id}: ${check.reason}`);
@@ -152,13 +214,21 @@ export async function gate(
       status: 'blocked',
       reason: 'An earlier required check failed',
     });
-  if (contentId(root) !== before && mode !== 'build')
+  if (contentId(root) !== before)
     failure = new Error(
       'Unexpected source diff during read-only validation; run env:setup/codegen before the gate',
     );
   mkdirSync(path.join(root, 'artifacts'), { recursive: true });
+  report.artifacts = artifactSizes(root);
+  report.status = failure ? 'failed' : 'passed';
+  receipt.status = report.status;
+  if (mode === 'full' && variant === 'all')
+    writeFileSync(
+      path.join(root, 'artifacts', 'generation.json'),
+      `${JSON.stringify(receipt, null, 2)}\n`,
+    );
   writeFileSync(
-    path.join(root, 'artifacts', `gate-${mode}-${process.platform}.json`),
+    path.join(root, 'artifacts', `gate-${mode}-${variant}-${process.platform}.json`),
     `${JSON.stringify(report, null, 2)}\n`,
   );
   console.log(
@@ -169,12 +239,17 @@ export async function gate(
 
 if (process.argv[1]?.endsWith(`${path.sep}gate.ts`)) {
   const mode = process.argv[2] ?? 'full';
-  if (!['pre-pr', 'push', 'full', 'test', 'build'].includes(mode))
-    throw new Error('Expected pre-pr|push|full|test|build');
+  if (!['pre-pr', 'push', 'ci', 'full', 'test', 'build'].includes(mode))
+    throw new Error('Expected pre-pr|push|ci|full|test|build');
   const baseIndex = process.argv.indexOf('--base');
+  const checksIndex = process.argv.indexOf('--checks');
+  const variant = checksIndex === -1 ? 'all' : process.argv[checksIndex + 1];
+  if (!['all', 'javascript', 'native', 'worker'].includes(variant ?? ''))
+    throw new Error('Expected --checks all|javascript|native|worker');
   await gate(
     process.cwd(),
-    mode as 'pre-pr' | 'push' | 'full' | 'test' | 'build',
+    mode as 'pre-pr' | 'push' | 'ci' | 'full' | 'test' | 'build',
     baseIndex === -1 ? undefined : process.argv[baseIndex + 1],
+    variant as 'all' | 'javascript' | 'native' | 'worker',
   );
 }

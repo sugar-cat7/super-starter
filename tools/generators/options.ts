@@ -1,6 +1,22 @@
 export const presets = ['web', 'api', 'desktop', 'fullstack', 'fullstack-desktop'] as const;
 export type Preset = (typeof presets)[number];
 export type Feature = 'd1' | 'kv' | 'r2' | 'services';
+export const verificationCases: { key: string; preset: Preset; features: string }[] = [
+  { key: 'web', preset: 'web', features: '' },
+  { key: 'api', preset: 'api', features: '' },
+  { key: 'desktop', preset: 'desktop', features: '' },
+  { key: 'fullstack', preset: 'fullstack', features: 'd1,kv,r2' },
+  { key: 'fullstack-desktop', preset: 'fullstack-desktop', features: 'd1,kv,r2' },
+  { key: 'web-bindings', preset: 'web', features: 'd1,kv,r2' },
+  { key: 'api-bindings', preset: 'api', features: 'd1,kv,r2' },
+  ...(['web', 'api'] as const).flatMap((preset) =>
+    ['d1', 'kv', 'r2'].map((feature) => ({
+      key: `${preset}-${feature}`,
+      preset,
+      features: feature,
+    })),
+  ),
+];
 export type ProjectOptions = {
   name: string;
   scope: string;
@@ -91,6 +107,7 @@ export function flags(args: string[]): Record<string, string | boolean> {
         'generate-only',
         'faults',
         'hooks',
+        'lifecycle',
       ].includes(key)
     )
       result[key] = true;

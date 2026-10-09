@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "vp dev --mode offline --host 127.0.0.1 --strictPort",
     "check": "vp check .",
-    "test": "vp test run --config vitest.config.ts",
+    "test": "node ../../tools/quality/vitest.ts --config vitest.config.ts",
     "test:runtime": "node ../../tools/cloudflare/runtime.ts",
     "test:e2e": "node ../../tools/quality/browser.ts",
     "build": "node ../../tools/cloudflare/build.ts",

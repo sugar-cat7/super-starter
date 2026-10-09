@@ -6,6 +6,24 @@ export async function database(
   cwd: string,
   action: 'migrate' | 'seed',
   stateRoot?: string,
+  signal?: AbortSignal,
+): Promise<void> {
+  // A remote preflight can leave a dev build behind. Always obtain the SDK's
+  // offline configuration before deriving a local-only migration command.
+  await pnpm(['build'], {
+    env: { ...process.env, STARTER_BUILD_MODE: 'offline' },
+    cwd,
+    timeout: 120_000,
+    ...(signal ? { signal } : {}),
+  });
+  await localDatabase(cwd, action, stateRoot, signal);
+}
+
+async function localDatabase(
+  cwd: string,
+  action: 'migrate' | 'seed',
+  stateRoot?: string,
+  signal?: AbortSignal,
 ): Promise<void> {
   const configPath = path.join(cwd, '.cloudflare/output/v0/workers/default/worker.config.json');
   if (!existsSync(configPath)) throw new Error('Build local configuration first: pnpm build');
@@ -46,19 +64,35 @@ export async function database(
     cwd,
     env: { ...process.env, CLOUDFLARE_SEND_METRICS: 'false' },
     timeout: 120_000,
+    ...(signal ? { signal } : {}),
   });
 }
 
-export async function prepareDatabase(cwd: string, stateRoot?: string): Promise<void> {
+export async function prepareDatabase(
+  cwd: string,
+  stateRoot?: string,
+  signal?: AbortSignal,
+): Promise<void> {
+  signal?.throwIfAborted();
   if (!existsSync(path.join(cwd, 'migrations'))) return;
-  await database(cwd, 'migrate', stateRoot);
+  // A remote preflight can leave a dev build behind. Always obtain the SDK's
+  // offline configuration before deriving a local-only migration command.
+  await pnpm(['build'], {
+    env: { ...process.env, STARTER_BUILD_MODE: 'offline' },
+    cwd,
+    timeout: 120_000,
+    ...(signal ? { signal } : {}),
+  });
+  await localDatabase(cwd, 'migrate', stateRoot, signal);
+  signal?.throwIfAborted();
   const marker = path.join(
     stateRoot ?? path.resolve(cwd, '../../.state'),
     path.basename(cwd),
     '.seeded',
   );
   if (!existsSync(marker)) {
-    await database(cwd, 'seed', stateRoot);
+    await localDatabase(cwd, 'seed', stateRoot, signal);
+    signal?.throwIfAborted();
     writeFileSync(marker, '1\n');
   }
 }

@@ -1,4 +1,5 @@
 import { existsSync, readFileSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
 import path from 'node:path';
 import { digest, walk, type Files } from './files.ts';
 import { selectedPackages, type ProjectOptions } from './options.ts';
@@ -28,7 +29,9 @@ export type TemplateState = {
   packages: string[];
   managed: Record<string, string>;
   lockPending?: boolean;
+  lockId?: string;
   formatKey?: string;
+  origin?: { sha: string | null; dirty: boolean; contentId: string };
 };
 
 function expand(contents: string, options: ProjectOptions, app = ''): string {
@@ -85,6 +88,7 @@ export function appFiles(
   options: ProjectOptions,
   kind: string,
   name = kind,
+  format = true,
 ): Files {
   const files: Files = new Map();
   const templates = path.join(source, 'tools/generators/templates', kind);
@@ -166,7 +170,7 @@ export function appFiles(
         ),
       );
   }
-  return formatFiles(source, files);
+  return format ? formatFiles(source, files) : files;
 }
 
 export function infrastructureFiles(source: string): Files {
@@ -232,6 +236,27 @@ export function projectFiles(
       [...files].map(([relative, contents]) => [relative, digest(contents)]),
     ),
   };
+  if (kind === 'project') {
+    const git = spawnSync('git', ['rev-parse', 'HEAD'], {
+      cwd: source,
+      encoding: 'utf8',
+      timeout: 10000,
+    });
+    const status = spawnSync('git', ['status', '--porcelain'], {
+      cwd: source,
+      encoding: 'utf8',
+      timeout: 10000,
+    });
+    state.origin = {
+      sha: git.status === 0 ? git.stdout.trim() : null,
+      dirty: status.status === 0 && status.stdout.length > 0,
+      contentId: digest(
+        Buffer.concat(
+          [...files].flatMap(([filename, contents]) => [Buffer.from(`${filename}\0`), contents]),
+        ),
+      ),
+    };
+  }
   const key = formatterKey(source);
   if (key) state.formatKey = key;
   files.set('.template.json', Buffer.from(`${JSON.stringify(state, null, 2)}\n`));

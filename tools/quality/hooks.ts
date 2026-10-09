@@ -15,6 +15,7 @@ import path from 'node:path';
 import { mkdtempSync } from 'node:fs';
 import { pnpm, runSync, run } from '../process.ts';
 import { workspacePackages } from './graph.ts';
+import { assertCheckout } from './checkout.ts';
 
 const hookPath = 'tools/quality/git-hooks';
 export function installHooks(root: string): void {
@@ -133,21 +134,25 @@ if (process.argv[1]?.endsWith(`${path.sep}hooks.ts`)) {
   else if (event === 'pre-push') {
     let input = '';
     for await (const chunk of process.stdin) input += String(chunk);
+    const commits = new Map<string, Set<string>>();
     for (const line of input.trim().split('\n').filter(Boolean)) {
       const [, local, , remote] = line.split(' ');
       if (!local || /^0+$/u.test(local)) continue;
+      const bases = commits.get(local) ?? new Set<string>();
+      bases.add(remote && !/^0+$/u.test(remote) ? remote : 'unknown');
+      commits.set(local, bases);
+    }
+    for (const [local, bases] of commits) {
+      const base = bases.size === 1 ? [...bases][0]! : 'unknown';
       // Validate the actual pushed commit, including when HEAD is different.
       const snapshot = mkdtempSync(path.join(os.tmpdir(), 'starter-push-'));
       rmSync(snapshot, { recursive: true });
       try {
         runSync('git', ['worktree', 'add', '--detach', snapshot, local], root);
         await pnpm(['install', '--frozen-lockfile'], { cwd: snapshot });
-        await pnpm(['env:setup'], { cwd: snapshot });
-        runSync('git', ['diff', '--exit-code', local], snapshot);
-        await pnpm(
-          ['gate:push', '--', '--base', remote && !/^0+$/u.test(remote) ? remote : 'unknown'],
-          { cwd: snapshot },
-        );
+        await pnpm(['env:setup', '--', '--javascript'], { cwd: snapshot });
+        assertCheckout(snapshot, local);
+        await pnpm(['gate:push', '--', '--base', base], { cwd: snapshot });
       } finally {
         runSync('git', ['worktree', 'remove', '--force', snapshot], root);
       }

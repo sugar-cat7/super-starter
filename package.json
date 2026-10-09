@@ -14,7 +14,7 @@
     "dev:web": "node tools/dev-environment/dev.ts web",
     "dev:api": "node tools/dev-environment/dev.ts api",
     "dev:desktop": "node tools/dev-environment/dev.ts desktop",
-    "test:tools": "vp test run",
+    "test:tools": "node tools/quality/vitest.ts",
     "build": "node tools/quality/gate.ts build",
     "gate:pre-pr": "node tools/quality/gate.ts pre-pr",
     "gate:full": "node tools/quality/gate.ts full",
@@ -22,9 +22,14 @@
     "template:init": "node tools/generators/cli.ts init",
     "template:sync": "node tools/generators/cli.ts sync --no-install",
     "template:verify": "node tools/generators/verify.ts",
+    "template:faults": "node tools/quality/faults.ts",
+    "template:hooks": "node tools/quality/hooks-rehearsal.ts",
+    "template:lifecycle": "node tools/generators/lifecycle.ts",
     "deploy:preflight": "node tools/cloudflare/deploy.ts preflight",
     "deploy": "node tools/cloudflare/deploy.ts deploy",
-    "gate:push": "node tools/quality/gate.ts push"
+    "gate:push": "node tools/quality/gate.ts push",
+    "gate:ci": "node tools/quality/gate.ts ci",
+    "acceptance:report": "node tools/quality/acceptance.ts"
   },
   "devDependencies": {
     "@types/node": "catalog:",

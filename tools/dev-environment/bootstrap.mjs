@@ -29,12 +29,14 @@ try {
   }
   invoke('mise', ['install', 'aqua:pnpm/pnpm@12.10.1']);
   const manager = ['exec', 'aqua:pnpm/pnpm@12.10.1', '--', 'pnpm'];
+  // Initialization may have changed identity/preset while the clone still has its old lock.
+  const initialized = JSON.parse(readFileSync(statePath, 'utf8'));
   invoke('mise', [
     ...manager,
     'install',
-    ...(existsSync(path.join(root, 'pnpm-lock.yaml'))
-      ? ['--frozen-lockfile']
-      : ['--no-frozen-lockfile']),
+    ...(initialized.lockPending || !existsSync(path.join(root, 'pnpm-lock.yaml'))
+      ? ['--no-frozen-lockfile']
+      : ['--frozen-lockfile']),
   ]);
   invoke('mise', [...manager, 'env:setup']);
 } catch (error) {

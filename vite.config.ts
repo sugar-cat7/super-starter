@@ -2,12 +2,14 @@ import { defineConfig } from 'vite-plus';
 
 export default defineConfig({
   lint: {
+    categories: { correctness: 'error' },
     options: {
       typeAware: process.env.STARTER_CHECK_PHASE !== 'index',
       typeCheck: process.env.STARTER_CHECK_PHASE !== 'index',
     },
     plugins: ['typescript', 'react', 'import', 'vitest'],
     rules: {
+      'no-debugger': 'error',
       'typescript/no-floating-promises':
         process.env.STARTER_CHECK_PHASE === 'index' ? 'off' : 'error',
       'typescript/no-explicit-any': 'error',

@@ -6,8 +6,12 @@ import assert from 'node:assert/strict';
 import { applyFiles, walk } from '../generators/files.ts';
 import { installHooks } from './hooks.ts';
 import { pnpm } from '../process.ts';
+import { contentId } from './gate.ts';
+import { hookPhases } from './definitions.ts';
 
 export async function hookRehearsal(project: string): Promise<void> {
+  const started = performance.now();
+  let status: 'passed' | 'failed' = 'failed';
   const owned = mkdtempSync(path.join(os.tmpdir(), 'starter-hooks-'));
   const root = path.join(owned, 'project');
   const remote = path.join(owned, 'remote.git');
@@ -72,7 +76,7 @@ export async function hookRehearsal(project: string): Promise<void> {
     assert.equal(readFileSync(probe, 'utf8'), good, 'Hook must preserve unstaged correction');
     assert.equal(git(['show', ':tools/hook-probe.ts']).trim(), bad.trim(), 'Hook must not restage');
     git(['add', 'tools/hook-probe.ts']);
-    git(['commit', '-m', 'Repaired index']);
+    git(['commit', '--allow-empty', '-m', 'Repaired index and empty-diff hook']);
     git(['init', '--bare', '-q', remote]);
     git(['push', remote, 'HEAD:refs/heads/test']);
     const before = git(['--git-dir', remote, 'rev-parse', 'refs/heads/test']);
@@ -125,7 +129,17 @@ export async function hookRehearsal(project: string): Promise<void> {
     console.log(
       'Real Git index/partial-stage, subdirectory, push-ref, linked-worktree and existing-hook protection passed',
     );
+    status = 'passed';
   } finally {
+    mkdirSync(path.join(project, 'artifacts'), { recursive: true });
+    const state = JSON.parse(readFileSync(path.join(project, '.template.json'), 'utf8')) as {
+      origin?: unknown;
+    };
+    writeFileSync(
+      path.join(project, 'artifacts/hooks.json'),
+      `${JSON.stringify({ schema: 1, phases: status === 'passed' ? hookPhases : [], status, origin: state.origin, contentId: contentId(project), os: process.platform, milliseconds: Math.round(performance.now() - started) }, null, 2)}\n`,
+    );
     rmSync(owned, { recursive: true, force: true });
   }
 }
+if (process.argv[1]?.endsWith(`${path.sep}hooks-rehearsal.ts`)) await hookRehearsal(process.cwd());

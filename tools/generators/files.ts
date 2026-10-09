@@ -1,10 +1,11 @@
-import { createHash } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 import {
   existsSync,
   lstatSync,
   mkdirSync,
   readFileSync,
   readdirSync,
+  renameSync,
   rmSync,
   writeFileSync,
 } from 'node:fs';
@@ -19,15 +20,16 @@ export function walk(
   directory: string,
   prefix = '',
   ignored: ReadonlySet<string> = new Set(),
+  ignoredPaths: ReadonlySet<string> = new Set(),
 ): string[] {
   return readdirSync(directory, { withFileTypes: true })
     .flatMap((entry) => {
       const relative = prefix ? `${prefix}/${entry.name}` : entry.name;
-      if (ignored.has(entry.name) || ignored.has(relative)) return [];
+      if (ignored.has(entry.name) || ignored.has(relative) || ignoredPaths.has(relative)) return [];
       if (entry.isSymbolicLink())
         throw new Error(`Template must not contain symlinks: ${relative}`);
       return entry.isDirectory()
-        ? walk(path.join(directory, entry.name), relative, ignored)
+        ? walk(path.join(directory, entry.name), relative, ignored, ignoredPaths)
         : [relative];
     })
     .sort();
@@ -35,10 +37,27 @@ export function walk(
 
 type Journal = {
   version: 1;
-  files: { path: string; previous: string | null; next: string | null }[];
+  files: {
+    path: string;
+    previous: string | null;
+    next: string | null;
+    temp?: string;
+    mode?: number;
+  }[];
   directories: string[];
 };
 const journalName = '.template-transaction.json';
+
+function atomicWrite(
+  root: string,
+  relative: string,
+  contents: Buffer,
+  temp: string,
+  mode = 0o644,
+): void {
+  writeFileSync(safeFile(root, temp), contents, { flag: 'wx', mode });
+  renameSync(safeFile(root, temp), safeFile(root, relative));
+}
 
 export function recover(root: string): void {
   const filename = safeFile(root, journalName);
@@ -53,11 +72,22 @@ export function recover(root: string): void {
       throw new Error(
         `Recovery found a user change: ${entry.path}; preserve it and review the transaction before retrying`,
       );
+    if (entry.temp) {
+      safeFile(root, entry.temp);
+      if (
+        path.dirname(entry.temp) !== path.dirname(entry.path) ||
+        !/^\.template-write-[0-9a-f-]+\.tmp$/u.test(path.basename(entry.temp))
+      )
+        throw new Error('Unsafe transaction temporary file');
+    }
   }
   for (const directory of journal.directories) safeFile(root, directory);
   for (const entry of journal.files.toReversed()) {
     const target = safeFile(root, entry.path);
+    if (entry.temp) rmSync(safeFile(root, entry.temp), { force: true });
     if (entry.previous === null) rmSync(target, { force: true });
+    else if (entry.temp)
+      atomicWrite(root, entry.path, Buffer.from(entry.previous, 'base64'), entry.temp, entry.mode);
     else writeFileSync(target, Buffer.from(entry.previous, 'base64'));
   }
   for (const directory of journal.directories.toReversed()) {
@@ -102,6 +132,8 @@ export function applyFiles(
         path: relative,
         previous: existsSync(target) ? readFileSync(target).toString('base64') : null,
         next: files.has(relative) ? digest(files.get(relative)!) : null,
+        temp: path.posix.join(path.posix.dirname(relative), `.template-write-${randomUUID()}.tmp`),
+        mode: existsSync(target) ? lstatSync(target).mode & 0o777 : 0o644,
       };
     }),
     directories,
@@ -115,12 +147,20 @@ export function applyFiles(
     let index = 0;
     for (const [relative, contents] of files) {
       beforeWrite?.(index++);
-      writeFileSync(safeFile(root, relative), contents);
+      const entry = journal.files.find((value) => value.path === relative)!;
+      atomicWrite(root, relative, contents, entry.temp!, entry.mode);
     }
     for (const relative of remove) rmSync(safeFile(root, relative));
     rmSync(safeFile(root, journalName));
   } catch (error) {
-    recover(root);
+    try {
+      recover(root);
+    } catch (recovery) {
+      throw new AggregateError(
+        [error, recovery],
+        'Generation failed; transaction retained for explicit recovery',
+      );
+    }
     throw error;
   }
 }

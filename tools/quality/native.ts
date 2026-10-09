@@ -1,9 +1,9 @@
-import { spawn } from 'node:child_process';
-import { existsSync, mkdirSync, readFileSync, rmSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { setTimeout as pause } from 'node:timers/promises';
 import { availablePort, stopTree } from '../dev-environment/servers.ts';
-import { pnpm, run } from '../process.ts';
+import { spawnOwned, pnpm, run } from '../process.ts';
+import { nativeCases, rustCases } from './test-results.ts';
 
 const cwd = process.cwd();
 const root = path.resolve(cwd, '../..');
@@ -20,6 +20,11 @@ const target = path.join(
 );
 const binary = path.join(target, 'release', `${name}${process.platform === 'win32' ? '.exe' : ''}`);
 const environment = { ...process.env, CARGO_TARGET_DIR: target };
+const testTimeout = Math.min(30 * 60000, Number(process.env.STARTER_TEST_TIMEOUT_MS ?? 30 * 60000));
+if (!Number.isFinite(testTimeout) || testTimeout <= 0)
+  throw new Error(
+    'STARTER_TEST_TIMEOUT_MS must be positive and cannot extend the standard timeout',
+  );
 if (
   process.platform === 'linux' &&
   ['e2e', 'release'].includes(operation ?? '') &&
@@ -35,7 +40,13 @@ if (operation === 'rust') {
     env: environment,
     timeout: 30 * 60_000,
   });
-  await run('cargo', ['test', '--locked'], { cwd: native, env: environment, timeout: 30 * 60_000 });
+  const output = await run('cargo', ['test', '--locked'], {
+    cwd: native,
+    env: environment,
+    timeout: testTimeout,
+    capture: true,
+  });
+  console.log(`Executed ${rustCases(output)} Rust cases`);
 } else if (operation === 'e2e') {
   await pnpm(
     [
@@ -55,6 +66,9 @@ if (operation === 'rust') {
   const owned = path.join(root, 'artifacts', `native-${process.platform}`);
   mkdirSync(owned, { recursive: true });
   for (const scenario of ['save', 'cancel', 'error']) {
+    const reportDirectory = path.join(owned, scenario);
+    rmSync(reportDirectory, { recursive: true, force: true });
+    mkdirSync(reportDirectory, { recursive: true });
     const savePath =
       scenario === 'cancel'
         ? 'cancel'
@@ -70,8 +84,22 @@ if (operation === 'rust') {
         STARTER_DRIVER_PORT: String(await availablePort()),
         STARTER_TEST_SAVE_PATH: savePath,
         STARTER_EXPORT_CASE: scenario,
+        STARTER_NATIVE_REPORT_DIR: reportDirectory,
       },
     });
+    const cases = nativeCases(
+      readdirSync(reportDirectory)
+        .filter((filename) => filename.endsWith('.json'))
+        .map(
+          (filename) =>
+            JSON.parse(readFileSync(path.join(reportDirectory, filename), 'utf8')) as unknown,
+        ),
+    );
+    writeFileSync(
+      path.join(reportDirectory, 'verified.json'),
+      `${JSON.stringify({ scenario, cases, os: process.platform, binary }, null, 2)}\n`,
+    );
+    console.log(`Executed ${cases} real native cases (${scenario})`);
   }
 } else if (operation === 'build') {
   await pnpm(['exec', 'tauri', 'build', '--no-bundle'], {
@@ -86,19 +114,11 @@ if (operation === 'rust') {
     env: environment,
     timeout: 30 * 60_000,
   });
-  const tree = await new Promise<string>((resolve, reject) => {
-    const child = spawn('cargo', ['tree', '--locked', '-e', 'normal'], {
-      cwd: native,
-      env: environment,
-    });
-    let output = '';
-    child.stdout.on('data', (chunk: Buffer) => {
-      output += chunk.toString();
-    });
-    child.once('error', reject);
-    child.once('exit', (code) =>
-      code === 0 ? resolve(output) : reject(new Error('Cargo release graph failed')),
-    );
+  const tree = await run('cargo', ['tree', '--locked', '-e', 'normal'], {
+    cwd: native,
+    env: environment,
+    capture: true,
+    timeout: 60000,
   });
   if (tree.includes('tauri-plugin-wdio'))
     throw new Error('WebDriver dependency leaked into release graph');
@@ -116,17 +136,17 @@ if (operation === 'rust') {
     if (/__wdio|wdio:|plugin:wdio/u.test(readFileSync(path.join(assets, filename), 'utf8')))
       throw new Error('WebDriver frontend leaked into release bundle');
   const port = await availablePort();
-  const child = spawn(binary, [], {
+  const child = spawnOwned(binary, [], {
     cwd,
     env: { ...environment, TAURI_WEBDRIVER_PORT: String(port) },
     detached: process.platform !== 'win32',
     stdio: ['ignore', 'pipe', 'pipe'],
   });
   let output = '';
-  child.stdout.on('data', (chunk: Buffer) => {
+  child.stdout?.on('data', (chunk: Buffer) => {
     output += chunk.toString();
   });
-  child.stderr.on('data', (chunk: Buffer) => {
+  child.stderr?.on('data', (chunk: Buffer) => {
     output += chunk.toString();
   });
   try {

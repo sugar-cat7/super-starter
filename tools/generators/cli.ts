@@ -2,7 +2,7 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { pnpm } from '../process.ts';
-import { applyFiles, digest, recover, type Files } from './files.ts';
+import { applyFiles, digest, recover, walk, type Files } from './files.ts';
 import { flags, projectOptions, selectedPackages, validateName } from './options.ts';
 import { appFiles, projectFiles, infrastructureFiles, type TemplateState } from './render.ts';
 import { safeFile } from './safety.ts';
@@ -154,9 +154,21 @@ export async function main(args: string[]): Promise<void> {
     for (const shared of selectedPackages(options).filter(
       (value) => !['web', 'api', 'desktop'].includes(value),
     )) {
-      if (!existsSync(path.join(root, 'packages', shared)))
+      const sharedManifest = safeFile(root, `packages/${shared}/package.json`);
+      if (existsSync(sharedManifest)) {
+        const manifest = JSON.parse(readFileSync(sharedManifest, 'utf8')) as { name?: string };
+        if (manifest.name !== `${options.scope}/${shared}`)
+          throw new Error(`Shared package identity collision: ${shared}`);
+      } else {
+        const directory = safeFile(root, `packages/${shared}`);
+        if (
+          existsSync(directory) &&
+          walk(directory, '', new Set(['node_modules', 'dist', 'artifacts'])).length
+        )
+          throw new Error(`Shared package directory contains user files: ${shared}`);
         for (const [filename, contents] of appFiles(root, options, shared))
           files.set(filename, contents);
+      }
     }
     const manifest = JSON.parse(readFileSync(path.join(root, 'package.json'), 'utf8')) as {
       scripts: Record<string, string>;

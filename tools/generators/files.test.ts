@@ -1,11 +1,43 @@
 import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync, symlinkSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { applyFiles, recover, digest } from './files.ts';
 import { safeFile } from './safety.ts';
 
+const failure = vi.hoisted(() => ({ partial: false }));
+vi.mock('node:fs', async (original) => {
+  const fs = await original<typeof import('node:fs')>();
+  return {
+    ...fs,
+    writeFileSync: (...args: Parameters<typeof fs.writeFileSync>) => {
+      if (failure.partial && String(args[0]).includes('.template-write-')) {
+        failure.partial = false;
+        fs.writeFileSync(args[0], Buffer.from('partial'), args[2]);
+        throw new Error('ENOSPC during write');
+      }
+      return fs.writeFileSync(...args);
+    },
+  };
+});
+
 describe('generation transaction', () => {
+  it('preserves old bytes when the operating system writes only part of a replacement', () => {
+    const root = mkdtempSync(path.join(os.tmpdir(), 'template-partial-'));
+    try {
+      writeFileSync(path.join(root, 'existing.txt'), 'original');
+      failure.partial = true;
+      expect(() =>
+        applyFiles(root, new Map([['existing.txt', Buffer.from('replacement')]])),
+      ).toThrow('ENOSPC during write');
+      expect(readFileSync(path.join(root, 'existing.txt'), 'utf8')).toBe('original');
+      expect(existsSync(path.join(root, '.template-transaction.json'))).toBe(false);
+      applyFiles(root, new Map([['existing.txt', Buffer.from('retry')]]));
+      expect(readFileSync(path.join(root, 'existing.txt'), 'utf8')).toBe('retry');
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
   it('rolls back every earlier write and preserves unrelated user changes after an I/O failure', () => {
     const root = mkdtempSync(path.join(os.tmpdir(), 'template-rollback-'));
     try {

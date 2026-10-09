@@ -22,16 +22,19 @@ export function workspacePackages(root: string): WorkspacePackage[] {
         readFileSync(path.join(root, directory, 'package.json'), 'utf8'),
       ) as {
         name: string;
-        starter?: { runtime?: WorkspacePackage['runtime'] };
+        starter?: { runtime?: string };
         dependencies?: Record<string, string>;
         devDependencies?: Record<string, string>;
         optionalDependencies?: Record<string, string>;
         scripts?: Record<string, string>;
       };
+      const runtime = manifest.starter?.runtime ?? 'library';
+      if (!['library', 'worker', 'desktop'].includes(runtime))
+        throw new Error(`Unknown starter.runtime ${runtime} in ${directory}/package.json`);
       return {
         name: manifest.name,
         directory,
-        runtime: manifest.starter?.runtime ?? 'library',
+        runtime: runtime as WorkspacePackage['runtime'],
         dependencies: Object.keys({
           ...manifest.dependencies,
           ...manifest.devDependencies,

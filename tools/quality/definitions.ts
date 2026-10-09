@@ -25,6 +25,85 @@ export const globalChecks: Check[] = [
   },
 ];
 
+export function faultCheckIds(packages: WorkspacePackage[]): string[] {
+  return [
+    'format',
+    'lint',
+    'type',
+    'secret-tools',
+    'unit-focused',
+    'unit',
+    'unit-zero',
+    'unit-skipped',
+    'unit-timeout',
+    'boundary',
+    ...(packages.some((pkg) => pkg.directory === 'packages/contracts')
+      ? ['secret-contracts', 'contract']
+      : []),
+    ...(packages.some((pkg) => pkg.runtime === 'worker')
+      ? [
+          'worker-behavior',
+          'worker-zero',
+          'deploy-quality',
+          'deploy-environment',
+          'deploy-settings',
+        ]
+      : []),
+    ...(packages.some((pkg) => pkg.scripts['db:migrate'])
+      ? ['dev-preflight-to-local-d1', 'migration']
+      : []),
+    ...(packages.some((pkg) => pkg.scripts['test:e2e'])
+      ? [
+          'browser-behavior',
+          'browser-focused',
+          'browser-zero',
+          'browser-skipped',
+          'browser-timeout',
+          'visual-regression',
+        ]
+      : []),
+    ...(packages.some((pkg) => pkg.runtime === 'desktop')
+      ? [
+          'rust-behavior',
+          'rust-zero',
+          'rust-ignored',
+          'rust-timeout',
+          'native-behavior',
+          'native-focused',
+          'native-zero',
+          'native-skipped',
+          'native-timeout',
+        ]
+      : []),
+  ];
+}
+
+export const lifecyclePhases = [
+  'cold-setup',
+  'cold-gate',
+  'hmr',
+  'warm-setup',
+  'warm-gate',
+  'cache-cleared-gate',
+  'rename-and-exclude',
+  'add-and-start',
+  'sample-removal',
+  'interrupted-recovery',
+  're-add-excluded-web',
+];
+export const hookPhases = [
+  'install-repeat',
+  'valid-commit',
+  'partial-stage-valid',
+  'partial-stage-invalid',
+  'empty-diff-repair',
+  'valid-push',
+  'invalid-push',
+  'multi-ref-repair',
+  'linked-worktree',
+  'existing-hook-protection',
+];
+
 export function packageChecks(pkg: WorkspacePackage, phase: 'test' | 'build' | 'full'): Check[] {
   const entries: [string, string, string[]][] =
     phase === 'build'

@@ -29,6 +29,23 @@ function fixture(files: Record<string, string>, inspect: (root: string) => void)
 }
 
 describe('runtime boundaries', () => {
+  it('detects secret material in first-party tools, configuration, tests and CI', () => {
+    const token = ['ghp', '_', 'a'.repeat(24)].join('');
+    const files = [
+      'tools/probe.ts',
+      'vite.config.ts',
+      'packages/web/cloudflare.config.ts',
+      'packages/web/test/probe.test.ts',
+      '.github/workflows/probe.yml',
+      'tools/generators/templates/api/src/probe.ts.template',
+      'packages/api/src/generated/probe.ts',
+    ];
+    fixture(Object.fromEntries(files.map((name) => [name, `// ${token}`])), (root) => {
+      expect(structure(root).filter((error) => error.includes('secret material'))).toHaveLength(
+        files.length,
+      );
+    });
+  });
   it('detects a server import reached indirectly by a route while allowing a Worker-only helper', () => {
     fixture(
       {

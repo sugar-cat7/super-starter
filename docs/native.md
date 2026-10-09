@@ -9,3 +9,28 @@ The package scripts `test:rust`, `test:native`, `test:release`, `build` and opti
 Native E2E follows the [current Tauri recommendation](https://v2.tauri.app/develop/tests/webdriver/) and [embedded WebdriverIO setup](https://webdriver.io/docs/desktop-testing/tauri/plugin-setup). Cargo feature `e2e`, test config/capabilities, renderer mode and target directory are separate. It starts the real app on Linux/macOS/Windows and invokes real Rust CRUD, cancel/error/export and denied unknown commands. A test-only process environment chooses an export fixture; production IPC accepts no path. Normal release rebuilds without the feature/import/global API, checks dependency/capability/frontend isolation, starts the native window and verifies that setting the test driver port cannot enable a listener.
 
 User-selected native dialog interaction is distinct from the controlled E2E fixture. Remote connections, public distribution and signing have not been performed by setup or CI.
+
+If an existing Linux environment provides Docker but cannot install system libraries, the optional `tools/dev-environment/native.Dockerfile` provisions the same official prerequisites. This is still Linux validation. It uses standard package commands and no privileged container or host networking. Build an image, mount this project and the tools selected by mise, then work inside it:
+
+```sh
+mise install
+docker build --build-arg DEVELOPMENT_UID="$(id -u)" -f tools/dev-environment/native.Dockerfile -t starter-native-dev tools/dev-environment
+STARTER_NODE_DIR="$(mise where node)"
+STARTER_PNPM_DIR="$(mise where aqua:pnpm/pnpm)"
+mkdir -p .state/container-home .state/container-tmp
+docker run --rm -it \
+  --mount "type=bind,src=$PWD,dst=/project" \
+  --mount "type=bind,src=$PWD/.state/container-home,dst=/home/developer" \
+  --mount "type=bind,src=$PWD/.state/container-tmp,dst=/tmp" \
+  --mount "type=bind,src=$STARTER_NODE_DIR,dst=/opt/node,readonly" \
+  --mount "type=bind,src=$STARTER_PNPM_DIR/pnpm,dst=/usr/local/bin/pnpm,readonly" \
+  --env PATH=/opt/node/bin:/usr/local/cargo/bin:/usr/local/bin:/usr/bin:/bin \
+  --env CARGO_HOME=/home/developer/.cargo \
+  starter-native-dev bash
+pnpm env:setup
+pnpm env:doctor
+xvfb-run -a pnpm dev -- desktop
+xvfb-run -a pnpm gate:full
+```
+
+For non-interactive execution omit `-it` and append `bash -c '<command>'`. A managed network may require its approved CA during image build (`--secret id=system_ca,src=<public-ca-bundle>`) and runtime; use the environment's documented trust/proxy configuration without disabling certificate verification. Cache only this project's `.state`/dependencies and an owned Cargo registry volume. Git operations use the mounted repository's local hooks; Docker and Rust are unnecessary for presets without Desktop.

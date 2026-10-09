@@ -9,7 +9,7 @@
   },
   "scripts": {
     "check": "vp check .",
-    "test": "vp test run",
+    "test": "node ../../tools/quality/vitest.ts",
     "build": "vp pack"
   },
   "dependencies": {

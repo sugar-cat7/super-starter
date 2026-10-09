@@ -1,16 +1,57 @@
 import { spawn, spawnSync, type SpawnOptions } from 'node:child_process';
 import type { ChildProcess } from 'node:child_process';
+import { readFileSync } from 'node:fs';
 import { setTimeout as pause } from 'node:timers/promises';
+
+const owned = new WeakSet<ChildProcess>();
+const quoteWindows = (value: string): string =>
+  `"${value.replace(/(\\*)"/gu, '$1$1\\"').replace(/\\+$/u, '$&$&')}"`;
+
+export function spawnOwned(
+  command: string,
+  args: string[],
+  options: SpawnOptions = {},
+): ChildProcess {
+  let child: ChildProcess;
+  if (process.platform === 'win32') {
+    const script = readFileSync(new URL('./windows-job.ps1', import.meta.url), 'utf8');
+    child = spawn('powershell.exe', ['-NoProfile', '-NonInteractive', '-Command', script], {
+      ...options,
+      detached: false,
+      env: {
+        ...(options.env ?? process.env),
+        STARTER_PROCESS_SPEC: Buffer.from(
+          JSON.stringify({
+            commandLine: [command, ...args].map(quoteWindows).join(' '),
+          }),
+        ).toString('base64'),
+      },
+    });
+  } else child = spawn(command, args, { ...options, detached: true });
+  owned.add(child);
+  return child;
+}
 
 export async function stopTree(child: ChildProcess): Promise<void> {
   if (!child.pid) return;
   const pid = child.pid;
+  if (!owned.has(child)) throw new Error('Cleanup requires a process started by spawnOwned');
   if (process.platform === 'win32') {
-    if (child.exitCode === null)
-      spawnSync('taskkill', ['/PID', String(pid), '/T', '/F'], {
-        stdio: 'ignore',
-        timeout: 10_000,
-      });
+    if (child.exitCode !== null || child.signalCode !== null) return;
+    const closed = new Promise<void>((resolve) => child.once('close', () => resolve()));
+    if (!child.kill('SIGKILL') && child.exitCode === null && child.signalCode === null)
+      throw new Error('Unable to terminate the owned Windows Job host');
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    try {
+      await Promise.race([
+        closed,
+        new Promise<never>((_, reject) => {
+          timer = setTimeout(() => reject(new Error('Owned Windows Job cleanup timeout')), 10000);
+        }),
+      ]);
+    } finally {
+      if (timer) clearTimeout(timer);
+    }
     return;
   }
   const signal = (value: NodeJS.Signals | 0): boolean => {
@@ -45,15 +86,24 @@ export function runSync(command: string, args: string[], cwd: string): string {
 export async function run(
   command: string,
   args: string[],
-  options: SpawnOptions & { timeout?: number } = {},
-): Promise<void> {
-  const { timeout = 10 * 60_000, ...spawnOptions } = options;
-  await new Promise<void>((resolve, reject) => {
-    const child = spawn(command, args, {
-      stdio: 'inherit',
+  options: SpawnOptions & { timeout?: number; capture?: boolean } = {},
+): Promise<string> {
+  const { timeout = 10 * 60_000, capture = false, ...spawnOptions } = options;
+  return await new Promise<string>((resolve, reject) => {
+    const child = spawnOwned(command, args, {
+      stdio: capture ? ['ignore', 'pipe', 'pipe'] : 'inherit',
       detached: process.platform !== 'win32',
       ...spawnOptions,
     });
+    let output = '';
+    if (capture) {
+      const record = (chunk: Buffer, stream: NodeJS.WriteStream) => {
+        output = (output + chunk.toString()).slice(-2_000_000);
+        stream.write(chunk);
+      };
+      child.stdout?.on('data', (chunk: Buffer) => record(chunk, process.stdout));
+      child.stderr?.on('data', (chunk: Buffer) => record(chunk, process.stderr));
+    }
     let timedOut = false;
     const timer = setTimeout(() => {
       timedOut = true;
@@ -61,11 +111,11 @@ export async function run(
     }, timeout);
     child.once('error', (error) => {
       clearTimeout(timer);
-      reject(error);
+      void stopTree(child).then(() => reject(error), reject);
     });
     child.once('close', (code, signal) => {
       clearTimeout(timer);
-      if (code === 0 && !timedOut) resolve();
+      if (code === 0 && !timedOut) resolve(output);
       else
         void stopTree(child).then(
           () =>
