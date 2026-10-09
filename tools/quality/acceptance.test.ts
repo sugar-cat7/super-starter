@@ -77,6 +77,11 @@ it('requires actual executables and subcommands rather than mention-only or help
   expect(agentCommandValid('full', ['echo', 'pnpm', 'gate:full'])).toBe(false);
   expect(agentCommandValid('commit', ['git', 'commit', '--help'])).toBe(false);
   expect(agentCommandValid('push', ['git', 'push', '--no-verify'])).toBe(false);
+  expect(agentCommandValid('commit', ['git', 'commit', '-an', '-m', 'Feature'])).toBe(false);
+  expect(agentCommandValid('push', ['git', 'push', '-n', 'origin', 'HEAD'])).toBe(false);
+  expect(agentCommandValid('full', ['pnpm', 'gate:full', '--', '--checks', 'javascript'])).toBe(
+    false,
+  );
   expect(agentCommandValid('commit', ['git', '-c', 'core.hooksPath=/tmp', 'commit'])).toBe(false);
   expect(agentCommandValid('preflight', ['pnpm', 'deploy:preflight', '--dry-run'])).toBe(false);
   expect(

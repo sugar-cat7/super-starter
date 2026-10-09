@@ -30,7 +30,7 @@ export function agentCommandValid(phase: string, argv: string[]): boolean {
     argv.some(
       (arg) =>
         /^(?:--help|-h|--version|-v|--dry-run|--no-verify)$/u.test(arg) ||
-        /^(?:core\.hooksPath=|--config-env=core\.hooksPath)/u.test(arg),
+        /^(?:core\.hooksPath(?:=|$)|--config-env=core\.hooksPath)/u.test(arg),
     )
   )
     return false;
@@ -46,7 +46,7 @@ export function agentCommandValid(phase: string, argv: string[]): boolean {
     args = args.slice(separator + 2);
   }
   if (phase === 'commit' || phase === 'push') {
-    if (command !== 'git') return false;
+    if (command !== 'git' || args.some((arg) => /^-[A-Za-z]*n[A-Za-z]*$/u.test(arg))) return false;
     while (['-C', '-c', '--git-dir', '--work-tree'].includes(args[0] ?? '')) {
       if (!args[1]) return false;
       args = args.slice(2);
@@ -63,6 +63,15 @@ export function agentCommandValid(phase: string, argv: string[]): boolean {
     else return false;
   }
   if (args[0] === 'run') args = args.slice(1);
+  if (
+    phase === 'full' &&
+    args.some(
+      (arg, index) =>
+        (arg === '--checks' && args[index + 1] !== 'all') ||
+        (arg.startsWith('--checks=') && arg !== '--checks=all'),
+    )
+  )
+    return false;
   const token = (
     {
       setup: 'env:setup',
@@ -369,7 +378,7 @@ export function acceptance(directory: string, sha: string) {
               !entry.argv.some(
                 (argument) =>
                   argument === '--no-verify' ||
-                  /^(?:core\.hooksPath=|--config-env=core\.hooksPath)/u.test(argument),
+                  /^(?:core\.hooksPath(?:=|$)|--config-env=core\.hooksPath)/u.test(argument),
               ) &&
               agentCommandValid(phase, entry.argv),
           ),
