@@ -1,6 +1,37 @@
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, realpathSync, statSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { pnpm } from '../process.ts';
+
+type BuildManifest = { mainModule: string; modules: Record<string, { type: string }> };
+
+export function moduleRules(bundle: string, manifest: BuildManifest) {
+  if (!manifest?.modules || !Object.keys(manifest.modules).length)
+    throw new Error('Local preview requires the SDK build manifest');
+  const esm: string[] = [];
+  const data: string[] = [];
+  const realBundle = realpathSync(bundle);
+  for (const [file, module] of Object.entries(manifest.modules)) {
+    if (
+      path.isAbsolute(file) ||
+      path.win32.isAbsolute(file) ||
+      file.includes('\\') ||
+      !path.resolve(bundle, file).startsWith(`${path.resolve(bundle)}${path.sep}`) ||
+      !existsSync(path.join(bundle, file)) ||
+      !statSync(path.join(bundle, file)).isFile() ||
+      !realpathSync(path.join(bundle, file)).startsWith(`${realBundle}${path.sep}`) ||
+      !['esm', 'data'].includes(module.type) ||
+      (module.type === 'esm' && !file.endsWith('.js'))
+    )
+      throw new Error(`Invalid, missing or unsupported SDK-built module: ${file}`);
+    (module.type === 'esm' ? esm : data).push(file);
+  }
+  if (!esm.includes(manifest.mainModule))
+    throw new Error('SDK build manifest is missing its ESM main module');
+  return [
+    { type: 'ESModule', globs: esm, fallthrough: true },
+    ...(data.length ? [{ type: 'Data', globs: data, fallthrough: true }] : []),
+  ];
+}
 
 // cloudflare.config.ts -> SDK build output -> SDK Wrangler conversion.
 // No authored second binding/environment configuration is maintained.
@@ -15,27 +46,11 @@ export async function preview(convert: (input: unknown) => unknown): Promise<voi
   const { manifest, ...worker } = JSON.parse(
     readFileSync(path.join(output, 'workers/default/worker.config.json'), 'utf8'),
   ) as {
-    manifest: { mainModule: string; modules: Record<string, { type: string }> };
+    manifest: BuildManifest;
     [key: string]: unknown;
   };
-  if (
-    !manifest ||
-    !Object.keys(manifest.modules).length ||
-    Object.values(manifest.modules).some((module) => module.type !== 'esm')
-  )
-    throw new Error(
-      'Local preview requires the current ESM build manifest; review SDK compatibility before adopting other module formats',
-    );
   const bundle = path.join(output, 'workers/default/bundle');
-  for (const file of Object.keys(manifest.modules))
-    if (
-      !file.endsWith('.js') ||
-      path.resolve(bundle, file).startsWith(`${bundle}${path.sep}`) === false ||
-      !existsSync(path.join(bundle, file))
-    )
-      throw new Error(`Invalid or missing SDK-built module: ${file}`);
-  if (!Object.hasOwn(manifest.modules, manifest.mainModule))
-    throw new Error('SDK build manifest is missing its main module');
+  const rules = moduleRules(bundle, manifest);
   const config = convert({ worker, containers: [] }) as {
     assets?: Record<string, unknown>;
     [key: string]: unknown;
@@ -43,7 +58,7 @@ export async function preview(convert: (input: unknown) => unknown): Promise<voi
   config.main = path.join(bundle, manifest.mainModule);
   config.base_dir = bundle;
   config.find_additional_modules = true;
-  config.rules = [{ type: 'ESModule', globs: Object.keys(manifest.modules), fallthrough: true }];
+  config.rules = rules;
   const assets = path.join(output, 'workers/default/assets');
   if (existsSync(assets)) config.assets = { ...config.assets, directory: assets };
   const filename = path.join(cwd, '.cloudflare/preview.wrangler.json');

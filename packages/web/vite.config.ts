@@ -15,9 +15,29 @@ export default defineConfig({
       },
       experimental: { newConfig: { cfBuildOutput: true } },
     }),
-    tanstackStart({ router: { quoteStyle: 'single', semicolons: true } }),
+    tanstackStart({
+      router: { quoteStyle: 'single', semicolons: true },
+      server: { build: { inlineCss: true } },
+    }),
     react(),
     tailwind(),
   ],
+  // Keep the framework runtime separately cacheable and avoid a single large initial script.
+  // Vite/TanStack generate preload links; SSR retains the SDK's own output settings.
+  environments: {
+    client: {
+      build: {
+        rolldownOptions: {
+          output: {
+            codeSplitting: {
+              groups: [
+                { name: 'react', test: /[\\/]node_modules[\\/](?:react|react-dom|scheduler)[\\/]/ },
+              ],
+            },
+          },
+        },
+      },
+    },
+  },
   server: { port: Number(process.env.STARTER_PORT ?? 5173), strictPort: true },
 });

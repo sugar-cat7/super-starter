@@ -1,5 +1,5 @@
 import { createRootRoute, HeadContent, Link, Outlet, Scripts } from '@tanstack/react-router';
-import css from '../styles.css?inline';
+import '../styles.css';
 import favicon from '../favicon.svg?url';
 
 export const Route = createRootRoute({
@@ -19,7 +19,6 @@ export const Route = createRootRoute({
     <html lang="en">
       <head>
         <HeadContent />
-        <style>{css}</style>
       </head>
       <body>
         <a href="#main" className="sr-only focus:not-sr-only">
