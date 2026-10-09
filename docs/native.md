@@ -34,3 +34,5 @@ xvfb-run -a pnpm gate:full
 ```
 
 For non-interactive execution omit `-it` and append `bash -c '<command>'`. A managed network may require its approved CA during image build (`--secret id=system_ca,src=<public-ca-bundle>`) and runtime; use the environment's documented trust/proxy configuration without disabling certificate verification. Cache only this project's `.state`/dependencies and an owned Cargo registry volume. Git operations use the mounted repository's local hooks; Docker and Rust are unnecessary for presets without Desktop.
+
+The pinned embedded driver returns from refresh before WebKit has replaced the document. Native regression tests mark the old document, yield 100 ms to its queued unload, then require a new complete document and the installed plugin initialization before subsequent Rust/DOM operations. This handoff is not a success condition; the existing 30-second test timeout and all assertions remain active. The behavior and typed plugin globals were checked against the installed 1.5.0 service SDK and real Linux windows.

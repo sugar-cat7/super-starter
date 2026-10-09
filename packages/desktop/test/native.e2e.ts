@@ -3,6 +3,33 @@ import '@wdio/tauri-service';
 import { readFile } from 'node:fs/promises';
 import { noteSchema, notesSchema } from '@starter/contracts';
 
+async function reloadNativeWindow() {
+  // The embedded driver's refresh returns before WebKit replaces the document.
+  // Wait for the new document/plugin before the service's next Rust focus query.
+  const marker = crypto.randomUUID();
+  await browser.execute((value: string) => {
+    document.documentElement.dataset.nativeReload = value;
+  }, marker);
+  await browser.refresh();
+  // Yield to WebKit's queued unload before creating an eval completion callback.
+  await browser.pause(100);
+  await browser.waitUntil(
+    () =>
+      browser.execute(
+        (value: string) =>
+          document.documentElement.dataset.nativeReload !== value &&
+          document.readyState === 'complete' &&
+          typeof window.wdioTauri?.waitForInit === 'function' &&
+          typeof window.__wdio_original_core__?.invoke === 'function',
+        marker,
+      ),
+    { timeout: 5000, interval: 100, timeoutMsg: 'Reloaded native plugin did not initialize' },
+  );
+  await browser.execute(async () => {
+    await window.wdioTauri?.waitForInit();
+  });
+}
+
 describe('real native Tauri window and Rust IPC', () => {
   it('renders offline UI and validates real CRUD/export permissions', async () => {
     await expect(browser.$('h1')).toHaveText('Notes');
@@ -11,7 +38,7 @@ describe('real native Tauri window and Rust IPC', () => {
         tauri.core.invoke('add_note', { text: 'Native note' }),
       ),
     );
-    await browser.refresh();
+    await reloadNativeWindow();
     await expect(browser.$(`button[aria-label="Delete Native note"]`)).toExist();
     const mode = process.env.STARTER_EXPORT_CASE ?? 'save';
     if (mode === 'error') {
@@ -37,7 +64,7 @@ describe('real native Tauri window and Rust IPC', () => {
       (tauri, id: string) => tauri.core.invoke('delete_note', { id }),
       note.id,
     );
-    await browser.refresh();
+    await reloadNativeWindow();
     await expect(browser.$('section')).toHaveText(expect.stringContaining('No notes yet.'));
   });
 });
