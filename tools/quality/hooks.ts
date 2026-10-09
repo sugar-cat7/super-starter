@@ -13,7 +13,7 @@ import {
 import os from 'node:os';
 import path from 'node:path';
 import { mkdtempSync } from 'node:fs';
-import { pnpm, runSync } from '../process.ts';
+import { pnpm, runSync, run } from '../process.ts';
 import { workspacePackages } from './graph.ts';
 
 const hookPath = 'tools/quality/git-hooks';
@@ -106,14 +106,20 @@ export async function indexCheck(root: string): Promise<void> {
         root,
         snapshot,
       );
-    await pnpm(['exec', 'vp', 'fmt', '--check'], { cwd: snapshot, timeout: 120_000 });
+    // pnpm 12 can prepare dependencies implicitly in a copied index tree. The
+    // index must stay immutable, so invoke the already-installed local CLI.
+    const vp = path.join(snapshot, 'node_modules/vite-plus/bin/vp');
+    await run(process.execPath, [vp, 'fmt', '--check'], { cwd: snapshot, timeout: 120_000 });
     // Staged checks intentionally use lint rather than worktree typegen/runtime.
-    await pnpm(['exec', 'vp', 'lint'], {
+    await run(process.execPath, [vp, 'lint'], {
       cwd: snapshot,
       env: { ...process.env, STARTER_CHECK_PHASE: 'index' },
       timeout: 120_000,
     });
-    await pnpm(['exec', 'node', 'tools/quality/structure.ts'], { cwd: snapshot, timeout: 120_000 });
+    await run(process.execPath, ['tools/quality/structure.ts'], {
+      cwd: snapshot,
+      timeout: 120_000,
+    });
   } finally {
     rmSync(snapshot, { recursive: true, force: true });
   }
