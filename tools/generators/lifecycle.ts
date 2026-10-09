@@ -8,6 +8,7 @@ import { contentId } from '../quality/gate.ts';
 import { Servers } from '../dev-environment/servers.ts';
 import { workspacePackages } from '../quality/graph.ts';
 import { lifecyclePhases } from '../quality/definitions.ts';
+import { baselineDifferences } from './baseline.ts';
 import { applyFiles } from './files.ts';
 import { projectOptions } from './options.ts';
 import { projectFiles } from './render.ts';
@@ -265,7 +266,7 @@ export async function lifecycleRehearsal(source: string): Promise<void> {
     mkdirSync(path.join(source, 'artifacts'), { recursive: true });
     writeFileSync(
       path.join(source, 'artifacts/lifecycle.json'),
-      `${JSON.stringify({ schema: 1, contentId: contentId(source), os: process.platform, status: completed && reports.length && reports.every((entry) => entry.status === 'passed') ? 'passed' : 'failed', origin: (JSON.parse(readFileSync(path.join(source, '.template.json'), 'utf8')) as { origin?: unknown }).origin, reports }, null, 2)}\n`,
+      `${JSON.stringify({ schema: 1, baselineDifferences: baselineDifferences(source), contentId: contentId(source), os: process.platform, status: completed && reports.length && reports.every((entry) => entry.status === 'passed') ? 'passed' : 'failed', origin: (JSON.parse(readFileSync(path.join(source, '.template.json'), 'utf8')) as { origin?: unknown }).origin, reports }, null, 2)}\n`,
     );
     rmSync(owned, { recursive: true, force: true });
   }

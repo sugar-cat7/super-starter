@@ -8,6 +8,7 @@ import { installHooks } from './hooks.ts';
 import { pnpm } from '../process.ts';
 import { contentId } from './gate.ts';
 import { hookPhases } from './definitions.ts';
+import { baselineDifferences } from '../generators/baseline.ts';
 
 export async function hookRehearsal(project: string): Promise<void> {
   const started = performance.now();
@@ -137,7 +138,7 @@ export async function hookRehearsal(project: string): Promise<void> {
     };
     writeFileSync(
       path.join(project, 'artifacts/hooks.json'),
-      `${JSON.stringify({ schema: 1, phases: status === 'passed' ? hookPhases : [], status, origin: state.origin, contentId: contentId(project), os: process.platform, milliseconds: Math.round(performance.now() - started) }, null, 2)}\n`,
+      `${JSON.stringify({ schema: 1, baselineDifferences: baselineDifferences(project), phases: status === 'passed' ? hookPhases : [], status, origin: state.origin, contentId: contentId(project), os: process.platform, milliseconds: Math.round(performance.now() - started) }, null, 2)}\n`,
     );
     rmSync(owned, { recursive: true, force: true });
   }

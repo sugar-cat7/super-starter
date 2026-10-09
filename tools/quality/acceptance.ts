@@ -203,6 +203,7 @@ export function acceptance(directory: string, sha: string) {
     const evidence = files.find((file) => {
       const report = JSON.parse(readFileSync(path.join(directory, file), 'utf8')) as {
         schema?: number;
+        baselineDifferences?: string[];
         sha?: string;
         origin?: { sha?: string; dirty?: boolean };
         status?: string;
@@ -225,6 +226,11 @@ export function acceptance(directory: string, sha: string) {
         report.status !== 'passed' ||
         !report.contentId ||
         !(report.sha === sha || (report.origin?.sha === sha && report.origin.dirty === false))
+      )
+        return false;
+      if (
+        ['faults', 'hooks', 'lifecycle'].includes(mechanism.file) &&
+        (!Array.isArray(report.baselineDifferences) || report.baselineDifferences.length)
       )
         return false;
       if ('os' in mechanism && report.os !== mechanism.os) return false;
@@ -308,6 +314,12 @@ export function acceptance(directory: string, sha: string) {
               entry.phase === phase &&
               entry.exit === 0 &&
               !!entry.log &&
+              existsSync(path.resolve(directory, path.dirname(file), entry.log)) &&
+              !entry.argv.some(
+                (argument) =>
+                  argument === '--no-verify' ||
+                  /^(?:core\.hooksPath=|--config-env=core\.hooksPath)/u.test(argument),
+              ) &&
               commandValid(phase, entry.argv),
           ),
         )

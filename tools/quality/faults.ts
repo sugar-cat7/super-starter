@@ -15,6 +15,7 @@ import { applyFiles, walk } from '../generators/files.ts';
 import { workspacePackages } from './graph.ts';
 import { contentId } from './gate.ts';
 import { faultCheckIds } from './definitions.ts';
+import { baselineDifferences } from '../generators/baseline.ts';
 
 async function capture(
   root: string,
@@ -102,6 +103,7 @@ async function injectFaults(root: string): Promise<void> {
   const directory = path.join(root, 'artifacts/faults');
   mkdirSync(directory, { recursive: true });
   const before = contentId(root);
+  const inputBaseline = baselineDifferences(root);
   const origin = (
     JSON.parse(readFileSync(path.join(root, '.template.json'), 'utf8')) as { origin?: unknown }
   ).origin;
@@ -513,7 +515,7 @@ async function injectFaults(root: string): Promise<void> {
   await pnpm(['check'], { cwd: root });
   writeFileSync(
     path.join(root, 'artifacts/faults.json'),
-    `${JSON.stringify({ schema: 1, status: 'passed', configuration: (JSON.parse(readFileSync(path.join(root, '.template.json'), 'utf8')) as { options: unknown }).options, workspace: workspacePackages(root), origin, contentId: before, os: process.platform, reports }, null, 2)}\n`,
+    `${JSON.stringify({ schema: 1, baselineDifferences: inputBaseline, status: 'passed', configuration: (JSON.parse(readFileSync(path.join(root, '.template.json'), 'utf8')) as { options: unknown }).options, workspace: workspacePackages(root), origin, contentId: before, os: process.platform, reports }, null, 2)}\n`,
   );
 }
 if (process.argv[1]?.endsWith(`${path.sep}faults.ts`)) await faultRehearsal(process.cwd());
