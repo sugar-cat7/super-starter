@@ -1,13 +1,13 @@
-import { z } from 'zod';
+import { z } from 'zod/mini';
 
-export const noteInput = z.object({ text: z.string().trim().min(1).max(1000) }).strict();
-export const noteSchema = z
-  .object({
-    id: z.uuid(),
-    text: z.string().min(1).max(1000),
-    createdAt: z.number().int().nonnegative(),
-  })
-  .strict();
+export const noteInput = z.strictObject({
+  text: z.string().check(z.trim(), z.minLength(1), z.maxLength(1000)),
+});
+export const noteSchema = z.strictObject({
+  id: z.uuid(),
+  text: z.string().check(z.minLength(1), z.maxLength(1000)),
+  createdAt: z.int().check(z.gte(0)),
+});
 export const notesSchema = z.array(noteSchema);
 export const apiErrorSchema = z.object({
   error: z.object({ code: z.string(), message: z.string() }),

@@ -23,4 +23,12 @@ describe('portable communication schemas', () => {
         .text,
     ).toBe('note');
   });
+  it('preserves maximum text, strict data and safe nonnegative integer time boundaries', () => {
+    expect(noteInput.parse({ text: ` ${'x'.repeat(1000)} ` }).text).toHaveLength(1000);
+    const note = { id: '993a848f-d07f-43a2-85f8-333b05292ed4', text: 'note', createdAt: 0 };
+    expect(noteSchema.parse(note)).toEqual(note);
+    for (const createdAt of [-1, 1.5, NaN, Infinity, Number.MAX_SAFE_INTEGER + 1])
+      expect(noteSchema.safeParse({ ...note, createdAt }).success).toBe(false);
+    expect(noteSchema.safeParse({ ...note, unexpected: true }).success).toBe(false);
+  });
 });

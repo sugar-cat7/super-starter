@@ -97,6 +97,7 @@ async function measure(
     desktopConfig: unknown;
   },
   browser: string,
+  browserFlags: string[],
   url: string,
   profile: 'mobile' | 'desktop',
   prefix: string,
@@ -110,6 +111,7 @@ async function measure(
   const child = spawnOwned(
     browser,
     [
+      ...browserFlags,
       '--headless=new',
       '--no-sandbox',
       '--disable-dev-shm-usage',
@@ -203,6 +205,17 @@ async function audit(root: string, pkg: WorkspacePackage): Promise<void> {
   const chromium = (load('@playwright/test') as { chromium: { executablePath(): string } })
     .chromium;
   const browser = chromium.executablePath();
+  // Match the official CLI's browser startup without using its detached launcher.
+  // These SDK defaults suppress background services, not Lighthouse throttling/audits.
+  const browserFlags = [
+    ...(
+      createRequire(load.resolve('lighthouse'))('chrome-launcher') as {
+        Launcher: { defaultFlags(): string[] };
+      }
+    ).Launcher.defaultFlags(),
+    // Lighthouse 13.5.0 cli/bin.js enables its WebMCP protocol before launch.
+    '--enable-features=DevToolsWebMCPSupport',
+  ];
   if (!existsSync(browser))
     throw new Error(
       `Lighthouse browser is missing; run pnpm --filter ${pkg.name} exec playwright install chromium and provision its OS prerequisites`,
@@ -240,6 +253,7 @@ async function audit(root: string, pkg: WorkspacePackage): Promise<void> {
     node: process.version,
     lighthouse: (load('lighthouse/package.json') as { version: string }).version,
     chromium: runSync(browser, ['--version'], cwd),
+    browserFlags,
     profiles: ['mobile', 'desktop'],
     runsPerPage: 3,
     origin: null as string | null,
@@ -295,6 +309,7 @@ async function audit(root: string, pkg: WorkspacePackage): Promise<void> {
             await measure(
               api,
               browser,
+              browserFlags,
               new URL(route, origin).href,
               profile,
               prefix,
