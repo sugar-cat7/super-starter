@@ -30,11 +30,11 @@
     ".agents/skills/worker/SKILL.md": "09e2301895da919f94aa4993eb523f1dd040c265bf41dfab23caab8298e2c707",
     ".github/pull_request_template.md": "dad5393876ffd5b2f24d998322c3e9725e0cb9ed6b5570c90f4bb8654721d082",
     ".github/workflows/quality.yml": "b95c4c704d1c2d2a7260711e325e3a97e4523722141ce47e3f44b865e63b6eaf",
-    "docs/adoption.md": "c3c8426cccab7f332d6f36e138afd51c70673251c0abdfc3070ce534e0142f8b",
+    "docs/adoption.md": "94751b4e3dabf1bcf8fb2c9714359b9e786a9b76277ef508dcf3f452b57a75c3",
     "docs/cloudflare.md": "fcb195799bb484df83f0f922c3cf287053a5470ce62b6158a6e7aa892a967bd9",
     "docs/native.md": "06c8330bbf169505fc4701cf1c90c454381767d63cdb95ae05ca7e26ed67cfc7",
     "docs/quality.md": "21c7006e1b62b43b338e3d96a75cf3d9c3c5dccca6df9b0cd23d268bdb2b7e83",
-    "docs/stack.md": "9ec88f3d95147ea98de65c4e268eeadfcd4ca58e4aa3de15ae41374699f58ab2",
+    "docs/stack.md": "7ed09460b1e7e38237fa2259009b4f1ae58a5a44e6c8be06bf95e507504df66f",
     "docs/template.md": "25e7301ee7b3d8d4b687d1f6ecd1213ecbe409020079a7974b79d37c948b9f32",
     "docs/troubleshooting.md": "2826deb73de3303993a3784898011088fae5eb149de25654a61fffe8c6f309f5",
     "tools/cloudflare/build.ts": "3db8ee9513143962afe2420d8d86d1022fe48fd4b9d111a44d87aac6e5df069b",
@@ -170,7 +170,7 @@
     "CLAUDE.md": "ece74a7b7350ec3134b12c5c7bb24c4ceb5fd7e0bdf71d0c686e9abcd8d3e103",
     "renovate.json": "d4ce70ffbce6648bafdc59c56c67e4f10de2771a5c5fef4eff9e3e1cbf02911b",
     "mise.toml": "c325bb8305b08141857ef12f3eab15672b5c655dc692862acc97007cea7dd9cf",
-    "pnpm-workspace.yaml": "c8b7ffa0071c96803bf86f88ab500eac9ed85143603b4ed182929b7112d797f7",
+    "pnpm-workspace.yaml": "244e83a02d74cd4081ab2d4035779a6b43e4e6087f6923cf2f6ca8e09775724a",
     "tsconfig.json": "c9928afc714f647544e5d02b88c3222b370ea7badf6cca6e2a72ce69fb96f634",
     "vite.config.ts": "c8bb45067bdc919f97d1f7d2ab14773f529e50a9d829f0ceeb5b666eca9ea40b",
     "package.json": "937daa9e7061578ddbda2dbb6e9049e8aa6e183e6eaf95825e537eabf71ec8fe",
@@ -240,5 +240,5 @@
   },
   "formatKey": "24b5084c98eba393678f698e62a5f781275177b71561fd8fe37689cb87c6cb57",
   "lockPending": false,
-  "lockId": "87e08ffde8efb06b3344bf52d5ba9807bff8bffe672795fae94ac5ae83c45161"
+  "lockId": "b4ba67ef47f5550515ce5ec0dfea3962e5fbbfc8d41a1a705d2ce31171a553d2"
 }
