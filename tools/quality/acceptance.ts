@@ -1,4 +1,11 @@
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import {
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  realpathSync,
+  statSync,
+  writeFileSync,
+} from 'node:fs';
 import path from 'node:path';
 import {
   verificationCases,
@@ -17,6 +24,74 @@ import {
 import type { WorkspacePackage } from './graph.ts';
 import { appFiles } from '../generators/render.ts';
 import { fileURLToPath } from 'node:url';
+export function agentCommandValid(phase: string, argv: string[]): boolean {
+  if (
+    !argv.length ||
+    argv.some(
+      (arg) =>
+        /^(?:--help|-h|--version|-v|--dry-run|--no-verify)$/u.test(arg) ||
+        /^(?:core\.hooksPath=|--config-env=core\.hooksPath)/u.test(arg),
+    )
+  )
+    return false;
+  const executable = (value: string) => path.basename(value).replace(/\.exe$/u, '');
+  let args = argv.slice(1);
+  let command = executable(argv[0]!);
+  if (command === 'mise') {
+    if (args[0] === 'run') return phase === 'setup' && args[1] === 'setup';
+    if (args[0] !== 'exec') return false;
+    const separator = args.indexOf('--');
+    if (separator < 1) return false;
+    command = executable(args[separator + 1] ?? '');
+    args = args.slice(separator + 2);
+  }
+  if (phase === 'commit' || phase === 'push') {
+    if (command !== 'git') return false;
+    while (['-C', '-c', '--git-dir', '--work-tree'].includes(args[0] ?? '')) {
+      if (!args[1]) return false;
+      args = args.slice(2);
+    }
+    return args[0] === phase;
+  }
+  if (command !== 'pnpm') return false;
+  while (args[0]?.startsWith('-')) {
+    if (['--filter', '-F', '-C', '--dir'].includes(args[0])) {
+      if (!args[1]) return false;
+      args = args.slice(2);
+    } else if (['-r', '--recursive', '-w', '--workspace-root'].includes(args[0]))
+      args = args.slice(1);
+    else return false;
+  }
+  if (args[0] === 'run') args = args.slice(1);
+  const token = (
+    {
+      setup: 'env:setup',
+      doctor: 'env:doctor',
+      dev: 'dev',
+      'targeted-test': 'test',
+      'pre-pr': 'gate:pre-pr',
+      full: 'gate:full',
+      build: 'build',
+      preflight: 'deploy:preflight',
+    } as Record<string, string>
+  )[phase];
+  return (
+    !!token &&
+    (args[0] === token ||
+      (['dev', 'targeted-test'].includes(phase) && args[0]?.startsWith(`${token}:`) === true))
+  );
+}
+function agentLogValid(directory: string, relative: string): boolean {
+  if (!relative.startsWith('logs/') || !relative.endsWith('.log')) return false;
+  const filename = path.resolve(directory, relative);
+  if (!existsSync(filename)) return false;
+  const logs = path.resolve(directory, 'logs');
+  return (
+    realpathSync(filename).startsWith(`${realpathSync(logs)}${path.sep}`) &&
+    statSync(filename).isFile() &&
+    statSync(filename).size > 0
+  );
+}
 const source = fileURLToPath(new URL('../..', import.meta.url));
 function canonicalPackages(options: ProjectOptions): WorkspacePackage[] {
   return selectedPackages(options).map((kind) => {
@@ -277,30 +352,6 @@ export function acceptance(directory: string, sha: string) {
         'commit',
         'push',
       ];
-      const commandValid = (phase: string, argv: string[]): boolean => {
-        const git = path.basename(argv[0] ?? '').replace(/\.exe$/u, '') === 'git';
-        if (phase === 'commit' || phase === 'push') return git && argv.includes(phase);
-        if (!argv.some((entry) => ['pnpm', 'pnpm.exe', 'mise'].includes(path.basename(entry))))
-          return false;
-        const token = (
-          {
-            setup: 'env:setup',
-            doctor: 'env:doctor',
-            dev: 'dev',
-            'targeted-test': 'test',
-            'pre-pr': 'gate:pre-pr',
-            full: 'gate:full',
-            build: 'build',
-            preflight: 'deploy:preflight',
-          } as Record<string, string>
-        )[phase]!;
-        return argv.some(
-          (entry) =>
-            entry === token ||
-            ((phase === 'dev' || phase === 'targeted-test') && entry.startsWith(`${token}:`)) ||
-            (phase === 'setup' && entry === 'setup'),
-        );
-      };
       return (
         report.execution === 'agent' &&
         report.independentContext === true &&
@@ -314,13 +365,13 @@ export function acceptance(directory: string, sha: string) {
               entry.phase === phase &&
               entry.exit === 0 &&
               !!entry.log &&
-              existsSync(path.resolve(directory, path.dirname(file), entry.log)) &&
+              agentLogValid(path.resolve(directory, path.dirname(file)), entry.log) &&
               !entry.argv.some(
                 (argument) =>
                   argument === '--no-verify' ||
                   /^(?:core\.hooksPath=|--config-env=core\.hooksPath)/u.test(argument),
               ) &&
-              commandValid(phase, entry.argv),
+              agentCommandValid(phase, entry.argv),
           ),
         )
       );

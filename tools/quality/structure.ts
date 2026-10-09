@@ -66,14 +66,14 @@ export function structure(root: string): string[] {
     const directory = path.join(root, pkg.directory, 'src');
     if (!existsSync(directory)) continue;
     for (const relative of walk(directory).filter(
-      (filename) => /\.[jt]sx?$/u.test(filename) && !filename.includes('.test.'),
+      (filename) => /\.[cm]?[jt]sx?$/u.test(filename) && !filename.includes('.test.'),
     )) {
       const filename = `${pkg.directory}/src/${relative}`;
       const specifiers: string[] = [];
       imports.set(filename, specifiers);
       if (
         pkg.runtime === 'worker' &&
-        /^(?:client\/|routes\/|(?:main|client)\.[jt]sx?$)/u.test(relative)
+        /^(?:client\/|routes\/|(?:main|client)\.[cm]?[jt]sx?$)/u.test(relative)
       )
         clients.push(filename);
       const contents = readFileSync(path.join(root, filename), 'utf8');
@@ -152,10 +152,12 @@ export function structure(root: string): string[] {
     }
     if (!candidate) return;
     candidate = candidate.split(path.sep).join('/');
-    const stem = candidate.replace(/\.[cm]?jsx?$/u, '');
-    return [candidate, `${stem}.ts`, `${stem}.tsx`, `${stem}/index.ts`, `${stem}/index.tsx`].find(
-      (entry) => imports.has(entry),
-    );
+    const stem = candidate.replace(/\.[cm]?[jt]sx?$/u, '');
+    const extensions = ['ts', 'tsx', 'js', 'jsx', 'mts', 'cts', 'mjs', 'cjs'];
+    return [
+      candidate,
+      ...extensions.flatMap((extension) => [`${stem}.${extension}`, `${stem}/index.${extension}`]),
+    ].find((entry) => imports.has(entry));
   };
   const visited = new Set<string>();
   const visitClient = (filename: string, chain: string[]): void => {

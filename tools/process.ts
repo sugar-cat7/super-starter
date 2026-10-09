@@ -115,17 +115,15 @@ export async function run(
     });
     child.once('close', (code, signal) => {
       clearTimeout(timer);
-      if (code === 0 && !timedOut) resolve(output);
-      else
-        void stopTree(child).then(
-          () =>
-            reject(
-              new Error(
-                `${command} ${args.join(' ')}: ${timedOut ? 'timeout' : `exit ${code}, signal ${signal}`}`,
-              ),
+      void stopTree(child).then(() => {
+        if (code === 0 && !timedOut) resolve(output);
+        else
+          reject(
+            new Error(
+              `${command} ${args.join(' ')}: ${timedOut ? 'timeout' : `exit ${code}, signal ${signal}`}`,
             ),
-          reject,
-        );
+          );
+      }, reject);
     });
   });
 }

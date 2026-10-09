@@ -71,3 +71,21 @@ it('rejects passed labels that omit applications or actual mechanism execution',
     rmSync(root, { recursive: true, force: true });
   }
 });
+
+it('requires actual executables and subcommands rather than mention-only or help commands', async () => {
+  const { agentCommandValid } = await import('./acceptance.ts');
+  expect(agentCommandValid('full', ['echo', 'pnpm', 'gate:full'])).toBe(false);
+  expect(agentCommandValid('commit', ['git', 'commit', '--help'])).toBe(false);
+  expect(agentCommandValid('push', ['git', 'push', '--no-verify'])).toBe(false);
+  expect(agentCommandValid('commit', ['git', '-c', 'core.hooksPath=/tmp', 'commit'])).toBe(false);
+  expect(agentCommandValid('preflight', ['pnpm', 'deploy:preflight', '--dry-run'])).toBe(false);
+  expect(
+    agentCommandValid('full', ['mise', 'exec', 'pnpm@12.10.1', '--', 'pnpm', 'gate:full']),
+  ).toBe(true);
+  expect(
+    agentCommandValid('targeted-test', ['pnpm', '--filter', '@fixture/api', 'test:unit']),
+  ).toBe(true);
+  expect(agentCommandValid('commit', ['git', '-C', '/project', 'commit', '-m', 'Feature'])).toBe(
+    true,
+  );
+});

@@ -1,6 +1,14 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import {
+  cpSync,
+  existsSync,
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { pnpm, run } from '../process.ts';
@@ -22,6 +30,7 @@ export async function lifecycleRehearsal(source: string): Promise<void> {
     status: 'passed' | 'failed';
     milliseconds: number;
     contentId: string;
+    artifacts: string | null;
   }[] = [];
   const phase = async (id: string, work: () => Promise<void>) => {
     const started = performance.now();
@@ -30,7 +39,15 @@ export async function lifecycleRehearsal(source: string): Promise<void> {
       await work();
       status = 'passed';
     } finally {
+      const evidence = path.join(source, 'artifacts/lifecycle-phases', id);
+      const artifacts = path.join(root, 'artifacts');
+      if (existsSync(artifacts)) {
+        rmSync(evidence, { recursive: true, force: true });
+        mkdirSync(path.dirname(evidence), { recursive: true });
+        cpSync(artifacts, evidence, { recursive: true });
+      }
       reports.push({
+        artifacts: existsSync(artifacts) ? `lifecycle-phases/${id}` : null,
         id,
         status,
         milliseconds: Math.round(performance.now() - started),
@@ -94,6 +111,36 @@ export async function lifecycleRehearsal(source: string): Promise<void> {
     await phase('cache-cleared-gate', async () => {
       await pnpm(['gate:full'], { cwd: root });
     });
+    const signatures = ['cold-gate', 'warm-gate', 'cache-cleared-gate'].map((id) => {
+      const report = JSON.parse(
+        readFileSync(
+          path.join(
+            source,
+            'artifacts/lifecycle-phases',
+            id,
+            `gate-full-all-${process.platform}.json`,
+          ),
+          'utf8',
+        ),
+      ) as {
+        contentId: string;
+        checks: { id: string; status: string; command: string[] }[];
+        workspace: unknown;
+        tools: unknown;
+      };
+      return {
+        contentId: report.contentId,
+        workspace: report.workspace,
+        tools: report.tools,
+        checks: report.checks.map(({ id, status, command }) => ({ id, status, command })),
+      };
+    });
+    assert.deepEqual(signatures[1], signatures[0], 'Warm validation must match cold inputs/checks');
+    assert.deepEqual(
+      signatures[2],
+      signatures[0],
+      'Cache-cleared validation must match cold inputs/checks',
+    );
     const readme = readFileSync(path.join(root, 'README.md'));
     writeFileSync(
       path.join(root, 'README.md'),
@@ -255,6 +302,13 @@ export async function lifecycleRehearsal(source: string): Promise<void> {
       cli(['add', '--kind', 'web', '--name', 'portal', '--no-install'], /contains user files/u);
       assert.equal(readFileSync(userFile, 'utf8'), 'Protected library directory content\n');
       rmSync(userFile);
+      const appUserFile = path.join(root, 'packages/web/src/USER.md');
+      mkdirSync(path.dirname(appUserFile), { recursive: true });
+      writeFileSync(appUserFile, 'Protected removed app content\n');
+      cli(['add', '--kind', 'web', '--name', 'web', '--no-install'], /contains user files/u);
+      assert.equal(readFileSync(appUserFile, 'utf8'), 'Protected removed app content\n');
+      rmSync(appUserFile);
+      cli(['add', '--kind', 'web', '--name', 'web', '--no-install']);
       cli(['add', '--kind', 'web', '--name', 'portal', '--no-install']);
       await pnpm(['env:setup'], { cwd: root });
       await pnpm(['env:doctor'], { cwd: root });

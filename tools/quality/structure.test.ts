@@ -92,3 +92,26 @@ describe('runtime boundaries', () => {
     );
   });
 });
+
+it('follows ECMAScript and CommonJS module variants through client dependencies', () => {
+  for (const extension of ['mjs', 'cjs', 'mts', 'cts']) {
+    const serverImport = ['cjs', 'cts'].includes(extension)
+      ? "require('node:fs');"
+      : "import 'node:fs';";
+    fixture(
+      {
+        'packages/web/src/routes/index.ts': `import '../helper.${extension}';`,
+        [`packages/web/src/helper.${extension}`]: serverImport,
+      },
+      (root) =>
+        expect(structure(root)).toEqual([
+          expect.stringContaining('client dependency boundary violation: node:fs'),
+        ]),
+    );
+    fixture({ [`packages/contracts/src/index.${extension}`]: serverImport }, (root) =>
+      expect(structure(root)).toEqual([
+        expect.stringContaining('runtime boundary violation: node:fs'),
+      ]),
+    );
+  }
+});
