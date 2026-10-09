@@ -6,7 +6,7 @@ Create a branch for your changes and open a pull request against `main`.
 
 A portable application workspace: React/TanStack Start on Workers, a TypeScript Worker API, and an independent React/Tauri Desktop SPA. Applications and shared packages all live in `packages/*`.
 
-Start with [AGENTS.md](AGENTS.md) for the development workflow and task skills.
+Start with [AGENTS.md](AGENTS.md) for the development workflow and task skills. [Technology stack and ownership](docs/stack.md) maps every application, shared tool, test layer and CI configuration to its source of truth and update policy.
 
 ## Cold start
 

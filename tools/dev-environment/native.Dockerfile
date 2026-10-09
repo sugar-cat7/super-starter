@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 # Optional Linux development environment. It contains system libraries/Rust,
 # not application code, credentials or an alternative test runner.
-FROM rust:1.98.1-bookworm
+FROM rust:1.99.0-bookworm
 RUN --mount=type=secret,id=system_ca \
     if [ -f /run/secrets/system_ca ]; then export SSL_CERT_FILE=/run/secrets/system_ca; fi; \
     apt-get update && \

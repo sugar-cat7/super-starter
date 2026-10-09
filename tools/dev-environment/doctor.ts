@@ -5,11 +5,20 @@ import { workspacePackages } from '../quality/graph.ts';
 import { pnpmCommand } from '../process.ts';
 
 export function doctor(root: string): { id: string; ok: boolean; detail: string }[] {
+  const tools = readFileSync(path.join(root, 'mise.toml'), 'utf8');
+  const nodeVersion = /^node = "(\d+\.\d+\.\d+)"$/mu.exec(tools)?.[1];
+  const aquaVersion = /^"aqua:pnpm\/pnpm" = "(\d+\.\d+\.\d+)"$/mu.exec(tools)?.[1];
+  const manifest = JSON.parse(readFileSync(path.join(root, 'package.json'), 'utf8')) as {
+    packageManager?: string;
+  };
+  const pnpmVersion = /^pnpm@(\d+\.\d+\.\d+)$/u.exec(manifest.packageManager ?? '')?.[1];
+  if (!nodeVersion || !aquaVersion || !pnpmVersion)
+    throw new Error('Exact Node/aqua pnpm/packageManager versions are required');
   const checks = [
     {
       id: 'node',
-      ok: process.versions.node === '24.19.0',
-      detail: `Node ${process.versions.node}; required 24.19.0 (mise install)`,
+      ok: process.versions.node === nodeVersion,
+      detail: `Node ${process.versions.node}; required ${nodeVersion} (mise install)`,
     },
   ];
   const invocation = pnpmCommand(['--version']);
@@ -20,8 +29,9 @@ export function doctor(root: string): { id: string; ok: boolean; detail: string 
   });
   checks.push({
     id: 'pnpm',
-    ok: manager.status === 0 && manager.stdout.trim() === '12.10.1',
-    detail: 'pnpm 12.10.1 required (mise install aqua:pnpm/pnpm@12.10.1)',
+    ok:
+      manager.status === 0 && manager.stdout.trim() === pnpmVersion && aquaVersion === pnpmVersion,
+    detail: `pnpm ${pnpmVersion} required (mise install aqua:pnpm/pnpm@${pnpmVersion}); mise pin ${aquaVersion}`,
   });
   checks.push({
     id: 'vite-plus',
@@ -42,6 +52,10 @@ export function doctor(root: string): { id: string; ok: boolean; detail: string 
         detail: 'Local Worker types required (pnpm env:setup); no cloud credentials needed',
       });
     if (pkg.runtime === 'desktop') {
+      const rustVersion = /^channel = "(\d+\.\d+\.\d+)"$/mu.exec(
+        readFileSync(path.join(cwd, 'src-tauri/rust-toolchain.toml'), 'utf8'),
+      )?.[1];
+      if (!rustVersion) throw new Error(`Exact Rust toolchain version required: ${pkg.name}`);
       // rustc, unlike rustup show, does not silently install missing toolchains.
       const rust = spawnSync('rustc', ['--version'], {
         cwd: path.join(cwd, 'src-tauri'),
@@ -51,8 +65,8 @@ export function doctor(root: string): { id: string; ok: boolean; detail: string 
       });
       checks.push({
         id: `${pkg.name}/rust`,
-        ok: rust.status === 0 && rust.stdout.startsWith('rustc 1.98.1 '),
-        detail: 'Rust 1.98.1 required; see docs/native.md for OS prerequisites',
+        ok: rust.status === 0 && rust.stdout.startsWith(`rustc ${rustVersion} `),
+        detail: `Rust ${rustVersion} required; see docs/native.md for OS prerequisites`,
       });
       if (process.platform === 'linux') {
         const native = spawnSync('pkg-config', ['--exists', 'gtk+-3.0', 'webkit2gtk-4.1'], {

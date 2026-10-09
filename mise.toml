@@ -4,7 +4,7 @@ min_version = "2026.9.0"
 run_auto_install = false
 
 [tools]
-node = "24.19.0"
+node = "24.21.0"
 "aqua:pnpm/pnpm" = "12.10.1"
 
 [tasks._node]

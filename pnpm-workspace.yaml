@@ -34,8 +34,7 @@ catalog:
   tailwindcss: 4.3.3
   zod: 4.6.5
   jsdom: 30.1.2
-  tsx: 4.23.15
-  '@types/node': 24.10.9
+  '@types/node': 24.19.1
   typescript: 7.0.2
   vite-plus: 1.1.0
   vitest: 5.0.3
@@ -43,6 +42,11 @@ overrides:
   # Vite+ documents a single Vite core and the bundled Vitest version.
   vite@*: npm:@voidzero-dev/vite-plus-core@1.1.0
   vitest@*: 5.0.3
+  # Mocha 10's serializer range predates the published RCE/DoS fixes.
+  # Keep the supported WDIO 9/Mocha 10 APIs; validate parallel serialization/native tests.
+  mocha@10.8.2>serialize-javascript: 7.1.2
+  # Miniflare pins sharp 0.35.4; 0.35.5 supplies the patched librsvg binary.
+  miniflare@5.20261006.0-alpha>sharp: 0.35.5
 peerDependencyRules:
   allowedVersions:
     # The alias exposes Vite 8.3.3 with its own package version 1.1.0.
