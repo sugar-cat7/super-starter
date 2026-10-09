@@ -3,7 +3,7 @@ import { mkdtempSync, readFileSync, rmSync, writeFileSync, mkdirSync } from 'nod
 import os from 'node:os';
 import path from 'node:path';
 import assert from 'node:assert/strict';
-import { applyFiles, walk } from '../generators/files.ts';
+import { copyProjectFixture } from './fixture.ts';
 import { installHooks } from './hooks.ts';
 import { pnpm } from '../process.ts';
 import { contentId } from './gate.ts';
@@ -29,27 +29,7 @@ export async function hookRehearsal(project: string): Promise<void> {
   const good = "export const hookProbe = 'valid';\n";
   const bad = "debugger;\nexport const hookProbe = 'invalid';\n";
   try {
-    const ignored = new Set([
-      'node_modules',
-      '.git',
-      '.state',
-      '.cloudflare',
-      'dist',
-      'target',
-      'artifacts',
-      'test-results',
-      'playwright-report',
-      '.template-cache',
-    ]);
-    applyFiles(
-      root,
-      new Map(
-        walk(project, '', ignored).map((filename) => [
-          filename,
-          readFileSync(path.join(project, filename)),
-        ]),
-      ),
-    );
+    copyProjectFixture(project, root);
     await pnpm(['env:setup'], { cwd: root, timeout: 10 * 60_000 });
     git(['init', '-q']);
     git(['config', 'user.name', 'Template rehearsal']);

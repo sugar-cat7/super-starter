@@ -11,7 +11,8 @@ import os from 'node:os';
 import path from 'node:path';
 import assert from 'node:assert/strict';
 import { spawnOwned, pnpmCommand, pnpm, run, stopTree } from '../process.ts';
-import { applyFiles, walk } from '../generators/files.ts';
+import { copyProjectFixture } from './fixture.ts';
+import { walk } from '../generators/files.ts';
 import { workspacePackages } from './graph.ts';
 import { contentId } from './gate.ts';
 import { faultCheckIds } from './definitions.ts';
@@ -56,35 +57,8 @@ async function capture(
 export async function faultRehearsal(project: string): Promise<void> {
   const owned = mkdtempSync(path.join(os.tmpdir(), 'starter-faults-'));
   const root = path.join(owned, 'project');
-  const ignored = new Set([
-    'node_modules',
-    '.git',
-    '.state',
-    '.cloudflare',
-    '.wrangler',
-    '.template-cache',
-    'dist',
-    'target',
-    'artifacts',
-    'generated',
-    'icons',
-    'gen',
-    'test-results',
-    'playwright-report',
-    '.env',
-    '.env.local',
-    '.dev.vars',
-  ]);
   try {
-    applyFiles(
-      root,
-      new Map(
-        walk(project, '', ignored).map((filename) => [
-          filename,
-          readFileSync(path.join(project, filename)),
-        ]),
-      ),
-    );
+    copyProjectFixture(project, root);
     await pnpm(['env:setup'], { cwd: root, timeout: 10 * 60000 });
     await injectFaults(root);
   } finally {

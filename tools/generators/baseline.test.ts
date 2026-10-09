@@ -1,4 +1,4 @@
-import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { expect, it } from 'vitest';
@@ -121,5 +121,37 @@ it('fingerprints legal app names and first-party directories that resemble gener
     expect(contentId(root)).toBe(after);
   } finally {
     rmSync(root, { recursive: true, force: true });
+  }
+});
+
+it('renders identical frozen Cargo locks and binding-free config from LF and CRLF blueprints', async () => {
+  const { appFiles } = await import('./render.ts');
+  const { projectOptions } = await import('./options.ts');
+  const source = path.resolve(import.meta.dirname, '../..');
+  const copy = mkdtempSync(path.join(os.tmpdir(), 'crlf-blueprints-'));
+  try {
+    const templates = 'tools/generators/templates';
+    mkdirSync(path.join(copy, 'tools/generators'), { recursive: true });
+    cpSync(path.join(source, templates), path.join(copy, templates), { recursive: true });
+    for (const file of [
+      'desktop/src-tauri/Cargo.lock.template',
+      'web/cloudflare.config.ts.template',
+    ]) {
+      const filename = path.join(copy, templates, file);
+      writeFileSync(filename, readFileSync(filename, 'utf8').replaceAll('\n', '\r\n'));
+    }
+    const configs: string[] = [];
+    for (const preset of ['desktop', 'web']) {
+      const options = projectOptions({ name: 'zzz-notes', scope: '@new-os', preset });
+      const expected = appFiles(source, options, preset, preset, false);
+      const actual = appFiles(copy, options, preset, preset, false);
+      expect([...actual]).toEqual([...expected]);
+      const config = actual.get('packages/web/cloudflare.config.ts')?.toString();
+      if (config) configs.push(config);
+    }
+    expect(configs).toHaveLength(1);
+    expect(configs[0]).not.toContain('const required');
+  } finally {
+    rmSync(copy, { recursive: true, force: true });
   }
 });

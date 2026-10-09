@@ -59,6 +59,7 @@ export function contentId(root: string): string {
     'CLAUDE.md',
     'knip.ts',
     '.gitignore',
+    '.gitattributes',
     'renovate.json',
     'LICENSE',
   ])

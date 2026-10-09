@@ -12,6 +12,7 @@ const infrastructure = [
   'docs',
   'tools',
   '.gitignore',
+  '.gitattributes',
   'knip.ts',
   'LICENSE',
   'README.md',
@@ -60,6 +61,7 @@ function expand(contents: string, options: ProjectOptions, app = ''): string {
           : []),
       ];
   return contents
+    .replaceAll('\r\n', '\n')
     .replaceAll('__VISUAL_STORAGE__', has('d1') ? 'persistent' : 'volatile')
     .replaceAll('__BINDINGS__', bindings.join('\n'))
     .replaceAll('__SERVER_IMPORT__', service ? '' : "import { handleNotes } from './notes.ts';")
