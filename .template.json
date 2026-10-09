@@ -140,7 +140,7 @@
     "tools/quality/definitions.ts": "652526c7f70a8535490a72756fe6fa9704fb0f759bf4039c20b8954245c844c6",
     "tools/quality/documentation.ts": "71cd842f6919267b0c88a710129da56aa5b7a33feec42186fb1ef91e5b2469e2",
     "tools/quality/evidence.ts": "efd95aa42fbcd7312117a9e3f41f879bfb6a0b63b29254c15fd860ed0c73fea7",
-    "tools/quality/faults.ts": "66af4837743a1171569c5a65a3226f1ed59c38d3be7c5bd2a50795849a0cb577",
+    "tools/quality/faults.ts": "9662a6db6c2f078df4d35729731e0db97cec978410112a466250c37ddb4a89e1",
     "tools/quality/fixture.test.ts": "41a265c17a2db971059ef7961382f76f141fe732b22f1a224925f2bbb590f43f",
     "tools/quality/fixture.ts": "64b0e98acad4ad9c530eafdf85ef8f40de71a8ffddee58e21199b9e33e9f1c13",
     "tools/quality/gate.ts": "487961c7059c4c9f877a1db7e1485cd08715b36d78c4234e579f8b15c480e762",

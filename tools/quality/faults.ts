@@ -473,7 +473,7 @@ async function injectFaults(root: string): Promise<void> {
       'native-timeout',
       {
         [file]:
-          "describe('native timeout', () => { it('required case', async () => { await new Promise<void>(() => {}); }, 50); });\n",
+          "describe('native timeout', () => { it('required case', async () => { await new Promise<void>(() => {}); }).timeout(50); });\n",
       },
       native,
       /Timeout of 50ms exceeded/iu,
