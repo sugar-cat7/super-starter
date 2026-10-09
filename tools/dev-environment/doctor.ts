@@ -4,10 +4,28 @@ import { spawnSync } from 'node:child_process';
 import { workspacePackages } from '../quality/graph.ts';
 import { pnpmCommand } from '../process.ts';
 
+// Read this repository's exact string pins, respecting TOML tables, quotes and comments.
+function exactPin(contents: string, table: string, key: string): string | undefined {
+  let current = '';
+  let value: string | undefined;
+  for (const line of contents.split(/\r?\n/u)) {
+    const header = /^\s*\[([^\]]+)\]\s*(?:#.*)?$/u.exec(line);
+    if (header) current = header[1]!.trim();
+    if (current !== table) continue;
+    const pin =
+      /^\s*(?:"([^"]+)"|'([^']+)'|([\w-]+))\s*=\s*(["'])(\d+\.\d+\.\d+)\4\s*(?:#.*)?$/u.exec(line);
+    if (pin && (pin[1] ?? pin[2] ?? pin[3]) === key) {
+      if (value) throw new Error(`Duplicate version pin: ${table}.${key}`);
+      value = pin[5];
+    }
+  }
+  return value;
+}
+
 export function doctor(root: string): { id: string; ok: boolean; detail: string }[] {
   const tools = readFileSync(path.join(root, 'mise.toml'), 'utf8');
-  const nodeVersion = /^node = "(\d+\.\d+\.\d+)"$/mu.exec(tools)?.[1];
-  const aquaVersion = /^"aqua:pnpm\/pnpm" = "(\d+\.\d+\.\d+)"$/mu.exec(tools)?.[1];
+  const nodeVersion = exactPin(tools, 'tools', 'node');
+  const aquaVersion = exactPin(tools, 'tools', 'aqua:pnpm/pnpm');
   const manifest = JSON.parse(readFileSync(path.join(root, 'package.json'), 'utf8')) as {
     packageManager?: string;
   };
@@ -52,9 +70,11 @@ export function doctor(root: string): { id: string; ok: boolean; detail: string 
         detail: 'Local Worker types required (pnpm env:setup); no cloud credentials needed',
       });
     if (pkg.runtime === 'desktop') {
-      const rustVersion = /^channel = "(\d+\.\d+\.\d+)"$/mu.exec(
+      const rustVersion = exactPin(
         readFileSync(path.join(cwd, 'src-tauri/rust-toolchain.toml'), 'utf8'),
-      )?.[1];
+        'toolchain',
+        'channel',
+      );
       if (!rustVersion) throw new Error(`Exact Rust toolchain version required: ${pkg.name}`);
       // rustc, unlike rustup show, does not silently install missing toolchains.
       const rust = spawnSync('rustc', ['--version'], {

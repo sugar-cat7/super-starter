@@ -5,6 +5,38 @@ import { expect, it } from 'vitest';
 import { digest } from './files.ts';
 import { baselineDifferences } from './baseline.ts';
 
+it('syncs the reference lock baseline after dependency updates without rewriting the lock', async () => {
+  const { main } = await import('./cli.ts');
+  const { projectFiles } = await import('./render.ts');
+  const { projectOptions } = await import('./options.ts');
+  const { applyFiles } = await import('./files.ts');
+  const root = mkdtempSync(path.join(os.tmpdir(), 'reference-lock-sync-'));
+  try {
+    const options = projectOptions({ name: 'lock-example', scope: '@lock-example', preset: 'api' });
+    applyFiles(
+      root,
+      projectFiles(path.resolve(import.meta.dirname, '../..'), options, 'reference'),
+    );
+    writeFileSync(path.join(root, 'pnpm-lock.yaml'), 'updated lock');
+    expect(baselineDifferences(root)).toContain('pnpm-lock.yaml');
+    await main(['sync', '--target', root, '--no-install']);
+    expect(baselineDifferences(root)).toEqual([]);
+    expect(readFileSync(path.join(root, 'pnpm-lock.yaml'), 'utf8')).toBe('updated lock');
+    await main(['sync', '--target', root, '--check']);
+    const state = JSON.parse(readFileSync(path.join(root, '.template.json'), 'utf8'));
+    state.kind = 'project';
+    writeFileSync(path.join(root, '.template.json'), JSON.stringify(state));
+    writeFileSync(path.join(root, 'pnpm-lock.yaml'), 'user lock change');
+    await expect(main(['sync', '--target', root, '--no-install'])).rejects.toThrow(
+      'sync is only for the reference workspace',
+    );
+    expect(readFileSync(path.join(root, 'pnpm-lock.yaml'), 'utf8')).toBe('user lock change');
+    expect(baselineDifferences(root)).toContain('pnpm-lock.yaml');
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
 it('distinguishes an unchanged generated baseline from feature edits and extra source', () => {
   const root = mkdtempSync(path.join(os.tmpdir(), 'generation-baseline-'));
   try {

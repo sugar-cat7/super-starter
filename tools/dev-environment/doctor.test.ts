@@ -43,6 +43,20 @@ function fixture(inspect: (root: string) => void): void {
 }
 
 describe('environment versions', () => {
+  it('accepts TOML quote/comment/spacing variants and ignores pins in other tables', () => {
+    fixture((root) => {
+      writeFileSync(
+        path.join(root, 'mise.toml'),
+        `[env]\nnode = "0.0.0"\n[tools] # selected preparation\nnode='${process.versions.node}' # LTS\n'aqua:pnpm/pnpm'="12.10.1"\n`,
+      );
+      writeFileSync(
+        path.join(root, 'packages/desktop/src-tauri/rust-toolchain.toml'),
+        "[other]\nchannel = '0.0.0'\n[toolchain]\nchannel='1.99.0' # pinned compiler\n",
+      );
+      for (const id of ['node', 'pnpm', '@example/desktop/rust'])
+        expect(doctor(root).find((check) => check.id === id)?.ok).toBe(true);
+    });
+  });
   it('reads the selected versions from their owning manifests and never installs Rust', () => {
     fixture((root) => {
       const checks = doctor(root);

@@ -103,6 +103,10 @@ export async function main(args: string[]): Promise<void> {
         ),
       },
     };
+    const lock = path.join(root, 'pnpm-lock.yaml');
+    if (existsSync(lock)) state.lockId = digest(readFileSync(lock));
+    // A normal sync prepares dependencies after rendering; setup records its final lock.
+    if (!input['no-install'] && !input.check && !input['dry-run']) state.lockPending = true;
     const key = formatterKey(root);
     if (key) state.formatKey = key;
     files.set('.template.json', Buffer.from(`${JSON.stringify(state, null, 2)}\n`));

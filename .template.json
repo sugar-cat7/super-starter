@@ -45,15 +45,15 @@
     "tools/cloudflare/runtime.ts": "c28fbe3d8c9545dfaaa644b3fb96b55b6fa0b4c335b2ac880a0cc45d58c0c3f9",
     "tools/dev-environment/bootstrap.mjs": "24ffb5c1e3703832a2ea7b6cadaf57d6573372bd27f8ebecbd6dbc40f8e19893",
     "tools/dev-environment/dev.ts": "15efd3c30b5261fc1d60a97681c50d7883e24583968b3c9a9693af5096853136",
-    "tools/dev-environment/doctor.test.ts": "40087a4c5415bb0964f9e0cadb0a5c543f6bef86e4986beabeac511374beb3fd",
-    "tools/dev-environment/doctor.ts": "750cdc873726d938527aebca1e7ee725788697f6b4ffab5e6621e74eaa9a0132",
+    "tools/dev-environment/doctor.test.ts": "dc32120879f9fc1b773550b1bd044c64f4dba450cfda7bb6f014c9be1921a5e6",
+    "tools/dev-environment/doctor.ts": "62b59bd5d720fabe922cc7332dfaf8d2b2269d703059482e68106fbbd07cef5d",
     "tools/dev-environment/native.Dockerfile": "e74db5fc94d222855abd1bfc073d4e3749e83611d73db87800ebe3429d03ebc1",
     "tools/dev-environment/servers.test.ts": "d1eefe313be73aade466515690c8d73ada7934acb3bef48a02fcd3277bb6d95e",
     "tools/dev-environment/servers.ts": "2cd9490d6b898a8a6720b1a46f87dc182b1ee8566849985145936fa222b222e7",
     "tools/dev-environment/setup.ts": "ddf59d4354b4e8db5f761d60bc65a84e253dab5805dc8cb1f9b6a3fe89a8d511",
-    "tools/generators/baseline.test.ts": "95504ea41ea48bacaa5677acdeafbc1e49ca90cf1d996c2c49493252a62352fc",
+    "tools/generators/baseline.test.ts": "8b87924fdcde1e85df4011a8f314accbe3e9fdb178386952795384c7ef1a28c6",
     "tools/generators/baseline.ts": "1e64247cab927ce08754e32f4341c223455da761eaac9630c11e38318f4ddd4a",
-    "tools/generators/cli.ts": "6626209c4ced006574a4622dfd16affc34571a8954208b6782ba4b281b838627",
+    "tools/generators/cli.ts": "66d2a3dc9948df5b6c0bef2381d626968675630757bbab0a13a57ec36d2e0989",
     "tools/generators/files.test.ts": "546fd572355a5e0da486082653682972f3544ada3d63cc7045663645ec27074f",
     "tools/generators/files.ts": "43f25d746564c28ebc7f197c4ea426547bb5237c981bcf99e3a77333dc772cb5",
     "tools/generators/format.ts": "1d2585bb9f30427ac1d9b3c8e214da5d6bbc8b87673724e65f81ac8db6619755",
@@ -240,5 +240,5 @@
   },
   "formatKey": "24b5084c98eba393678f698e62a5f781275177b71561fd8fe37689cb87c6cb57",
   "lockPending": false,
-  "lockId": "d964d5ebb75866da5249cab6e8974485ff008910e87ac280d4c7c473576309b0"
+  "lockId": "87e08ffde8efb06b3344bf52d5ba9807bff8bffe672795fae94ac5ae83c45161"
 }
