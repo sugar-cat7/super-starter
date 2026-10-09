@@ -1,0 +1,29 @@
+import { browser, expect } from '@wdio/globals';
+import '@wdio/tauri-service';
+import { readFile } from 'node:fs/promises';
+import { noteSchema, notesSchema } from '__SCOPE__/contracts';
+
+describe('real native Tauri window and Rust IPC', () => {
+  it('renders offline UI and validates real CRUD/export permissions', async () => {
+    await expect(browser.$('h1')).toHaveText('Notes');
+    const note = noteSchema.parse(await browser.tauri.execute((tauri) => tauri.core.invoke('add_note', { text: 'Native note' })));
+    await browser.refresh();
+    await expect(browser.$(`button[aria-label="Delete Native note"]`)).toExist();
+    const mode = process.env.STARTER_EXPORT_CASE ?? 'save';
+    if (mode === 'error') {
+      await expect(browser.tauri.execute((tauri) => tauri.core.invoke('export_notes'))).rejects.toThrow();
+    } else {
+      const result = await browser.tauri.execute((tauri) => tauri.core.invoke('export_notes'));
+      if (mode === 'cancel') expect(result).toBeNull();
+      else {
+        expect(typeof result).toBe('string');
+        const filename = process.env.STARTER_TEST_SAVE_PATH; if (!filename) throw new Error('Native export path missing');
+        expect(notesSchema.parse(JSON.parse(await readFile(filename, 'utf8')))).toContainEqual(note);
+      }
+    }
+    await expect(browser.tauri.execute((tauri) => tauri.core.invoke('read_file', { path: '/unrelated' }))).rejects.toThrow();
+    await browser.tauri.execute((tauri, id: string) => tauri.core.invoke('delete_note', { id }), note.id);
+    await browser.refresh();
+    await expect(browser.$('section')).toHaveText(expect.stringContaining('No notes yet.'));
+  });
+});

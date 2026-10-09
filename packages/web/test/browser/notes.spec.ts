@@ -1,0 +1,67 @@
+import { test, expect } from '@playwright/test';
+import AxeBuilder from '@axe-core/playwright';
+import { readFile } from 'node:fs/promises';
+import { notesSchema } from '@starter/contracts';
+
+test('SSR, hydration, CRUD, same-origin export, routes and accessibility', async ({
+  page,
+  request,
+}) => {
+  const rendered = await request.get('/');
+  expect(rendered.status()).toBe(200);
+  expect(await rendered.text()).toContain('New note');
+  const existing = notesSchema.parse(await (await request.get('/api/notes')).json());
+  for (const note of existing)
+    expect((await request.delete(`/api/notes/${note.id}`)).status()).toBe(204);
+  const errors: string[] = [];
+  page.on('pageerror', (error) => errors.push(error.message));
+  await page.goto('/');
+  await expect(page.getByText('No notes yet. Add your first note.')).toBeVisible();
+  await page.getByRole('button', { name: 'Add note', exact: true }).click();
+  await expect(page.getByRole('alert')).toContainText('between 1 and 1000');
+  await page.getByLabel('New note').fill('Browser note');
+  await page.getByRole('button', { name: 'Add note', exact: true }).click();
+  await expect(page.getByText('Browser note', { exact: true })).toBeVisible();
+  const download = page.waitForEvent('download');
+  await page.getByRole('button', { name: 'Export JSON' }).click();
+  const exported = await download;
+  const filename = await exported.path();
+  if (!filename) throw new Error('JSON download missing');
+  expect(
+    notesSchema.parse(JSON.parse(await readFile(filename, 'utf8'))).map((note) => note.text),
+  ).toEqual(['Browser note']);
+  expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+  await page.getByRole('button', { name: 'Delete Browser note' }).click();
+  await expect(page.getByText('No notes yet. Add your first note.')).toBeVisible();
+  await page.getByRole('link', { name: 'About' }).click();
+  await expect(page.getByRole('heading', { name: 'About this sample' })).toBeVisible();
+  await page.getByRole('link', { name: 'Notes', exact: true }).click();
+  await expect(page.getByLabel('New note')).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test('loading, empty and API-error states have reviewed visual baselines', async ({ page }) => {
+  let release: (() => void) | undefined;
+  const waiting = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  await page.route('**/api/notes', async (route) => {
+    await waiting;
+    await route.fulfill({ json: [] });
+  });
+  await page.goto('/');
+  await expect(page.getByText('Loading notes…')).toBeVisible();
+  const region = page.getByRole('region', { name: 'Notes' });
+  await expect(region).toHaveScreenshot('persistent-loading.png');
+  release?.();
+  await expect(page.getByText('No notes yet. Add your first note.')).toBeVisible();
+  await expect(region).toHaveScreenshot('persistent-empty.png');
+  await page.unroute('**/api/notes');
+  await page.route('**/api/notes', (route) =>
+    route.fulfill({ status: 503, json: { error: { code: 'unavailable' } } }),
+  );
+  await page.reload();
+  await expect(page.getByRole('alert')).toContainText('could not be loaded');
+  await expect(region).toHaveScreenshot('persistent-error.png');
+  expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+});

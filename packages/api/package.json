@@ -1,0 +1,34 @@
+{
+  "name": "@starter/api",
+  "version": "0.1.0",
+  "private": true,
+  "license": "Apache-2.0",
+  "type": "module",
+  "exports": {},
+  "scripts": {
+    "dev": "vp dev --mode offline --host 127.0.0.1 --strictPort",
+    "check": "vp check .",
+    "test": "vp test run --config vitest.config.ts",
+    "test:runtime": "node ../../tools/cloudflare/runtime.ts",
+    "build": "node ../../tools/cloudflare/build.ts",
+    "typegen": "cf workers types -m local",
+    "db:migrate": "node ../../tools/cloudflare/database.ts migrate",
+    "db:seed": "node ../../tools/cloudflare/database.ts seed",
+    "test:restart": "node test/restart.ts"
+  },
+  "dependencies": {
+    "@starter/contracts": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "catalog:",
+    "cf": "catalog:",
+    "typescript": "catalog:",
+    "vite-plus": "catalog:",
+    "vitest": "catalog:",
+    "wrangler": "catalog:"
+  },
+  "starter": {
+    "runtime": "worker"
+  }
+}

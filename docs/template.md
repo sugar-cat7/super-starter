@@ -1,0 +1,11 @@
+# Template generation and updates
+
+Version is recorded in the root manifest and `.template.json` with chosen preset/features, identity, package list and managed-file hashes. The blueprint directory is the sole sample source. Reference packages are derived; `pnpm template:sync` regenerates them and refuses conflicting edits. Project-local Vite+ supplies formatting; cold initialization uses only Node, and setup finalizes only unchanged managed files.
+
+Initialization supports empty directories and a GitHub-template/reference clone. Defaults select web, not all dependencies. Supply `--name`, `--scope`, optional `--identifier`, `--preset web|api|desktop|fullstack|fullstack-desktop`, and `--features d1,kv,r2`. Fullstack always includes Service Bindings. `fullstack+desktop` is also accepted. `--dry-run` shows writes/removals without changing content; `--no-install` permits generation before tool preparation. Repeating the same identity/preset preserves downstream changes. A changed preset/identity requires clean managed files; ownership/path/case/symlink checks and a recovery journal protect user content.
+
+`pnpm app:new -- --kind api --name jobs --features kv` adds an independent app and required shared packages. Root runtime selection reads manifests rather than a second dependency graph. It updates selected scripts and lock/install; it never rewrites other app sources. Unknown names/collisions fail. Prefer a service binding to an explicit API rather than implementation imports.
+
+For upgrades, compare the recorded template version to the desired release, review blueprint/tool changes in a separate branch, apply infrastructure changes selectively, regenerate in an empty temporary directory and compare the diff. Protect downstream business code, migrations and licenses. No automatic downstream source overwrite, private registry or registry publication is part of this version.
+
+The small Node renderer handles dependency-free preset selection and transactional ownership, which Vite+'s Bingo project generator does not provide directly for this repository. It delegates dev/build/check/test/format to the standard project-local tool rather than building another JS toolchain. Keep this comparison under review when upgrading Vite+.

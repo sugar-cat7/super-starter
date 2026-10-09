@@ -1,0 +1,119 @@
+import { noteInput, type Note } from '@starter/contracts';
+import { z } from 'zod';
+
+export type SampleBindings = {
+  WRITE_MODE: string;
+  NOTES?: D1Database;
+  NOTE_CACHE?: KVNamespace;
+  NOTE_EXPORTS?: R2Bucket;
+};
+const volatileNotes = new Map<string, Note>();
+const extensionInput = z
+  .object({ key: z.string().regex(/^[a-z0-9-]{1,64}$/u), value: z.string().max(2000) })
+  .strict();
+
+export async function handleNotes(request: Request, env: SampleBindings): Promise<Response> {
+  const requestId = crypto.randomUUID();
+  const started = performance.now();
+  const url = new URL(request.url);
+  const json = (body: unknown, status = 200) =>
+    Response.json(body, {
+      status,
+      headers: {
+        'x-request-id': requestId,
+        'x-storage-mode': env.NOTES ? 'persistent-d1' : 'volatile-sample',
+      },
+    });
+  const error = (code: string, message: string, status: number) =>
+    json({ error: { code, message }, requestId }, status);
+  let response: Response;
+  try {
+    if (url.pathname === '/health')
+      response = json({
+        ok: true,
+        storage: env.NOTES ? 'd1' : 'volatile',
+        writeMode: env.WRITE_MODE,
+      });
+    else if (request.method !== 'GET' && env.WRITE_MODE !== 'allow')
+      response = error('writes_disabled', 'Writes are disabled in this environment.', 403);
+    else if (url.pathname === '/api/notes' && request.method === 'GET') {
+      const notes = env.NOTES
+        ? (
+            await env.NOTES.prepare(
+              'SELECT id, text, created_at AS createdAt FROM notes ORDER BY created_at, id',
+            ).all<Note>()
+          ).results
+        : [...volatileNotes.values()];
+      response = json(notes);
+    } else if (url.pathname === '/api/notes' && request.method === 'POST') {
+      const parsed = noteInput.safeParse(await request.json());
+      if (!parsed.success)
+        response = error(
+          'invalid_input',
+          'Text must contain 1–1000 characters and no extra fields.',
+          400,
+        );
+      else {
+        const note: Note = {
+          id: crypto.randomUUID(),
+          text: parsed.data.text,
+          createdAt: Date.now(),
+        };
+        if (env.NOTES)
+          await env.NOTES.prepare('INSERT INTO notes (id, text, created_at) VALUES (?, ?, ?)')
+            .bind(note.id, note.text, note.createdAt)
+            .run();
+        else volatileNotes.set(note.id, note);
+        response = json(note, 201);
+      }
+    } else if (url.pathname.startsWith('/api/notes/') && request.method === 'DELETE') {
+      const id = url.pathname.slice('/api/notes/'.length);
+      if (!z.uuid().safeParse(id).success)
+        response = error('invalid_input', 'Note identifier must be a UUID.', 400);
+      else {
+        const removed = env.NOTES
+          ? (await env.NOTES.prepare('DELETE FROM notes WHERE id = ?').bind(id).run()).meta
+              .changes > 0
+          : volatileNotes.delete(id);
+        response = removed
+          ? new Response(null, { status: 204, headers: { 'x-request-id': requestId } })
+          : error('not_found', 'Note not found.', 404);
+      }
+    } else if (url.pathname === '/extensions/kv' && env.NOTE_CACHE) {
+      if (request.method === 'POST') {
+        const parsed = extensionInput.safeParse(await request.json());
+        if (!parsed.success) response = error('invalid_input', 'Invalid key/value.', 400);
+        else {
+          await env.NOTE_CACHE.put(parsed.data.key, parsed.data.value);
+          response = json({ ok: true });
+        }
+      } else
+        response = json({ value: await env.NOTE_CACHE.get(url.searchParams.get('key') ?? '') });
+    } else if (url.pathname === '/extensions/r2' && env.NOTE_EXPORTS) {
+      if (request.method === 'POST') {
+        const parsed = extensionInput.safeParse(await request.json());
+        if (!parsed.success) response = error('invalid_input', 'Invalid key/value.', 400);
+        else {
+          await env.NOTE_EXPORTS.put(parsed.data.key, parsed.data.value);
+          response = json({ ok: true });
+        }
+      } else {
+        const object = await env.NOTE_EXPORTS.get(url.searchParams.get('key') ?? '');
+        response = json({ value: object ? await object.text() : null });
+      }
+    } else response = error('not_found', 'Route or selected feature not found.', 404);
+  } catch (caught) {
+    response =
+      caught instanceof SyntaxError
+        ? error('invalid_json', 'Request body must be valid JSON.', 400)
+        : error('internal_error', 'The operation could not be completed.', 500);
+  }
+  console.log(
+    JSON.stringify({
+      requestId,
+      status: response.status,
+      durationMs: Math.round(performance.now() - started),
+    }),
+  );
+  return response;
+}

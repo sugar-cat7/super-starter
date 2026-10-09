@@ -1,0 +1,141 @@
+name: Quality
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: quality-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  source:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca # v5.1.1
+        with:
+          version: 2026.9.12
+          cache: false
+          persist_github_token: false
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm env:setup
+      - run: pnpm check
+      - run: pnpm test:tools
+      - name: Reference blueprint integrity
+        run: node -e 'const s=JSON.parse(require("fs").readFileSync(".template.json","utf8")); if(s.kind==="reference") require("child_process").execFileSync(process.execPath,["tools/generators/cli.ts","sync","--check","--no-install"],{stdio:"inherit"}); else console.log("Reference sync not_required for a generated project");'
+      - run: pnpm template:verify -- --generate-only --output generated
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: generated-projects
+          path: generated
+          include-hidden-files: true
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: source-evidence
+          path: artifacts
+          if-no-files-found: error
+  generated:
+    needs: source
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { preset: web, os: ubuntu-24.04 }
+          - { preset: api, os: ubuntu-24.04 }
+          - { preset: web-bindings, os: ubuntu-24.04 }
+          - { preset: api-bindings, os: ubuntu-24.04 }
+          - { preset: fullstack, os: ubuntu-24.04 }
+          - { preset: fullstack-desktop, os: ubuntu-24.04 }
+          - { preset: desktop, os: ubuntu-24.04 }
+          - { preset: desktop, os: macos-15 }
+          - { preset: desktop, os: windows-2025 }
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    steps:
+      # Deliberately no source checkout. Each artifact is a separate named/scoped project.
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: generated-projects
+      - uses: jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca # v5.1.1
+        with:
+          version: 2026.9.12
+          working_directory: ${{ matrix.preset }}
+          cache: false
+          persist_github_token: false
+      - name: Native Linux prerequisites
+        if: runner.os == 'Linux' && contains(matrix.preset, 'desktop')
+        run: sudo apt-get update && sudo apt-get install -y libwebkit2gtk-4.1-dev build-essential libayatana-appindicator3-dev librsvg2-dev patchelf xvfb
+      - name: Setup generated project
+        working-directory: ${{ matrix.preset }}
+        run: pnpm env:setup
+      - name: Browser prerequisite
+        if: runner.os == 'Linux' && !contains(matrix.preset, 'api') && matrix.preset != 'desktop'
+        working-directory: ${{ matrix.preset }}
+        run: pnpm --filter ./packages/web exec playwright install --with-deps chromium
+      - name: Generated doctor
+        working-directory: ${{ matrix.preset }}
+        run: pnpm env:doctor
+      - name: Selected full gate (native Linux)
+        if: runner.os == 'Linux' && contains(matrix.preset, 'desktop')
+        working-directory: ${{ matrix.preset }}
+        run: xvfb-run -a pnpm gate:full
+      - name: Selected full gate
+        if: runner.os != 'Linux' || !contains(matrix.preset, 'desktop')
+        working-directory: ${{ matrix.preset }}
+        run: pnpm gate:full
+      - name: Generator and failure rehearsal
+        if: matrix.preset == 'web'
+        working-directory: ${{ matrix.preset }}
+        run: pnpm template:verify -- --preset web --faults --hooks
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: generated-evidence-${{ matrix.preset }}-${{ runner.os }}
+          path: ${{ matrix.preset }}/artifacts
+          if-no-files-found: error
+  worker-windows:
+    needs: source
+    runs-on: windows-2025
+    timeout-minutes: 20
+    steps:
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: generated-projects
+      - uses: jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca # v5.1.1
+        with:
+          version: 2026.9.12
+          working_directory: fullstack
+          cache: false
+          persist_github_token: false
+      - working-directory: fullstack
+        run: pnpm env:setup
+      - working-directory: fullstack
+        run: pnpm test
+      - working-directory: fullstack
+        run: pnpm --filter ./packages/api test:runtime
+      - working-directory: fullstack
+        run: pnpm --filter ./packages/web test:runtime
+      - working-directory: fullstack
+        run: pnpm build
+  required:
+    if: always()
+    needs: [source, generated, worker-windows]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Require every planned job
+        env:
+          RESULTS: ${{ toJSON(needs) }}
+        run: node -e 'const jobs=JSON.parse(process.env.RESULTS); for(const [name,job] of Object.entries(jobs)) if(job.result!=="success") throw new Error(`${name} ${job.result}; every required job must succeed`);'

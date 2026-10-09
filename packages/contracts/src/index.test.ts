@@ -1,0 +1,26 @@
+import { describe, expect, it } from 'vitest';
+import { noteInput, noteSchema } from './index';
+
+describe('portable communication schemas', () => {
+  it('normalizes user text and refuses missing, empty, extra and oversized input', () => {
+    expect(noteInput.parse({ text: '  a note  ' })).toEqual({ text: 'a note' });
+    for (const input of [
+      {},
+      { text: '' },
+      { text: '   ' },
+      { text: 'x'.repeat(1001) },
+      { text: 'valid', path: '/tmp/file' },
+    ]) {
+      expect(noteInput.safeParse(input).success).toBe(false);
+    }
+  });
+  it('checks identifiers and time without relying on a platform SDK', () => {
+    expect(noteSchema.safeParse({ id: 'not-a-uuid', text: 'note', createdAt: 1 }).success).toBe(
+      false,
+    );
+    expect(
+      noteSchema.parse({ id: '993a848f-d07f-43a2-85f8-333b05292ed4', text: 'note', createdAt: 1 })
+        .text,
+    ).toBe('note');
+  });
+});

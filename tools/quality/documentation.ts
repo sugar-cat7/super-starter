@@ -1,0 +1,48 @@
+import { existsSync, readFileSync } from 'node:fs';
+import path from 'node:path';
+import { walk } from '../generators/files.ts';
+
+export function documentation(root: string): string[] {
+  const errors: string[] = [];
+  const files = [
+    'README.md',
+    'AGENTS.md',
+    ...['docs', '.agents', '.github']
+      .filter((directory) => existsSync(path.join(root, directory)))
+      .flatMap((directory) =>
+        walk(path.join(root, directory))
+          .filter((filename) => filename.endsWith('.md'))
+          .map((filename) => `${directory}/${filename}`),
+      ),
+  ];
+  const manifest = JSON.parse(readFileSync(path.join(root, 'package.json'), 'utf8')) as {
+    scripts: Record<string, string>;
+  };
+  for (const filename of files) {
+    if (!existsSync(path.join(root, filename))) {
+      errors.push(`Missing instruction entry: ${filename}`);
+      continue;
+    }
+    const text = readFileSync(path.join(root, filename), 'utf8');
+    for (const match of text.matchAll(/\[[^\]]*\]\(([^)]+)\)/gu)) {
+      const target = match[1]?.split('#')[0];
+      if (!target || /^(?:https?:|#)/u.test(target)) continue;
+      if (!existsSync(path.resolve(root, path.dirname(filename), target)))
+        errors.push(`${filename}: broken local reference ${target}`);
+    }
+    // Commands are code examples; ordinary prose such as "pnpm is" is not an invocation.
+    const examples = [...text.matchAll(/```[^\n]*\n([\s\S]*?)```|`([^`\n]+)`/gu)]
+      .map((match) => match[1] ?? match[2] ?? '')
+      .join('\n');
+    for (const match of examples.matchAll(/\bpnpm ([a-z][a-z:-]+)\b/gu)) {
+      const command = match[1];
+      if (
+        command &&
+        !['exec', 'install', 'add', 'remove', 'update', 'run'].includes(command) &&
+        !manifest.scripts[command]
+      )
+        errors.push(`${filename}: unknown root command pnpm ${command}`);
+    }
+  }
+  return errors;
+}
