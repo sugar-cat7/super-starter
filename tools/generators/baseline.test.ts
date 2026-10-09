@@ -45,3 +45,30 @@ it('distinguishes an unchanged generated baseline from feature edits and extra s
     rmSync(root, { recursive: true, force: true });
   }
 });
+
+it('inherits canonical provenance without Git only while the generated baseline is unchanged', async () => {
+  const { generationOrigin } = await import('./render.ts');
+  const root = mkdtempSync(path.join(os.tmpdir(), 'generation-origin-'));
+  const sha = 'a'.repeat(40);
+  try {
+    writeFileSync(path.join(root, 'pnpm-lock.yaml'), 'lock');
+    writeFileSync(path.join(root, 'package.json'), '{}');
+    writeFileSync(
+      path.join(root, '.template.json'),
+      JSON.stringify({
+        kind: 'project',
+        managed: { 'package.json': digest('{}') },
+        lockId: digest('lock'),
+        origin: { sha, dirty: false },
+      }),
+    );
+    expect(generationOrigin(root)).toEqual({ sha, dirty: false });
+    rmSync(path.join(root, 'pnpm-lock.yaml'));
+    expect(generationOrigin(root)).toEqual({ sha: null, dirty: true });
+    writeFileSync(path.join(root, 'pnpm-lock.yaml'), 'lock');
+    writeFileSync(path.join(root, 'package.json'), 'feature');
+    expect(generationOrigin(root)).toEqual({ sha: null, dirty: true });
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});

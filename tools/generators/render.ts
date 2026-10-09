@@ -1,5 +1,6 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
+import { baselineDifferences } from './baseline.ts';
 import path from 'node:path';
 import { digest, walk, type Files } from './files.ts';
 import { selectedPackages, type ProjectOptions } from './options.ts';
@@ -190,6 +191,38 @@ export function infrastructureFiles(source: string): Files {
   return files;
 }
 
+export function generationOrigin(source: string): { sha: string | null; dirty: boolean } {
+  const filename = path.join(source, '.template.json');
+  const previous = existsSync(filename)
+    ? (JSON.parse(readFileSync(filename, 'utf8')) as TemplateState)
+    : undefined;
+  const changed = previous?.kind === 'project' && baselineDifferences(source).length > 0;
+  if (
+    previous?.kind === 'project' &&
+    !changed &&
+    previous.origin?.dirty === false &&
+    /^[a-f0-9]{40}$/u.test(previous.origin.sha ?? '')
+  )
+    return { sha: previous.origin.sha, dirty: false };
+  const git = spawnSync('git', ['rev-parse', 'HEAD'], {
+    cwd: source,
+    encoding: 'utf8',
+    timeout: 10000,
+  });
+  const status = spawnSync('git', ['status', '--porcelain'], {
+    cwd: source,
+    encoding: 'utf8',
+    timeout: 10000,
+  });
+  return {
+    sha: git.status === 0 ? git.stdout.trim() : null,
+    dirty:
+      changed ||
+      (status.status === 0 && status.stdout.length > 0) ||
+      previous?.origin?.dirty === true,
+  };
+}
+
 export function projectFiles(
   source: string,
   options: ProjectOptions,
@@ -237,19 +270,8 @@ export function projectFiles(
     ),
   };
   if (kind === 'project') {
-    const git = spawnSync('git', ['rev-parse', 'HEAD'], {
-      cwd: source,
-      encoding: 'utf8',
-      timeout: 10000,
-    });
-    const status = spawnSync('git', ['status', '--porcelain'], {
-      cwd: source,
-      encoding: 'utf8',
-      timeout: 10000,
-    });
     state.origin = {
-      sha: git.status === 0 ? git.stdout.trim() : null,
-      dirty: status.status === 0 && status.stdout.length > 0,
+      ...generationOrigin(source),
       contentId: digest(
         Buffer.concat(
           [...files].flatMap(([filename, contents]) => [Buffer.from(`${filename}\0`), contents]),

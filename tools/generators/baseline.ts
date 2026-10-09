@@ -44,7 +44,10 @@ export function baselineDifferences(root: string): string[] {
         generated,
       ))
         if (!(file in state.managed)) differences.push(file);
-  if (state.lockId !== digest(readFileSync(path.join(root, 'pnpm-lock.yaml'))))
+  if (
+    !existsSync(path.join(root, 'pnpm-lock.yaml')) ||
+    state.lockId !== digest(readFileSync(path.join(root, 'pnpm-lock.yaml')))
+  )
     differences.push('pnpm-lock.yaml');
   return [...new Set(differences)].toSorted();
 }
