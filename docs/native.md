@@ -18,7 +18,7 @@ docker build --build-arg DEVELOPMENT_UID="$(id -u)" -f tools/dev-environment/nat
 STARTER_NODE_DIR="$(mise where node)"
 STARTER_PNPM_DIR="$(mise where aqua:pnpm/pnpm)"
 mkdir -p .state/container-home .state/container-tmp
-docker run --rm -it \
+docker run --rm --init -it \
   --mount "type=bind,src=$PWD,dst=/project" \
   --mount "type=bind,src=$PWD/.state/container-home,dst=/home/developer" \
   --mount "type=bind,src=$PWD/.state/container-tmp,dst=/tmp" \
