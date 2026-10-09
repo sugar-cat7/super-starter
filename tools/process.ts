@@ -109,13 +109,19 @@ export async function run(
       timedOut = true;
       void stopTree(child).catch(reject);
     }, timeout);
+    let cleanup: Promise<void> | undefined;
+    child.once('exit', () => {
+      clearTimeout(timer);
+      cleanup = stopTree(child);
+      void cleanup.catch(reject);
+    });
     child.once('error', (error) => {
       clearTimeout(timer);
       void stopTree(child).then(() => reject(error), reject);
     });
     child.once('close', (code, signal) => {
       clearTimeout(timer);
-      void stopTree(child).then(() => {
+      void (cleanup ?? stopTree(child)).then(() => {
         if (code === 0 && !timedOut) resolve(output);
         else
           reject(

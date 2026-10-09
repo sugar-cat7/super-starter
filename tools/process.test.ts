@@ -66,26 +66,33 @@ it('cleans an orphaned descendant while preserving an unrelated server', async (
   }
 }, 40000);
 
-it('reclaims descendants after the owned root exits successfully', async () => {
-  const root = mkdtempSync(path.join(os.tmpdir(), 'owned-success-'));
-  const address = path.join(root, 'address');
-  const server = path.join(root, 'server.mjs');
-  const parent = path.join(root, 'parent.mjs');
-  writeFileSync(
-    server,
-    "import {createServer} from 'node:http'; import {writeFileSync} from 'node:fs'; const server=createServer((_,res)=>res.end('ready')); server.listen(0,'127.0.0.1',()=>writeFileSync(process.argv[2],'http://127.0.0.1:'+server.address().port));",
-  );
-  writeFileSync(
-    parent,
-    "import {spawn} from 'node:child_process'; import {existsSync} from 'node:fs'; const child=spawn(process.execPath,[process.argv[2],process.argv[3]],{stdio:'ignore'}); child.unref(); const timer=setInterval(()=>{if(existsSync(process.argv[3])) {clearInterval(timer); process.exit(0)}},20);",
-  );
-  try {
-    await run(process.execPath, [parent, server, address], { timeout: 15000 });
-    expect(existsSync(address)).toBe(true);
-    await expect(
-      fetch(readFileSync(address, 'utf8'), { signal: AbortSignal.timeout(1000) }),
-    ).rejects.toThrow(/fetch failed|aborted/iu);
-  } finally {
-    rmSync(root, { recursive: true, force: true });
-  }
-}, 20000);
+it.each(['ignore', 'inherit'])(
+  'reclaims descendants with %s streams after the owned root exits successfully',
+  async (stdio) => {
+    const root = mkdtempSync(path.join(os.tmpdir(), 'owned-success-'));
+    const address = path.join(root, 'address');
+    const server = path.join(root, 'server.mjs');
+    const parent = path.join(root, 'parent.mjs');
+    writeFileSync(
+      server,
+      "import {createServer} from 'node:http'; import {writeFileSync} from 'node:fs'; const server=createServer((_,res)=>res.end('ready')); server.listen(0,'127.0.0.1',()=>writeFileSync(process.argv[2],'http://127.0.0.1:'+server.address().port));",
+    );
+    writeFileSync(
+      parent,
+      "import {spawn} from 'node:child_process'; import {existsSync} from 'node:fs'; const child=spawn(process.execPath,[process.argv[2],process.argv[3]],{stdio:process.argv[4]}); child.unref(); const timer=setInterval(()=>{if(existsSync(process.argv[3])) {clearInterval(timer); process.exit(0)}},20);",
+    );
+    try {
+      await run(process.execPath, [parent, server, address, stdio], {
+        timeout: 15000,
+        capture: true,
+      });
+      expect(existsSync(address)).toBe(true);
+      await expect(
+        fetch(readFileSync(address, 'utf8'), { signal: AbortSignal.timeout(1000) }),
+      ).rejects.toThrow(/fetch failed|aborted/iu);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  },
+  20000,
+);
