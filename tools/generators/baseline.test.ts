@@ -72,3 +72,54 @@ it('inherits canonical provenance without Git only while the generated baseline 
     rmSync(root, { recursive: true, force: true });
   }
 });
+
+it('renders renamed Desktop locks in Cargo order without changing locked dependencies', async () => {
+  const { appFiles } = await import('./render.ts');
+  const { projectOptions } = await import('./options.ts');
+  const source = path.resolve(import.meta.dirname, '../..');
+  const blueprint = readFileSync(
+    path.join(source, 'tools/generators/templates/desktop/src-tauri/Cargo.lock.template'),
+    'utf8',
+  );
+  const blocks = (lock: string) =>
+    lock
+      .split('[[package]]\n')
+      .slice(1)
+      .map((block) => block.trimEnd());
+  const dependencyBlocks = blocks(blueprint)
+    .filter((block) => !block.includes('name = "__PROJECT__-__APP__"'))
+    .sort();
+  for (const name of ['aaa-notes', 'zzz-notes']) {
+    const options = projectOptions({ name, scope: '@renamed', preset: 'desktop' });
+    const lock = appFiles(source, options, 'desktop', 'desktop', false)
+      .get('packages/desktop/src-tauri/Cargo.lock')!
+      .toString();
+    const packages = blocks(lock);
+    const names = packages.map((block) => /^name = "([^"]+)"/mu.exec(block)![1]!);
+    expect(names).toEqual([...names].sort());
+    expect(packages.filter((block) => !block.includes(`name = "${name}-desktop"`)).sort()).toEqual(
+      dependencyBlocks,
+    );
+  }
+});
+
+it('fingerprints legal app names and first-party directories that resemble generated caches', async () => {
+  const { contentId } = await import('../quality/gate.ts');
+  const root = mkdtempSync(path.join(os.tmpdir(), 'generation-fingerprint-'));
+  try {
+    mkdirSync(path.join(root, 'packages/dist/src/target'), { recursive: true });
+    mkdirSync(path.join(root, 'packages/dist/dist'), { recursive: true });
+    writeFileSync(
+      path.join(root, 'packages/dist/package.json'),
+      JSON.stringify({ name: '@example/dist', starter: { runtime: 'library' } }),
+    );
+    const before = contentId(root);
+    writeFileSync(path.join(root, 'packages/dist/src/target/user.ts'), 'source');
+    const after = contentId(root);
+    expect(after).not.toBe(before);
+    writeFileSync(path.join(root, 'packages/dist/dist/generated.mjs'), 'build');
+    expect(contentId(root)).toBe(after);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});

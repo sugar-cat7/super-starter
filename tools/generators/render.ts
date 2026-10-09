@@ -103,11 +103,22 @@ export function appFiles(
     )
       continue;
     const contents = readFileSync(path.join(templates, filename));
+    let expanded = expand(contents.toString(), options, name);
+    if (filename === 'src-tauri/Cargo.lock.template') {
+      // Cargo's lock package order is by name. A renamed root package must move
+      // with its unchanged dependency/checksum block, including in frozen builds.
+      const [header, ...blocks] = expanded.split('[[package]]\n');
+      blocks.sort((left, right) => {
+        const a = /^name = "([^"]+)"/mu.exec(left)![1]!;
+        const b = /^name = "([^"]+)"/mu.exec(right)![1]!;
+        return a < b ? -1 : a > b ? 1 : 0;
+      });
+      expanded = `${header!.trimEnd()}\n\n[[package]]\n${blocks.map((block) => block.trimEnd()).join('\n\n[[package]]\n')}\n`;
+    }
+
     files.set(
       `packages/${name}/${filename.slice(0, -'.template'.length)}`,
-      filename.endsWith('.png.template')
-        ? contents
-        : Buffer.from(expand(contents.toString(), options, name)),
+      filename.endsWith('.png.template') ? contents : Buffer.from(expanded),
     );
   }
   if (kind === 'api' || (kind === 'web' && !options.features.includes('services'))) {

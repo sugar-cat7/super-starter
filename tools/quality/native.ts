@@ -60,6 +60,8 @@ if (operation === 'rust') {
       'src-tauri/tauri.e2e.conf.json',
       '--config',
       JSON.stringify({ build: { beforeBuildCommand: 'pnpm build:renderer --mode e2e' } }),
+      '--',
+      '--locked',
     ],
     { cwd, env: environment, timeout: 30 * 60_000 },
   );
@@ -102,14 +104,14 @@ if (operation === 'rust') {
     console.log(`Executed ${cases} real native cases (${scenario})`);
   }
 } else if (operation === 'build') {
-  await pnpm(['exec', 'tauri', 'build', '--no-bundle'], {
+  await pnpm(['exec', 'tauri', 'build', '--no-bundle', '--', '--locked'], {
     cwd,
     env: environment,
     timeout: 30 * 60_000,
   });
 } else if (operation === 'release') {
   // Separate target and renderer mode prevent reusing feature-enabled artifacts.
-  await pnpm(['exec', 'tauri', 'build', '--no-bundle'], {
+  await pnpm(['exec', 'tauri', 'build', '--no-bundle', '--', '--locked'], {
     cwd,
     env: environment,
     timeout: 30 * 60_000,
