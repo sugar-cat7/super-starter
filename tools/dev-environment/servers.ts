@@ -91,6 +91,7 @@ export class Servers {
         const response = await fetch(`${origin}${pkg.runtime === 'worker' ? '/health' : '/'}`, {
           signal: AbortSignal.any([signal, AbortSignal.timeout(1_000)]),
         });
+        await response.arrayBuffer();
         if (response.ok) {
           signal.throwIfAborted();
           this.origins.set(pkg.name, origin);

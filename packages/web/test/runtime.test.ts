@@ -18,8 +18,8 @@ describe('Web Worker and same-origin API', () => {
     expect(
       notesSchema.parse(await (await fetch(new URL('/api/notes', origin))).json()),
     ).toContainEqual(note);
-    expect(
-      (await fetch(new URL(`/api/notes/${note.id}`, origin), { method: 'DELETE' })).status,
-    ).toBe(204);
+    const removed = await fetch(new URL(`/api/notes/${note.id}`, origin), { method: 'DELETE' });
+    await removed.arrayBuffer();
+    expect(removed.status).toBe(204);
   });
 });
