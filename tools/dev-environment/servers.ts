@@ -106,7 +106,7 @@ export class Servers {
     }
     throw new Error(`${pkg.name} ready timeout\n${output}`);
   }
-  async workers(target: string): Promise<string> {
+  async workers(target: string, script = 'dev'): Promise<string> {
     const packages = workspacePackages(this.root);
     const pkg = packages.find(
       (value) =>
@@ -118,14 +118,14 @@ export class Servers {
     for (const dependency of pkg.dependencies) {
       const upstream = packages.find((value) => value.name === dependency);
       if (upstream?.runtime === 'worker' && !this.origins.has(upstream.name))
-        await this.workers(upstream.name);
+        await this.workers(upstream.name, script);
     }
-    return this.origins.get(pkg.name) ?? (await this.start(pkg));
+    return this.origins.get(pkg.name) ?? (await this.start(pkg, script));
   }
-  async stop(): Promise<void> {
+  async stop(graceMs?: number): Promise<void> {
     this.stopping = true;
     this.cancellation.abort(new Error('Server startup cancelled by stop'));
-    await Promise.all(this.children.toReversed().map((child) => stopTree(child)));
+    await Promise.all(this.children.toReversed().map((child) => stopTree(child, graceMs)));
     this.children = [];
     this.origins.clear();
   }

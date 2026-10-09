@@ -1,6 +1,8 @@
 packages:
   - packages/*
 catalog:
+  '@cloudflare/config': 0.24.0
+  lighthouse: 13.5.0
   '@wdio/types': 9.32.0
   '@wdio/spec-reporter': 9.32.0
   '@wdio/json-reporter': 9.32.0

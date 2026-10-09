@@ -116,7 +116,7 @@ export async function gate(
       (check) =>
         !check.package ||
         (selected.find((pkg) => pkg.name === check.package)?.runtime === 'worker' &&
-          !check.id.endsWith('/browser')),
+          !/\/(?:browser|lighthouse)$/u.test(check.id)),
     );
   if (variant === 'javascript')
     checks = checks

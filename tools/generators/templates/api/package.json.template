@@ -8,6 +8,7 @@
   "starter": { "runtime": "worker" },
   "scripts": {
     "dev": "vp dev --mode offline --host 127.0.0.1 --strictPort",
+    "preview": "node preview.ts",
     "check": "vp check .",
     "test": "node ../../tools/quality/vitest.ts --config vitest.config.ts",
     "test:runtime": "node ../../tools/cloudflare/runtime.ts",
@@ -17,5 +18,5 @@
     "db:seed": "node ../../tools/cloudflare/database.ts seed"
   },
   "dependencies": { "__SCOPE__/contracts": "workspace:*", "zod": "catalog:" },
-  "devDependencies": { "@cloudflare/vite-plugin": "catalog:", "cf": "catalog:", "wrangler": "catalog:", "vite-plus": "catalog:", "vitest": "catalog:", "typescript": "catalog:" }
+  "devDependencies": { "@cloudflare/config": "catalog:", "@cloudflare/vite-plugin": "catalog:", "cf": "catalog:", "wrangler": "catalog:", "vite-plus": "catalog:", "vitest": "catalog:", "typescript": "catalog:" }
 }

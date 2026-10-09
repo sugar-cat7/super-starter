@@ -7,6 +7,7 @@
   "exports": {},
   "scripts": {
     "dev": "vp dev --mode offline --host 127.0.0.1 --strictPort",
+    "preview": "node preview.ts",
     "check": "vp check .",
     "test": "node ../../tools/quality/vitest.ts --config vitest.config.ts",
     "test:runtime": "node ../../tools/cloudflare/runtime.ts",
@@ -21,6 +22,7 @@
     "zod": "catalog:"
   },
   "devDependencies": {
+    "@cloudflare/config": "catalog:",
     "@cloudflare/vite-plugin": "catalog:",
     "cf": "catalog:",
     "typescript": "catalog:",

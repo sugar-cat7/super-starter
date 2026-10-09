@@ -330,6 +330,21 @@ async function injectFaults(root: string): Promise<void> {
   }
   const web = packages.find((pkg) => pkg.scripts['test:e2e']);
   if (web) {
+    const route = `${web.directory}/src/routes/__root.tsx`;
+    const original = readFileSync(path.join(root, route), 'utf8');
+    const missingDescription = original.replace(/\{\s*name:\s*'description',[^}]+\},?/u, '');
+    assert.notEqual(
+      missingDescription,
+      original,
+      'The Web fault needs an actual meta-description to remove',
+    );
+    await fault(
+      'lighthouse-score',
+      { [route]: missingDescription },
+      ['--filter', web.name, 'test:lighthouse'],
+      /Lighthouse requires every category to score 100:.*seo/u,
+      ['--filter', web.name, 'test:lighthouse'],
+    );
     const browser = ['--filter', web.name, 'test:e2e'];
     const file = `${web.directory}/test/browser/fault.spec.ts`;
     await fault(

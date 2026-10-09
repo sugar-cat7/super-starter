@@ -62,6 +62,7 @@ export function faultCheckIds(packages: WorkspacePackage[]): string[] {
           'visual-regression',
         ]
       : []),
+    ...(packages.some((pkg) => pkg.scripts['test:lighthouse']) ? ['lighthouse-score'] : []),
     ...(packages.some((pkg) => pkg.runtime === 'desktop')
       ? [
           'rust-behavior',
@@ -117,6 +118,8 @@ export function packageChecks(pkg: WorkspacePackage, phase: 'test' | 'build' | '
       entries.push(['restart', 'test:restart', ['migration', 'seed', 'persistence']]);
     if (pkg.scripts['test:e2e'])
       entries.push(['browser', 'test:e2e', ['web', 'accessibility', 'vrt']]);
+    if (pkg.dependencies.includes('@tanstack/react-start') || pkg.scripts['test:lighthouse'])
+      entries.push(['lighthouse', 'test:lighthouse', ['web', 'lighthouse-all-100']]);
     if (pkg.runtime === 'desktop')
       entries.push(
         ['rust', 'test:rust', ['rust', 'ipc', 'export']],
@@ -129,7 +132,12 @@ export function packageChecks(pkg: WorkspacePackage, phase: 'test' | 'build' | '
     requirements,
     package: pkg.name,
     command: ['--filter', pkg.name, script],
-    timeout: pkg.runtime === 'desktop' && id !== 'unit' ? 30 * 60_000 : 180_000,
+    timeout:
+      id === 'lighthouse'
+        ? 15 * 60_000
+        : pkg.runtime === 'desktop' && id !== 'unit'
+          ? 30 * 60_000
+          : 180_000,
     reason: `Selected ${pkg.runtime} ${pkg.name}; ${phase} phase`,
   }));
 }

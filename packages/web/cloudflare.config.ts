@@ -12,7 +12,9 @@ export default defineConfig(({ mode }) => {
       compatibilityDate: '2026-10-09',
       compatibilityFlags: ['nodejs_compat'],
       workersDev: false,
+      assets: { runWorkerFirst: ['/assets/*'] },
       env: {
+        ASSETS: bindings.assets(),
         WRITE_MODE: bindings.text(environment === 'local' ? 'allow' : 'deny'),
         API: bindings.worker({ worker: 'super-starter-api' }),
       },

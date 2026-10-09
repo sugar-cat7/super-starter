@@ -32,7 +32,7 @@ export function spawnOwned(
   return child;
 }
 
-export async function stopTree(child: ChildProcess): Promise<void> {
+export async function stopTree(child: ChildProcess, graceMs = 3_000): Promise<void> {
   if (!child.pid) return;
   const pid = child.pid;
   if (!owned.has(child)) throw new Error('Cleanup requires a process started by spawnOwned');
@@ -65,7 +65,7 @@ export async function stopTree(child: ChildProcess): Promise<void> {
   };
   if (!signal('SIGTERM')) return;
   const started = performance.now();
-  while (signal(0) && performance.now() - started < 3_000) await pause(50);
+  while (signal(0) && performance.now() - started < graceMs) await pause(50);
   if (signal(0)) signal('SIGKILL');
 }
 
@@ -86,9 +86,9 @@ export function runSync(command: string, args: string[], cwd: string): string {
 export async function run(
   command: string,
   args: string[],
-  options: SpawnOptions & { timeout?: number; capture?: boolean } = {},
+  options: SpawnOptions & { timeout?: number; capture?: boolean; terminationGraceMs?: number } = {},
 ): Promise<string> {
-  const { timeout = 10 * 60_000, capture = false, ...spawnOptions } = options;
+  const { timeout = 10 * 60_000, capture = false, terminationGraceMs, ...spawnOptions } = options;
   return await new Promise<string>((resolve, reject) => {
     const child = spawnOwned(command, args, {
       stdio: capture ? ['ignore', 'pipe', 'pipe'] : 'inherit',
@@ -107,21 +107,21 @@ export async function run(
     let timedOut = false;
     const timer = setTimeout(() => {
       timedOut = true;
-      void stopTree(child).catch(reject);
+      void stopTree(child, terminationGraceMs).catch(reject);
     }, timeout);
     let cleanup: Promise<void> | undefined;
     child.once('exit', () => {
       clearTimeout(timer);
-      cleanup = stopTree(child);
+      cleanup = stopTree(child, terminationGraceMs);
       void cleanup.catch(reject);
     });
     child.once('error', (error) => {
       clearTimeout(timer);
-      void stopTree(child).then(() => reject(error), reject);
+      void stopTree(child, terminationGraceMs).then(() => reject(error), reject);
     });
     child.once('close', (code, signal) => {
       clearTimeout(timer);
-      void (cleanup ?? stopTree(child)).then(() => {
+      void (cleanup ?? stopTree(child, terminationGraceMs)).then(() => {
         if (code === 0 && !timedOut) resolve(output);
         else
           reject(
@@ -136,7 +136,7 @@ export async function run(
 
 export async function pnpm(
   args: string[],
-  options: SpawnOptions & { timeout?: number } = {},
+  options: SpawnOptions & { timeout?: number; terminationGraceMs?: number } = {},
 ): Promise<void> {
   const invocation = pnpmCommand(args);
   await run(invocation.command, invocation.args, options);

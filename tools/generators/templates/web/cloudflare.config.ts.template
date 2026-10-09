@@ -15,6 +15,7 @@ export default defineConfig(({ mode }) => {
     compatibilityDate: '2026-10-09',
     compatibilityFlags: ['nodejs_compat'],
     workersDev: false,
-    env: { WRITE_MODE: bindings.text(environment === 'local' ? 'allow' : 'deny'), __BINDINGS__ },
+    assets: { runWorkerFirst: ['/assets/*'] },
+    env: { ASSETS: bindings.assets(), WRITE_MODE: bindings.text(environment === 'local' ? 'allow' : 'deny'), __BINDINGS__ },
   } };
 });

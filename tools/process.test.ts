@@ -1,10 +1,55 @@
 import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { setTimeout as pause } from 'node:timers/promises';
 import type { ChildProcess } from 'node:child_process';
 import { expect, it } from 'vitest';
 import { run, spawnOwned, stopTree } from './process.ts';
+
+it('forwards Worker build interruption to its detached non-cooperating child', async () => {
+  const root = mkdtempSync(path.join(os.tmpdir(), 'owned-build-'));
+  const executor = path.join(root, 'executor.mjs');
+  const address = path.join(root, 'address');
+  writeFileSync(
+    executor,
+    "import {createServer} from 'node:http'; import {writeFileSync} from 'node:fs'; process.on('SIGTERM',()=>{}); const server=createServer((_,res)=>res.end('ready')); server.listen(0,'127.0.0.1',()=>writeFileSync(process.env.BUILD_ADDRESS,'http://127.0.0.1:'+server.address().port));",
+  );
+  const child = spawnOwned(
+    process.execPath,
+    [fileURLToPath(new URL('./cloudflare/build.ts', import.meta.url))],
+    {
+      cwd: root,
+      stdio: 'ignore',
+      env: { ...process.env, npm_execpath: executor, BUILD_ADDRESS: address },
+    },
+  );
+  try {
+    const started = performance.now();
+    while (!existsSync(address) && performance.now() - started < 10_000) await pause(30);
+    expect(existsSync(address)).toBe(true);
+    const origin = readFileSync(address, 'utf8');
+    expect(await (await fetch(origin)).text()).toBe('ready');
+    expect(child.kill('SIGTERM')).toBe(true);
+    while (
+      child.exitCode === null &&
+      child.signalCode === null &&
+      performance.now() - started < 13_000
+    )
+      await pause(30);
+    expect(child.exitCode !== null || child.signalCode !== null).toBe(true);
+    expect(child.exitCode === 0).toBe(false);
+    expect({ code: child.exitCode, signal: child.signalCode }).toEqual(
+      process.platform === 'win32' ? { code: null, signal: 'SIGTERM' } : { code: 1, signal: null },
+    );
+    await expect(fetch(origin, { signal: AbortSignal.timeout(1_000) })).rejects.toThrow(
+      /fetch failed|aborted/iu,
+    );
+  } finally {
+    await stopTree(child);
+    rmSync(root, { recursive: true, force: true });
+  }
+}, 20_000);
 
 it('cleans an orphaned descendant while preserving an unrelated server', async () => {
   const root = mkdtempSync(path.join(os.tmpdir(), 'owned-process-'));

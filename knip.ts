@@ -40,6 +40,8 @@ export default {
           ignoreDependencies: [
             ...pkg.dependencies.filter((name) => workers.has(name)),
             ...(pkg.runtime === 'desktop' ? ['@wdio/cli', '@wdio/local-runner'] : []),
+            // The shared Web audit loads the owning package's Lighthouse SDK.
+            ...(pkg.scripts['test:lighthouse'] ? ['lighthouse'] : []),
           ],
         },
       ]),

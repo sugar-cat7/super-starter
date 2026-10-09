@@ -35,6 +35,7 @@ pnpm env:doctor
 pnpm dev
 pnpm check
 pnpm test
+pnpm test:lighthouse
 pnpm build
 pnpm gate:pre-pr -- --base <base-sha>
 pnpm gate:full

@@ -1,5 +1,6 @@
 import { createRootRoute, HeadContent, Link, Outlet, Scripts } from '@tanstack/react-router';
-import css from '../styles.css?url';
+import css from '../styles.css?inline';
+import favicon from '../favicon.svg?url';
 
 export const Route = createRootRoute({
   head: () => ({
@@ -7,13 +8,18 @@ export const Route = createRootRoute({
       { charSet: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { title: 'super-starter' },
+      {
+        name: 'description',
+        content: 'A small, accessible notes workspace with clear local storage and JSON export.',
+      },
     ],
-    links: [{ rel: 'stylesheet', href: css }],
+    links: [{ rel: 'icon', type: 'image/svg+xml', href: favicon }],
   }),
   component: () => (
     <html lang="en">
       <head>
         <HeadContent />
+        <style>{css}</style>
       </head>
       <body>
         <a href="#main" className="sr-only focus:not-sr-only">

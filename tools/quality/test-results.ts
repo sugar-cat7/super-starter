@@ -64,3 +64,62 @@ export function browserCases(report: unknown): number {
     );
   return value.stats.expected;
 }
+
+export function lighthouseScores(
+  report: unknown,
+  profile: 'mobile' | 'desktop',
+): Record<string, number> {
+  const value = report as {
+    runtimeError?: unknown;
+    configSettings?: {
+      formFactor?: string;
+      throttlingMethod?: string;
+      skipAudits?: unknown;
+      onlyAudits?: unknown;
+      onlyCategories?: unknown;
+      ignoreStatusCode?: boolean;
+    };
+    categories?: Record<string, { score?: number | null }>;
+    audits?: Record<string, { scoreDisplayMode?: string }>;
+  };
+  const settings = value.configSettings;
+  if (
+    value.runtimeError ||
+    !settings ||
+    settings.formFactor !== profile ||
+    settings.throttlingMethod !== 'simulate' ||
+    settings.skipAudits != null ||
+    settings.onlyAudits != null ||
+    settings.onlyCategories != null ||
+    settings.ignoreStatusCode
+  )
+    throw new Error(
+      'Lighthouse must complete the unmodified official mobile/desktop audit without exclusions',
+    );
+  const categories = value.categories ?? {};
+  for (const required of [
+    'performance',
+    'accessibility',
+    'best-practices',
+    'seo',
+    'agentic-browsing',
+  ]) {
+    if (!Object.hasOwn(categories, required))
+      throw new Error(`Lighthouse missing required category: ${required}`);
+  }
+  if (
+    !value.audits ||
+    !Object.keys(value.audits).length ||
+    Object.values(value.audits).some((audit) => audit.scoreDisplayMode === 'error')
+  )
+    throw new Error('Lighthouse collected no audits or an audit failed to execute');
+  const scores = Object.fromEntries(
+    Object.entries(categories).map(([id, category]) => [id, category.score]),
+  );
+  const failed = Object.entries(scores).filter(([, score]) => score !== 1);
+  if (failed.length)
+    throw new Error(
+      `Lighthouse requires every category to score 100: ${failed.map(([id, score]) => `${id}=${score == null ? 'missing' : score * 100}`).join(', ')}`,
+    );
+  return scores as Record<string, number>;
+}
