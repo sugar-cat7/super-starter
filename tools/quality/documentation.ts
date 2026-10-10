@@ -1,5 +1,6 @@
 import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
+import { parse } from 'yaml';
 import { walk } from '../generators/files.ts';
 
 export function documentation(root: string): string[] {
@@ -24,6 +25,37 @@ export function documentation(root: string): string[] {
       continue;
     }
     const text = readFileSync(path.join(root, filename), 'utf8');
+    if (filename.startsWith('.agents/skills/') && filename.endsWith('/SKILL.md')) {
+      const header = /^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/u.exec(text);
+      if (!header) errors.push(`${filename}: skill requires YAML frontmatter`);
+      else {
+        let metadata: unknown;
+        try {
+          metadata = parse(header[1]!, { strict: true, uniqueKeys: true });
+        } catch {
+          errors.push(`${filename}: invalid skill YAML frontmatter`);
+        }
+        const fields =
+          metadata && typeof metadata === 'object' && !Array.isArray(metadata)
+            ? (metadata as Record<string, unknown>)
+            : {};
+        const name = fields.name;
+        if (
+          typeof name !== 'string' ||
+          name.length > 64 ||
+          !/^[a-z0-9]+(?:-[a-z0-9]+)*$/u.test(name) ||
+          name !== path.basename(path.dirname(filename))
+        )
+          errors.push(`${filename}: invalid skill name or directory mismatch`);
+        const description = fields.description;
+        if (
+          typeof description !== 'string' ||
+          !description.trim() ||
+          Array.from(description).length > 1024
+        )
+          errors.push(`${filename}: skill description must contain 1–1024 characters`);
+      }
+    }
     for (const match of text.matchAll(/\[[^\]]*\]\(([^)]+)\)/gu)) {
       const target = match[1]?.split('#')[0];
       if (!target || /^(?:https?:|#)/u.test(target)) continue;

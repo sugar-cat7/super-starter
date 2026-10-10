@@ -1,3 +1,8 @@
+---
+name: debug
+description: Diagnose and repair failing checks or runtime behavior using reproducible failures, owned logs and targeted regressions. Use when a test, quality gate, build or application fails.
+---
+
 # Debugging and performance
 
 Apply to failures or performance work. Read [AGENTS.md](../../../AGENTS.md), [troubleshooting](../../../docs/troubleshooting.md) and the failing check's report. Reproduce the exact input and runtime; inspect current SDK guidance before proposing an API workaround.

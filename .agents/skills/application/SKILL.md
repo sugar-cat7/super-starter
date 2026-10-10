@@ -1,3 +1,8 @@
+---
+name: application
+description: Implement features across application boundaries using repository setup, targeted tests, quality gates, Git hooks, builds and deployment preflight. Use for application feature development spanning Web, API or Desktop.
+---
+
 # Application development
 
 Apply to a feature spanning application boundaries. Read [AGENTS.md](../../../AGENTS.md), [README](../../../README.md), owning manifests and [quality rules](../../../docs/quality.md). Read current official API documentation before adopting APIs; record the decision and compatibility check.

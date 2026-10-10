@@ -1,3 +1,8 @@
+---
+name: template
+description: Maintain canonical application blueprints, initialization and package addition while preserving downstream changes. Use for template, generator or shared development foundation changes.
+---
+
 # Template maintenance
 
 Apply to blueprints, initialization, app addition or shared tools. Read [AGENTS.md](../../../AGENTS.md), [template procedure](../../../docs/template.md), generator tests and [quality rules](../../../docs/quality.md).

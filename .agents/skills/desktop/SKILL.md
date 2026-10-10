@@ -1,3 +1,8 @@
+---
+name: desktop
+description: Develop typed Tauri IPC, Rust commands, native capabilities and Desktop UI with actual target-OS tests and release isolation. Use for Desktop renderer, native or export changes.
+---
+
 # Desktop and Rust
 
 Apply to Tauri SPA, native IPC, capabilities or export. Read [AGENTS.md](../../../AGENTS.md), [native guidance](../../../docs/native.md) and the owning Cargo/Tauri files. Research current Tauri/WebdriverIO SDK guidance before changing native APIs.

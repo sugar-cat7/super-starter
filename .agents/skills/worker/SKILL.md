@@ -1,3 +1,8 @@
+---
+name: worker
+description: Develop and validate Cloudflare Worker HTTP APIs, configuration, selected D1/KV/R2 or Service Bindings and local runtime behavior. Use for API, Worker or deployment configuration changes.
+---
+
 # Worker and service development
 
 Apply to Worker/API/Binding work. Read [AGENTS.md](../../../AGENTS.md), the owning `cloudflare.config.ts` and [Cloudflare guidance](../../../docs/cloudflare.md). Configuration is the sole binding/environment source; SDK output and generated types are derived. Verify current SDK signatures before changing it.

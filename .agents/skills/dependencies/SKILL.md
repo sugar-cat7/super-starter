@@ -1,3 +1,8 @@
+---
+name: dependencies
+description: Review current official SDKs and update catalog, locks or native toolchains after minimal compatibility checks. Use for dependency adoption, upgrades or supply-chain findings.
+---
+
 # Dependency updates
 
 Apply to catalog, lockfile or native toolchain updates. Read [AGENTS.md](../../../AGENTS.md), [adoption decisions](../../../docs/adoption.md), manifests and [update procedure](../../../docs/template.md). Consult current official docs/changelogs and installed SDK types; test compatibility before adopting.

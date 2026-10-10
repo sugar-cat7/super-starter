@@ -146,6 +146,19 @@ async function injectFaults(root: string): Promise<void> {
   };
   const probe = 'tools/fault-probe.ts';
   const testProbe = 'tools/fault-probe.test.ts';
+  const skill = '.agents/skills/application/SKILL.md';
+  await fault(
+    'skill-metadata',
+    {
+      [skill]: readFileSync(path.join(root, skill), 'utf8').replace(
+        /^---\r?\n[\s\S]*?\r?\n---\r?\n\r?\n/u,
+        '',
+      ),
+    },
+    ['check'],
+    /skill requires YAML frontmatter/u,
+    ['check'],
+  );
   await fault(
     'format',
     { [probe]: 'export const formatFault="needs formatting"\n' },

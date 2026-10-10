@@ -38,7 +38,8 @@
     "oxc-parser": "catalog:",
     "typescript": "catalog:",
     "vite-plus": "catalog:",
-    "vitest": "catalog:"
+    "vitest": "catalog:",
+    "yaml": "catalog:"
   },
   "engines": {
     "node": ">=24.21.0 <25"

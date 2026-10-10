@@ -1,3 +1,8 @@
+---
+name: frontend
+description: Develop React UI, TanStack routes, SSR and hydration with portable adapters, accessibility, browser regressions and all-100 Lighthouse checks. Use for Web pages, shared UI or Desktop renderer changes.
+---
+
 # Frontend and UI
 
 Apply to React, routing, accessibility and portable UI. Read [AGENTS.md](../../../AGENTS.md), package manifests and [quality rules](../../../docs/quality.md). Keep platform I/O in application adapters; schemas/UI stay portable. Check current React/TanStack/Tailwind APIs before adoption.

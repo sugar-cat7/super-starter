@@ -2,9 +2,124 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
 import { expect, it } from 'vitest';
-import { acceptance } from './acceptance.ts';
-import { globalChecks } from './definitions.ts';
+import { acceptance, workerEvidenceValid } from './acceptance.ts';
+import { globalChecks, packageChecks } from './definitions.ts';
 import { projectOptions, verificationCases } from '../generators/options.ts';
+import { projectFiles } from '../generators/render.ts';
+import { applyFiles } from '../generators/files.ts';
+import { workspacePackages } from './graph.ts';
+import { fileURLToPath } from 'node:url';
+import { contentId } from './gate.ts';
+
+it('selects a complete canonical baseline after an earlier passed feature report', () => {
+  const root = mkdtempSync(path.join(os.tmpdir(), 'acceptance-selection-'));
+  const sha = 'a'.repeat(40);
+  try {
+    const project = path.join(root, 'project');
+    const options = projectOptions({ name: 'fixture', scope: '@fixture', preset: 'api' });
+    applyFiles(project, projectFiles(fileURLToPath(new URL('../..', import.meta.url)), options));
+    const workspace = workspacePackages(project);
+    const report = {
+      schema: 1,
+      os: 'linux/x64',
+      sha: 'uncommitted',
+      status: 'passed',
+      contentId: 'b'.repeat(64),
+      origin: { sha, dirty: false, contentId: 'c'.repeat(64) },
+      configuration: options,
+      workspace,
+      tools: {},
+      checks: [...globalChecks, ...workspace.flatMap((pkg) => packageChecks(pkg, 'full'))].map(
+        (check) => ({ ...check, status: 'passed', milliseconds: 1 }),
+      ),
+    };
+    for (const [folder, actual] of [
+      ['000-feature', { ...report, workspace: [] }],
+      ['999-baseline', report],
+    ] as const) {
+      const target = path.join(root, folder);
+      mkdirSync(target);
+      writeFileSync(path.join(target, 'gate-full-all-linux.json'), JSON.stringify(actual));
+      writeFileSync(
+        path.join(target, 'generation.json'),
+        JSON.stringify({ ...actual, baselineDifferences: [] }),
+      );
+    }
+    const result = acceptance(root, sha);
+    const api = result.rows.find((row) => row.preset === 'api' && row.os === 'linux');
+    expect(api?.status).toBe('passed');
+    expect(api?.evidence).toBe('999-baseline/gate-full-all-linux.json');
+    expect(result.mechanisms.find((entry) => entry.id === 'worker-win32')?.status).toBe('blocked');
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+it('requires exact-source actual Windows Worker commands and rejects other OS or incomplete reports', () => {
+  const root = mkdtempSync(path.join(os.tmpdir(), 'acceptance-windows-'));
+  const sha = 'a'.repeat(40);
+  try {
+    const configuration = projectOptions({ name: 'fixture', scope: '@fixture', preset: 'api' });
+    applyFiles(root, projectFiles(fileURLToPath(new URL('../..', import.meta.url)), configuration));
+    const workspace = workspacePackages(root);
+    const expected = { sha, contentId: contentId(root), configuration, workspace };
+    const report = {
+      schema: 1,
+      sha,
+      contentId: expected.contentId,
+      os: 'win32/x64',
+      variant: 'worker',
+      status: 'passed',
+      configuration,
+      workspace,
+      tools: {},
+      checks: [
+        ...globalChecks,
+        ...workspace
+          .filter((pkg) => pkg.runtime === 'worker')
+          .flatMap((pkg) => packageChecks(pkg, 'full')),
+      ].map((check) => ({ ...check, status: 'passed', milliseconds: 1 })),
+    };
+    expect(workerEvidenceValid(report, expected)).toBe(true);
+    expect(workerEvidenceValid(report, undefined)).toBe(false);
+    expect(workerEvidenceValid({ ...report, contentId: 'd'.repeat(64) }, expected)).toBe(false);
+    expect(
+      workerEvidenceValid(report, {
+        ...expected,
+        configuration: projectOptions({ name: 'fixture', scope: '@fixture', preset: 'fullstack' }),
+      }),
+    ).toBe(false);
+    expect(
+      workerEvidenceValid(report, {
+        ...expected,
+        workspace: [
+          ...workspace,
+          {
+            ...workspace[0]!,
+            name: '@fixture/other-worker',
+            directory: 'packages/other-worker',
+            runtime: 'worker',
+          },
+        ],
+      }),
+    ).toBe(false);
+
+    expect(workerEvidenceValid({ ...report, os: 'linux/x64' }, expected)).toBe(false);
+    expect(workerEvidenceValid({ ...report, sha: 'd'.repeat(40) }, expected)).toBe(false);
+    expect(workerEvidenceValid({ ...report, workspace: [] }, expected)).toBe(false);
+    expect(workerEvidenceValid({ ...report, checks: report.checks.slice(0, -1) }, expected)).toBe(
+      false,
+    );
+    expect(
+      workerEvidenceValid(
+        { ...report, checks: report.checks.map((check) => ({ ...check, command: ['--help'] })) },
+        expected,
+      ),
+    ).toBe(false);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
 
 it('rejects passed labels that omit applications or actual mechanism execution', () => {
   const root = mkdtempSync(path.join(os.tmpdir(), 'acceptance-fault-'));

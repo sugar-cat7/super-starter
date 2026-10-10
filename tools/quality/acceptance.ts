@@ -21,7 +21,9 @@ import {
   hookPhases,
   lifecyclePhases,
 } from './definitions.ts';
-import type { WorkspacePackage } from './graph.ts';
+import { workspacePackages, type WorkspacePackage } from './graph.ts';
+import { contentId } from './gate.ts';
+import { spawnSync } from 'node:child_process';
 import { appFiles } from '../generators/render.ts';
 import { fileURLToPath } from 'node:url';
 export function agentCommandValid(phase: string, argv: string[]): boolean {
@@ -146,6 +148,7 @@ type GateReport = {
   sha: string;
   contentId: string;
   os: string;
+  variant?: string;
   status?: string;
   origin?: { sha: string | null; dirty: boolean; contentId: string };
   configuration?: ProjectOptions;
@@ -160,7 +163,93 @@ type GateReport = {
   }[];
 };
 
+type SourceIdentity = {
+  sha: string;
+  contentId: string;
+  configuration: ProjectOptions;
+  workspace: WorkspacePackage[];
+};
+function sourceIdentity(sha: string): SourceIdentity | undefined {
+  const head = spawnSync('git', ['rev-parse', 'HEAD'], { cwd: source, encoding: 'utf8' });
+  const status = spawnSync('git', ['status', '--porcelain'], { cwd: source, encoding: 'utf8' });
+  if (
+    head.status !== 0 ||
+    status.status !== 0 ||
+    head.stdout.trim() !== sha ||
+    status.stdout.trim()
+  )
+    return undefined;
+  const configuration = (
+    JSON.parse(readFileSync(path.join(source, '.template.json'), 'utf8')) as {
+      options: ProjectOptions;
+    }
+  ).options;
+  return { sha, contentId: contentId(source), configuration, workspace: workspacePackages(source) };
+}
+export function workerEvidenceValid(
+  report: GateReport,
+  expected: SourceIdentity | undefined,
+): boolean {
+  if (
+    !expected ||
+    report.schema !== 1 ||
+    report.sha !== expected.sha ||
+    report.origin ||
+    report.status !== 'passed' ||
+    report.variant !== 'worker' ||
+    !report.os.startsWith('win32/') ||
+    !report.configuration ||
+    report.contentId !== expected.contentId
+  )
+    return false;
+  const configuration = report.configuration;
+  if (
+    ['name', 'scope', 'identifier', 'preset'].some(
+      (key) =>
+        configuration[key as keyof ProjectOptions] !==
+        expected.configuration[key as keyof ProjectOptions],
+    ) ||
+    JSON.stringify(configuration.features.toSorted()) !==
+      JSON.stringify(expected.configuration.features.toSorted())
+  )
+    return false;
+  const workers = expected.workspace.filter((pkg) => pkg.runtime === 'worker');
+  const checks = [
+    ...globalChecks,
+    ...workers.flatMap((pkg) =>
+      packageChecks(pkg, 'full').filter((check) => !/\/(?:browser|lighthouse)$/u.test(check.id)),
+    ),
+  ];
+  return (
+    workers.length > 0 &&
+    report.workspace?.length === expected.workspace.length &&
+    expected.workspace.every((pkg) =>
+      report.workspace!.some(
+        (actual) =>
+          actual.name === pkg.name &&
+          actual.directory === pkg.directory &&
+          actual.runtime === pkg.runtime &&
+          Object.keys(actual.scripts).length === Object.keys(pkg.scripts).length &&
+          Object.keys(pkg.scripts).every((key) => actual.scripts[key] === pkg.scripts[key]) &&
+          JSON.stringify(actual.dependencies.toSorted()) ===
+            JSON.stringify(pkg.dependencies.toSorted()),
+      ),
+    ) &&
+    report.checks.length === checks.length &&
+    checks.every((check) =>
+      report.checks.some(
+        (actual) =>
+          actual.id === check.id &&
+          actual.status === 'passed' &&
+          JSON.stringify(actual.command) === JSON.stringify(check.command) &&
+          JSON.stringify(actual.requirements) === JSON.stringify(check.requirements),
+      ),
+    )
+  );
+}
+
 export function acceptance(directory: string, sha: string) {
+  const expectedSource = sourceIdentity(sha);
   const inputs = existsSync(directory)
     ? walk(directory)
         .filter((file) => /^gate-full-all-(?:linux|darwin|win32)\.json$/u.test(path.basename(file)))
@@ -188,68 +277,80 @@ export function acceptance(directory: string, sha: string) {
           report.origin?.sha === sha &&
           !report.origin.dirty,
       );
-      const input = compatible.find(({ report }) => report.status === 'passed');
-      const canonical = input?.report.configuration
-        ? canonicalPackages(input.report.configuration)
-        : [];
-      const expectedChecks = [
-        ...globalChecks,
-        ...canonical.flatMap((pkg) => packageChecks(pkg, 'full')),
-      ];
-      const workspaceComplete =
-        !!input?.report.workspace &&
-        canonical.length === input.report.workspace.length &&
-        canonical.every((pkg) =>
-          input.report.workspace!.some(
-            (entry) =>
-              entry.name === pkg.name &&
-              entry.runtime === pkg.runtime &&
-              entry.directory === pkg.directory &&
-              Object.keys(pkg.scripts).every((key) => entry.scripts[key] === pkg.scripts[key]),
-          ),
-        );
-      const receiptFile = input
-        ? path.join(directory, path.dirname(input.file), 'generation.json')
-        : '';
-      const receipt =
-        receiptFile && existsSync(receiptFile)
-          ? (JSON.parse(readFileSync(receiptFile, 'utf8')) as {
-              schema: number;
-              status: string;
-              contentId: string;
-              os: string;
-              origin?: { sha?: string; dirty?: boolean };
-              baselineDifferences?: string[];
-            })
-          : undefined;
-      const receiptMatches =
-        !!receipt &&
-        receipt.schema === 1 &&
-        receipt.status === 'passed' &&
-        receipt.contentId === input?.report.contentId &&
-        receipt.os === input?.report.os &&
-        receipt.origin?.sha === sha &&
-        receipt.origin.dirty === false &&
-        Array.isArray(receipt.baselineDifferences) &&
-        receipt.baselineDifferences.length === 0;
-      const checks = expectedChecks.map((check) => {
-        const result = input?.report.checks.find(
-          (result) =>
-            result.id === check.id &&
-            JSON.stringify(result.command) === JSON.stringify(check.command),
-        );
-        return {
-          ...check,
-          status: result?.status ?? 'missing',
-          milliseconds: result?.milliseconds ?? 0,
-        };
+      const candidates = compatible.map((input) => {
+        const canonical = input?.report.configuration
+          ? canonicalPackages(input.report.configuration)
+          : [];
+        const expectedChecks = [
+          ...globalChecks,
+          ...canonical.flatMap((pkg) => packageChecks(pkg, 'full')),
+        ];
+        const workspaceComplete =
+          !!input?.report.workspace &&
+          canonical.length === input.report.workspace.length &&
+          canonical.every((pkg) =>
+            input.report.workspace!.some(
+              (entry) =>
+                entry.name === pkg.name &&
+                entry.runtime === pkg.runtime &&
+                entry.directory === pkg.directory &&
+                Object.keys(pkg.scripts).every((key) => entry.scripts[key] === pkg.scripts[key]),
+            ),
+          );
+        const receiptFile = input
+          ? path.join(directory, path.dirname(input.file), 'generation.json')
+          : '';
+        const receipt =
+          receiptFile && existsSync(receiptFile)
+            ? (JSON.parse(readFileSync(receiptFile, 'utf8')) as {
+                schema: number;
+                status: string;
+                contentId: string;
+                os: string;
+                origin?: { sha?: string; dirty?: boolean };
+                baselineDifferences?: string[];
+              })
+            : undefined;
+        const receiptMatches =
+          !!receipt &&
+          receipt.schema === 1 &&
+          receipt.status === 'passed' &&
+          receipt.contentId === input?.report.contentId &&
+          receipt.os === input?.report.os &&
+          receipt.origin?.sha === sha &&
+          receipt.origin.dirty === false &&
+          Array.isArray(receipt.baselineDifferences) &&
+          receipt.baselineDifferences.length === 0;
+        const checks = expectedChecks.map((check) => {
+          const result = input?.report.checks.find(
+            (result) =>
+              result.id === check.id &&
+              JSON.stringify(result.command) === JSON.stringify(check.command),
+          );
+          return {
+            ...check,
+            status: result?.status ?? 'missing',
+            milliseconds: result?.milliseconds ?? 0,
+          };
+        });
+        const passed =
+          input.report.status === 'passed' &&
+          workspaceComplete &&
+          receiptMatches &&
+          checks.length > 0 &&
+          input.report.checks.length === expectedChecks.length &&
+          checks.every((check) => check.status === 'passed');
+        return { input, checks, passed };
       });
-      const passed =
-        !!input &&
-        workspaceComplete &&
-        receiptMatches &&
-        checks.length > 0 &&
-        checks.every((check) => check.status === 'passed');
+      const candidate = candidates.find((entry) => entry.passed) ?? candidates[0];
+      const input = candidate?.input;
+      const checks =
+        candidate?.checks ??
+        [
+          ...globalChecks,
+          ...canonicalPackages(expected).flatMap((pkg) => packageChecks(pkg, 'full')),
+        ].map((check) => ({ ...check, status: 'missing', milliseconds: 0 }));
+      const passed = candidate?.passed ?? false;
       return {
         preset: entry.key,
         os,
@@ -274,6 +375,7 @@ export function acceptance(directory: string, sha: string) {
         os,
       })),
     ),
+    { id: 'worker-win32', file: 'gate-ci-worker-win32' },
     { id: 'hooks-linux', file: 'hooks', os: 'linux' },
     { id: 'hooks-win32', file: 'hooks', os: 'win32' },
     { id: 'lifecycle', file: 'lifecycle', os: 'linux' },
@@ -318,6 +420,8 @@ export function acceptance(directory: string, sha: string) {
       )
         return false;
       if ('os' in mechanism && report.os !== mechanism.os) return false;
+      if (mechanism.file === 'gate-ci-worker-win32')
+        return workerEvidenceValid(report as GateReport, expectedSource);
       if (mechanism.file === 'faults') {
         const entry = verificationCases.find(
           (entry) => entry.key === ('preset' in mechanism ? mechanism.preset : ''),

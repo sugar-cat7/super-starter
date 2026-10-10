@@ -37,6 +37,7 @@ export function faultCheckIds(packages: WorkspacePackage[]): string[] {
     'unit-skipped',
     'unit-timeout',
     'boundary',
+    'skill-metadata',
     ...(packages.some((pkg) => pkg.directory === 'packages/contracts')
       ? ['secret-contracts', 'contract']
       : []),
