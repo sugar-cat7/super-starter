@@ -60,8 +60,11 @@ describe('real workerd HTTP contract', () => {
       await response.arrayBuffer();
       expect(response.status).toBe(selected ? 200 : 404);
       const read = await fetchLocal(`/extensions/${feature}?key=runtime-test`);
+      const body = await read.text();
+      if (read.status !== (selected ? 200 : 404))
+        console.error(`Unexpected ${feature} GET status ${read.status}: ${body}`);
       expect(read.status).toBe(selected ? 200 : 404);
-      expect(await read.json()).toMatchObject(
+      expect(JSON.parse(body)).toMatchObject(
         selected ? { value: 'stored locally' } : { error: { code: 'not_found' } },
       );
     }

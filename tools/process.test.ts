@@ -20,13 +20,28 @@ it('forwards Worker build interruption to its detached non-cooperating child', a
     [fileURLToPath(new URL('./cloudflare/build.ts', import.meta.url))],
     {
       cwd: root,
-      stdio: 'ignore',
+      stdio: ['ignore', 'pipe', 'pipe'],
       env: { ...process.env, npm_execpath: executor, BUILD_ADDRESS: address },
     },
   );
+  let output = `npm_execpath key spellings: ${Object.keys(process.env)
+    .filter((key) => key.toLowerCase() === 'npm_execpath')
+    .join(', ')}; expected fixture executor: ${executor}\n`;
+  const record = (chunk: Buffer) => {
+    output = (output + chunk.toString()).slice(-16_000);
+  };
+  child.stdout?.on('data', record);
+  child.stderr?.on('data', record);
   try {
     const started = performance.now();
-    while (!existsSync(address) && performance.now() - started < 10_000) await pause(30);
+    while (!existsSync(address) && performance.now() - started < 10_000) {
+      if (child.exitCode !== null || child.signalCode !== null)
+        throw new Error(
+          `Build fixture exited before ready: exit ${child.exitCode}, signal ${child.signalCode}\n${output}`,
+        );
+      await pause(30);
+    }
+    if (!existsSync(address)) throw new Error(`Build fixture readiness timeout:\n${output}`);
     expect(existsSync(address)).toBe(true);
     const origin = readFileSync(address, 'utf8');
     expect(await (await fetch(origin)).text()).toBe('ready');
@@ -63,7 +78,7 @@ it('cleans an orphaned descendant while preserving an unrelated server', async (
   );
   writeFileSync(
     intermediate,
-    "import {spawn} from 'node:child_process'; const child=spawn(process.execPath,[process.argv[2]],{stdio:['ignore','inherit','inherit']}); child.unref(); setTimeout(()=>process.exit(0),200);",
+    "import {spawn} from 'node:child_process'; const child=spawn(process.execPath,[process.argv[2]],{stdio:['ignore','inherit','inherit'],detached:process.platform==='win32'}); child.unref(); setTimeout(()=>process.exit(0),200);",
   );
   writeFileSync(
     parent,
