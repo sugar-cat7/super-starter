@@ -18,6 +18,9 @@ import { workspacePackages } from './graph.ts';
 import { assertCheckout } from './checkout.ts';
 
 const hookPath = 'tools/quality/git-hooks';
+export function removeOwnedWorktree(root: string, snapshot: string): void {
+  runSync('git', ['-c', 'core.longpaths=true', 'worktree', 'remove', '--force', snapshot], root);
+}
 export function installHooks(root: string): void {
   const git = spawnSync('git', ['rev-parse', '--show-toplevel'], { cwd: root, encoding: 'utf8' });
   if (git.status !== 0) {
@@ -154,7 +157,7 @@ if (process.argv[1]?.endsWith(`${path.sep}hooks.ts`)) {
         assertCheckout(snapshot, local);
         await pnpm(['gate:push', '--', '--base', base], { cwd: snapshot });
       } finally {
-        runSync('git', ['worktree', 'remove', '--force', snapshot], root);
+        removeOwnedWorktree(root, snapshot);
       }
     }
   } else throw new Error(`Unknown hook event: ${event}`);

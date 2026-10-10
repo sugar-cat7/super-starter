@@ -1,10 +1,10 @@
 import { spawnSync } from 'node:child_process';
-import { mkdtempSync, readFileSync, rmSync, writeFileSync, mkdirSync } from 'node:fs';
+import { mkdtempSync, readFileSync, rmSync, writeFileSync, mkdirSync, readdirSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import assert from 'node:assert/strict';
 import { copyProjectFixture } from './fixture.ts';
-import { installHooks } from './hooks.ts';
+import { installHooks, removeOwnedWorktree } from './hooks.ts';
 import { pnpm } from '../process.ts';
 import { contentId } from './gate.ts';
 import { hookPhases } from './definitions.ts';
@@ -17,7 +17,13 @@ export async function hookRehearsal(project: string): Promise<void> {
   const root = path.join(owned, 'project');
   const remote = path.join(owned, 'remote.git');
   const git = (args: string[], expected = true, cwd = root, input?: string): string => {
-    const result = spawnSync('git', args, { cwd, input, encoding: 'utf8', timeout: 10 * 60_000 });
+    const result = spawnSync('git', args, {
+      cwd,
+      input,
+      encoding: 'utf8',
+      timeout: 10 * 60_000,
+      env: { ...process.env, TMPDIR: owned, TMP: owned, TEMP: owned },
+    });
     const output = `${result.stdout ?? ''}${result.stderr ?? ''}`;
     if (expected) assert.equal(result.status, 0, output);
     else {
@@ -59,7 +65,21 @@ export async function hookRehearsal(project: string): Promise<void> {
     git(['add', 'tools/hook-probe.ts']);
     git(['commit', '--allow-empty', '-m', 'Repaired index and empty-diff hook']);
     git(['init', '--bare', '-q', remote]);
+    const originalWorktrees = git(['worktree', 'list', '--porcelain']);
+    const assertPushCleanup = () => {
+      assert.equal(
+        git(['worktree', 'list', '--porcelain']),
+        originalWorktrees,
+        'Push checks must remove their registered worktrees',
+      );
+      assert.equal(
+        readdirSync(owned).some((name) => name.startsWith('starter-push-')),
+        false,
+        'Push checks must remove their physical snapshots even after a rejected gate',
+      );
+    };
     git(['push', remote, 'HEAD:refs/heads/test']);
+    assertPushCleanup();
     const before = git(['--git-dir', remote, 'rev-parse', 'refs/heads/test']);
     const blob = git(['hash-object', '-w', '--stdin'], true, root, bad).trim();
     git(['update-index', '--cacheinfo', `100644,${blob},tools/hook-probe.ts`]);
@@ -73,6 +93,7 @@ export async function hookRehearsal(project: string): Promise<void> {
     ).trim();
     git(['reset', '-q', 'HEAD', '--', 'tools/hook-probe.ts']);
     git(['push', remote, `${invalidCommit}:refs/heads/test`], false);
+    assertPushCleanup();
     assert.equal(
       git(['--git-dir', remote, 'rev-parse', 'refs/heads/test']),
       before,
@@ -86,6 +107,7 @@ export async function hookRehearsal(project: string): Promise<void> {
       'Repair committed fault\n',
     ).trim();
     git(['push', remote, `${repaired}:refs/heads/test`, `${repaired}:refs/heads/second`]);
+    assertPushCleanup();
     assert.equal(git(['--git-dir', remote, 'rev-parse', 'refs/heads/test']).trim(), repaired);
     const linked = path.join(owned, 'linked');
     git(['worktree', 'add', '--detach', linked, 'HEAD']);
@@ -100,7 +122,7 @@ export async function hookRehearsal(project: string): Promise<void> {
         'Linked worktree must not change original worktree',
       );
     } finally {
-      git(['worktree', 'remove', '--force', linked]);
+      removeOwnedWorktree(root, linked);
     }
     mkdirSync(path.join(root, 'user-hooks'));
     writeFileSync(path.join(root, 'user-hooks/pre-commit'), 'owned');
