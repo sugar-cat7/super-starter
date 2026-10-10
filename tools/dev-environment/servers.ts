@@ -84,10 +84,10 @@ export class Servers {
       exited = true;
       this.failures.push(error);
     });
-    child.once('exit', (code, signal) => {
+    child.once('exit', (code, exitSignal) => {
       exited = true;
-      if (!this.stopping && code !== 0 && signal !== 'SIGTERM')
-        this.failures.push(new Error(`${pkg.name}: exit ${code}, signal ${signal}`));
+      if (!signal.aborted && code !== 0)
+        this.failures.push(new Error(`${pkg.name}: exit ${code}, signal ${exitSignal}`));
     });
     const origin = `http://127.0.0.1:${port}`;
     const started = performance.now();
@@ -165,7 +165,7 @@ export class Servers {
     child.stderr?.on('data', log);
     child.once('error', (error) => this.failures.push(error));
     child.once('exit', (code, exitSignal) => {
-      if (!this.stopping && code !== 0)
+      if (!signal.aborted && code !== 0)
         this.failures.push(new Error(`${pkg.name} native exit ${code}, signal ${exitSignal}`));
     });
     const start = performance.now();

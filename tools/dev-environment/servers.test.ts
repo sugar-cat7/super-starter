@@ -1,4 +1,5 @@
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { once } from 'node:events';
 import os from 'node:os';
 import path from 'node:path';
 import { expect, it } from 'vitest';
@@ -51,6 +52,46 @@ it('cancels a pending start before spawn and permits an explicit real-server res
     expect(existsSync(secondRegistry)).toBe(false);
     expect(readFileSync(data, 'utf8')).toBe('persistent');
     expect(readFileSync(path.join(sibling, 'registration'), 'utf8')).toBe('protected');
+  } finally {
+    await servers.stop();
+    rmSync(root, { recursive: true, force: true });
+  }
+}, 30000);
+
+it('keeps stopped lifecycle exits out of an immediate restart and reports unexpected termination', async () => {
+  const root = mkdtempSync(path.join(os.tmpdir(), 'starter-lifecycle-exit-'));
+  const servers = new Servers(root);
+  const pkg = {
+    name: 'lifecycle-exit-fixture',
+    directory: '.',
+    runtime: 'library' as const,
+    dependencies: [],
+    scripts: { dev: 'node server.cjs' },
+  };
+  writeFileSync(
+    path.join(root, 'package.json'),
+    JSON.stringify({ name: pkg.name, scripts: pkg.scripts }),
+  );
+  writeFileSync(
+    path.join(root, 'server.cjs'),
+    "require('node:http').createServer((req,res)=>res.end('ready')).listen(Number(process.env.STARTER_PORT),'127.0.0.1',()=>console.log('http://127.0.0.1:'+process.env.STARTER_PORT));\n",
+  );
+  try {
+    let origin = await servers.start(pkg);
+    expect(await (await fetch(origin)).text()).toBe('ready');
+    for (let attempt = 0; attempt < 3; attempt += 1) {
+      await servers.stop(0);
+      origin = await servers.start(pkg);
+      expect(await (await fetch(origin)).text()).toBe('ready');
+      expect(servers.failures).toEqual([]);
+    }
+    const child = servers.children[0]!;
+    const exited = once(child, 'exit');
+    expect(child.kill('SIGTERM')).toBe(true);
+    await exited;
+    expect(servers.stopping).toBe(false);
+    expect(servers.failures).toHaveLength(1);
+    expect(servers.failures[0]?.message).toContain(`${pkg.name}: exit`);
   } finally {
     await servers.stop();
     rmSync(root, { recursive: true, force: true });
