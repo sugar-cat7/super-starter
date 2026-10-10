@@ -1,4 +1,13 @@
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import {
+  existsSync,
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  realpathSync,
+  rmSync,
+  symlinkSync,
+  writeFileSync,
+} from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { expect, it } from 'vitest';
@@ -19,11 +28,14 @@ it('isolates retained verification output from parent ignore rules and hook conf
     const configuration = readFileSync(path.join(parent, '.git/config'));
     expect(runSync('git', ['check-ignore', 'input.ts'], project)).toBe('input.ts');
     initializeVerificationGit(project);
-    expect(runSync('git', ['rev-parse', '--show-toplevel'], project).replaceAll('\\', '/')).toBe(
-      project.replaceAll('\\', '/'),
+    expect(realpathSync.native(runSync('git', ['rev-parse', '--show-toplevel'], project))).toBe(
+      realpathSync.native(project),
     );
     expect(() => runSync('git', ['check-ignore', 'input.ts'], project)).toThrow('git failed:');
     installHooks(project);
+    const alias = path.join(parent, 'logical-alias');
+    symlinkSync(project, alias, 'junction');
+    installHooks(alias);
     expect(runSync('git', ['config', '--local', '--get', 'core.hooksPath'], project)).toBe(
       'tools/quality/git-hooks',
     );

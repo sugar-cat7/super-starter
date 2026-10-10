@@ -108,7 +108,7 @@ export function doctor(root: string): { id: string; ok: boolean; detail: string 
     timeout: 10_000,
   });
   if (git.status === 0) {
-    const ownGit = realpathSync(git.stdout.trim()) === realpathSync(root);
+    const ownGit = realpathSync.native(git.stdout.trim()) === realpathSync.native(root);
     const hook = ownGit
       ? spawnSync('git', ['config', '--local', '--get', 'core.hooksPath'], {
           cwd: root,

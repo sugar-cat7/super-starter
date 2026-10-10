@@ -31,7 +31,7 @@ export function installHooks(root: string): void {
     console.log('Hooks not_required: no Git repository (run env:setup after git init)');
     return;
   }
-  if (realpathSync(git.stdout.trim()) !== realpathSync(root))
+  if (realpathSync.native(git.stdout.trim()) !== realpathSync.native(root))
     throw new Error(
       'Nested project belongs to a parent Git repository; run git init in this project, then env:setup. Parent Git configuration and hooks were left unchanged',
     );
