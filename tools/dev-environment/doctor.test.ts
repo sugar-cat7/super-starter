@@ -43,6 +43,26 @@ function fixture(inspect: (root: string) => void): void {
 }
 
 describe('environment versions', () => {
+  it('diagnoses a parent Git repository without reading its hook configuration', () => {
+    fixture((root) => {
+      const original = vi.mocked(spawnSync).getMockImplementation()!;
+      vi.mocked(spawnSync).mockImplementation((command, args, options) => {
+        if (command === 'git')
+          return { status: 0, stdout: path.dirname(root), stderr: '' } as ReturnType<
+            typeof spawnSync
+          >;
+        return original(command, args, options);
+      });
+      const check = doctor(root).find((entry) => entry.id === 'hooks');
+      expect(check?.ok).toBe(false);
+      expect(check?.detail).toContain('git init in this project');
+      expect(
+        vi
+          .mocked(spawnSync)
+          .mock.calls.some(([command, args]) => command === 'git' && args?.includes('config')),
+      ).toBe(false);
+    });
+  });
   it('accepts TOML quote/comment/spacing variants and ignores pins in other tables', () => {
     fixture((root) => {
       writeFileSync(

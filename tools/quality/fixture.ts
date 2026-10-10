@@ -1,8 +1,15 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 import { applyFiles, digest, walk } from '../generators/files.ts';
 import { workspacePackages } from './graph.ts';
+import { runSync } from '../process.ts';
+
+export function initializeVerificationGit(root: string): void {
+  if (readdirSync(root).some((entry) => entry.toLowerCase() === '.git'))
+    throw new Error('Verification Git boundary must be new; existing Git metadata is protected');
+  runSync('git', ['init', '--quiet', '--template='], root);
+}
 
 // Omit only owned outputs and local credentials, never a matching basename in
 // first-party source or a legal application directory.

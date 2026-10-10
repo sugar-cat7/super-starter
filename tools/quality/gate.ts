@@ -9,6 +9,7 @@ import { affectedPackages, workspacePackages } from './graph.ts';
 import { globalChecks, packageChecks, type Check } from './definitions.ts';
 import { artifactSizes, toolVersions } from './evidence.ts';
 import { baselineDifferences } from '../generators/baseline.ts';
+import { headSha } from './checkout.ts';
 
 export function contentId(root: string): string {
   const hash = createHash('sha256');
@@ -78,7 +79,7 @@ export async function gate(
 ): Promise<void> {
   const git = (args: string[]) =>
     spawnSync('git', args, { cwd: root, encoding: 'utf8', timeout: 10_000 });
-  const head = git(['rev-parse', 'HEAD']).stdout.trim() || 'uncommitted';
+  const head = headSha(root) ?? 'uncommitted';
   let changed: string[] | undefined;
   let selectionReason = 'Full selected configuration (unknown base or explicit full gate)';
   if (['pre-pr', 'push', 'ci'].includes(mode) && base && base !== 'unknown') {

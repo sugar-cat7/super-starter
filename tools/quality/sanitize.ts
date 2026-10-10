@@ -1,9 +1,9 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
-import { spawnSync } from 'node:child_process';
 import { walk } from '../generators/files.ts';
 import { contentId } from './gate.ts';
 import { workspacePackages } from './graph.ts';
+import { headSha } from './checkout.ts';
 
 type Rule = { id: string; pattern: string; allow?: { file: string; reason: string }[] };
 export function sanitize(root: string, rules: Rule[]): { file: string; rule: string }[] {
@@ -61,7 +61,7 @@ if (process.argv[1]?.endsWith(`${path.sep}sanitize.ts`)) {
   mkdirSync('artifacts', { recursive: true });
   writeFileSync(
     'artifacts/sanitization.json',
-    `${JSON.stringify({ schema: 1, sha: spawnSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).stdout.trim() || null, origin: state.origin, contentId: contentId(process.cwd()), rules, failures, status: failures.length ? 'failed' : 'passed' }, null, 2)}\n`,
+    `${JSON.stringify({ schema: 1, sha: headSha(process.cwd()), origin: state.origin, contentId: contentId(process.cwd()), rules, failures, status: failures.length ? 'failed' : 'passed' }, null, 2)}\n`,
   );
   if (failures.length)
     throw new Error(failures.map((entry) => `${entry.file}: ${entry.rule}`).join('\n'));

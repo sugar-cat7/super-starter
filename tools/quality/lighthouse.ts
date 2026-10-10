@@ -1,5 +1,5 @@
 import { createRequire } from 'node:module';
-import { spawnSync } from 'node:child_process';
+import { headSha } from './checkout.ts';
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 import path from 'node:path';
@@ -241,12 +241,7 @@ async function audit(root: string, pkg: WorkspacePackage): Promise<void> {
   const report = {
     schema: 1,
     package: pkg.name,
-    sha:
-      spawnSync('git', ['rev-parse', 'HEAD'], {
-        cwd: root,
-        encoding: 'utf8',
-        timeout: 10_000,
-      }).stdout.trim() || 'uncommitted',
+    sha: headSha(root) ?? 'uncommitted',
     contentId: before,
     templateOrigin:
       (JSON.parse(readFileSync(path.join(root, '.template.json'), 'utf8')) as { origin?: unknown })

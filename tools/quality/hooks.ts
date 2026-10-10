@@ -31,6 +31,10 @@ export function installHooks(root: string): void {
     console.log('Hooks not_required: no Git repository (run env:setup after git init)');
     return;
   }
+  if (realpathSync(git.stdout.trim()) !== realpathSync(root))
+    throw new Error(
+      'Nested project belongs to a parent Git repository; run git init in this project, then env:setup. Parent Git configuration and hooks were left unchanged',
+    );
   const configured = spawnSync('git', ['config', '--get', 'core.hooksPath'], {
     cwd: root,
     encoding: 'utf8',
@@ -134,8 +138,11 @@ export async function indexCheck(root: string): Promise<void> {
 }
 
 if (process.argv[1]?.endsWith(`${path.sep}hooks.ts`)) {
-  const root = runSync('git', ['rev-parse', '--show-toplevel'], process.cwd());
   const event = process.argv[2];
+  const root =
+    event === 'install'
+      ? process.cwd()
+      : runSync('git', ['rev-parse', '--show-toplevel'], process.cwd());
   if (event === 'install') installHooks(root);
   else if (event === 'pre-commit') await indexCheck(root);
   else if (event === 'pre-push') {

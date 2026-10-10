@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, realpathSync } from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { workspacePackages } from '../quality/graph.ts';
@@ -108,16 +108,20 @@ export function doctor(root: string): { id: string; ok: boolean; detail: string 
     timeout: 10_000,
   });
   if (git.status === 0) {
-    const hook = spawnSync('git', ['config', '--local', '--get', 'core.hooksPath'], {
-      cwd: root,
-      encoding: 'utf8',
-      timeout: 10_000,
-    });
+    const ownGit = realpathSync(git.stdout.trim()) === realpathSync(root);
+    const hook = ownGit
+      ? spawnSync('git', ['config', '--local', '--get', 'core.hooksPath'], {
+          cwd: root,
+          encoding: 'utf8',
+          timeout: 10_000,
+        })
+      : null;
     checks.push({
       id: 'hooks',
-      ok: hook.stdout.trim() === 'tools/quality/git-hooks',
-      detail:
-        'Repository hooks required (pnpm env:setup); existing hook conflicts require explicit migration',
+      ok: hook?.stdout.trim() === 'tools/quality/git-hooks',
+      detail: ownGit
+        ? 'Repository hooks required (pnpm env:setup); existing hook conflicts require explicit migration'
+        : 'Nested project belongs to parent Git; run git init in this project, then pnpm env:setup',
     });
   }
   // Read the manifest to catch corrupt state; never inspect values of runtime secrets.

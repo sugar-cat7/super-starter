@@ -2,6 +2,15 @@ import { spawnSync } from 'node:child_process';
 import path from 'node:path';
 import { runSync } from '../process.ts';
 
+export function headSha(root: string): string | null {
+  const head = spawnSync('git', ['rev-parse', '--verify', 'HEAD'], {
+    cwd: root,
+    encoding: 'utf8',
+    timeout: 10_000,
+  });
+  return head.status === 0 ? head.stdout.trim() : null;
+}
+
 export function assertCheckout(root: string, expected: string): void {
   const head = runSync('git', ['rev-parse', 'HEAD'], root);
   if (head !== expected)

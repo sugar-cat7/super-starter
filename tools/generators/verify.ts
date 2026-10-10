@@ -12,7 +12,6 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { pnpm } from '../process.ts';
 import { contentId as sourceId } from '../quality/gate.ts';
-import { spawnSync } from 'node:child_process';
 import { applyFiles, digest } from './files.ts';
 import { projectFiles } from './render.ts';
 import { flags, projectOptions, verificationCases } from './options.ts';
@@ -20,6 +19,8 @@ import { faultRehearsal } from '../quality/faults.ts';
 import { hookRehearsal } from '../quality/hooks-rehearsal.ts';
 import { lifecycleRehearsal } from './lifecycle.ts';
 import { writeEvidenceAfterCleanup } from '../quality/evidence.ts';
+import { initializeVerificationGit } from '../quality/fixture.ts';
+import { headSha } from '../quality/checkout.ts';
 
 const source = path.resolve(fileURLToPath(new URL('../..', import.meta.url)));
 const input = flags(process.argv.slice(2));
@@ -64,6 +65,7 @@ try {
     );
     applyFiles(root, files);
     try {
+      initializeVerificationGit(root);
       await pnpm(['install', '--lockfile-only', '--no-frozen-lockfile'], { cwd: root });
       if (!input['generate-only']) {
         await pnpm(['env:setup'], { cwd: root, timeout: 10 * 60_000 });
@@ -111,9 +113,7 @@ try {
       status: completed ? (input['generate-only'] ? 'generated' : 'passed') : 'failed',
       node: process.version,
       os: process.platform,
-      sourceSha:
-        spawnSync('git', ['rev-parse', 'HEAD'], { cwd: source, encoding: 'utf8' }).stdout.trim() ||
-        null,
+      sourceSha: headSha(source),
       sourceContentId: sourceId(source),
       generatedFrom: JSON.parse(readFileSync(path.join(source, '.template.json'), 'utf8')).version,
       reports,
