@@ -52,6 +52,59 @@ vi.mock('node:fs', async (original) => {
 });
 
 describe('generation transaction', () => {
+  it('preserves specially permissioned managed ancestors through pruning failure and retry', () => {
+    const root = mkdtempSync(path.join(os.tmpdir(), 'template-special-mode-'));
+    try {
+      const directory = path.join(root, 'packages/api/src');
+      mkdirSync(directory, { recursive: true });
+      chmodSync(directory, 0o2750);
+      const mode = statSync(directory).mode & 0o7777;
+      expect(mode & 0o7000).toBe(process.platform === 'win32' ? 0 : 0o2000);
+      writeFileSync(path.join(directory, 'notes.ts'), 'original');
+      failure.prune = path.join('packages', 'api');
+      expect(() => applyFiles(root, new Map(), ['packages/api/src/notes.ts'])).toThrow('EACCES');
+      expect(readFileSync(path.join(directory, 'notes.ts'), 'utf8')).toBe('original');
+      expect(statSync(directory).mode & 0o7777).toBe(mode);
+      expect(existsSync(path.join(root, '.template-transaction.json'))).toBe(false);
+      applyFiles(root, new Map(), ['packages/api/src/notes.ts']);
+      expect(existsSync(path.join(directory, 'notes.ts'))).toBe(false);
+      expect(existsSync(directory)).toBe((mode & 0o7000) !== 0);
+      expect(existsSync(directory) ? statSync(directory).mode & 0o7777 : null).toBe(
+        (mode & 0o7000) !== 0 ? mode : null,
+      );
+    } finally {
+      failure.prune = '';
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+  it('preserves special directory permissions added after the journal was written', () => {
+    const root = mkdtempSync(path.join(os.tmpdir(), 'template-special-mode-race-'));
+    try {
+      const directory = path.join(root, 'packages/api/src');
+      mkdirSync(directory, { recursive: true });
+      writeFileSync(path.join(directory, 'notes.ts'), 'managed');
+      let mode = 0;
+      applyFiles(
+        root,
+        new Map([['new.txt', Buffer.from('new')]]),
+        ['packages/api/src/notes.ts'],
+        () => {
+          chmodSync(directory, 0o1750);
+          mode = statSync(directory).mode & 0o7777;
+          expect(mode & 0o7000).toBe(process.platform === 'win32' ? 0 : 0o1000);
+        },
+      );
+      expect(existsSync(path.join(directory, 'notes.ts'))).toBe(false);
+      expect(existsSync(directory)).toBe((mode & 0o7000) !== 0);
+      expect(existsSync(directory) ? statSync(directory).mode & 0o7777 : null).toBe(
+        (mode & 0o7000) !== 0 ? mode : null,
+      );
+      expect(readFileSync(path.join(root, 'new.txt'), 'utf8')).toBe('new');
+      expect(existsSync(path.join(root, '.template-transaction.json'))).toBe(false);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
   it('refuses a symlink swap after recovery creates a directory without changing external permissions', () => {
     const root = mkdtempSync(path.join(os.tmpdir(), 'template-recovery-swap-'));
     const outside = mkdtempSync(path.join(os.tmpdir(), 'template-recovery-outside-'));

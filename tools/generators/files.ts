@@ -53,6 +53,8 @@ const journalName = '.template-transaction.json';
 
 function removeEmptyDirectory(root: string, relative: string): void {
   try {
+    const target = safeFile(root, relative);
+    if (existsSync(target) && (lstatSync(target).mode & 0o7000) !== 0) return;
     rmdirSync(safeFile(root, relative));
   } catch (error) {
     if (!['ENOENT', 'ENOTEMPTY', 'EEXIST'].includes((error as NodeJS.ErrnoException).code ?? ''))
@@ -177,11 +179,12 @@ export function applyFiles(
       ),
     ]
       .filter((relative) => existsSync(safeFile(root, relative)))
-      .map((relative) => {
+      .flatMap((relative) => {
         const target = safeFile(root, relative);
-        if (!lstatSync(target).isDirectory())
-          throw new Error(`Not a removal directory: ${relative}`);
-        return { path: relative, mode: lstatSync(target).mode & 0o777 };
+        const metadata = lstatSync(target);
+        if (!metadata.isDirectory()) throw new Error(`Not a removal directory: ${relative}`);
+        if ((metadata.mode & 0o7000) !== 0) return [];
+        return [{ path: relative, mode: metadata.mode & 0o777 }];
       }),
   };
   writeFileSync(safeFile(root, journalName), `${JSON.stringify(journal)}\n`, {
