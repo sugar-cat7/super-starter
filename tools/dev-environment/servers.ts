@@ -2,6 +2,7 @@ import type { ChildProcess } from 'node:child_process';
 import { createServer } from 'node:net';
 import path from 'node:path';
 import { setTimeout as pause } from 'node:timers/promises';
+import { stripVTControlCharacters } from 'node:util';
 import { spawnOwned, pnpmCommand, stopTree } from '../process.ts';
 export { stopTree } from '../process.ts';
 import { workspacePackages, type WorkspacePackage } from '../quality/graph.ts';
@@ -84,7 +85,7 @@ export class Servers {
       signal.throwIfAborted();
       if (exited) throw new Error(`${pkg.name} exited before ready\n${output}`);
       try {
-        if (!output.includes(origin)) {
+        if (!stripVTControlCharacters(output).includes(origin)) {
           await pause(100, undefined, { signal });
           continue;
         }

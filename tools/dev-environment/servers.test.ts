@@ -1,4 +1,4 @@
-import { existsSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { expect, it } from 'vitest';
@@ -34,6 +34,37 @@ it('cancels a pending start before spawn and permits an explicit real-server res
       'fetch failed',
     );
   } finally {
+    await servers.stop();
+    rmSync(root, { recursive: true, force: true });
+  }
+}, 30000);
+
+it('probes an owned server whose logged URL contains split terminal color sequences', async () => {
+  const root = mkdtempSync(path.join(os.tmpdir(), 'starter-colored-url-'));
+  const servers = new Servers(root);
+  const pkg = {
+    name: 'colored-url-fixture',
+    directory: '.',
+    runtime: 'library' as const,
+    dependencies: [],
+    scripts: { dev: 'node server.cjs' },
+  };
+  writeFileSync(
+    path.join(root, 'package.json'),
+    JSON.stringify({ name: pkg.name, scripts: pkg.scripts }),
+  );
+  writeFileSync(
+    path.join(root, 'server.cjs'),
+    "const fs=require('node:fs');require('node:http').createServer((req,res)=>{fs.writeFileSync('health-request',req.url);res.end('ready');}).listen(Number(process.env.STARTER_PORT),'127.0.0.1',()=>{process.stdout.write('Local: \\u001b[36mhttp://127.0.0.1:\\u001b[');setTimeout(()=>process.stdout.write('1m'+process.env.STARTER_PORT+'\\u001b[22m/\\u001b[39m\\n'),30);});\n",
+  );
+  const deadline = setTimeout(() => void servers.stop(), 5000);
+  try {
+    const origin = await servers.start(pkg);
+    expect(readFileSync(path.join(root, 'health-request'), 'utf8')).toBe('/');
+    expect(servers.origins.get(pkg.name)).toBe(origin);
+    expect(await (await fetch(origin)).text()).toBe('ready');
+  } finally {
+    clearTimeout(deadline);
     await servers.stop();
     rmSync(root, { recursive: true, force: true });
   }
