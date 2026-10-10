@@ -7,6 +7,8 @@ import {
   readdirSync,
   renameSync,
   rmSync,
+  rmdirSync,
+  chmodSync,
   writeFileSync,
 } from 'node:fs';
 import path from 'node:path';
@@ -45,8 +47,18 @@ type Journal = {
     mode?: number;
   }[];
   directories: string[];
+  prunedDirectories?: { path: string; mode: number }[];
 };
 const journalName = '.template-transaction.json';
+
+function removeEmptyDirectory(root: string, relative: string): void {
+  try {
+    rmdirSync(safeFile(root, relative));
+  } catch (error) {
+    if (!['ENOENT', 'ENOTEMPTY', 'EEXIST'].includes((error as NodeJS.ErrnoException).code ?? ''))
+      throw error;
+  }
+}
 
 function atomicWrite(
   root: string,
@@ -82,6 +94,26 @@ export function recover(root: string): void {
     }
   }
   for (const directory of journal.directories) safeFile(root, directory);
+  const pruned = journal.prunedDirectories ?? [];
+  for (const directory of pruned) {
+    const target = safeFile(root, directory.path);
+    if (!Number.isInteger(directory.mode) || directory.mode < 0 || directory.mode > 0o777)
+      throw new Error('Unsafe transaction directory mode');
+    if (existsSync(target) && !lstatSync(target).isDirectory())
+      throw new Error(`Not a recovery directory: ${directory.path}`);
+  }
+  for (const directory of [...pruned].sort(
+    (a, b) => a.path.split('/').length - b.path.split('/').length,
+  )) {
+    const target = safeFile(root, directory.path);
+    if (!existsSync(target)) {
+      mkdirSync(target, { mode: directory.mode });
+      const recreated = safeFile(root, directory.path);
+      if (!lstatSync(recreated).isDirectory())
+        throw new Error(`Recovery directory was replaced: ${directory.path}`);
+      chmodSync(safeFile(root, directory.path), directory.mode);
+    }
+  }
   for (const entry of journal.files.toReversed()) {
     const target = safeFile(root, entry.path);
     if (entry.temp) rmSync(safeFile(root, entry.temp), { force: true });
@@ -91,8 +123,7 @@ export function recover(root: string): void {
     else writeFileSync(target, Buffer.from(entry.previous, 'base64'));
   }
   for (const directory of journal.directories.toReversed()) {
-    const target = safeFile(root, directory);
-    if (existsSync(target) && readdirSync(target).length === 0) rmSync(target, { recursive: true });
+    removeEmptyDirectory(root, directory);
   }
   rmSync(filename);
 }
@@ -137,6 +168,21 @@ export function applyFiles(
       };
     }),
     directories,
+    prunedDirectories: [
+      ...new Set(
+        remove.flatMap((filename) => {
+          const parts = filename.split('/').slice(0, -1);
+          return parts.map((_, index) => parts.slice(0, index + 1).join('/'));
+        }),
+      ),
+    ]
+      .filter((relative) => existsSync(safeFile(root, relative)))
+      .map((relative) => {
+        const target = safeFile(root, relative);
+        if (!lstatSync(target).isDirectory())
+          throw new Error(`Not a removal directory: ${relative}`);
+        return { path: relative, mode: lstatSync(target).mode & 0o777 };
+      }),
   };
   writeFileSync(safeFile(root, journalName), `${JSON.stringify(journal)}\n`, {
     flag: 'wx',
@@ -151,6 +197,10 @@ export function applyFiles(
       atomicWrite(root, relative, contents, entry.temp!, entry.mode);
     }
     for (const relative of remove) rmSync(safeFile(root, relative));
+    for (const directory of [...(journal.prunedDirectories ?? [])].sort(
+      (a, b) => b.path.split('/').length - a.path.split('/').length,
+    ))
+      removeEmptyDirectory(root, directory.path);
     rmSync(safeFile(root, journalName));
   } catch (error) {
     try {
