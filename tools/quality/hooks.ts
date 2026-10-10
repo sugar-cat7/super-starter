@@ -20,6 +20,10 @@ import { assertCheckout } from './checkout.ts';
 const hookPath = 'tools/quality/git-hooks';
 export function removeOwnedWorktree(root: string, snapshot: string): void {
   runSync('git', ['-c', 'core.longpaths=true', 'worktree', 'remove', '--force', snapshot], root);
+  // Git deliberately retains Windows junctions and their ancestors while
+  // unregistering the worktree. Finish only the successfully removed owned
+  // snapshot; Node removes junctions without following their targets.
+  rmSync(snapshot, { recursive: true, force: true });
 }
 export function installHooks(root: string): void {
   const git = spawnSync('git', ['rev-parse', '--show-toplevel'], { cwd: root, encoding: 'utf8' });
