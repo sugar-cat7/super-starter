@@ -60,6 +60,39 @@ export async function stopTree(child: ChildProcess, graceMs = 3_000): Promise<vo
       return true;
     } catch (error) {
       if ((error as NodeJS.ErrnoException).code === 'ESRCH') return false;
+      if (
+        process.platform === 'darwin' &&
+        value === 0 &&
+        (error as NodeJS.ErrnoException).code === 'EPERM'
+      ) {
+        // XNU excludes zombies from killpg, returning EPERM even after all live members stop.
+        // Only a complete, valid process table may establish that this owned group has stopped.
+        const table = spawnSync('/bin/ps', ['-A', '-o', 'pid=,pgid=,stat='], {
+          encoding: 'utf8',
+          timeout: 1_000,
+        });
+        if (table.error || table.status !== 0)
+          throw new Error('Unable to inspect the owned Darwin process group', { cause: error });
+        const members: string[] = [];
+        const rows = table.stdout.split('\n').filter((line) => line.trim());
+        if (!rows.length) throw new Error('Invalid Darwin process table', { cause: error });
+        for (const row of rows) {
+          const fields = /^\s*(\d+)\s+(\d+)\s+(\S+)\s*$/u.exec(row);
+          if (
+            !fields ||
+            !Number.isSafeInteger(Number(fields[1])) ||
+            !Number.isSafeInteger(Number(fields[2])) ||
+            !/^[HIRSTUZ?][+<>AELNSVWXs]*$/u.test(fields[3] ?? '')
+          )
+            throw new Error('Invalid Darwin process table', { cause: error });
+          if (Number(fields[2]) === pid) {
+            members.push(row.trim());
+            if (!fields[3]?.startsWith('Z')) throw error;
+          }
+        }
+        console.warn(`Stopped Darwin group ${pid}: ${JSON.stringify(members)}`);
+        return false;
+      }
       throw error;
     }
   };

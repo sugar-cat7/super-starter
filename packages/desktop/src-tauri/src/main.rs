@@ -145,6 +145,7 @@ fn main() {
             export_notes
         ])
         .on_page_load(|_, payload| {
+            eprintln!("NATIVE_PAGE_LOAD {:?} {}", payload.event(), payload.url());
             if payload.event() == tauri::webview::PageLoadEvent::Finished {
                 println!("NATIVE_READY");
             }

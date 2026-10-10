@@ -86,7 +86,7 @@ jobs:
           persist_github_token: false
       - name: Native Linux prerequisites
         if: runner.os == 'Linux' && contains(matrix.preset, 'desktop')
-        run: sudo apt-get update && sudo apt-get install -y libwebkit2gtk-4.1-dev build-essential libayatana-appindicator3-dev librsvg2-dev patchelf xvfb
+        run: sudo apt-get update && sudo apt-get install -y libwebkit2gtk-4.1-dev build-essential libayatana-appindicator3-dev librsvg2-dev patchelf xvfb dbus-x11 at-spi2-core
       - name: Setup generated project
         working-directory: ${{ matrix.preset }}
         run: pnpm env:setup
@@ -100,7 +100,7 @@ jobs:
       - name: Selected full gate (native Linux)
         if: runner.os == 'Linux' && contains(matrix.preset, 'desktop')
         working-directory: ${{ matrix.preset }}
-        run: xvfb-run -a pnpm gate:full
+        run: dbus-run-session -- xvfb-run -a pnpm gate:full
       - name: Selected full gate
         if: runner.os != 'Linux' || !contains(matrix.preset, 'desktop')
         working-directory: ${{ matrix.preset }}
@@ -115,7 +115,7 @@ jobs:
         shell: bash
         run: |
           if [ "$RUNNER_OS" = Linux ] && [ "${{ matrix.preset }}" = desktop ]; then
-            xvfb-run -a pnpm template:faults
+            dbus-run-session -- xvfb-run -a pnpm template:faults
           else
             pnpm template:faults
           fi
@@ -156,12 +156,12 @@ jobs:
           persist_github_token: false
       - name: Native Linux prerequisites
         if: runner.os == 'Linux'
-        run: sudo apt-get update && sudo apt-get install -y libwebkit2gtk-4.1-dev build-essential libayatana-appindicator3-dev librsvg2-dev patchelf xvfb
+        run: sudo apt-get update && sudo apt-get install -y libwebkit2gtk-4.1-dev build-essential libayatana-appindicator3-dev librsvg2-dev patchelf xvfb dbus-x11 at-spi2-core
       - run: pnpm env:setup
       - run: node tools/quality/checkout.ts
       - name: Actual native checks on Linux
         if: runner.os == 'Linux'
-        run: xvfb-run -a pnpm gate:ci -- --base "$CI_BASE_SHA" --checks native
+        run: dbus-run-session -- xvfb-run -a pnpm gate:ci -- --base "$CI_BASE_SHA" --checks native
       - name: Actual native checks on macOS or Windows
         if: runner.os != 'Linux'
         shell: bash

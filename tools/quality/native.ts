@@ -151,16 +151,20 @@ if (operation === 'rust') {
   child.stderr?.on('data', (chunk: Buffer) => {
     output += chunk.toString();
   });
+  const startedAt = new Date().toISOString();
+  const start = performance.now();
+  let passed = false;
   try {
-    const start = performance.now();
     while (!output.includes('NATIVE_READY') && performance.now() - start < 30_000) {
-      if (child.exitCode !== null) throw new Error(`Release exited before startup: ${output}`);
+      if (child.exitCode !== null || child.signalCode !== null)
+        throw new Error(`Release exited before startup: ${output}`);
       await pause(100);
     }
     if (!output.includes('NATIVE_READY'))
       throw new Error(`Release native startup timeout: ${output}`);
     await pause(1_000);
-    if (child.exitCode !== null) throw new Error(`Release crashed after startup: ${output}`);
+    if (child.exitCode !== null || child.signalCode !== null)
+      throw new Error(`Release crashed after startup: ${output}`);
     let reachable = false;
     try {
       await fetch(`http://127.0.0.1:${port}/status`, { signal: AbortSignal.timeout(1_000) });
@@ -169,9 +173,35 @@ if (operation === 'rust') {
       /* Feature-off release must have no driver listener. */
     }
     if (reachable) throw new Error('WebDriver server enabled in release');
+    passed = true;
     console.log(`Release native startup passed on ${process.platform}; WebDriver disabled`);
   } finally {
-    await stopTree(child);
+    try {
+      const evidence = path.join(root, 'artifacts', `native-${process.platform}`);
+      mkdirSync(evidence, { recursive: true });
+      writeFileSync(
+        path.join(evidence, 'release-startup.json'),
+        `${JSON.stringify(
+          {
+            os: process.platform,
+            binary,
+            startedAt,
+            durationMs: performance.now() - start,
+            startupPassed: passed,
+            nativeReady: output.includes('NATIVE_READY'),
+            exitCode: child.exitCode,
+            signalCode: child.signalCode,
+            display: process.env.DISPLAY ?? null,
+            sessionBusConfigured: Boolean(process.env.DBUS_SESSION_BUS_ADDRESS),
+            output: output.slice(-16_000),
+          },
+          null,
+          2,
+        )}\n`,
+      );
+    } finally {
+      await stopTree(child);
+    }
   }
 } else throw new Error('Expected rust|e2e|release|build');
 // Cleanup is limited to our test export; caches remain owned by this worktree.

@@ -21,7 +21,13 @@ it('forwards Worker build interruption to its detached non-cooperating child', a
     {
       cwd: root,
       stdio: ['ignore', 'pipe', 'pipe'],
-      env: { ...process.env, npm_execpath: executor, BUILD_ADDRESS: address },
+      env: {
+        ...Object.fromEntries(
+          Object.entries(process.env).filter(([key]) => key.toLowerCase() !== 'npm_execpath'),
+        ),
+        npm_execpath: executor,
+        BUILD_ADDRESS: address,
+      },
     },
   );
   let output = `npm_execpath key spellings: ${Object.keys(process.env)

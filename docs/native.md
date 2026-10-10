@@ -2,7 +2,7 @@
 
 The selected Desktop package owns `src-tauri/rust-toolchain.toml`, Cargo.lock, Tauri config/capabilities and its SPA. Web/API-only projects install no Rust or Tauri package. Install rustup using its [official installation](https://rustup.rs/) for your existing development environment; setup activates the package's pinned toolchain. No root Rust pin is duplicated in mise.
 
-Follow [Tauri prerequisites](https://v2.tauri.app/start/prerequisites/): macOS Xcode command-line tools; Windows MSVC C++ tools and WebView2; Linux GTK3, WebKitGTK 4.1, libayatana-appindicator, librsvg, patchelf and build tools. On an environment you cannot provision, doctor reports the missing libraries. CI's standard hosted Linux image installs those packages and uses Xvfb. A Linux result does not certify Windows/macOS.
+Follow [Tauri prerequisites](https://v2.tauri.app/start/prerequisites/): macOS Xcode command-line tools; Windows MSVC C++ tools and WebView2; Linux GTK3, WebKitGTK 4.1, libayatana-appindicator, librsvg, patchelf and build tools. On an environment you cannot provision, doctor reports the missing libraries. CI's standard hosted Linux image installs those packages, Xvfb, `dbus-x11` and `at-spi2-core`; headless native checks run inside `dbus-run-session -- xvfb-run -a` so WebKit has an owned session bus and its accessibility service. See the [SDK adoption evidence](adoption.md) for this prerequisite. A Linux result does not certify Windows/macOS.
 
 The package scripts `test:rust`, `test:native`, `test:release`, `build` and optional `build:bundle` operate independently. `pnpm build` builds each selected package; Desktop's ordinary build is unsigned and has no bundle/publication step. Signed installers, certificates, notarization and distribution require separate authorized work.
 
@@ -29,8 +29,8 @@ docker run --rm --init -it \
   starter-native-dev bash
 pnpm env:setup
 pnpm env:doctor
-xvfb-run -a pnpm dev -- desktop
-xvfb-run -a pnpm gate:full
+dbus-run-session -- xvfb-run -a pnpm dev -- desktop
+dbus-run-session -- xvfb-run -a pnpm gate:full
 ```
 
 For non-interactive execution omit `-it` and append `bash -c '<command>'`. A managed network may require its approved CA during image build (`--secret id=system_ca,src=<public-ca-bundle>`) and runtime; use the environment's documented trust/proxy configuration without disabling certificate verification. Cache only this project's `.state`/dependencies and an owned Cargo registry volume. Git operations use the mounted repository's local hooks; Docker and Rust are unnecessary for presets without Desktop.
