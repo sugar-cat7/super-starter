@@ -5,7 +5,6 @@ import {
   readFileSync,
   readdirSync,
   rmSync,
-  writeFileSync,
   cpSync,
 } from 'node:fs';
 import os from 'node:os';
@@ -20,6 +19,7 @@ import { flags, projectOptions, verificationCases } from './options.ts';
 import { faultRehearsal } from '../quality/faults.ts';
 import { hookRehearsal } from '../quality/hooks-rehearsal.ts';
 import { lifecycleRehearsal } from './lifecycle.ts';
+import { writeEvidenceAfterCleanup } from '../quality/evidence.ts';
 
 const source = path.resolve(fileURLToPath(new URL('../..', import.meta.url)));
 const input = flags(process.argv.slice(2));
@@ -43,6 +43,7 @@ const reports: {
   status: 'generated' | 'passed' | 'failed';
   error?: string;
 }[] = [];
+let completed = false;
 try {
   for (const entry of selected) {
     const started = performance.now();
@@ -101,11 +102,24 @@ try {
       }
     }
   }
+  completed = true;
 } finally {
-  mkdirSync(path.join(source, 'artifacts'), { recursive: true });
-  writeFileSync(
+  writeEvidenceAfterCleanup(
     path.join(source, 'artifacts', `template-${process.platform}.json`),
-    `${JSON.stringify({ schema: 1, node: process.version, os: process.platform, sourceSha: spawnSync('git', ['rev-parse', 'HEAD'], { cwd: source, encoding: 'utf8' }).stdout.trim() || null, sourceContentId: sourceId(source), generatedFrom: JSON.parse(readFileSync(path.join(source, '.template.json'), 'utf8')).version, reports }, null, 2)}\n`,
+    () => ({
+      schema: 1,
+      status: completed ? (input['generate-only'] ? 'generated' : 'passed') : 'failed',
+      node: process.version,
+      os: process.platform,
+      sourceSha:
+        spawnSync('git', ['rev-parse', 'HEAD'], { cwd: source, encoding: 'utf8' }).stdout.trim() ||
+        null,
+      sourceContentId: sourceId(source),
+      generatedFrom: JSON.parse(readFileSync(path.join(source, '.template.json'), 'utf8')).version,
+      reports,
+    }),
+    () => {
+      if (temporary) rmSync(output, { recursive: true, force: true });
+    },
   );
-  if (temporary) rmSync(output, { recursive: true, force: true });
 }

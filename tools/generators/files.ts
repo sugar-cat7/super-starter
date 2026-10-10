@@ -67,10 +67,22 @@ function atomicWrite(
   relative: string,
   contents: Buffer,
   temp: string,
-  mode = 0o644,
+  mode?: number,
 ): void {
-  writeFileSync(safeFile(root, temp), contents, { flag: 'wx', mode });
+  existingMode(root, relative);
+  writeFileSync(safeFile(root, temp), contents, { flag: 'wx', mode: mode ?? 0o644 });
+  if (mode !== undefined) chmodSync(safeFile(root, temp), mode);
   renameSync(safeFile(root, temp), safeFile(root, relative));
+}
+
+function existingMode(root: string, relative: string): number | undefined {
+  const target = safeFile(root, relative);
+  if (!existsSync(target)) return undefined;
+  const metadata = lstatSync(target);
+  if (!metadata.isFile()) throw new Error(`Not a regular file: ${relative}`);
+  if ((metadata.mode & 0o7000) !== 0)
+    throw new Error(`Special file permissions require manual review: ${relative}`);
+  return metadata.mode & 0o777;
 }
 
 export function recover(root: string): void {
@@ -79,6 +91,12 @@ export function recover(root: string): void {
   const journal = JSON.parse(readFileSync(filename, 'utf8')) as Journal;
   if (journal.version !== 1) throw new Error('Unknown template transaction version');
   for (const entry of journal.files) {
+    existingMode(root, entry.path);
+    if (
+      entry.mode !== undefined &&
+      (!Number.isInteger(entry.mode) || entry.mode < 0 || entry.mode > 0o777)
+    )
+      throw new Error('Unsafe transaction file mode');
     const target = safeFile(root, entry.path);
     const current = existsSync(target) ? digest(readFileSync(target)) : null;
     const before = entry.previous === null ? null : digest(Buffer.from(entry.previous, 'base64'));
@@ -142,11 +160,7 @@ export function applyFiles(
   const targets = [...new Set([...files.keys(), ...remove])];
   if (new Set(targets.map((filename) => filename.toLowerCase())).size !== targets.length)
     throw new Error('Case-insensitive path collision');
-  for (const filename of targets) {
-    const target = safeFile(root, filename);
-    if (existsSync(target) && !lstatSync(target).isFile())
-      throw new Error(`Not a regular file: ${filename}`);
-  }
+  for (const filename of targets) existingMode(root, filename);
   const directories = [
     ...new Set(
       [...files.keys()].flatMap((filename) => {
@@ -161,12 +175,13 @@ export function applyFiles(
     version: 1,
     files: targets.map((relative) => {
       const target = safeFile(root, relative);
+      const mode = existingMode(root, relative);
       return {
         path: relative,
         previous: existsSync(target) ? readFileSync(target).toString('base64') : null,
         next: files.has(relative) ? digest(files.get(relative)!) : null,
         temp: path.posix.join(path.posix.dirname(relative), `.template-write-${randomUUID()}.tmp`),
-        mode: existsSync(target) ? lstatSync(target).mode & 0o777 : 0o644,
+        ...(mode === undefined ? {} : { mode }),
       };
     }),
     directories,
@@ -199,7 +214,10 @@ export function applyFiles(
       const entry = journal.files.find((value) => value.path === relative)!;
       atomicWrite(root, relative, contents, entry.temp!, entry.mode);
     }
-    for (const relative of remove) rmSync(safeFile(root, relative));
+    for (const relative of remove) {
+      existingMode(root, relative);
+      rmSync(safeFile(root, relative));
+    }
     for (const directory of [...(journal.prunedDirectories ?? [])].sort(
       (a, b) => b.path.split('/').length - a.path.split('/').length,
     ))

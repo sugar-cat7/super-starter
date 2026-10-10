@@ -20,6 +20,7 @@ import { baselineDifferences } from './baseline.ts';
 import { applyFiles } from './files.ts';
 import { projectOptions } from './options.ts';
 import { projectFiles } from './render.ts';
+import { writeEvidenceAfterCleanup } from '../quality/evidence.ts';
 
 export async function lifecycleRehearsal(source: string): Promise<void> {
   let completed = false;
@@ -317,12 +318,26 @@ export async function lifecycleRehearsal(source: string): Promise<void> {
     assert.deepEqual(reports.map((entry) => entry.id).toSorted(), lifecyclePhases.toSorted());
     completed = true;
   } finally {
-    mkdirSync(path.join(source, 'artifacts'), { recursive: true });
-    writeFileSync(
+    writeEvidenceAfterCleanup(
       path.join(source, 'artifacts/lifecycle.json'),
-      `${JSON.stringify({ schema: 1, baselineDifferences: baselineDifferences(source), contentId: contentId(source), os: process.platform, status: completed && reports.length && reports.every((entry) => entry.status === 'passed') ? 'passed' : 'failed', origin: (JSON.parse(readFileSync(path.join(source, '.template.json'), 'utf8')) as { origin?: unknown }).origin, reports }, null, 2)}\n`,
+      () => ({
+        schema: 1,
+        baselineDifferences: baselineDifferences(source),
+        contentId: contentId(source),
+        os: process.platform,
+        status:
+          completed && reports.length && reports.every((entry) => entry.status === 'passed')
+            ? 'passed'
+            : 'failed',
+        origin: (
+          JSON.parse(readFileSync(path.join(source, '.template.json'), 'utf8')) as {
+            origin?: unknown;
+          }
+        ).origin,
+        reports,
+      }),
+      () => rmSync(owned, { recursive: true, force: true }),
     );
-    rmSync(owned, { recursive: true, force: true });
   }
 }
 if (process.argv[1]?.endsWith(`${path.sep}lifecycle.ts`)) await lifecycleRehearsal(process.cwd());

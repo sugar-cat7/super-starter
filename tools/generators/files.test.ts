@@ -11,6 +11,8 @@ import {
 } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
+import { spawnSync } from 'node:child_process';
+import { pathToFileURL } from 'node:url';
 import { describe, expect, it, vi } from 'vitest';
 import { applyFiles, recover, digest } from './files.ts';
 import { safeFile } from './safety.ts';
@@ -52,6 +54,180 @@ vi.mock('node:fs', async (original) => {
 });
 
 describe('generation transaction', () => {
+  it.each(['replace', 'rollback', 'recover'])(
+    'preserves actual file modes with a restrictive umask during %s',
+    (operation) => {
+      const root = mkdtempSync(path.join(os.tmpdir(), 'template-file-mode-'));
+      try {
+        const moduleUrl = pathToFileURL(path.resolve('tools/generators/files.ts')).href;
+        const result = spawnSync(
+          process.execPath,
+          [
+            '--input-type=module',
+            '-e',
+            `
+              import { chmodSync, existsSync, readFileSync, statSync, writeFileSync } from 'node:fs';
+              import path from 'node:path';
+              const { applyFiles, digest, recover } = await import(process.argv[2]);
+              const root = process.argv[1];
+              const operation = process.argv[3];
+              process.umask(0o022);
+              const names = ['group.txt', 'executable.txt'];
+              for (const [index, name] of names.entries()) {
+                writeFileSync(path.join(root, name), 'original');
+                chmodSync(path.join(root, name), index ? 0o770 : 0o660);
+              }
+              const before = names.map(name => statSync(path.join(root, name)).mode & 0o7777);
+              writeFileSync(path.join(root, 'user.txt'), 'preserve');
+              let failure = null;
+              if (operation === 'recover') {
+                for (const name of names) {
+                  writeFileSync(path.join(root, name), 'replacement');
+                  chmodSync(path.join(root, name), 0o600);
+                }
+                writeFileSync(path.join(root, '.template-transaction.json'), JSON.stringify({
+                  version: 1, directories: [], files: names.map((name, index) => ({
+                    path: name, previous: Buffer.from('original').toString('base64'),
+                    next: digest('replacement'), temp: '.template-write-' + index + '.tmp',
+                    mode: before[index],
+                  })),
+                }));
+                recover(root);
+              } else {
+                try {
+                  applyFiles(root, new Map([
+                    ...names.map(name => [name, Buffer.from('replacement')]),
+                    ['new.txt', Buffer.from('new')],
+                  ]), [], index => {
+                    if (operation === 'rollback' && index === 1) throw new Error('interrupted');
+                  });
+                } catch (error) { failure = error.message; }
+              }
+              console.log(JSON.stringify({
+                before, after: names.map(name => statSync(path.join(root, name)).mode & 0o7777),
+                contents: names.map(name => readFileSync(path.join(root, name), 'utf8')),
+                failure, journal: existsSync(path.join(root, '.template-transaction.json')),
+                newMode: existsSync(path.join(root, 'new.txt'))
+                  ? statSync(path.join(root, 'new.txt')).mode & 0o7777 : null,
+                user: readFileSync(path.join(root, 'user.txt'), 'utf8'),
+              }));
+            `,
+            root,
+            moduleUrl,
+            operation,
+          ],
+          { encoding: 'utf8', timeout: 30000 },
+        );
+        expect(result.status, `${result.stdout}${result.stderr}`).toBe(0);
+        const report = JSON.parse(result.stdout) as {
+          before: number[];
+          after: number[];
+          contents: string[];
+          failure: string | null;
+          journal: boolean;
+          newMode: number | null;
+          user: string;
+        };
+        expect(report.before).toEqual(
+          process.platform === 'win32' ? [0o666, 0o666] : [0o660, 0o770],
+        );
+        expect(report.after).toEqual(report.before);
+        expect(report.contents).toEqual(
+          operation === 'replace' ? ['replacement', 'replacement'] : ['original', 'original'],
+        );
+        expect(report.failure).toBe(operation === 'rollback' ? 'interrupted' : null);
+        expect(report.journal).toBe(false);
+        expect(report.newMode).toBe(
+          operation === 'replace' ? (process.platform === 'win32' ? 0o666 : 0o644) : null,
+        );
+        expect(report.user).toBe('preserve');
+      } finally {
+        rmSync(root, { recursive: true, force: true });
+      }
+    },
+  );
+  it.each([0o4750, 0o2750, 0o1750])(
+    'protects special file mode %s before any transaction mutation',
+    (requestedMode) => {
+      const root = mkdtempSync(path.join(os.tmpdir(), 'template-special-file-'));
+      try {
+        const filename = path.join(root, 'existing.txt');
+        writeFileSync(filename, 'original');
+        chmodSync(filename, requestedMode);
+        const mode = statSync(filename).mode & 0o7777;
+        expect(mode & 0o7000).toBe(process.platform === 'win32' ? 0 : requestedMode & 0o7000);
+        const replace = () =>
+          applyFiles(
+            root,
+            new Map([
+              ['earlier.txt', Buffer.from('new')],
+              ['existing.txt', Buffer.from('replacement')],
+            ]),
+          );
+        let replacementError: string | null = null;
+        try {
+          replace();
+        } catch (error) {
+          replacementError = (error as Error).message;
+        }
+        const expectedError =
+          process.platform === 'win32'
+            ? null
+            : 'Special file permissions require manual review: existing.txt';
+        expect(replacementError).toBe(expectedError);
+        expect(readFileSync(filename, 'utf8')).toBe(
+          process.platform === 'win32' ? 'replacement' : 'original',
+        );
+        expect(statSync(filename).mode & 0o7777).toBe(mode);
+        expect(existsSync(path.join(root, 'earlier.txt'))).toBe(process.platform === 'win32');
+        let removalError: string | null = null;
+        try {
+          applyFiles(root, new Map(), ['existing.txt']);
+        } catch (error) {
+          removalError = (error as Error).message;
+        }
+        expect(removalError).toBe(expectedError);
+        expect(existsSync(filename)).toBe(process.platform !== 'win32');
+        expect(existsSync(path.join(root, '.template-transaction.json'))).toBe(false);
+      } finally {
+        rmSync(root, { recursive: true, force: true });
+      }
+    },
+  );
+  it.each([0o4750, -1, 0o1000, 1.5])(
+    'refuses unsafe recovery file mode %s before mutation',
+    (mode) => {
+      const root = mkdtempSync(path.join(os.tmpdir(), 'template-unsafe-file-mode-'));
+      try {
+        const filename = path.join(root, 'existing.txt');
+        writeFileSync(filename, 'replacement');
+        const before = statSync(filename).mode & 0o7777;
+        const journal = path.join(root, '.template-transaction.json');
+        writeFileSync(
+          journal,
+          JSON.stringify({
+            version: 1,
+            directories: [],
+            files: [
+              {
+                path: 'existing.txt',
+                previous: Buffer.from('original').toString('base64'),
+                next: digest('replacement'),
+                temp: '.template-write-a.tmp',
+                mode,
+              },
+            ],
+          }),
+        );
+        expect(() => recover(root)).toThrow('Unsafe transaction file mode');
+        expect(readFileSync(filename, 'utf8')).toBe('replacement');
+        expect(statSync(filename).mode & 0o7777).toBe(before);
+        expect(existsSync(journal)).toBe(true);
+      } finally {
+        rmSync(root, { recursive: true, force: true });
+      }
+    },
+  );
   it('preserves specially permissioned managed ancestors through pruning failure and retry', () => {
     const root = mkdtempSync(path.join(os.tmpdir(), 'template-special-mode-'));
     try {

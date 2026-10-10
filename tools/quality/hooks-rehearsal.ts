@@ -9,6 +9,7 @@ import { pnpm } from '../process.ts';
 import { contentId } from './gate.ts';
 import { hookPhases } from './definitions.ts';
 import { baselineDifferences } from '../generators/baseline.ts';
+import { writeEvidenceAfterCleanup } from './evidence.ts';
 
 export async function hookRehearsal(project: string): Promise<void> {
   const started = performance.now();
@@ -134,15 +135,24 @@ export async function hookRehearsal(project: string): Promise<void> {
     );
     status = 'passed';
   } finally {
-    mkdirSync(path.join(project, 'artifacts'), { recursive: true });
-    const state = JSON.parse(readFileSync(path.join(project, '.template.json'), 'utf8')) as {
-      origin?: unknown;
-    };
-    writeFileSync(
+    writeEvidenceAfterCleanup(
       path.join(project, 'artifacts/hooks.json'),
-      `${JSON.stringify({ schema: 1, baselineDifferences: baselineDifferences(project), phases: status === 'passed' ? hookPhases : [], status, origin: state.origin, contentId: contentId(project), os: process.platform, milliseconds: Math.round(performance.now() - started) }, null, 2)}\n`,
+      () => ({
+        schema: 1,
+        baselineDifferences: baselineDifferences(project),
+        phases: status === 'passed' ? hookPhases : [],
+        status,
+        origin: (
+          JSON.parse(readFileSync(path.join(project, '.template.json'), 'utf8')) as {
+            origin?: unknown;
+          }
+        ).origin,
+        contentId: contentId(project),
+        os: process.platform,
+        milliseconds: Math.round(performance.now() - started),
+      }),
+      () => rmSync(owned, { recursive: true, force: true }),
     );
-    rmSync(owned, { recursive: true, force: true });
   }
 }
 if (process.argv[1]?.endsWith(`${path.sep}hooks-rehearsal.ts`)) await hookRehearsal(process.cwd());

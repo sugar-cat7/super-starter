@@ -17,6 +17,7 @@ import { workspacePackages } from './graph.ts';
 import { contentId } from './gate.ts';
 import { faultCheckIds } from './definitions.ts';
 import { baselineDifferences } from '../generators/baseline.ts';
+import { writeEvidenceAfterCleanup } from './evidence.ts';
 
 async function capture(
   root: string,
@@ -57,19 +58,61 @@ async function capture(
 export async function faultRehearsal(project: string): Promise<void> {
   const owned = mkdtempSync(path.join(os.tmpdir(), 'starter-faults-'));
   const root = path.join(owned, 'project');
+  const failures: unknown[] = [];
+  let completed = false;
+  let report: Record<string, unknown> & { status: string; error?: string } = {
+    schema: 1,
+    status: 'failed',
+    os: process.platform,
+    reports: [],
+  };
   try {
     copyProjectFixture(project, root);
     await pnpm(['env:setup'], { cwd: root, timeout: 10 * 60000 });
     await injectFaults(root);
-  } finally {
-    const artifacts = path.join(root, 'artifacts');
-    const destination = path.join(project, 'artifacts', `fault-rehearsal-${process.platform}`);
+    completed = true;
+  } catch (error) {
+    failures.push(error);
+  }
+  const artifacts = path.join(root, 'artifacts');
+  const destination = path.join(project, 'artifacts', `fault-rehearsal-${process.platform}`);
+  const filename = path.join(destination, 'faults.json');
+  try {
+    const original = path.join(artifacts, 'faults.json');
+    if (existsSync(original)) {
+      const parsed: unknown = JSON.parse(readFileSync(original, 'utf8'));
+      if (
+        !parsed ||
+        typeof parsed !== 'object' ||
+        Array.isArray(parsed) ||
+        !('status' in parsed) ||
+        typeof parsed.status !== 'string'
+      )
+        throw new Error('Invalid fault rehearsal evidence');
+      report = parsed as typeof report;
+    } else if (completed) {
+      throw new Error('Fault rehearsal did not produce its required final evidence');
+    }
     if (existsSync(artifacts)) {
       rmSync(destination, { recursive: true, force: true });
       cpSync(artifacts, destination, { recursive: true });
     }
-    rmSync(owned, { recursive: true, force: true });
+  } catch (error) {
+    failures.push(error);
   }
+  if (!completed || failures.length) {
+    report.status = 'failed';
+    report.error = failures.map(String).join('\n');
+  }
+  try {
+    writeEvidenceAfterCleanup(filename, report, () =>
+      rmSync(owned, { recursive: true, force: true }),
+    );
+  } catch (error) {
+    failures.push(error);
+  }
+  if (failures.length === 1) throw failures[0];
+  if (failures.length) throw new AggregateError(failures, 'Fault rehearsal failed');
 }
 
 async function injectFaults(root: string): Promise<void> {

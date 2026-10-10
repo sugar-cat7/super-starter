@@ -1,9 +1,41 @@
-import { existsSync, readFileSync, statSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { gzipSync } from 'node:zlib';
 import { pnpmCommand, runSync } from '../process.ts';
 import { walk } from '../generators/files.ts';
 import { workspacePackages } from './graph.ts';
+
+export function writeEvidenceAfterCleanup<T extends { status: string; error?: string }>(
+  filename: string,
+  report: T | (() => T),
+  cleanup: () => void,
+): void {
+  const failures: unknown[] = [];
+  let result: { status: string; error?: string };
+  try {
+    result = typeof report === 'function' ? report() : report;
+  } catch (error) {
+    failures.push(error);
+    result = { status: 'failed', error: `Evidence preparation failed: ${String(error)}` };
+  }
+  try {
+    cleanup();
+  } catch (error) {
+    failures.push(error);
+    result.status = 'failed';
+    result.error = [result.error, `Evidence cleanup failed: ${String(error)}`]
+      .filter(Boolean)
+      .join('\n');
+  }
+  try {
+    mkdirSync(path.dirname(filename), { recursive: true });
+    writeFileSync(filename, `${JSON.stringify(result, null, 2)}\n`);
+  } catch (error) {
+    failures.push(error);
+  }
+  if (failures.length === 1) throw failures[0];
+  if (failures.length) throw new AggregateError(failures, 'Evidence finalization failed');
+}
 
 export function toolVersions(root: string): Record<string, string> {
   const versions: Record<string, string> = { node: process.version };
