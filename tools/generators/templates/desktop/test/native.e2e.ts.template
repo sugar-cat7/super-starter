@@ -33,7 +33,7 @@ async function reloadNativeWindow() {
 describe('real native Tauri window and Rust IPC', () => {
   it('renders offline UI and validates real CRUD/export permissions', async () => {
     await expect(browser.$('h1')).toHaveText('Notes');
-    for (const text of ['\uFEFFnative\uFEFF', '\u0085', '\uFEFF\u0085note\u0085\uFEFF', `\uFEFF${'x'.repeat(1000)}\uFEFF`]) {
+    for (const text of ['\uFEFFnative\uFEFF', '\u0085', '\uFEFF\u0085note\u0085\uFEFF', `\uFEFF${'x'.repeat(1000)}\uFEFF`, `\uFEFF${'😀'.repeat(500)}\uFEFF`]) {
       const normalized = noteSchema.parse(
         await browser.tauri.execute(
           (tauri, value: string) => tauri.core.invoke('add_note', { text: value }),
@@ -49,6 +49,9 @@ describe('real native Tauri window and Rust IPC', () => {
     await expect(
       browser.tauri.execute((tauri) => tauri.core.invoke('add_note', { text: '\uFEFF' })),
     ).rejects.toThrow();
+    for (const text of ['😀'.repeat(501), `${'😀'.repeat(500)}x`]) {
+      await expect(browser.tauri.execute((tauri, value: string) => tauri.core.invoke('add_note', { text: value }), text)).rejects.toThrow();
+    }
     const note = noteSchema.parse(await browser.tauri.execute((tauri) => tauri.core.invoke('add_note', { text: 'Native note' })));
     await reloadNativeWindow();
     await expect(browser.$(`button[aria-label="Delete Native note"]`)).toExist();

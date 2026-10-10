@@ -29,6 +29,25 @@ describe('real workerd HTTP contract', () => {
     expect(await fetchStatus(`/api/notes/${note.id}`, { method: 'DELETE' })).toBe(404);
     expect(await fetchStatus('/api/notes/not-a-uuid', { method: 'DELETE' })).toBe(400);
   });
+  it('enforces the normalized UTF-16 text boundary over real HTTP', async () => {
+    const text = '😀'.repeat(500);
+    const added = await fetchLocal('/api/notes', {
+      method: 'POST',
+      body: JSON.stringify({ text: `\uFEFF${text}\uFEFF` }),
+    });
+    expect(added.status).toBe(201);
+    const note = noteSchema.parse(await added.json());
+    expect(note.text).toBe(text);
+    expect(await fetchStatus(`/api/notes/${note.id}`, { method: 'DELETE' })).toBe(204);
+    for (const text of ['😀'.repeat(501), `${'😀'.repeat(500)}x`]) {
+      const invalid = await fetchLocal('/api/notes', {
+        method: 'POST',
+        body: JSON.stringify({ text: `\uFEFF${text}\uFEFF` }),
+      });
+      expect(invalid.status).toBe(400);
+      expect(await invalid.json()).toMatchObject({ error: { code: 'invalid_input' } });
+    }
+  });
   it('exercises only the selected KV and R2 bindings, and refuses absent features', async () => {
     for (const [feature, selected] of [
       ['kv', true],

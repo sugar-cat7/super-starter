@@ -38,6 +38,7 @@ describe('real native Tauri window and Rust IPC', () => {
       '\u0085',
       '\uFEFF\u0085note\u0085\uFEFF',
       `\uFEFF${'x'.repeat(1000)}\uFEFF`,
+      `\uFEFF${'😀'.repeat(500)}\uFEFF`,
     ]) {
       const normalized = noteSchema.parse(
         await browser.tauri.execute(
@@ -54,6 +55,14 @@ describe('real native Tauri window and Rust IPC', () => {
     await expect(
       browser.tauri.execute((tauri) => tauri.core.invoke('add_note', { text: '\uFEFF' })),
     ).rejects.toThrow();
+    for (const text of ['😀'.repeat(501), `${'😀'.repeat(500)}x`]) {
+      await expect(
+        browser.tauri.execute(
+          (tauri, value: string) => tauri.core.invoke('add_note', { text: value }),
+          text,
+        ),
+      ).rejects.toThrow();
+    }
     const note = noteSchema.parse(
       await browser.tauri.execute((tauri) =>
         tauri.core.invoke('add_note', { text: 'Native note' }),

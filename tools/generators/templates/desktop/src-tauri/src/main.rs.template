@@ -164,6 +164,8 @@ mod tests {
         assert!(new_note("   ").is_err());
         assert!(new_note(&"x".repeat(1001)).is_err());
         assert!(new_note(&"😀".repeat(501)).is_err());
+        assert!(new_note(&format!("{}x", "😀".repeat(500))).is_err());
+        assert_eq!(new_note(&format!("\u{feff}{}\u{feff}", "😀".repeat(500)))?.text.encode_utf16().count(), 1000);
         assert!(new_note("\u{feff}").is_err());
         assert_eq!(new_note("\u{0085}")?.text, "\u{0085}");
         assert_eq!(new_note("\u{feff}note\u{feff}")?.text, "note");

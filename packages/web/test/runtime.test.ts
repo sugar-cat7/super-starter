@@ -22,4 +22,23 @@ describe('Web Worker and same-origin API', () => {
     await removed.arrayBuffer();
     expect(removed.status).toBe(204);
   });
+  it('preserves the UTF-16 note limit through its same-origin transport', async () => {
+    const text = '😀'.repeat(500);
+    const added = await fetch(new URL('/api/notes', origin), {
+      method: 'POST',
+      body: JSON.stringify({ text: `\uFEFF${text}\uFEFF` }),
+    });
+    expect(added.status).toBe(201);
+    const note = noteSchema.parse(await added.json());
+    expect(note.text).toBe(text);
+    const removed = await fetch(new URL(`/api/notes/${note.id}`, origin), { method: 'DELETE' });
+    await removed.arrayBuffer();
+    expect(removed.status).toBe(204);
+    const invalid = await fetch(new URL('/api/notes', origin), {
+      method: 'POST',
+      body: JSON.stringify({ text: '😀'.repeat(501) }),
+    });
+    expect(invalid.status).toBe(400);
+    expect(await invalid.json()).toMatchObject({ error: { code: 'invalid_input' } });
+  });
 });
