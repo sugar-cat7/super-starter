@@ -60,7 +60,10 @@ jobs:
         if: always()
         with:
           name: source-evidence
-          path: artifacts
+          path: |
+            artifacts
+            packages/*/artifacts
+            packages/*/test-results
           if-no-files-found: error
   generated:
     if: needs.source.outputs.fixtures == 'true'
@@ -124,7 +127,10 @@ jobs:
         if: always()
         with:
           name: generated-evidence-${{ matrix.preset }}-${{ runner.os }}
-          path: ${{ matrix.preset }}/artifacts
+          path: |
+            ${{ matrix.preset }}/artifacts
+            ${{ matrix.preset }}/packages/*/artifacts
+            ${{ matrix.preset }}/packages/*/test-results
           if-no-files-found: error
   native:
     if: needs.source.outputs.native == 'true'
@@ -164,7 +170,10 @@ jobs:
         if: always()
         with:
           name: actual-native-evidence-${{ runner.os }}
-          path: artifacts
+          path: |
+            artifacts
+            packages/*/artifacts
+            packages/*/test-results
           if-no-files-found: error
   worker-windows:
     if: needs.source.outputs.workers == 'true'
@@ -193,7 +202,10 @@ jobs:
         if: always()
         with:
           name: actual-worker-evidence-Windows
-          path: artifacts
+          path: |
+            artifacts
+            packages/*/artifacts
+            packages/*/test-results
           if-no-files-found: error
   required:
     if: always()
