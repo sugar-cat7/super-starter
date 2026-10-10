@@ -1,5 +1,5 @@
 import { createRootRoute, HeadContent, Link, Outlet, Scripts } from '@tanstack/react-router';
-import stylesheet from '../styles.css?url';
+import '../styles.css';
 import favicon from '../favicon.svg?url';
 
 export const Route = createRootRoute({
@@ -13,10 +13,7 @@ export const Route = createRootRoute({
         content: 'A small, accessible notes workspace with clear local storage and JSON export.',
       },
     ],
-    links: [
-      { rel: 'stylesheet', href: stylesheet },
-      { rel: 'icon', type: 'image/svg+xml', href: favicon },
-    ],
+    links: [{ rel: 'icon', type: 'image/svg+xml', href: favicon }],
   }),
   component: () => (
     <html lang="en">

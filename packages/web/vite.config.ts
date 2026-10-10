@@ -15,7 +15,10 @@ export default defineConfig({
       },
       experimental: { newConfig: { cfBuildOutput: true } },
     }),
-    tanstackStart({ router: { quoteStyle: 'single', semicolons: true } }),
+    tanstackStart({
+      server: { build: { inlineCss: true } },
+      router: { quoteStyle: 'single', semicolons: true },
+    }),
     react(),
     tailwind(),
   ],

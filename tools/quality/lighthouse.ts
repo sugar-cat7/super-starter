@@ -93,7 +93,7 @@ async function measure(
       url: string,
       flags: object,
       config?: unknown,
-    ) => Promise<{ report: string | string[] } | undefined>;
+    ) => Promise<{ report: string | string[]; artifacts?: { Trace?: unknown } } | undefined>;
     desktopConfig: unknown;
   },
   browser: string,
@@ -168,6 +168,8 @@ async function measure(
       throw new Error('Lighthouse did not produce complete JSON and HTML reports');
     writeFileSync(`${prefix}.report.json`, result.report[0]!);
     writeFileSync(`${prefix}.report.html`, result.report[1]!);
+    if (result.artifacts?.Trace)
+      writeFileSync(`${prefix}.trace.json`, JSON.stringify(result.artifacts.Trace));
   } catch (error) {
     if (signal.aborted) throw signal.reason;
     throw error;

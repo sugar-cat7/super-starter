@@ -9,7 +9,7 @@ test('styled SSR and safe input remain available while hydration is loading', as
     release = resolve;
   });
   let requested = false;
-  await page.route('**/src/hydrate.tsx*', async (route) => {
+  await page.route('**/src/client.ts*', async (route) => {
     requested = true;
     await waiting;
     await route.continue();
@@ -17,7 +17,7 @@ test('styled SSR and safe input remain available while hydration is loading', as
   const errors: string[] = [];
   page.on('pageerror', (error) => errors.push(error.message));
   try {
-    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    await page.goto('/', { waitUntil: 'commit' });
     await expect.poll(() => requested).toBe(true);
     const input = page.getByLabel('New note');
     await expect(input).toBeVisible();
