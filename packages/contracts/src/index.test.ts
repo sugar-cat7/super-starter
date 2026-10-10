@@ -4,10 +4,16 @@ import { noteInput, noteSchema } from './index';
 describe('portable communication schemas', () => {
   it('normalizes user text and refuses missing, empty, extra and oversized input', () => {
     expect(noteInput.parse({ text: '  a note  ' })).toEqual({ text: 'a note' });
+    expect(noteInput.parse({ text: '\uFEFFa note\uFEFF' })).toEqual({ text: 'a note' });
+    expect(noteInput.parse({ text: '\u0085' })).toEqual({ text: '\u0085' });
+    expect(noteInput.parse({ text: '\uFEFF\u0085note\u0085\uFEFF' })).toEqual({
+      text: '\u0085note\u0085',
+    });
     for (const input of [
       {},
       { text: '' },
       { text: '   ' },
+      { text: '\uFEFF' },
       { text: 'x'.repeat(1001) },
       { text: 'valid', path: '/tmp/file' },
     ]) {

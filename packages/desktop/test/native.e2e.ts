@@ -33,6 +33,27 @@ async function reloadNativeWindow() {
 describe('real native Tauri window and Rust IPC', () => {
   it('renders offline UI and validates real CRUD/export permissions', async () => {
     await expect(browser.$('h1')).toHaveText('Notes');
+    for (const text of [
+      '\uFEFFnative\uFEFF',
+      '\u0085',
+      '\uFEFF\u0085note\u0085\uFEFF',
+      `\uFEFF${'x'.repeat(1000)}\uFEFF`,
+    ]) {
+      const normalized = noteSchema.parse(
+        await browser.tauri.execute(
+          (tauri, value: string) => tauri.core.invoke('add_note', { text: value }),
+          text,
+        ),
+      );
+      expect(normalized.text).toBe(text.trim());
+      await browser.tauri.execute(
+        (tauri, id: string) => tauri.core.invoke('delete_note', { id }),
+        normalized.id,
+      );
+    }
+    await expect(
+      browser.tauri.execute((tauri) => tauri.core.invoke('add_note', { text: '\uFEFF' })),
+    ).rejects.toThrow();
     const note = noteSchema.parse(
       await browser.tauri.execute((tauri) =>
         tauri.core.invoke('add_note', { text: 'Native note' }),

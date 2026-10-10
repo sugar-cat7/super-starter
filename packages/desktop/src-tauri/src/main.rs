@@ -22,7 +22,24 @@ struct Note {
 struct Notes(Mutex<Vec<Note>>);
 
 fn new_note(text: &str) -> Result<Note, String> {
-    let text = text.trim();
+    // Match the portable contract's ECMAScript TrimString whitespace set.
+    // Rust's Unicode White_Space removes U+0085 but preserves U+FEFF.
+    let text = text.trim_matches(|character| {
+        matches!(
+            character,
+            '\u{0009}'..='\u{000d}'
+                | '\u{0020}'
+                | '\u{00a0}'
+                | '\u{1680}'
+                | '\u{2000}'..='\u{200a}'
+                | '\u{2028}'
+                | '\u{2029}'
+                | '\u{202f}'
+                | '\u{205f}'
+                | '\u{3000}'
+                | '\u{feff}'
+        )
+    });
     if text.is_empty() || text.encode_utf16().count() > 1000 {
         return Err("Text must contain 1–1000 characters".into());
     }
@@ -147,6 +164,19 @@ mod tests {
         assert!(new_note("   ").is_err());
         assert!(new_note(&"x".repeat(1001)).is_err());
         assert!(new_note(&"😀".repeat(501)).is_err());
+        assert!(new_note("\u{feff}").is_err());
+        assert_eq!(new_note("\u{0085}")?.text, "\u{0085}");
+        assert_eq!(new_note("\u{feff}note\u{feff}")?.text, "note");
+        assert_eq!(
+            new_note("\u{feff}\u{0085}note\u{0085}\u{feff}")?.text,
+            "\u{0085}note\u{0085}"
+        );
+        assert_eq!(
+            new_note(&format!("\u{feff}{}\u{feff}", "x".repeat(1000)))?
+                .text
+                .len(),
+            1000
+        );
         let note = new_note(" note ")?;
         assert_eq!(note.text, "note");
         let json = serde_json::to_value(&note).map_err(|error| error.to_string())?;
