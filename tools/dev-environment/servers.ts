@@ -1,4 +1,5 @@
 import type { ChildProcess } from 'node:child_process';
+import { mkdirSync, mkdtempSync, rmSync } from 'node:fs';
 import { createServer } from 'node:net';
 import path from 'node:path';
 import { setTimeout as pause } from 'node:timers/promises';
@@ -29,6 +30,7 @@ export class Servers {
   readonly stateRoot: string;
   stopping = false;
   private cancellation = new AbortController();
+  private registry: string | undefined;
   constructor(root: string, stateRoot = path.join(root, '.state')) {
     this.root = root;
     this.stateRoot = stateRoot;
@@ -48,6 +50,13 @@ export class Servers {
       await prepareDatabase(path.join(this.root, pkg.directory), this.stateRoot, signal);
     signal.throwIfAborted();
     const invocation = pnpmCommand(['--filter', pkg.name, script]);
+    // Forced native cleanup may leave fresh SDK registrations behind. Give each
+    // lifecycle one shared namespace, independent of persistent Worker data.
+    if (!this.registry) {
+      mkdirSync(path.join(this.stateRoot, 'registry'), { recursive: true });
+      this.registry = mkdtempSync(path.join(this.stateRoot, 'registry', 'session-'));
+    }
+    const registry = this.registry;
     const child = spawnOwned(invocation.command, invocation.args, {
       cwd: this.root,
       detached: process.platform !== 'win32',
@@ -56,7 +65,8 @@ export class Servers {
         ...process.env,
         STARTER_PORT: String(port),
         STARTER_STATE_ROOT: this.stateRoot,
-        WRANGLER_REGISTRY_PATH: path.join(this.stateRoot, 'registry'),
+        WRANGLER_REGISTRY_PATH: registry,
+        MINIFLARE_REGISTRY_PATH: registry,
         CLOUDFLARE_SEND_METRICS: 'false',
       },
     });
@@ -96,7 +106,9 @@ export class Servers {
         if (response.ok) {
           signal.throwIfAborted();
           this.origins.set(pkg.name, origin);
-          console.log(`READY ${pkg.name} ${origin} ${Math.round(performance.now() - started)}ms`);
+          console.log(
+            `READY ${pkg.name} ${origin} ${Math.round(performance.now() - started)}ms; registry ${registry}`,
+          );
           return origin;
         }
       } catch {
@@ -126,7 +138,10 @@ export class Servers {
   async stop(graceMs?: number): Promise<void> {
     this.stopping = true;
     this.cancellation.abort(new Error('Server startup cancelled by stop'));
+    const registry = this.registry;
     await Promise.all(this.children.toReversed().map((child) => stopTree(child, graceMs)));
+    if (registry) rmSync(registry, { recursive: true, force: true });
+    this.registry = undefined;
     this.children = [];
     this.origins.clear();
   }

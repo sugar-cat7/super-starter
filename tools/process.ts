@@ -60,12 +60,8 @@ export async function stopTree(child: ChildProcess, graceMs = 3_000): Promise<vo
       return true;
     } catch (error) {
       if ((error as NodeJS.ErrnoException).code === 'ESRCH') return false;
-      if (
-        process.platform === 'darwin' &&
-        value === 0 &&
-        (error as NodeJS.ErrnoException).code === 'EPERM'
-      ) {
-        // XNU excludes zombies from killpg, returning EPERM even after all live members stop.
+      if (process.platform === 'darwin' && (error as NodeJS.ErrnoException).code === 'EPERM') {
+        // XNU excludes zombies from every killpg signal, including existence probes.
         // Only a complete, valid process table may establish that this owned group has stopped.
         const table = spawnSync('/bin/ps', ['-A', '-o', 'pid=,pgid=,stat='], {
           encoding: 'utf8',

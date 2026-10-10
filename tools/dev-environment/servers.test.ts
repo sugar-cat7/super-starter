@@ -1,4 +1,4 @@
-import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { expect, it } from 'vitest';
@@ -20,19 +20,37 @@ it('cancels a pending start before spawn and permits an explicit real-server res
   );
   writeFileSync(
     path.join(root, 'server.cjs'),
-    "require('node:http').createServer((req,res)=>res.end('ready')).listen(Number(process.env.STARTER_PORT),'127.0.0.1',()=>console.log('http://127.0.0.1:'+process.env.STARTER_PORT));\n",
+    "const fs=require('node:fs');const registry=process.env.MINIFLARE_REGISTRY_PATH;if(registry!==process.env.WRANGLER_REGISTRY_PATH)throw new Error('SDK registry mismatch');fs.writeFileSync(registry+'/registration','owned');fs.writeFileSync('registry-path',registry);require('node:http').createServer((req,res)=>res.end('ready')).listen(Number(process.env.STARTER_PORT),'127.0.0.1',()=>console.log('http://127.0.0.1:'+process.env.STARTER_PORT));\n",
   );
+  const data = path.join(root, '.state', 'api', 'durable-data');
+  const sibling = path.join(root, '.state', 'registry', 'user-owned');
+  mkdirSync(path.dirname(data), { recursive: true });
+  mkdirSync(sibling, { recursive: true });
+  writeFileSync(data, 'persistent');
+  writeFileSync(path.join(sibling, 'registration'), 'protected');
   try {
     const pending = servers.start(pkg);
     await Promise.all([expect(pending).rejects.toThrow('cancelled by stop'), servers.stop()]);
     expect(servers.children).toHaveLength(0);
     const origin = await servers.start(pkg);
     expect(await (await fetch(origin)).text()).toBe('ready');
+    const firstRegistry = readFileSync(path.join(root, 'registry-path'), 'utf8');
+    expect(readFileSync(path.join(firstRegistry, 'registration'), 'utf8')).toBe('owned');
     await servers.stop();
     expect(servers.children).toHaveLength(0);
     await expect(fetch(origin, { signal: AbortSignal.timeout(1000) })).rejects.toThrow(
       'fetch failed',
     );
+    expect(existsSync(firstRegistry)).toBe(false);
+    const restarted = await servers.start(pkg);
+    expect(await (await fetch(restarted)).text()).toBe('ready');
+    const secondRegistry = readFileSync(path.join(root, 'registry-path'), 'utf8');
+    expect(secondRegistry).not.toBe(firstRegistry);
+    expect(readFileSync(path.join(secondRegistry, 'registration'), 'utf8')).toBe('owned');
+    await servers.stop();
+    expect(existsSync(secondRegistry)).toBe(false);
+    expect(readFileSync(data, 'utf8')).toBe('persistent');
+    expect(readFileSync(path.join(sibling, 'registration'), 'utf8')).toBe('protected');
   } finally {
     await servers.stop();
     rmSync(root, { recursive: true, force: true });

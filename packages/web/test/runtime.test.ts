@@ -13,8 +13,11 @@ describe('Web Worker and same-origin API', () => {
       method: 'POST',
       body: JSON.stringify({ text: 'Same-origin note' }),
     });
+    const body = await added.text();
+    if (added.status !== 201)
+      console.error(`Unexpected same-origin POST ${added.status}: ${body.slice(-16_000)}`);
     expect(added.status).toBe(201);
-    const note = noteSchema.parse(await added.json());
+    const note = noteSchema.parse(JSON.parse(body));
     expect(
       notesSchema.parse(await (await fetch(new URL('/api/notes', origin))).json()),
     ).toContainEqual(note);
@@ -28,8 +31,11 @@ describe('Web Worker and same-origin API', () => {
       method: 'POST',
       body: JSON.stringify({ text: `\uFEFF${text}\uFEFF` }),
     });
+    const body = await added.text();
+    if (added.status !== 201)
+      console.error(`Unexpected same-origin POST ${added.status}: ${body.slice(-16_000)}`);
     expect(added.status).toBe(201);
-    const note = noteSchema.parse(await added.json());
+    const note = noteSchema.parse(JSON.parse(body));
     expect(note.text).toBe(text);
     const removed = await fetch(new URL(`/api/notes/${note.id}`, origin), { method: 'DELETE' });
     await removed.arrayBuffer();

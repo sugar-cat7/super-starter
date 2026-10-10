@@ -10,8 +10,10 @@ describe('Web Worker and same-origin API', () => {
     expect(html.status).toBe(200);
     expect(await html.text()).toContain('New note');
     const added = await fetch(new URL('/api/notes', origin), { method: 'POST', body: JSON.stringify({ text: 'Same-origin note' }) });
+    const body = await added.text();
+    if (added.status !== 201) console.error(`Unexpected same-origin POST ${added.status}: ${body.slice(-16_000)}`);
     expect(added.status).toBe(201);
-    const note = noteSchema.parse(await added.json());
+    const note = noteSchema.parse(JSON.parse(body));
     expect(notesSchema.parse(await (await fetch(new URL('/api/notes', origin))).json())).toContainEqual(note);
     const removed = await fetch(new URL(`/api/notes/${note.id}`, origin), { method: 'DELETE' });
     await removed.arrayBuffer();
@@ -20,8 +22,10 @@ describe('Web Worker and same-origin API', () => {
   it('preserves the UTF-16 note limit through its same-origin transport', async () => {
     const text = '😀'.repeat(500);
     const added = await fetch(new URL('/api/notes', origin), { method: 'POST', body: JSON.stringify({ text: `\uFEFF${text}\uFEFF` }) });
+    const body = await added.text();
+    if (added.status !== 201) console.error(`Unexpected same-origin POST ${added.status}: ${body.slice(-16_000)}`);
     expect(added.status).toBe(201);
-    const note = noteSchema.parse(await added.json());
+    const note = noteSchema.parse(JSON.parse(body));
     expect(note.text).toBe(text);
     const removed = await fetch(new URL(`/api/notes/${note.id}`, origin), { method: 'DELETE' });
     await removed.arrayBuffer();

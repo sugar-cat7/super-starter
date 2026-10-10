@@ -74,10 +74,24 @@ it('rejects a failed or timed-out process table command', async () => {
   await expect(stopTree(child)).rejects.toThrow('Unable to inspect the owned Darwin process group');
 });
 
-it('does not reinterpret a Darwin termination permission failure', async () => {
-  await expect(stopTree(fixture('4242 4242 Z\n', 'SIGTERM'))).rejects.toThrow('kill EPERM');
-  expect(mocks.spawnSync).not.toHaveBeenCalled();
-});
+it.each(['SIGTERM', 'SIGKILL'] as const)(
+  'confirms an already stopped Darwin group after %s returns EPERM',
+  async (signal) => {
+    await stopTree(fixture('4242 4242 Z\n', signal), 0);
+    expect(mocks.kill).toHaveBeenCalledWith(-4242, signal);
+    expect(console.warn).toHaveBeenCalledWith('Stopped Darwin group 4242: ["4242 4242 Z"]');
+  },
+);
+
+it.each(['SIGTERM', 'SIGKILL'] as const)(
+  'preserves a Darwin %s permission failure for live descendants',
+  async (signal) => {
+    await expect(stopTree(fixture('4242 4242 Z\n4243 4242 S\n', signal), 0)).rejects.toThrow(
+      'kill EPERM',
+    );
+    expect(console.warn).not.toHaveBeenCalled();
+  },
+);
 
 it('does not reinterpret another OS permission failure', async () => {
   const child = fixture('4242 4242 Z\n');
