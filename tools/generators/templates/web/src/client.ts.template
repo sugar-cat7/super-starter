@@ -1,12 +1,16 @@
 import './styles.css';
 import { StrictMode, startTransition, createElement } from 'react';
 
-// Give the styled SSR document a rendering opportunity before loading the renderer.
+// Let the styled SSR document render, then initialize each runtime across frames.
 requestAnimationFrame(() => {
   requestAnimationFrame(() => {
-    void Promise.all([import('react-dom/client'), import('@tanstack/react-start/client')]).then(([{ hydrateRoot }, { StartClient }]) => {
-      startTransition(() => {
-        hydrateRoot(document, createElement(StrictMode, null, createElement(StartClient)));
+    void import('react-dom/client').then(({ hydrateRoot }) => {
+      requestAnimationFrame(() => {
+        void import('@tanstack/react-start/client').then(({ StartClient }) => {
+          startTransition(() => {
+            hydrateRoot(document, createElement(StrictMode, null, createElement(StartClient)));
+          });
+        });
       });
     });
   });
