@@ -1,9 +1,8 @@
 import './styles.css';
 import { StrictMode, startTransition, createElement } from 'react';
-import { hydrateRoot } from 'react-dom/client';
 
-// Initialize React normally; load the route framework independently of the entry.
-void import('@tanstack/react-start/client').then(({ StartClient }) => {
+// Keep renderer/framework loading separate from the small styled SSR entry.
+void Promise.all([import('react-dom/client'), import('@tanstack/react-start/client')]).then(([{ hydrateRoot }, { StartClient }]) => {
   startTransition(() => {
     hydrateRoot(document, createElement(StrictMode, null, createElement(StartClient)));
   });
