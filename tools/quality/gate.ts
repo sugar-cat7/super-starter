@@ -53,6 +53,7 @@ export function contentId(root: string): string {
     'pnpm-workspace.yaml',
     'mise.toml',
     'mise.security.toml',
+    'mise.o11y.toml',
     'tsconfig.json',
     'vite.config.ts',
     '.template.json',

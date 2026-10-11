@@ -1,5 +1,6 @@
 import { spawnSync } from 'node:child_process';
 import path from 'node:path';
+import { realpathSync } from 'node:fs';
 import { runSync } from '../process.ts';
 
 export function headSha(root: string): string | null {
@@ -9,6 +10,16 @@ export function headSha(root: string): string | null {
     timeout: 10_000,
   });
   return head.status === 0 ? head.stdout.trim() : null;
+}
+export function ownHeadSha(root: string): string | null {
+  const top = spawnSync('git', ['rev-parse', '--show-toplevel'], {
+    cwd: root,
+    encoding: 'utf8',
+    timeout: 10_000,
+  });
+  if (top.status !== 0 || realpathSync.native(top.stdout.trim()) !== realpathSync.native(root))
+    return null;
+  return headSha(root);
 }
 
 export function assertCheckout(root: string, expected: string): void {

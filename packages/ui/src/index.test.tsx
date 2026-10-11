@@ -1,21 +1,22 @@
 import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { Ok, Err, failure, publicFailure, type Result, type PublicError } from '@starter/contracts';
 import { NotesPanel, type NotesAdapter } from './index';
 
 afterEach(cleanup);
 const note = { id: '993a848f-d07f-43a2-85f8-333b05292ed4', text: 'A real note', createdAt: 1 };
 const adapter = (): NotesAdapter => ({
-  list: vi.fn<NotesAdapter['list']>().mockResolvedValue([]),
-  add: vi.fn<NotesAdapter['add']>().mockResolvedValue(note),
-  remove: vi.fn<NotesAdapter['remove']>().mockResolvedValue(undefined),
-  export: vi.fn<NotesAdapter['export']>().mockResolvedValue(undefined),
+  list: vi.fn<NotesAdapter['list']>().mockResolvedValue(Ok([])),
+  add: vi.fn<NotesAdapter['add']>().mockResolvedValue(Ok(note)),
+  remove: vi.fn<NotesAdapter['remove']>().mockResolvedValue(Ok(undefined)),
+  export: vi.fn<NotesAdapter['export']>().mockResolvedValue(Ok(undefined)),
 });
 
 describe('platform-independent note UI', () => {
   it('keeps initial input read-only until the adapter is ready, then retains typed text', async () => {
     const actions = adapter();
-    let ready: ((notes: (typeof note)[]) => void) | undefined;
+    let ready: ((notes: Result<(typeof note)[], PublicError>) => void) | undefined;
     vi.mocked(actions.list).mockImplementation(
       () =>
         new Promise((resolve) => {
@@ -29,7 +30,7 @@ describe('platform-independent note UI', () => {
     await user.type(input, 'Too early');
     expect(input.value).toBe('');
     if (!ready) throw new Error('Adapter readiness was not requested');
-    ready([]);
+    ready(Ok([]));
     await screen.findByText('No notes yet. Add your first note.');
     expect(input.readOnly).toBe(false);
     await user.type(input, 'Retained text');
@@ -56,8 +57,10 @@ describe('platform-independent note UI', () => {
   });
   it('retains data on a failed API mutation and permits retry after a load error', async () => {
     const actions = adapter();
-    vi.mocked(actions.list).mockRejectedValueOnce(new Error('network')).mockResolvedValue([note]);
-    vi.mocked(actions.remove).mockRejectedValue(new Error('server'));
+    vi.mocked(actions.list)
+      .mockResolvedValueOnce(Err(publicFailure(failure('network_failed'))))
+      .mockResolvedValue(Ok([note]));
+    vi.mocked(actions.remove).mockResolvedValue(Err(publicFailure(failure('storage_failed'))));
     render(<NotesPanel adapter={actions} storage="Volatile sample storage" />);
     await screen.findByRole('alert');
     const user = userEvent.setup();

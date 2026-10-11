@@ -88,9 +88,9 @@ export function lighthouseScores(
     !settings ||
     settings.formFactor !== profile ||
     settings.throttlingMethod !== 'simulate' ||
-    settings.skipAudits != null ||
-    settings.onlyAudits != null ||
-    settings.onlyCategories != null ||
+    (settings.skipAudits !== null && settings.skipAudits !== undefined) ||
+    (settings.onlyAudits !== null && settings.onlyAudits !== undefined) ||
+    (settings.onlyCategories !== null && settings.onlyCategories !== undefined) ||
     settings.ignoreStatusCode
   )
     throw new Error(
@@ -119,7 +119,7 @@ export function lighthouseScores(
   const failed = Object.entries(scores).filter(([, score]) => score !== 1);
   if (failed.length)
     throw new Error(
-      `Lighthouse requires every category to score 100: ${failed.map(([id, score]) => `${id}=${score == null ? 'missing' : score * 100}`).join(', ')}`,
+      `Lighthouse requires every category to score 100: ${failed.map(([id, score]) => `${id}=${score === null || score === undefined ? 'missing' : score * 100}`).join(', ')}`,
     );
   return scores as Record<string, number>;
 }

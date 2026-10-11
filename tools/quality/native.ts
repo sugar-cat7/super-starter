@@ -4,6 +4,10 @@ import { setTimeout as pause } from 'node:timers/promises';
 import { availablePort, stopTree } from '../dev-environment/servers.ts';
 import { spawnOwned, pnpm, run } from '../process.ts';
 import { nativeCases, rustCases } from './test-results.ts';
+import { headSha } from './checkout.ts';
+import { contentId } from './gate.ts';
+import { checkGeneratedErrors } from '../errors/generate.ts';
+import { workspacePackages } from './graph.ts';
 
 const cwd = process.cwd();
 const root = path.resolve(cwd, '../..');
@@ -12,6 +16,11 @@ const cargo = readFileSync(path.join(native, 'Cargo.toml'), 'utf8');
 const name = /^name = "([^"]+)"/mu.exec(cargo)?.[1];
 if (!name) throw new Error('Cargo package name missing');
 const operation = process.argv[2];
+const generatedDrift = checkGeneratedErrors(
+  root,
+  workspacePackages(root).filter((pkg) => path.resolve(root, pkg.directory) === cwd),
+);
+if (generatedDrift.length) throw new Error(generatedDrift.join('\n'));
 const target = path.join(
   root,
   '.state',
@@ -71,6 +80,9 @@ if (operation === 'rust') {
     const reportDirectory = path.join(owned, scenario);
     rmSync(reportDirectory, { recursive: true, force: true });
     mkdirSync(reportDirectory, { recursive: true });
+    const telemetryDirectory = path.join(reportDirectory, 'telemetry');
+    mkdirSync(telemetryDirectory, { mode: 0o700 });
+    const runId = `native-${process.platform}-${scenario}-${headSha(root) ?? 'local'}`;
     const savePath =
       scenario === 'cancel'
         ? 'cancel'
@@ -87,6 +99,9 @@ if (operation === 'rust') {
         STARTER_TEST_SAVE_PATH: savePath,
         STARTER_EXPORT_CASE: scenario,
         STARTER_NATIVE_REPORT_DIR: reportDirectory,
+        STARTER_OTEL_NATIVE_DIR: telemetryDirectory,
+        STARTER_OTEL_RUN_ID: runId,
+        STARTER_OTEL_VERSION: headSha(root) ?? 'local',
       },
     });
     const cases = nativeCases(
@@ -97,9 +112,32 @@ if (operation === 'rust') {
             JSON.parse(readFileSync(path.join(reportDirectory, filename), 'utf8')) as unknown,
         ),
     );
+    const telemetry = Object.fromEntries(
+      ['traces', 'logs', 'metrics'].map((signal) => {
+        const lines = readFileSync(path.join(telemetryDirectory, `native.${signal}.jsonl`), 'utf8')
+          .trim()
+          .split('\n');
+        if (!lines.length) throw new Error(`Native ${signal} were not emitted`);
+        const payloads = lines.map((line) => JSON.parse(line) as unknown);
+        const text = JSON.stringify(payloads);
+        if (
+          !text.includes(runId) ||
+          !text.includes('notes.add') ||
+          !text.includes('notes.export') ||
+          text.includes('Native note') ||
+          text.includes('notes.json')
+        )
+          throw new Error(
+            `Native ${signal} are missing correlation or contain private application data`,
+          );
+        if (signal !== 'metrics' && !text.includes('app.diagnostic.id'))
+          throw new Error(`Native ${signal} did not record the expected input failure`);
+        return [signal, { records: lines.length }];
+      }),
+    );
     writeFileSync(
       path.join(reportDirectory, 'verified.json'),
-      `${JSON.stringify({ scenario, cases, os: process.platform, binary }, null, 2)}\n`,
+      `${JSON.stringify({ scenario, cases, os: process.platform, binary, runId, sha: headSha(root), contentId: contentId(root), telemetry }, null, 2)}\n`,
     );
     console.log(`Executed ${cases} real native cases (${scenario})`);
   }

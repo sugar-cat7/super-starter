@@ -44,11 +44,31 @@ export const securityChecks: Check[] = [
   },
 ];
 
+// Real collection needs an explicitly selected local Docker/MCP profile; CI runs
+// it once in the source-free generated workspace, outside ordinary app setup.
+export const observabilityCheck: Check = {
+  id: 'real-signals-mcp',
+  requirements: [
+    'result-policy',
+    'telemetry-privacy',
+    'signal-correlation',
+    'bounded-ai-investigation',
+    'native-signal-provenance',
+  ],
+  command: ['o11y:verify'],
+  timeout: 15 * 60_000,
+  reason:
+    'Actual ClickHouse rows and official read-only MCP; native producers must match each required OS and source',
+};
+
 export function faultCheckIds(packages: WorkspacePackage[]): string[] {
   return [
     'format',
     'lint',
     'type',
+    'lint-floating-void',
+    'lint-misused-promise',
+    'lint-exhaustiveness',
     'secret-tools',
     'unit-focused',
     'unit',
@@ -58,7 +78,7 @@ export function faultCheckIds(packages: WorkspacePackage[]): string[] {
     'boundary',
     'skill-metadata',
     ...(packages.some((pkg) => pkg.directory === 'packages/contracts')
-      ? ['secret-contracts', 'contract']
+      ? ['secret-contracts', 'contract', 'result-discard', 'telemetry-owner', 'error-catalog-drift']
       : []),
     ...(packages.some((pkg) => pkg.runtime === 'worker')
       ? [

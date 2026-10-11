@@ -47,6 +47,8 @@ pnpm template:verify
 
 Root startup reads selected manifests, starts dependencies first, waits for health/ready and uses worktree-local ports/state. Use `pnpm dev -- web` or a selected `dev:<directory>` script for one app. Package scripts remain directly available through `pnpm --filter <scope>/<directory> <script>`. Ctrl-C shuts down owned processes. `env:doctor` is read-only and returns nonzero for missing selected prerequisites; setup is repeatable and installs local hooks without replacing existing user hooks.
 
+Expected failures use [Result and generated error contracts](docs/errors.md). [Local observability and AI investigation](docs/observability.md) describes the optional OTel/ClickHouse stack, bounded MCP and investigation skill; ordinary setup does not install/start it.
+
 The sample provides validated note CRUD, loading/empty/error UI, keyboard-accessible forms and JSON export. Without D1 it explicitly uses volatile sample data. D1 selection adds repeatable migrations, initial seed and restart persistence; KV/R2 add local read/write examples. Web uses same-origin API calls and SSR/hydration/routes; fullstack uses a Service Binding to an internal API. Desktop stays offline, calls typed Rust IPC and saves through a user-selected native destination. Samples can be replaced without changing the shared development tools.
 
 Commands run without prompts and return nonzero on failure, missing tests or timeout. Builds are local artifacts, not deployments. [Quality/evidence](docs/quality.md) explains affected checks, index-safe Git hooks, CI, fault rehearsals and reports. [Troubleshooting](docs/troubleshooting.md) maps failures to the next action. [Adoption decisions](docs/adoption.md) record versions and official sources.

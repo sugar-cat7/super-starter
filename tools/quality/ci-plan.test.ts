@@ -40,12 +40,14 @@ it('plans runtime checks on the changed real application, skips unrelated native
     expect(api.checks).toContain('@test/api/runtime');
     expect(api.native).toBe(false);
     expect(api.fixtures).toBe(false);
+    expect(api.observability).toBe(true);
     writeFileSync(path.join(root, 'mise.toml'), 'changed infrastructure');
     git('add', '.');
     git('commit', '-qm', 'root change');
     const all = ciPlan(root, base);
     expect(all.nativeMatrix.include).toHaveLength(3);
     expect(all.fixtures).toBe(true);
+    expect(all.observability).toBe(true);
     expect(all.checks).toContain('@test/desktop/native');
   } finally {
     rmSync(root, { recursive: true, force: true });

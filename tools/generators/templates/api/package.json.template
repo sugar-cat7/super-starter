@@ -5,7 +5,12 @@
   "type": "module",
   "license": "Apache-2.0",
   "exports": {},
-  "starter": { "runtime": "worker" },
+  "starter": {
+    "runtime": "worker",
+    "resultBoundaries": {
+      "src/notes.ts:handleNotes": "HTTP ingress projects a handled Result into a platform Response."
+    }
+  },
   "scripts": {
     "dev": "vp dev --mode offline --host 127.0.0.1 --strictPort",
     "preview": "node preview.ts",
@@ -17,6 +22,18 @@
     "db:migrate": "node ../../tools/cloudflare/database.ts migrate",
     "db:seed": "node ../../tools/cloudflare/database.ts seed"
   },
-  "dependencies": { "__SCOPE__/contracts": "workspace:*", "zod": "catalog:" },
-  "devDependencies": { "@cloudflare/config": "catalog:", "@cloudflare/vite-plugin": "catalog:", "cf": "catalog:", "wrangler": "catalog:", "vite-plus": "catalog:", "vitest": "catalog:", "typescript": "catalog:" }
+  "dependencies": {
+    "__SCOPE__/contracts": "workspace:*",
+    "zod": "catalog:",
+    "__SCOPE__/observability": "workspace:*"
+  },
+  "devDependencies": {
+    "@cloudflare/config": "catalog:",
+    "@cloudflare/vite-plugin": "catalog:",
+    "cf": "catalog:",
+    "wrangler": "catalog:",
+    "vite-plus": "catalog:",
+    "vitest": "catalog:",
+    "typescript": "catalog:"
+  }
 }

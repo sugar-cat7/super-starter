@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@starter/contracts": "workspace:*",
+    "@starter/observability": "workspace:*",
     "@starter/ui": "workspace:*",
     "@tanstack/react-router": "catalog:",
     "@tanstack/react-start": "catalog:",
@@ -43,6 +44,10 @@
     "wrangler": "catalog:"
   },
   "starter": {
-    "runtime": "worker"
+    "runtime": "worker",
+    "resultBoundaries": {
+      "src/server.ts:fetch": "HTTP runtime ingress must return the platform Response.",
+      "src/assets.ts:compressAsset": "HTTP asset adapter must return the compressed platform Response."
+    }
   }
 }

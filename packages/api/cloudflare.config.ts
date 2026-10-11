@@ -21,6 +21,15 @@ export default defineConfig(({ mode }) => {
       compatibilityFlags: ['nodejs_compat'],
       workersDev: false,
       env: {
+        OTEL_SERVICE_NAME: bindings.text('super-starter-api'),
+        OTEL_VERSION: bindings.text(process.env.STARTER_OTEL_VERSION ?? 'development'),
+        OTEL_INSTANCE: bindings.text('super-starter'),
+        OTEL_RUN_ID: bindings.text(
+          environment === 'local' ? (process.env.STARTER_OTEL_RUN_ID ?? 'local') : environment,
+        ),
+        OTEL_ENDPOINT: bindings.text(
+          environment === 'local' ? (process.env.STARTER_OTEL_ENDPOINT ?? '') : '',
+        ),
         WRITE_MODE: bindings.text(environment === 'local' ? 'allow' : 'deny'),
         NOTES: bindings.d1({
           id:

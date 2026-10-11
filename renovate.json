@@ -9,7 +9,7 @@
     "vulnerabilityFixStrategy": "lowest"
   },
   "minimumReleaseAge": "1 day",
-  "enabledManagers": ["npm", "cargo", "github-actions", "mise", "custom.regex"],
+  "enabledManagers": ["npm", "cargo", "github-actions", "mise", "custom.regex", "docker-compose"],
   "customManagers": [
     {
       "customType": "regex",

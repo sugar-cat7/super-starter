@@ -22,6 +22,15 @@ export function ciPlan(root: string, base?: string) {
     changed === undefined || changed.some((filename) => !filename.startsWith('packages/'));
   const native = selected.some((pkg) => pkg.runtime === 'desktop');
   const workers = selected.some((pkg) => pkg.runtime === 'worker');
+  const observability =
+    changed === undefined ||
+    changed.some(
+      (file) =>
+        !file.endsWith('.md') &&
+        /^(?:packages\/|tools\/(?:o11y|errors|generators|quality)\/|\.github\/workflows\/quality\.yml$|(?:pnpm|mise|vite|package)[^/]*\.(?:yaml|toml|json|ts)$)/u.test(
+          file,
+        ),
+    );
   return {
     schema: 1,
     sha: head.stdout.trim(),
@@ -33,6 +42,7 @@ export function ciPlan(root: string, base?: string) {
     fixtures,
     native,
     workers,
+    observability,
     reason:
       changed === undefined
         ? 'Unknown base requires the complete configuration'
@@ -71,6 +81,7 @@ if (process.argv[1]?.endsWith(`${path.sep}ci-plan.ts`)) {
       fixtures: String(plan.fixtures),
       native: String(plan.native),
       workers: String(plan.workers),
+      observability: String(plan.observability),
       native_matrix: JSON.stringify(plan.nativeMatrix),
       fixtures_matrix: JSON.stringify(plan.fixturesMatrix),
     }))

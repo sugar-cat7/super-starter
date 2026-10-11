@@ -165,6 +165,11 @@ it('renders identical frozen Cargo locks and binding-free config from LF and CRL
     const templates = 'tools/generators/templates';
     mkdirSync(path.join(copy, 'tools/generators'), { recursive: true });
     cpSync(path.join(source, templates), path.join(copy, templates), { recursive: true });
+    mkdirSync(path.join(copy, 'tools/errors'), { recursive: true });
+    cpSync(
+      path.join(source, 'tools/errors/catalog.json'),
+      path.join(copy, 'tools/errors/catalog.json'),
+    );
     for (const file of [
       'desktop/src-tauri/Cargo.lock.template',
       'web/cloudflare.config.ts.template',

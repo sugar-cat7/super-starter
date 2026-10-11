@@ -20,6 +20,7 @@ import {
   faultCheckIds,
   hookPhases,
   lifecyclePhases,
+  observabilityCheck,
 } from './definitions.ts';
 import { workspacePackages, type WorkspacePackage } from './graph.ts';
 import { contentId } from './gate.ts';
@@ -248,6 +249,74 @@ export function workerEvidenceValid(
   );
 }
 
+type ObservabilityReport = {
+  schema?: number;
+  result?: string;
+  check?: string;
+  requirements?: string[];
+  sha?: string;
+  contentId?: string;
+  sourceCheckout?: boolean;
+  origin?: { sha?: string; dirty?: boolean };
+  baselineDifferences?: string[];
+  health?: { collectable?: boolean; queryReady?: boolean };
+  counts?: { failureLogs?: number; traceSpans?: number; histograms?: number };
+  mcp?: {
+    official?: string;
+    boundedTools?: number;
+    arbitraryQueryRejected?: boolean;
+    readOnlyWriteRejected?: boolean;
+  };
+  native?: { actualOperatingSystems?: string[]; collected?: string[] };
+  nativeSource?: { sha?: string; contentId?: string };
+};
+export function observabilityEvidenceValid(
+  report: ObservabilityReport,
+  expected: SourceIdentity | undefined,
+): boolean {
+  if (
+    !expected ||
+    report.schema !== 1 ||
+    report.result !== 'passed' ||
+    report.sha !== expected.sha ||
+    !/^[a-f0-9]{64}$/u.test(report.contentId ?? '') ||
+    report.check !== observabilityCheck.id ||
+    JSON.stringify(report.requirements) !== JSON.stringify(observabilityCheck.requirements) ||
+    report.health?.collectable !== true ||
+    report.health.queryReady !== true ||
+    ![report.counts?.failureLogs, report.counts?.traceSpans, report.counts?.histograms].every(
+      (value) => Number.isInteger(value) && value! > 0,
+    ) ||
+    report.mcp?.official !== 'mcp-clickhouse 0.7.0' ||
+    report.mcp.boundedTools !== 3 ||
+    report.mcp.arbitraryQueryRejected !== true ||
+    report.mcp.readOnlyWriteRejected !== true
+  )
+    return false;
+  if (report.sourceCheckout === true) {
+    if (report.contentId !== expected.contentId) return false;
+  } else if (
+    report.sourceCheckout !== false ||
+    report.origin?.sha !== expected.sha ||
+    report.origin.dirty !== false ||
+    !Array.isArray(report.baselineDifferences) ||
+    report.baselineDifferences.length !== 0
+  )
+    return false;
+  if (!expected.workspace.some((pkg) => pkg.runtime === 'desktop')) return true;
+  const cases = ['linux', 'darwin', 'win32'].flatMap((os) =>
+    ['save', 'cancel', 'error'].map((scenario) => `${os}/${scenario}`),
+  );
+  return (
+    report.nativeSource?.sha === expected.sha &&
+    report.nativeSource.contentId === expected.contentId &&
+    JSON.stringify(report.native?.actualOperatingSystems?.toSorted()) ===
+      JSON.stringify(['darwin', 'linux', 'win32']) &&
+    report.native?.collected?.length === cases.length &&
+    cases.every((item) => report.native?.collected?.includes(item))
+  );
+}
+
 export function acceptance(directory: string, sha: string) {
   const expectedSource = sourceIdentity(sha);
   const inputs = existsSync(directory)
@@ -380,6 +449,7 @@ export function acceptance(directory: string, sha: string) {
     { id: 'hooks-win32', file: 'hooks', os: 'win32' },
     { id: 'lifecycle', file: 'lifecycle', os: 'linux' },
     { id: 'sanitization', file: 'sanitization' },
+    { id: observabilityCheck.id, file: 'verified' },
     ...['agent-web-api', 'agent-desktop', 'agent-package-add'].map((id) => ({ id, file: id })),
   ];
   const mechanisms = mechanismCases.map((mechanism) => {
@@ -407,6 +477,8 @@ export function acceptance(directory: string, sha: string) {
         commands?: { phase: string; argv: string[]; exit: number; log: string }[];
         featureSha?: string;
       };
+      if (mechanism.file === 'verified')
+        return observabilityEvidenceValid(report as ObservabilityReport, expectedSource);
       if (
         report.schema !== 1 ||
         report.status !== 'passed' ||

@@ -196,7 +196,7 @@ export async function lifecycleRehearsal(source: string): Promise<void> {
         workspacePackages(root)
           .map((pkg) => pkg.name)
           .sort(),
-        ['@different/api', '@different/contracts'],
+        ['@different/api', '@different/contracts', '@different/observability'],
       );
       assert.equal(readFileSync(path.join(root, 'USER.md'), 'utf8'), 'Unrelated user content\n');
       await pnpm(['gate:full'], { cwd: root });
@@ -237,11 +237,14 @@ export async function lifecycleRehearsal(source: string): Promise<void> {
         const manifestPath = path.join(root, pkg.directory, 'package.json');
         const manifest = JSON.parse(readFileSync(manifestPath, 'utf8')) as {
           dependencies: Record<string, string>;
+          starter?: { resultBoundaries?: Record<string, string> };
         };
         manifest.dependencies = {};
+        if (manifest.starter) delete manifest.starter.resultBoundaries;
         writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
       }
-      rmSync(path.join(root, 'packages/contracts'), { recursive: true });
+      for (const library of ['contracts', 'observability'])
+        rmSync(path.join(root, 'packages', library), { recursive: true });
       await pnpm(['install', '--no-frozen-lockfile'], { cwd: root });
       await pnpm(['exec', 'vp', 'fmt'], { cwd: root });
       await pnpm(['env:setup'], { cwd: root });

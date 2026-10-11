@@ -219,6 +219,26 @@ async function injectFaults(root: string): Promise<void> {
     /TS2322/u,
     ['check'],
   );
+  for (const [id, source, rule] of [
+    [
+      'lint-floating-void',
+      'export const task = (): Promise<void> => Promise.resolve();\nvoid task();\n',
+      /no-floating-promises/u,
+    ],
+    [
+      'lint-misused-promise',
+      'export const callback: () => void = async () => {};\n',
+      /no-misused-promises/u,
+    ],
+    [
+      'lint-exhaustiveness',
+      "export function choose(mode: 'first' | 'second'): void {\n  switch (mode) {\n    case 'first': break;\n  }\n}\n",
+      /switch-exhaustiveness-check/u,
+    ],
+  ] as const)
+    await fault(id, { [probe]: source }, ['exec', 'vp', 'lint', '--type-aware', probe], rule, [
+      'check',
+    ]);
   for (const file of ['tools/fault-secret.ts', 'packages/contracts/fault-secret.config.ts']) {
     if (!existsSync(path.dirname(path.join(root, file)))) continue;
     await fault(
@@ -286,6 +306,37 @@ async function injectFaults(root: string): Promise<void> {
     ['check'],
   );
   const contracts = packages.find((pkg) => path.basename(pkg.directory) === 'contracts');
+  if (contracts) {
+    const contractProbe = `${contracts.directory}/src/failure-probe.ts`;
+    await fault(
+      'result-discard',
+      {
+        [contractProbe]:
+          "import { captureSync } from './result.ts';\nvoid captureSync(() => 1, 'unexpected_failure');\n",
+      },
+      ['exec', 'node', 'tools/quality/structure.ts'],
+      /Result is discarded/u,
+      ['check'],
+    );
+    await fault(
+      'telemetry-owner',
+      {
+        [contractProbe]:
+          "import { BasicTracerProvider } from '@opentelemetry/sdk-trace-base';\nexport const sdk = BasicTracerProvider;\n",
+      },
+      ['exec', 'node', 'tools/quality/structure.ts'],
+      /OTel SDK and logger/u,
+      ['check'],
+    );
+    const generated = `${contracts.directory}/src/errors.generated.ts`;
+    await fault(
+      'error-catalog-drift',
+      { [generated]: readFileSync(path.join(root, generated), 'utf8') + '// injected drift\n' },
+      ['check'],
+      /error catalog drift/u,
+      ['check'],
+    );
+  }
   if (contracts)
     await fault(
       'contract',

@@ -1,11 +1,20 @@
 import { useCallback, useEffect, useState } from 'react';
-import { noteInput, type Note, type NoteInput } from '@starter/contracts';
+import {
+  noteInput,
+  Ok,
+  launch,
+  type AppError,
+  type PublicError,
+  type Result,
+  type Note,
+  type NoteInput,
+} from '@starter/contracts';
 
 export type NotesAdapter = {
-  list(this: void): Promise<Note[]>;
-  add(this: void, input: NoteInput): Promise<Note>;
-  remove(this: void, id: string): Promise<void>;
-  export(this: void, notes: readonly Note[]): Promise<void>;
+  list(this: void): Promise<Result<Note[], PublicError>>;
+  add(this: void, input: NoteInput): Promise<Result<Note, PublicError>>;
+  remove(this: void, id: string): Promise<Result<void, PublicError>>;
+  export(this: void, notes: readonly Note[]): Promise<Result<void, PublicError>>;
 };
 
 export function NotesPanel({ adapter, storage }: { adapter: NotesAdapter; storage: string }) {
@@ -15,48 +24,45 @@ export function NotesPanel({ adapter, storage }: { adapter: NotesAdapter; storag
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [announcement, setAnnouncement] = useState('');
-  const reload = useCallback(async () => {
+  const reportUnexpected = useCallback((_failure: AppError | PublicError) => {
+    setError('The operation failed. Your existing notes have been kept.');
+    setBusy(false);
+    setLoading(false);
+  }, []);
+  const reload = useCallback(async (): Promise<void> => {
     setLoading(true);
     setError('');
-    try {
-      setNotes(await adapter.list());
-    } catch {
-      setError('Notes could not be loaded. Try again.');
-    } finally {
-      setLoading(false);
-    }
+    const result = await adapter.list();
+    if (result.ok) setNotes(result.value);
+    else setError('Notes could not be loaded. Try again.');
+    setLoading(false);
   }, [adapter]);
 
   useEffect(() => {
     let current = true;
-    void adapter
-      .list()
-      .then(
-        (items) => {
-          if (current) setNotes(items);
-        },
-        () => {
-          if (current) setError('Notes could not be loaded. Try again.');
-        },
-      )
-      .finally(() => {
-        if (current) setLoading(false);
-      });
+    launch(
+      async () => {
+        const result = await adapter.list();
+        if (!current) return;
+        if (result.ok) setNotes(result.value);
+        else setError('Notes could not be loaded. Try again.');
+        setLoading(false);
+      },
+      (failure) => {
+        if (current) reportUnexpected(failure);
+      },
+    );
     return () => {
       current = false;
     };
-  }, [adapter]);
+  }, [adapter, reportUnexpected]);
 
-  const mutation = async (operation: () => Promise<void>) => {
+  const mutation = async (operation: () => Promise<Result<void, PublicError>>): Promise<void> => {
     setBusy(true);
     setError('');
-    try {
-      await operation();
-    } catch {
-      setError('The operation failed. Your existing notes have been kept.');
-    } finally {
-      setBusy(false);
-    }
+    const result = await operation();
+    if (!result.ok) reportUnexpected(result.error);
+    setBusy(false);
   };
 
   return (
@@ -71,12 +77,19 @@ export function NotesPanel({ adapter, storage }: { adapter: NotesAdapter; storag
             setError('Enter a note between 1 and 1000 characters.');
             return;
           }
-          void mutation(async () => {
-            const note = await adapter.add(parsed.data);
-            setNotes((current) => [...current, note]);
-            setText('');
-            setAnnouncement('Note added.');
-          });
+          launch(
+            () =>
+              mutation(async () => {
+                const result = await adapter.add(parsed.data);
+                if (!result.ok) return result;
+                const note = result.value;
+                setNotes((current) => [...current, note]);
+                setText('');
+                setAnnouncement('Note added.');
+                return Ok(undefined);
+              }),
+            reportUnexpected,
+          );
         }}
       >
         <label htmlFor="note-text" className="block font-medium">
@@ -103,7 +116,7 @@ export function NotesPanel({ adapter, storage }: { adapter: NotesAdapter; storag
           Add note
         </button>
       </form>
-      {loading && <p role="status">Loading notes…</p>}
+      {loading && <output className="block">Loading notes…</output>}
       {error && (
         <div role="alert">
           <p>{error}</p>
@@ -111,7 +124,7 @@ export function NotesPanel({ adapter, storage }: { adapter: NotesAdapter; storag
             type="button"
             disabled={busy}
             onClick={() => {
-              void reload();
+              launch(reload, reportUnexpected);
             }}
           >
             Retry
@@ -131,11 +144,17 @@ export function NotesPanel({ adapter, storage }: { adapter: NotesAdapter; storag
               aria-label={`Delete ${note.text}`}
               disabled={busy}
               onClick={() => {
-                void mutation(async () => {
-                  await adapter.remove(note.id);
-                  setNotes((current) => current.filter((item) => item.id !== note.id));
-                  setAnnouncement('Note deleted.');
-                });
+                launch(
+                  () =>
+                    mutation(async () => {
+                      const result = await adapter.remove(note.id);
+                      if (!result.ok) return result;
+                      setNotes((current) => current.filter((item) => item.id !== note.id));
+                      setAnnouncement('Note deleted.');
+                      return Ok(undefined);
+                    }),
+                  reportUnexpected,
+                );
               }}
             >
               Delete
@@ -147,15 +166,15 @@ export function NotesPanel({ adapter, storage }: { adapter: NotesAdapter; storag
         type="button"
         disabled={loading || busy}
         onClick={() => {
-          void mutation(() => adapter.export(notes));
+          launch(() => mutation(() => adapter.export(notes)), reportUnexpected);
         }}
         className="rounded border px-4 py-2"
       >
         Export JSON
       </button>
-      <p role="status" aria-live="polite" className="sr-only">
+      <output aria-live="polite" className="sr-only">
         {announcement}
-      </p>
+      </output>
     </section>
   );
 }

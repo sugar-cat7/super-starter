@@ -21,7 +21,7 @@ export function formatFiles(root: string, files: Files): Files {
   if (!existsSync(binary)) return files;
   const formatter = formatterKey(root);
   for (const [filename, contents] of files) {
-    if (!/\.(?:[cm]?[jt]sx?|json|css|html)$/u.test(filename)) continue;
+    if (!/\.(?:[cm]?[jt]sx?|json|css|html|md)$/u.test(filename)) continue;
     const key = digest(Buffer.concat([Buffer.from(`${formatter}\0${filename}\0`), contents]));
     const cached = formatted.get(key);
     if (cached) {

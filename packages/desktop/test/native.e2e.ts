@@ -1,7 +1,7 @@
 import { browser, expect } from '@wdio/globals';
 import '@wdio/tauri-service';
 import { readFile } from 'node:fs/promises';
-import { noteSchema, notesSchema } from '@starter/contracts';
+import { noteSchema, notesSchema, decodePublicError } from '@starter/contracts';
 
 async function reloadNativeWindow() {
   // The embedded driver's refresh returns before WebKit replaces the document.
@@ -63,6 +63,24 @@ describe('real native Tauri window and Rust IPC', () => {
         ),
       ).rejects.toThrow();
     }
+    // Inspect the actual Rust-to-renderer rejection before the WebDriver transport wraps it.
+    const publicFailure = decodePublicError(
+      await browser.tauri.execute(async (tauri) => {
+        try {
+          await tauri.core.invoke('add_note', { text: '' });
+          return null;
+        } catch (error) {
+          return error;
+        }
+      }),
+    );
+    expect(publicFailure.ok).toBe(true);
+    if (!publicFailure.ok)
+      throw new Error('Native rejection violated the generated public error policy');
+    expect(publicFailure.value.code).toBe('invalid_input');
+    expect(publicFailure.value.failureClass).toBe('validation');
+    expect(publicFailure.value.retry).toBe('never');
+    expect(publicFailure.value.diagnosticId).toMatch(/^[a-f0-9]{32}$/u);
     const note = noteSchema.parse(
       await browser.tauri.execute((tauri) =>
         tauri.core.invoke('add_note', { text: 'Native note' }),

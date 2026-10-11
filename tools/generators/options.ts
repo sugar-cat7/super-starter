@@ -83,6 +83,7 @@ export function selectedPackages(options: ProjectOptions): string[] {
         : [options.preset];
   return [
     'contracts',
+    'observability',
     ...(applications.some((name) => name !== 'api') ? ['ui'] : []),
     ...applications,
   ];

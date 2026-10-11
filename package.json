@@ -33,7 +33,16 @@
     "deploy": "node tools/cloudflare/deploy.ts deploy",
     "gate:push": "node tools/quality/gate.ts push",
     "gate:ci": "node tools/quality/gate.ts ci",
-    "acceptance:report": "node tools/quality/acceptance.ts"
+    "acceptance:report": "node tools/quality/acceptance.ts",
+    "errors:generate": "node tools/errors/generate.ts",
+    "errors:check": "node tools/errors/generate.ts --check",
+    "o11y:setup": "mise --env o11y install",
+    "o11y:up": "node tools/o11y/local.ts up",
+    "o11y:down": "node tools/o11y/local.ts down",
+    "o11y:status": "node tools/o11y/local.ts status",
+    "o11y:mcp": "node tools/o11y/mcp.ts",
+    "o11y:verify": "node tools/o11y/verify.ts",
+    "o11y:investigate": "node tools/o11y/investigate.ts"
   },
   "devDependencies": {
     "@types/node": "catalog:",

@@ -19,6 +19,7 @@ jobs:
       fixtures: ${{ steps.plan.outputs.fixtures }}
       native: ${{ steps.plan.outputs.native }}
       workers: ${{ steps.plan.outputs.workers }}
+      observability: ${{ steps.plan.outputs.observability }}
       native_matrix: ${{ steps.plan.outputs.native_matrix }}
       fixtures_matrix: ${{ steps.plan.outputs.fixtures_matrix }}
     env:
@@ -50,8 +51,10 @@ jobs:
         run: node -e 'const s=JSON.parse(require("fs").readFileSync(".template.json","utf8")); if(s.kind==="reference") require("child_process").execFileSync(process.execPath,["tools/generators/cli.ts","sync","--check","--no-install"],{stdio:"inherit"}); else console.log("Reference sync not_required for a generated project");'
       - if: steps.plan.outputs.fixtures == 'true'
         run: pnpm template:verify -- --generate-only --output generated
+      - if: steps.plan.outputs.fixtures == 'false' && steps.plan.outputs.observability == 'true'
+        run: pnpm template:verify -- --generate-only --preset fullstack --output generated
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
-        if: steps.plan.outputs.fixtures == 'true'
+        if: steps.plan.outputs.fixtures == 'true' || steps.plan.outputs.observability == 'true'
         with:
           name: generated-projects
           path: generated
@@ -215,9 +218,64 @@ jobs:
             packages/*/artifacts
             packages/*/test-results
           if-no-files-found: error
+  observability:
+    if: always() && !cancelled() && needs.source.result == 'success' && needs.source.outputs.observability == 'true'
+    needs: [source, native]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      # The renamed/scoped project runs without access to the original repository.
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: generated-projects
+      - uses: jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca # v5.1.1
+        with:
+          version: 2026.10.4
+          working_directory: fullstack
+          cache: false
+          persist_github_token: false
+      - working-directory: fullstack
+        run: pnpm env:setup
+      - working-directory: fullstack
+        run: pnpm --filter ./packages/web exec playwright install --with-deps chromium
+      - working-directory: fullstack
+        run: pnpm o11y:setup
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        if: needs.source.outputs.native == 'true'
+        with:
+          pattern: actual-native-evidence-*
+          path: native-input
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        if: needs.source.outputs.native == 'true'
+        with:
+          name: source-evidence
+          path: source-input
+      - working-directory: fullstack
+        run: pnpm o11y:up
+      - name: Real signals and official bounded MCP
+        working-directory: fullstack
+        shell: bash
+        env:
+          NATIVE_REQUIRED: ${{ needs.source.outputs.native }}
+          CI_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          if [ "$NATIVE_REQUIRED" = true ]; then
+            pnpm o11y:verify -- --native-artifacts ../native-input --native-source-evidence ../source-input/artifacts/ci-plan.json
+          else
+            pnpm o11y:verify
+          fi
+      - if: always()
+        working-directory: fullstack
+        run: pnpm o11y:down
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: observability-evidence
+          path: fullstack/artifacts/o11y
+          if-no-files-found: error
   required:
     if: always()
-    needs: [source, generated, native, worker-windows]
+    needs: [source, generated, native, worker-windows, observability]
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
@@ -227,5 +285,6 @@ jobs:
           FIXTURES: ${{ needs.source.outputs.fixtures }}
           NATIVE: ${{ needs.source.outputs.native }}
           WORKERS: ${{ needs.source.outputs.workers }}
+          OBSERVABILITY: ${{ needs.source.outputs.observability }}
         run: >-
-          node -e 'const jobs=JSON.parse(process.env.RESULTS); const plan={source:"true",generated:process.env.FIXTURES,native:process.env.NATIVE,"worker-windows":process.env.WORKERS}; for(const [name,required] of Object.entries(plan)) { if(!["true","false"].includes(required)) throw new Error(`Missing plan for ${name}`); const result=jobs[name]?.result; if(required==="true" && result!=="success") throw new Error(`${name} ${result}; planned checks must succeed`); if(required==="false" && result!=="skipped") throw new Error(`${name} unexpected result ${result}`); }'
+          node -e 'const jobs=JSON.parse(process.env.RESULTS); const plan={source:"true",generated:process.env.FIXTURES,native:process.env.NATIVE,"worker-windows":process.env.WORKERS,observability:process.env.OBSERVABILITY}; for(const [name,required] of Object.entries(plan)) { if(!["true","false"].includes(required)) throw new Error(`Missing plan for ${name}`); const result=jobs[name]?.result; if(required==="true" && result!=="success") throw new Error(`${name} ${result}; planned checks must succeed`); if(required==="false" && result!=="skipped") throw new Error(`${name} unexpected result ${result}`); }'

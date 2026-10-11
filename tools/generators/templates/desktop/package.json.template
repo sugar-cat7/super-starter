@@ -25,7 +25,8 @@
     "__SCOPE__/ui": "workspace:*",
     "@tauri-apps/api": "catalog:",
     "react": "catalog:",
-    "react-dom": "catalog:"
+    "react-dom": "catalog:",
+    "__SCOPE__/observability": "workspace:*"
   },
   "devDependencies": {
     "@tauri-apps/cli": "catalog:",

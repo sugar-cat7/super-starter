@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@starter/contracts": "workspace:*",
+    "@starter/observability": "workspace:*",
     "zod": "catalog:"
   },
   "devDependencies": {
@@ -31,6 +32,9 @@
     "wrangler": "catalog:"
   },
   "starter": {
-    "runtime": "worker"
+    "runtime": "worker",
+    "resultBoundaries": {
+      "src/notes.ts:handleNotes": "HTTP ingress projects a handled Result into a platform Response."
+    }
   }
 }

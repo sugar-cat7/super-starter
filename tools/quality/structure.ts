@@ -4,6 +4,7 @@ import { builtinModules } from 'node:module';
 import { parseSync } from 'oxc-parser';
 import { walk } from '../generators/files.ts';
 import { workspacePackages } from './graph.ts';
+import { failureHandling } from './failure-handling.ts';
 
 export function structure(root: string): string[] {
   const errors: string[] = [];
@@ -177,7 +178,7 @@ export function structure(root: string): string[] {
     }
   };
   clients.forEach((filename) => visitClient(filename, [filename]));
-  return errors;
+  return [...errors, ...failureHandling(root)];
 }
 
 if (process.argv[1]?.endsWith(`${path.sep}structure.ts`)) {

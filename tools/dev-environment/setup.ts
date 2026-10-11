@@ -6,6 +6,7 @@ import { prepareDatabase } from '../cloudflare/database.ts';
 import { installHooks } from '../quality/hooks.ts';
 import { finalizeManaged } from '../generators/format.ts';
 import { digest } from '../generators/files.ts';
+import { writeGeneratedErrors } from '../errors/generate.ts';
 
 const root = process.cwd();
 const args = process.argv.slice(2).filter((argument) => argument !== '--');
@@ -48,4 +49,6 @@ for (const pkg of workspacePackages(root)) {
     });
   }
 }
+if (!javascript || !workspacePackages(root).some((pkg) => pkg.runtime === 'desktop'))
+  writeGeneratedErrors(root, true);
 installHooks(root);

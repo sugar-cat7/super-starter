@@ -25,6 +25,7 @@ e2e = ["dep:tauri-plugin-wdio", "dep:tauri-plugin-wdio-webdriver"]
 
 [lints.rust]
 unsafe_code = "deny"
+unused_must_use = "deny"
 
 [lints.clippy]
 all = { level = "warn", priority = -1 }

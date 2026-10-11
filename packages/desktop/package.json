@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@starter/contracts": "workspace:*",
+    "@starter/observability": "workspace:*",
     "@starter/ui": "workspace:*",
     "@tauri-apps/api": "catalog:",
     "react": "catalog:",

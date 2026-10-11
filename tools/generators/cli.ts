@@ -96,6 +96,7 @@ export async function main(args: string[]): Promise<void> {
     );
     const state = {
       ...previous,
+      packages: selectedPackages(previous.options),
       managed: {
         ...retained,
         ...Object.fromEntries(

@@ -209,3 +209,71 @@ it('requires actual executables and subcommands rather than mention-only or help
     true,
   );
 });
+
+it('requires exact current collection, query, MCP and native producer evidence', async () => {
+  const { observabilityEvidenceValid } = await import('./acceptance.ts');
+  const { observabilityCheck } = await import('./definitions.ts');
+  const sha = 'a'.repeat(40);
+  const current = 'b'.repeat(64);
+  const expected = {
+    sha,
+    contentId: current,
+    configuration: projectOptions({ name: 'fixture', scope: '@fixture', preset: 'desktop' }),
+    workspace: [
+      {
+        name: '@fixture/desktop',
+        directory: 'packages/desktop',
+        runtime: 'desktop' as const,
+        scripts: {},
+        dependencies: [],
+      },
+    ],
+  };
+  const report = {
+    schema: 1,
+    result: 'passed',
+    sha,
+    contentId: 'c'.repeat(64),
+    sourceCheckout: false,
+    baselineDifferences: [],
+    origin: { sha, dirty: false },
+    check: observabilityCheck.id,
+    requirements: observabilityCheck.requirements,
+    health: { collectable: true, queryReady: true },
+    counts: { failureLogs: 3, traceSpans: 3, histograms: 4 },
+    mcp: {
+      official: 'mcp-clickhouse 0.7.0',
+      boundedTools: 3,
+      arbitraryQueryRejected: true,
+      readOnlyWriteRejected: true,
+    },
+    nativeSource: { sha, contentId: current },
+    native: {
+      actualOperatingSystems: ['linux', 'darwin', 'win32'],
+      collected: ['linux', 'darwin', 'win32'].flatMap((os) =>
+        ['save', 'cancel', 'error'].map((scenario) => `${os}/${scenario}`),
+      ),
+    },
+  };
+  expect(observabilityEvidenceValid(report, expected)).toBe(true);
+  for (const incomplete of [
+    { ...report, result: 'not_run' },
+    { ...report, baselineDifferences: ['packages/web/src/server.ts'] },
+    { ...report, sha: 'd'.repeat(40) },
+    { ...report, sourceCheckout: true },
+    { ...report, origin: { sha, dirty: true } },
+    { ...report, health: { collectable: false, queryReady: true } },
+    { ...report, counts: { failureLogs: 0, traceSpans: 3, histograms: 4 } },
+    { ...report, mcp: { ...report.mcp, arbitraryQueryRejected: false } },
+    { ...report, native: { ...report.native, collected: report.native.collected.slice(1) } },
+    { ...report, nativeSource: { sha, contentId: 'd'.repeat(64) } },
+  ])
+    expect(observabilityEvidenceValid(incomplete, expected)).toBe(false);
+  expect(observabilityEvidenceValid(report, undefined)).toBe(false);
+  expect(
+    observabilityEvidenceValid(
+      { ...report, native: { actualOperatingSystems: [], collected: [] } },
+      { ...expected, workspace: [] },
+    ),
+  ).toBe(true);
+});

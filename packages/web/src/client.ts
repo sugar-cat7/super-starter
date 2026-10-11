@@ -1,17 +1,27 @@
 import './styles.css';
+import { launch } from '@starter/contracts';
 import { StrictMode, startTransition, createElement } from 'react';
 
 // Let the styled SSR document render, then initialize each runtime across frames.
 requestAnimationFrame(() => {
   requestAnimationFrame(() => {
-    void import('react-dom/client').then(({ hydrateRoot }) => {
+    launch(async () => {
+      const { hydrateRoot } = await import('react-dom/client');
       requestAnimationFrame(() => {
-        void import('@tanstack/react-start/client').then(({ StartClient }) => {
+        launch(async () => {
+          const { StartClient } = await import('@tanstack/react-start/client');
           startTransition(() => {
             hydrateRoot(document, createElement(StrictMode, null, createElement(StartClient)));
           });
-        });
+        }, reportBootFailure);
       });
-    });
+    }, reportBootFailure);
   });
 });
+
+function reportBootFailure(): void {
+  const alert = document.createElement('p');
+  alert.setAttribute('role', 'alert');
+  alert.textContent = 'The page could not initialize. Reload to try again.';
+  document.body.appendChild(alert);
+}
