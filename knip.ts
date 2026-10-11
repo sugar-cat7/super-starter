@@ -39,6 +39,8 @@ export default {
           // The shared native helper invokes the WDIO CLI; WDIO resolves its local runner.
           ignoreDependencies: [
             ...pkg.dependencies.filter((name) => workers.has(name)),
+            // Shared local D1/preview adapters invoke the owning Worker's Wrangler CLI.
+            ...(pkg.runtime === 'worker' ? ['wrangler'] : []),
             ...(pkg.runtime === 'desktop' ? ['@wdio/cli', '@wdio/local-runner'] : []),
             // The shared Web audit loads the owning package's Lighthouse SDK.
             ...(pkg.scripts['test:lighthouse'] ? ['lighthouse'] : []),

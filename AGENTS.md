@@ -11,7 +11,7 @@ Start with [README.md](README.md). The workspace manifests, `pnpm-workspace.yaml
 
 Before adopting/updating APIs, consult current official docs, release notes and installed SDK types; record versions, dates, URLs and a minimal compatibility result. Report what actually ran, its input SHA/content ID and limitations. If explicitly asked to merge, recheck current HEAD/base, required CI, unresolved reviews and conflicts; merge only the verified HEAD through the permitted method, then verify main and its CI. Do not self-approve or bypass protection.
 
-For a selected Cloudflare Worker, use its project-local `pnpm cf <command>`; [Cloudflare guidance](docs/cloudflare.md) maps development/build/types, resource discovery and checked deployment to cf, with explicit SDK compatibility exceptions. Run it from the owning package, where `cloudflare.config.ts` exists.
+For a selected Cloudflare Worker, use its project-local `pnpm run cf <command>`; [Cloudflare guidance](docs/cloudflare.md) maps development/build/types, resource discovery and checked deployment to cf, with explicit SDK compatibility exceptions. Run it from the owning package, where `cloudflare.config.ts` exists.
 
 For security findings, apply the [security skill](.agents/skills/security/SKILL.md) and run `pnpm security:check` with its optional tool profile. HIGH/CRITICAL and ERROR findings, incomplete scans and unfixed vulnerabilities remain blocking. Keep raw scanner/secret evidence private; remote remediation requires an existing approved credential.
 
