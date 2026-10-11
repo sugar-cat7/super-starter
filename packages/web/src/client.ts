@@ -2,22 +2,26 @@ import './styles.css';
 import { launch } from '@starter/contracts';
 import { StrictMode, startTransition, createElement } from 'react';
 
-// Let the styled SSR document render, then initialize each runtime across frames.
-requestAnimationFrame(() => {
+// Static production pages keep their styled SSR and ordinary anchor navigation.
+// Development still hydrates for route HMR; interactive pages always hydrate.
+if (import.meta.env.DEV || !document.querySelector('meta[name="app-client"][content="static"]')) {
+  // Let the styled SSR document render, then initialize each runtime across frames.
   requestAnimationFrame(() => {
-    launch(async () => {
-      const { hydrateRoot } = await import('react-dom/client');
-      requestAnimationFrame(() => {
-        launch(async () => {
-          const { StartClient } = await import('@tanstack/react-start/client');
-          startTransition(() => {
-            hydrateRoot(document, createElement(StrictMode, null, createElement(StartClient)));
-          });
-        }, reportBootFailure);
-      });
-    }, reportBootFailure);
+    requestAnimationFrame(() => {
+      launch(async () => {
+        const { hydrateRoot } = await import('react-dom/client');
+        requestAnimationFrame(() => {
+          launch(async () => {
+            const { StartClient } = await import('@tanstack/react-start/client');
+            startTransition(() => {
+              hydrateRoot(document, createElement(StrictMode, null, createElement(StartClient)));
+            });
+          }, reportBootFailure);
+        });
+      }, reportBootFailure);
+    });
   });
-});
+}
 
 function reportBootFailure(): void {
   const alert = document.createElement('p');

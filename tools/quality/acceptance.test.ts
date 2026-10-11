@@ -59,7 +59,11 @@ it('requires exact-source actual Windows Worker commands and rejects other OS or
   const root = mkdtempSync(path.join(os.tmpdir(), 'acceptance-windows-'));
   const sha = 'a'.repeat(40);
   try {
-    const configuration = projectOptions({ name: 'fixture', scope: '@fixture', preset: 'api' });
+    const configuration = projectOptions({
+      name: 'fixture',
+      scope: '@fixture',
+      preset: 'fullstack',
+    });
     applyFiles(root, projectFiles(fileURLToPath(new URL('../..', import.meta.url)), configuration));
     const workspace = workspacePackages(root);
     const expected = { sha, contentId: contentId(root), configuration, workspace };
@@ -77,16 +81,36 @@ it('requires exact-source actual Windows Worker commands and rejects other OS or
         ...globalChecks,
         ...workspace
           .filter((pkg) => pkg.runtime === 'worker')
-          .flatMap((pkg) => packageChecks(pkg, 'full')),
+          .flatMap((pkg) => packageChecks(pkg, 'full'))
+          .filter((check) => !check.requirements.includes('browser')),
       ].map((check) => ({ ...check, status: 'passed', milliseconds: 1 })),
     };
     expect(workerEvidenceValid(report, expected)).toBe(true);
+    const productionBrowser = workspace
+      .flatMap((pkg) => packageChecks(pkg, 'full'))
+      .find((check) => check.id.endsWith('/browser-production'));
+    expect(productionBrowser).toBeDefined();
+    const web = workspace.find((pkg) => pkg.dependencies.includes('@tanstack/react-start'))!;
+    const missingProductionScript = { ...web, scripts: { ...web.scripts } };
+    delete missingProductionScript.scripts['test:e2e:production'];
+    expect(
+      packageChecks(missingProductionScript, 'full').map((check) => check.command),
+    ).toContainEqual(['--filter', web.name, 'test:e2e:production']);
+    expect(
+      workerEvidenceValid(
+        {
+          ...report,
+          checks: [...report.checks, { ...productionBrowser!, status: 'passed', milliseconds: 1 }],
+        },
+        expected,
+      ),
+    ).toBe(false);
     expect(workerEvidenceValid(report, undefined)).toBe(false);
     expect(workerEvidenceValid({ ...report, contentId: 'd'.repeat(64) }, expected)).toBe(false);
     expect(
       workerEvidenceValid(report, {
         ...expected,
-        configuration: projectOptions({ name: 'fixture', scope: '@fixture', preset: 'fullstack' }),
+        configuration: projectOptions({ name: 'fixture', scope: '@fixture', preset: 'api' }),
       }),
     ).toBe(false);
     expect(

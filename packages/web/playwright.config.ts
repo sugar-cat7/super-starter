@@ -17,5 +17,13 @@ export default defineConfig({
     trace: 'retain-on-failure',
   },
   snapshotPathTemplate: '{testDir}/snapshots/{arg}{ext}',
-  reporter: [['list'], ['json', { outputFile: '../../artifacts/browser.json' }]],
+  reporter: [
+    ['list'],
+    [
+      'json',
+      {
+        outputFile: `../../artifacts/browser${process.env.STARTER_BROWSER_MODE === 'production' ? '-production' : ''}.json`,
+      },
+    ],
+  ],
 });

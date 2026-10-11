@@ -218,7 +218,7 @@ export function workerEvidenceValid(
   const checks = [
     ...globalChecks,
     ...workers.flatMap((pkg) =>
-      packageChecks(pkg, 'full').filter((check) => !/\/(?:browser|lighthouse)$/u.test(check.id)),
+      packageChecks(pkg, 'full').filter((check) => !check.requirements.includes('browser')),
     ),
   ];
   return (

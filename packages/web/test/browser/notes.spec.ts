@@ -9,7 +9,7 @@ test('styled SSR and safe input remain available while hydration is loading', as
     release = resolve;
   });
   let requested = false;
-  await page.route('**/src/client.ts*', async (route) => {
+  await page.route(/\/(?:src\/client\.ts|assets\/client-[^/]+\.js)(?:\?|$)/u, async (route) => {
     requested = true;
     await waiting;
     await route.continue();
@@ -75,8 +75,55 @@ test('SSR, hydration, CRUD, same-origin export, routes and accessibility', async
   await page.getByRole('link', { name: 'About' }).click();
   await expect(page.getByRole('heading', { name: 'About this sample' })).toBeVisible();
   await page.getByRole('link', { name: 'Notes', exact: true }).click();
-  await expect(page.getByLabel('New note')).toBeVisible();
+  await expect(page.getByLabel('New note')).toBeEditable();
   expect(errors).toEqual([]);
+});
+
+test('cold static page preserves styled native navigation and the destination hydrates', async ({
+  page,
+  browser,
+}) => {
+  const rendererRequests: string[] = [];
+  const errors: string[] = [];
+  page.on('request', (request) => {
+    if (/\/assets\/react-dom-[^/]+\.js/u.test(request.url())) rendererRequests.push(request.url());
+  });
+  page.on('pageerror', (error) => errors.push(error.message));
+  await page.goto('/about');
+  await expect(page.getByRole('heading', { name: 'About this sample' })).toHaveCSS(
+    'font-size',
+    '30px',
+  );
+  await expect(page.locator('meta[name="app-client"]')).toHaveAttribute('content', 'static');
+  if (process.env.STARTER_BROWSER_MODE === 'production') {
+    // Observe initial lazy imports before navigation; a styled heading alone is too early.
+    await page.waitForLoadState('networkidle');
+    expect(rendererRequests).toEqual([]);
+  }
+  await page.getByRole('link', { name: 'Notes', exact: true }).click();
+  await expect(page.locator('meta[name="app-client"]')).toHaveCount(0);
+  await expect(page.getByLabel('New note')).toBeEditable();
+  await page.getByLabel('New note').fill('From static page');
+  await page.getByRole('button', { name: 'Add note', exact: true }).click();
+  await expect(page.getByText('From static page', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Delete From static page' }).click();
+  await expect(page.getByText('From static page', { exact: true })).toHaveCount(0);
+  expect(errors).toEqual([]);
+
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  try {
+    const staticPage = await context.newPage();
+    await staticPage.goto(new URL('/about', page.url()).href);
+    await expect(staticPage.getByRole('heading', { name: 'About this sample' })).toHaveCSS(
+      'font-size',
+      '30px',
+    );
+    await staticPage.getByRole('link', { name: 'Notes', exact: true }).click();
+    await expect(staticPage.getByLabel('New note')).toBeVisible();
+    await expect(staticPage.getByLabel('New note')).toHaveJSProperty('readOnly', true);
+  } finally {
+    await context.close();
+  }
 });
 
 test('loading, empty and API-error states have reviewed visual baselines', async ({ page }) => {

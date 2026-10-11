@@ -157,9 +157,15 @@ export function packageChecks(pkg: WorkspacePackage, phase: 'test' | 'build' | '
     if (pkg.scripts['test:restart'])
       entries.push(['restart', 'test:restart', ['migration', 'seed', 'persistence']]);
     if (pkg.scripts['test:e2e'])
-      entries.push(['browser', 'test:e2e', ['web', 'accessibility', 'vrt']]);
+      entries.push(['browser', 'test:e2e', ['web', 'browser', 'accessibility', 'vrt']]);
+    if (pkg.dependencies.includes('@tanstack/react-start') || pkg.scripts['test:e2e:production'])
+      entries.push([
+        'browser-production',
+        'test:e2e:production',
+        ['web', 'browser', 'production-ui'],
+      ]);
     if (pkg.dependencies.includes('@tanstack/react-start') || pkg.scripts['test:lighthouse'])
-      entries.push(['lighthouse', 'test:lighthouse', ['web', 'lighthouse-all-100']]);
+      entries.push(['lighthouse', 'test:lighthouse', ['web', 'browser', 'lighthouse-all-100']]);
     if (pkg.runtime === 'desktop')
       entries.push(
         ['rust', 'test:rust', ['rust', 'ipc', 'export']],
