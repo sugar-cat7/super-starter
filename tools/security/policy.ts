@@ -104,10 +104,22 @@ function severity(value: unknown, allowed: string[]): string {
 
 // Publish identifiers/locations only. Never copy secret matches, source snippets,
 // arbitrary rule messages, scanner errors or environment values into artifacts.
-export function trivyReport(input: unknown, expectedLocks: string[]): ScanResult {
+export function trivyReport(
+  input: unknown,
+  expectedLocks: string[],
+  expectedSha?: string | null,
+): ScanResult {
   const report = object(input);
-  if (report.SchemaVersion !== 2 || report.ArtifactType !== 'filesystem')
+  if (
+    report.SchemaVersion !== 2 ||
+    !['filesystem', 'repository'].includes(String(report.ArtifactType))
+  )
     throw new Error('Unsupported Trivy report');
+  if (
+    report.ArtifactType === 'repository' &&
+    (!expectedSha || object(report.Metadata).Commit !== expectedSha)
+  )
+    throw new Error('Trivy repository identity does not match checkout');
   const version = text(object(report.Trivy).Version);
   const scanned: string[] = [];
   const findings: Finding[] = [];

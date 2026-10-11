@@ -124,6 +124,7 @@ const policyFailures = new Set([
   'Scanner path escapes source',
   'Unknown scanner severity',
   'Unsupported Trivy report',
+  'Trivy repository identity does not match checkout',
   'Unexpected dependency ecosystem',
   'Zero-package dependency scan',
   'Required lockfile was not scanned',
@@ -281,7 +282,7 @@ export async function scan(root: string, scanner?: string): Promise<SecurityRepo
       stage = 'schema-and-coverage';
       const result =
         check.id === 'trivy'
-          ? trivyReport(input, locks)
+          ? trivyReport(input, locks, report.sha)
           : semgrepReport(input, expectedSources(root));
       stage = 'version';
       if (result.version !== expectedVersion(root, check.id))

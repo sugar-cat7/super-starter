@@ -85,6 +85,17 @@ describe('fail-closed security policy', () => {
     const result = trivyReport(trivy('MEDIUM', '1.0.1'), ['pnpm-lock.yaml']);
     expect(result.findings[0]).toMatchObject({ blocking: false, fixed: '1.0.1' });
   });
+  it('accepts the SDK repository classification only with an exact checkout identity', () => {
+    const sha = 'a'.repeat(40);
+    const input = { ...trivy(), ArtifactType: 'repository', Metadata: { Commit: sha } };
+    expect(trivyReport(input, ['pnpm-lock.yaml'], sha).findings[0]?.blocking).toBe(true);
+    expect(() => trivyReport(input, ['pnpm-lock.yaml'], 'b'.repeat(40))).toThrow(
+      'Trivy repository identity does not match checkout',
+    );
+    expect(() => trivyReport(input, ['pnpm-lock.yaml'])).toThrow(
+      'Trivy repository identity does not match checkout',
+    );
+  });
   it('rejects missing native coverage, empty package scans and schema changes', () => {
     expect(() =>
       trivyReport(trivy(), ['pnpm-lock.yaml', 'packages/desktop/src-tauri/Cargo.lock']),
