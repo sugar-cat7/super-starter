@@ -27,8 +27,8 @@ try {
       'Choose a project before installing: mise run setup -- --name my-project --scope @my-team [--preset web] (maintainers: --reference)',
     );
   }
-  invoke('mise', ['install', 'aqua:pnpm/pnpm@12.10.1']);
-  const manager = ['exec', 'aqua:pnpm/pnpm@12.10.1', '--', 'pnpm'];
+  invoke('mise', ['install', 'aqua:pnpm/pnpm@12.11.2']);
+  const manager = ['exec', 'aqua:pnpm/pnpm@12.11.2', '--', 'pnpm'];
   // Initialization may have changed identity/preset while the clone still has its old lock.
   const initialized = JSON.parse(readFileSync(statePath, 'utf8'));
   invoke('mise', [

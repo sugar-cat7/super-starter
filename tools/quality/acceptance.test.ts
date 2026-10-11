@@ -200,7 +200,7 @@ it('requires actual executables and subcommands rather than mention-only or help
   expect(agentCommandValid('commit', ['git', '-c', 'core.hooksPath=/tmp', 'commit'])).toBe(false);
   expect(agentCommandValid('preflight', ['pnpm', 'deploy:preflight', '--dry-run'])).toBe(false);
   expect(
-    agentCommandValid('full', ['mise', 'exec', 'pnpm@12.10.1', '--', 'pnpm', 'gate:full']),
+    agentCommandValid('full', ['mise', 'exec', 'pnpm@12.11.2', '--', 'pnpm', 'gate:full']),
   ).toBe(true);
   expect(
     agentCommandValid('targeted-test', ['pnpm', '--filter', '@fixture/api', 'test:unit']),

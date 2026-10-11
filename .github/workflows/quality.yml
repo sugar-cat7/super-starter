@@ -35,7 +35,7 @@ jobs:
           persist-credentials: false
       - uses: jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca # v5.1.1
         with:
-          version: 2026.10.4
+          version: 2026.10.7
           cache: false
           persist_github_token: false
       - run: pnpm install --frozen-lockfile
@@ -83,7 +83,7 @@ jobs:
           name: generated-projects
       - uses: jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca # v5.1.1
         with:
-          version: 2026.10.4
+          version: 2026.10.7
           working_directory: ${{ matrix.preset }}
           cache: false
           persist_github_token: false
@@ -162,7 +162,7 @@ jobs:
           persist-credentials: false
       - uses: jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca # v5.1.1
         with:
-          version: 2026.10.4
+          version: 2026.10.7
           cache: false
           persist_github_token: false
       - name: Native Linux prerequisites
@@ -202,7 +202,7 @@ jobs:
           persist-credentials: false
       - uses: jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca # v5.1.1
         with:
-          version: 2026.10.4
+          version: 2026.10.7
           cache: false
           persist_github_token: false
       - run: pnpm env:setup -- --javascript
@@ -230,7 +230,7 @@ jobs:
           name: generated-projects
       - uses: jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca # v5.1.1
         with:
-          version: 2026.10.4
+          version: 2026.10.7
           working_directory: fullstack
           cache: false
           persist_github_token: false
