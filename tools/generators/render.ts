@@ -104,6 +104,7 @@ export function appFiles(
       source,
       [{ runtime: kind === 'desktop' ? 'desktop' : 'library', directory: `packages/${name}` }],
       true,
+      format,
     ))
       if (file.startsWith(`packages/${name}/`)) files.set(file, contents);
   }

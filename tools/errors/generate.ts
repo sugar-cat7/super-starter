@@ -80,6 +80,7 @@ export function generatedErrors(
   root: string,
   selected: Pick<WorkspacePackage, 'directory' | 'runtime'>[] = workspacePackages(root),
   cold = false,
+  format = true,
 ): Map<string, Buffer> {
   const catalog = readCatalog(root);
   const banner = '// Generated from tools/errors/catalog.json by errors:generate. Do not edit.\n';
@@ -124,6 +125,10 @@ export function generatedErrors(
       '\n',
     )}\n    } }\n}\nimpl std::fmt::Display for AppError { fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result { write!(f, "{} ({})", self.internal_code(), self.diagnostic_id) } }\nimpl std::error::Error for AppError {}\n`;
   for (const pkg of packages.filter((entry) => entry.runtime === 'desktop')) {
+    if (!format) {
+      files.set(`${pkg.directory}/src-tauri/src/errors_generated.rs`, Buffer.from(rust));
+      continue;
+    }
     const formatted = spawnSync('rustfmt', ['--edition', '2024', '--emit', 'stdout'], {
       cwd: existsSync(path.join(root, pkg.directory, 'src-tauri'))
         ? path.join(root, pkg.directory, 'src-tauri')
@@ -151,7 +156,7 @@ export function generatedErrors(
         .join('\n')}\n`,
     ),
   );
-  return formatFiles(root, files);
+  return format ? formatFiles(root, files) : files;
 }
 
 // Setup may finalize a cold Rust output only while it still matches the generator's
