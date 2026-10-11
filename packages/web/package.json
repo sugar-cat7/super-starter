@@ -6,7 +6,8 @@
   "type": "module",
   "exports": {},
   "scripts": {
-    "dev": "vp dev --mode offline --host 127.0.0.1 --strictPort",
+    "cf": "cf",
+    "dev": "vp dev --mode offline",
     "preview": "node preview.ts",
     "check": "vp check .",
     "test": "node ../../tools/quality/vitest.ts --config vitest.config.ts",

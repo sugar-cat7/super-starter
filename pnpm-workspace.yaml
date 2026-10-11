@@ -15,7 +15,8 @@ catalog:
   yaml: 2.9.1
   '@types/mocha': 10.0.10
   oxc-parser: 0.153.0
-  '@cloudflare/vite-plugin': 1.63.1
+  # cf beta.14 delegates development/build only to the official v2 plugin.
+  '@cloudflare/vite-plugin': 2.0.0-beta.sha-91c870c02
   '@tanstack/react-router': 1.170.41
   '@tanstack/react-start': 1.168.60
   '@tailwindcss/vite': 4.3.3

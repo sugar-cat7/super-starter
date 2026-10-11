@@ -70,6 +70,7 @@ export class Servers {
         ...process.env,
         STARTER_PORT: String(port),
         STARTER_STATE_ROOT: this.stateRoot,
+        CLOUDFLARE_REGISTRY_PATH: registry,
         WRANGLER_REGISTRY_PATH: registry,
         MINIFLARE_REGISTRY_PATH: registry,
         CLOUDFLARE_SEND_METRICS: 'false',
