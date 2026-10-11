@@ -68,6 +68,18 @@ it('runs the real doctor CLI without automatic dependency preparation', () => {
     expect(existsSync(path.join(root, 'node_modules'))).toBe(false);
     expect(existsSync(path.join(root, '.state'))).toBe(false);
     expect(readFileSync(path.join(root, 'pnpm-lock.yaml'), 'utf8')).toBe(managerLock);
+    const javascriptInvocation = pnpmCommand(['env:doctor', '--', '--javascript']);
+    const javascript = spawnSync(javascriptInvocation.command, javascriptInvocation.args, {
+      cwd: root,
+      encoding: 'utf8',
+      timeout: 10_000,
+    });
+    expect(javascript.error).toBeUndefined();
+    expect(javascript.status).toBe(1);
+    expect(javascript.stdout).toContain('"scope": "javascript"');
+    expect(javascript.stdout).toContain('Project-local Vite+ required');
+    expect(existsSync(path.join(root, 'node_modules'))).toBe(false);
+    expect(readFileSync(path.join(root, 'pnpm-lock.yaml'), 'utf8')).toBe(managerLock);
   } finally {
     rmSync(root, { recursive: true, force: true });
   }

@@ -43,6 +43,33 @@ function fixture(inspect: (root: string) => void): void {
 }
 
 describe('environment versions', () => {
+  it('only omits native prerequisites for an explicitly selected JavaScript scope', () => {
+    fixture((root) => {
+      const original = vi.mocked(spawnSync).getMockImplementation()!;
+      vi.mocked(spawnSync).mockImplementation((command, args, options) =>
+        command === 'rustc' || command === 'pkg-config'
+          ? ({ status: 1, stdout: '', stderr: 'unavailable native prerequisite' } as ReturnType<
+              typeof spawnSync
+            >)
+          : original(command, args, options),
+      );
+      const full = doctor(root);
+      expect(full.find((entry) => entry.id === '@example/desktop/rust')?.ok).toBe(false);
+      vi.mocked(spawnSync).mockClear();
+      const renderer = doctor(root, true);
+      expect(
+        renderer.some(
+          (entry) => entry.id.endsWith('/rust') || entry.id.endsWith('/native-libraries'),
+        ),
+      ).toBe(false);
+      expect(renderer.find((entry) => entry.id === 'vite-plus')?.ok).toBe(false);
+      expect(
+        vi
+          .mocked(spawnSync)
+          .mock.calls.some(([command]) => command === 'rustc' || command === 'pkg-config'),
+      ).toBe(false);
+    });
+  });
   it('diagnoses a parent Git repository without reading its hook configuration', () => {
     fixture((root) => {
       const original = vi.mocked(spawnSync).getMockImplementation()!;

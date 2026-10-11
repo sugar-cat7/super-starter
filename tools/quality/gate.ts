@@ -5,7 +5,7 @@ import os from 'node:os';
 import { createHash } from 'node:crypto';
 import { pnpm } from '../process.ts';
 import { walk } from '../generators/files.ts';
-import { affectedPackages, workspacePackages } from './graph.ts';
+import { affectedPackages, executionChanges, workspacePackages } from './graph.ts';
 import { globalChecks, packageChecks, type Check } from './definitions.ts';
 import { artifactSizes, toolVersions } from './evidence.ts';
 import { baselineDifferences } from '../generators/baseline.ts';
@@ -103,6 +103,7 @@ export async function gate(
     }
   }
   const packages = workspacePackages(root);
+  if (changed) changed = executionChanges(root, changed, base);
   const selected = affectedPackages(packages, changed);
   let checks: Check[] = [
     ...(mode === 'build' ? [] : globalChecks),

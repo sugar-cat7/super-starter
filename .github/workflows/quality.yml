@@ -22,9 +22,11 @@ jobs:
       observability: ${{ steps.plan.outputs.observability }}
       native_matrix: ${{ steps.plan.outputs.native_matrix }}
       fixtures_matrix: ${{ steps.plan.outputs.fixtures_matrix }}
+      native_base: ${{ steps.plan.outputs.native_base }}
     env:
       CI_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
       CI_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+      CI_FULL: ${{ github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
@@ -49,10 +51,8 @@ jobs:
         run: pnpm gate:ci -- --base "$CI_BASE_SHA" --checks javascript
       - name: Reference blueprint integrity
         run: node -e 'const s=JSON.parse(require("fs").readFileSync(".template.json","utf8")); if(s.kind==="reference") require("child_process").execFileSync(process.execPath,["tools/generators/cli.ts","sync","--check","--no-install"],{stdio:"inherit"}); else console.log("Reference sync not_required for a generated project");'
-      - if: steps.plan.outputs.fixtures == 'true'
-        run: pnpm template:verify -- --generate-only --output generated
-      - if: steps.plan.outputs.fixtures == 'false' && steps.plan.outputs.observability == 'true'
-        run: pnpm template:verify -- --generate-only --preset fullstack --output generated
+      - if: steps.plan.outputs.fixtures == 'true' || steps.plan.outputs.observability == 'true'
+        run: node tools/quality/ci-plan.ts generate
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: steps.plan.outputs.fixtures == 'true' || steps.plan.outputs.observability == 'true'
         with:
@@ -88,18 +88,28 @@ jobs:
           cache: false
           persist_github_token: false
       - name: Native Linux prerequisites
-        if: runner.os == 'Linux' && contains(matrix.preset, 'desktop')
+        if: runner.os == 'Linux' && matrix.native
         run: sudo apt-get update && sudo apt-get install -y libwebkit2gtk-4.1-dev build-essential libayatana-appindicator3-dev librsvg2-dev patchelf xvfb dbus-x11 at-spi2-core
-      - name: Setup generated project
+      - name: Setup generated native project
+        if: matrix.native
         working-directory: ${{ matrix.preset }}
         run: pnpm env:setup
+      - name: Setup generated JavaScript project
+        if: '!matrix.native'
+        working-directory: ${{ matrix.preset }}
+        run: pnpm env:setup -- --javascript
       - name: Browser prerequisite
         if: runner.os == 'Linux' && !contains(matrix.preset, 'api') && matrix.preset != 'desktop'
         working-directory: ${{ matrix.preset }}
         run: pnpm --filter ./packages/web exec playwright install --with-deps chromium
-      - name: Generated doctor
+      - name: Generated native doctor
+        if: matrix.native
         working-directory: ${{ matrix.preset }}
         run: pnpm env:doctor
+      - name: Generated JavaScript doctor
+        if: '!matrix.native'
+        working-directory: ${{ matrix.preset }}
+        run: pnpm env:doctor -- --javascript
       - name: Rendered preset SAST on Linux
         if: runner.os == 'Linux'
         working-directory: ${{ matrix.preset }}
@@ -107,19 +117,23 @@ jobs:
           pnpm security:setup
           pnpm security:check -- --scanner semgrep
       - name: Selected full gate (native Linux)
-        if: runner.os == 'Linux' && contains(matrix.preset, 'desktop')
+        if: runner.os == 'Linux' && matrix.native
         working-directory: ${{ matrix.preset }}
         run: dbus-run-session -- xvfb-run -a pnpm gate:full
-      - name: Selected full gate
-        if: runner.os != 'Linux' || !contains(matrix.preset, 'desktop')
+      - name: Selected native full gate
+        if: runner.os != 'Linux' && matrix.native
         working-directory: ${{ matrix.preset }}
         run: pnpm gate:full
-      - name: Generator and failure rehearsal
-        if: matrix.preset == 'web'
+      - name: Selected full gate without native work
+        if: "!matrix.native && !contains(matrix.preset, 'desktop')"
         working-directory: ${{ matrix.preset }}
-        run: pnpm template:verify -- --preset web --faults --hooks --lifecycle
+        run: pnpm gate:full
+      - name: Selected renderer gate
+        if: "!matrix.native && contains(matrix.preset, 'desktop')"
+        working-directory: ${{ matrix.preset }}
+        run: pnpm gate:full -- --checks javascript
       - name: Native and persistence failure propagation
-        if: matrix.preset == 'desktop' || matrix.preset == 'api-bindings'
+        if: matrix.faults
         working-directory: ${{ matrix.preset }}
         shell: bash
         env:
@@ -130,10 +144,14 @@ jobs:
           else
             pnpm template:faults
           fi
-      - name: Windows real Git events and process cleanup
-        if: matrix.preset == 'desktop' && runner.os == 'Windows'
+      - name: Real Git events and process cleanup
+        if: matrix.hooks
         working-directory: ${{ matrix.preset }}
         run: pnpm template:hooks
+      - name: Cold, warm and lifecycle rehearsal
+        if: matrix.lifecycle
+        working-directory: ${{ matrix.preset }}
+        run: pnpm template:lifecycle
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()
         with:
@@ -152,7 +170,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 60
     env:
-      CI_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+      CI_BASE_SHA: ${{ needs.source.outputs.native_base }}
       CI_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
