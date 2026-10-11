@@ -175,7 +175,7 @@
     "tools/o11y/verify.test.ts": "c30214cd4c2fcc2d8beedb28a66223a23b38fd2ebe3d129893116b28e27d6b74",
     "tools/o11y/verify.ts": "b4ccc6e907cc1e35123d9bb04a321b2824c33add3586e21fa56370544f540c63",
     "tools/process-darwin.test.ts": "ae4b082117732f92ddbd1bce50b794b0e598a14c8dc4896385206c118370c07e",
-    "tools/process.test.ts": "6e2437e8594de137975c0c3d8831b3168f6c4f9b04331e13f5e90f95cc6f60b8",
+    "tools/process.test.ts": "fd614639bd7d716196adc9e8b1788b280526ab8c0248aaac2eba2af5877363bd",
     "tools/process.ts": "76293a57f512f0d3197dcff7b01d797fd996cb60579faa314192b040ce56802a",
     "tools/quality/acceptance.test.ts": "e64146f92f521c452ee81209cf307e54f336835e95bb2c62a6b4d0bbdd7bb1b8",
     "tools/quality/acceptance.ts": "4e1be884282ba22f316a499cb24bb5c8e66f635f5bf397a14a7a991fe73046e4",

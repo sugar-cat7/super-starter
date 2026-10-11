@@ -12,6 +12,10 @@ it('forwards Worker build interruption to its detached non-cooperating child', a
   const executor = path.join(root, 'executor.mjs');
   const address = path.join(root, 'address');
   writeFileSync(
+    path.join(root, 'package.json'),
+    JSON.stringify({ name: 'build-interruption-fixture', private: true, type: 'module' }),
+  );
+  writeFileSync(
     executor,
     "import {createServer} from 'node:http'; import {writeFileSync} from 'node:fs'; process.on('SIGTERM',()=>{}); const server=createServer((_,res)=>res.end('ready')); server.listen(0,'127.0.0.1',()=>writeFileSync(process.env.BUILD_ADDRESS,'http://127.0.0.1:'+server.address().port));",
   );
