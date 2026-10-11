@@ -34,6 +34,7 @@ export type TemplateState = {
   kind: 'reference' | 'project';
   options: ProjectOptions;
   packages: string[];
+  referenceApps?: Record<string, ProjectOptions>;
   managed: Record<string, string>;
   lockPending?: boolean;
   lockId?: string;

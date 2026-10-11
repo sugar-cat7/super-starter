@@ -5,6 +5,100 @@ import { expect, it } from 'vitest';
 import { digest } from './files.ts';
 import { baselineDifferences } from './baseline.ts';
 
+it.each(['web', 'desktop'])(
+  'keeps added %s shared UI owned when syncing an API reference',
+  async (kind) => {
+    const { main } = await import('./cli.ts');
+    const { projectFiles } = await import('./render.ts');
+    const { projectOptions } = await import('./options.ts');
+    const { applyFiles } = await import('./files.ts');
+    const root = mkdtempSync(path.join(os.tmpdir(), 'reference-shared-sync-'));
+    try {
+      const options = projectOptions({
+        name: 'shared-example',
+        scope: '@shared-example',
+        preset: 'api',
+      });
+      applyFiles(
+        root,
+        projectFiles(path.resolve(import.meta.dirname, '../..'), options, 'reference'),
+      );
+      writeFileSync(path.join(root, 'pnpm-lock.yaml'), 'fixture lock');
+      await main(['add', '--target', root, '--kind', kind, '--name', 'companion', '--no-install']);
+      await main(['sync', '--target', root, '--no-install']);
+      await main(['sync', '--target', root, '--check', '--no-install']);
+      const state = JSON.parse(readFileSync(path.join(root, '.template.json'), 'utf8'));
+      expect(state.packages).toContain('ui');
+      expect(state.packages).toContain('companion');
+      expect(baselineDifferences(root)).toEqual([]);
+      const ui = path.join(root, 'packages/ui/src/index.tsx');
+      const edited = `${readFileSync(ui, 'utf8')}\n// user UI change\n`;
+      writeFileSync(ui, edited);
+      await expect(main(['sync', '--target', root, '--no-install'])).rejects.toThrow(
+        'User change or collision',
+      );
+      expect(readFileSync(ui, 'utf8')).toBe(edited);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  },
+);
+
+it('regenerates an added reference service and protects edits without changing the original app', async () => {
+  const { main } = await import('./cli.ts');
+  const { projectFiles } = await import('./render.ts');
+  const { projectOptions } = await import('./options.ts');
+  const { applyFiles } = await import('./files.ts');
+  const root = mkdtempSync(path.join(os.tmpdir(), 'reference-service-sync-'));
+  try {
+    const options = projectOptions({
+      name: 'service-example',
+      scope: '@service-example',
+      preset: 'api',
+    });
+    applyFiles(
+      root,
+      projectFiles(path.resolve(import.meta.dirname, '../..'), options, 'reference'),
+    );
+    const original = readFileSync(path.join(root, 'packages/api/src/index.ts'));
+    await main([
+      'add',
+      '--target',
+      root,
+      '--kind',
+      'api',
+      '--name',
+      'jobs',
+      '--features',
+      'kv',
+      '--no-install',
+    ]);
+    await main(['sync', '--target', root, '--no-install']);
+    await main(['sync', '--target', root, '--check', '--no-install']);
+    const state = JSON.parse(readFileSync(path.join(root, '.template.json'), 'utf8'));
+    expect(state.packages).toContain('jobs');
+    expect(state.referenceApps.jobs).toMatchObject({
+      preset: 'api',
+      features: ['kv'],
+      scope: '@service-example',
+    });
+    expect(readFileSync(path.join(root, 'packages/jobs/cloudflare.config.ts'), 'utf8')).toContain(
+      'bindings.kv',
+    );
+    expect(readFileSync(path.join(root, 'packages/api/src/index.ts'))).toEqual(original);
+    const service = path.join(root, 'packages/jobs/src/index.ts');
+    const edited = `${readFileSync(service, 'utf8')}\n// user change\n`;
+    writeFileSync(service, edited);
+    await expect(main(['sync', '--target', root, '--no-install'])).rejects.toThrow(
+      'User change or collision',
+    );
+    expect(readFileSync(service, 'utf8')).toBe(edited);
+    expect(readFileSync(path.join(root, 'packages/api/src/index.ts'))).toEqual(original);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
 it('syncs the reference lock baseline after dependency updates without rewriting the lock', async () => {
   const { main } = await import('./cli.ts');
   const { projectFiles } = await import('./render.ts');

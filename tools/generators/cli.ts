@@ -83,7 +83,27 @@ export async function main(args: string[]): Promise<void> {
         ...appFiles(templateRoot, previous.options, kind),
       ]),
     );
-    const roots = selectedPackages(previous.options).map((name) => `packages/${name}/`);
+    const packages = new Set(selectedPackages(previous.options));
+    for (const [name, options] of Object.entries(previous.referenceApps ?? {})) {
+      validateName(name);
+      if (selectedPackages(previous.options).includes(name))
+        throw new Error(`Reference app name conflicts with preset: ${name}`);
+      const validated = projectOptions({ ...options, features: options.features.join(',') });
+      if (!['api', 'web', 'desktop'].includes(validated.preset))
+        throw new Error(`Reference app must use an application preset: ${name}`);
+      for (const [filename, contents] of appFiles(templateRoot, validated, validated.preset, name))
+        files.set(filename, contents);
+      packages.add(name);
+      for (const shared of selectedPackages(validated).filter(
+        (kind) => !['api', 'web', 'desktop'].includes(kind),
+      )) {
+        if (packages.has(shared)) continue;
+        for (const [filename, contents] of appFiles(templateRoot, validated, shared))
+          files.set(filename, contents);
+        packages.add(shared);
+      }
+    }
+    const roots = [...packages].map((name) => `packages/${name}/`);
     const owned = Object.fromEntries(
       Object.entries(previous.managed).filter(([filename]) =>
         roots.some((prefix) => filename.startsWith(prefix)),
@@ -96,7 +116,7 @@ export async function main(args: string[]): Promise<void> {
     );
     const state = {
       ...previous,
-      packages: selectedPackages(previous.options),
+      packages: [...packages],
       managed: {
         ...retained,
         ...Object.fromEntries(
@@ -205,6 +225,9 @@ export async function main(args: string[]): Promise<void> {
     files.set('package.json', Buffer.from(`${JSON.stringify(manifest, null, 2)}\n`));
     const state = {
       ...previous,
+      ...(previous.kind === 'reference'
+        ? { referenceApps: { ...previous.referenceApps, [input.name]: options } }
+        : {}),
       lockPending: true,
       packages: [
         ...new Set([

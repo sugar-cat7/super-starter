@@ -6,6 +6,8 @@ Initialization supports empty directories and a GitHub-template/reference clone.
 
 `pnpm app:new -- --kind api --name jobs --features kv` adds an independent app and required shared packages. Root runtime selection reads manifests rather than a second dependency graph. It updates selected scripts and lock/install; it never rewrites other app sources. Unknown names/collisions fail. Prefer a service binding to an explicit API rather than implementation imports.
 
+Maintainer reference workspaces also record added applications' generation options in `.template.json` so `template:sync` can regenerate them from the same blueprints. This is reference generation metadata; generated projects continue to own their application code. The thin `packages/sample-api` reference service uses the API template without external storage bindings. Its package README gives the targeted development and deployment-preflight commands.
+
 For upgrades, compare the recorded template version to the desired release, review blueprint/tool changes in a separate branch, apply infrastructure changes selectively, regenerate in an empty temporary directory and compare the diff. Protect downstream business code, migrations and licenses. No automatic downstream source overwrite, private registry or registry publication is part of this version.
 
 The small Node renderer handles dependency-free preset selection and transactional ownership, which Vite+'s Bingo project generator does not provide directly for this repository. It delegates dev/build/check/test/format to the standard project-local tool rather than building another JS toolchain. Keep this comparison under review when upgrading Vite+.

@@ -42,7 +42,8 @@
     "o11y:status": "node tools/o11y/local.ts status",
     "o11y:mcp": "node tools/o11y/mcp.ts",
     "o11y:verify": "node tools/o11y/verify.ts",
-    "o11y:investigate": "node tools/o11y/investigate.ts"
+    "o11y:investigate": "node tools/o11y/investigate.ts",
+    "dev:sample-api": "node tools/dev-environment/dev.ts sample-api"
   },
   "devDependencies": {
     "@types/node": "catalog:",
