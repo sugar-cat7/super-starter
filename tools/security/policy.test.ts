@@ -247,6 +247,16 @@ describe('bounded, reviewed remediation', () => {
       .mockResolvedValueOnce({ tree: { sha: identity.tree }, parents: [{ sha: identity.parent }] });
     expect((await github.existing('pulls', 'marker', identity))?.number).toBe(3);
     expect(request).toHaveBeenLastCalledWith(`git/commits/${sha}`);
+    request.mockResolvedValueOnce([pull]).mockResolvedValueOnce({
+      tree: { sha: 'd'.repeat(40) },
+      parents: [{ sha: identity.parent }],
+    });
+    expect(await github.existing('pulls', 'marker', identity)).toBeUndefined();
+    request.mockResolvedValueOnce([pull]).mockResolvedValueOnce({
+      tree: { sha: identity.tree },
+      parents: [{ sha: 'd'.repeat(40) }],
+    });
+    expect(await github.existing('pulls', 'marker', identity)).toBeUndefined();
   });
   it('resumes exact matching pushed branches and rejects conflicting ones without force', async () => {
     const identity = {
@@ -286,5 +296,15 @@ describe('bounded, reviewed remediation', () => {
     expect(body).toContain('not published');
     expect(body).toContain('revocation/rotation');
     expect(body).not.toContain('sensitive raw detail');
+  });
+  it.each([403, 500])('preserves branch lookup failure HTTP %s', async (status) => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false, status }));
+    await expect(
+      new GitHub('example/project', 'approved-fixture-credential').repairBranch({
+        branch: 'security/verified-tls-fixture',
+        tree: 'b'.repeat(40),
+        parent: 'c'.repeat(40),
+      }),
+    ).rejects.toThrow(`HTTP ${status}`);
   });
 });

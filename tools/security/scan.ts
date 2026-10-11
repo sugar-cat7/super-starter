@@ -117,6 +117,25 @@ export function expectedSources(root: string): string[] {
   for (const directory of ['packages', 'tools', '.github']) visit(directory);
   return files.sort();
 }
+const policyFailures = new Set([
+  'Invalid scanner object',
+  'Invalid scanner array',
+  'Invalid scanner identifier',
+  'Scanner path escapes source',
+  'Unknown scanner severity',
+  'Unsupported Trivy report',
+  'Unexpected dependency ecosystem',
+  'Zero-package dependency scan',
+  'Required lockfile was not scanned',
+  'Zero required lockfiles',
+  'Semgrep parsing/engine errors',
+  'Semgrep scanned zero files',
+  'Required source file was not scanned',
+  'Expected OSS Semgrep engine',
+  'Invalid finding line',
+  'Invalid scanner database timestamp',
+  'Stale or invalid scanner database',
+]);
 function expectedVersion(root: string, scanner: string): string {
   const profile = readFileSync(path.join(root, 'mise.security.toml'), 'utf8');
   const match =
@@ -230,14 +249,17 @@ export async function scan(root: string, scanner?: string): Promise<SecurityRepo
               raw,
               ...[
                 'node_modules',
-                'artifacts',
-                '.state',
-                'dist',
-                'target',
-                'gen',
-                '.cloudflare',
-                '.wrangler',
-                'test-results',
+                ...workspacePackages(root).flatMap((pkg) =>
+                  [
+                    'dist',
+                    'artifacts',
+                    'test-results',
+                    '.cloudflare',
+                    '.wrangler',
+                    'src-tauri/target',
+                    'src-tauri/gen',
+                  ].map((suffix) => `${pkg.directory}/${suffix}`),
+                ),
               ].flatMap((directory) => ['--exclude', directory]),
               'packages',
               'tools',
@@ -290,13 +312,13 @@ export async function scan(root: string, scanner?: string): Promise<SecurityRepo
         milliseconds: Math.round(performance.now() - started),
         result,
       });
-    } catch {
+    } catch (error) {
       // Raw logs stay private: failure text can contain source or credentials.
       report.checks.push({
         id: check.id,
         status: 'failed',
         milliseconds: Math.round(performance.now() - started),
-        reason: `${stage} failed${exitCode === undefined ? '' : `; scanner exit ${exitCode}`}; inspect private .state/security logs`,
+        reason: `${stage} failed${exitCode === undefined ? '' : `; scanner exit ${exitCode}`}${error instanceof Error && policyFailures.has(error.message) ? `; ${error.message}` : ''}; inspect private .state/security logs`,
       });
     }
   }

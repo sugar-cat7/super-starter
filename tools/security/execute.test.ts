@@ -1,8 +1,37 @@
-import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { expect, it } from 'vitest';
-import { execute } from './scan.ts';
+import { execute, expectedSources } from './scan.ts';
+
+it('scans source directories named gen/target while excluding only owned build paths', () => {
+  const root = mkdtempSync(path.join(os.tmpdir(), 'security-coverage-'));
+  try {
+    const files = {
+      'packages/web/package.json': '{"name":"web","starter":{"runtime":"worker"}}',
+      'packages/web/src/gen/a.ts': 'export const x = 1;',
+      'packages/web/dist/a.ts': 'generated',
+      'packages/target/package.json': '{"name":"target"}',
+      'packages/target/src/a.ts': 'export const y = 2;',
+      'tools/config.json': '{}',
+      '.github/workflows/test.yml': 'name: test',
+    };
+    for (const [filename, contents] of Object.entries(files)) {
+      mkdirSync(path.dirname(path.join(root, filename)), { recursive: true });
+      writeFileSync(path.join(root, filename), contents);
+    }
+    expect(expectedSources(root)).toEqual([
+      '.github/workflows/test.yml',
+      'packages/target/package.json',
+      'packages/target/src/a.ts',
+      'packages/web/package.json',
+      'packages/web/src/gen/a.ts',
+      'tools/config.json',
+    ]);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
 
 it('retains scanner exit status and strips the remediation credential from subprocesses', async () => {
   const root = mkdtempSync(path.join(os.tmpdir(), 'security-process-'));
