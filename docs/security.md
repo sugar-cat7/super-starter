@@ -16,6 +16,8 @@ Missing/stale Trivy database metadata, missing locks, zero-package/file scans, u
 
 The public artifact `artifacts/security/report.json` contains source SHA, content ID, durations, versions, database timestamps/check bundle digest, coverage and finding identifiers/locations. Raw scanner reports/logs stay in ignored `.state/security` and can contain secrets or source; never upload them. A failed run does not reuse an old report. No scanner result authorizes deployment, distribution or merging.
 
+Semgrep inputs and mandatory coverage use the same first-party file traversal, including root configuration and user-authored source directories. Exclusions cover owned cache/build/evidence paths; a source directory merely named `gen` or `target` remains scanned. Missing root configuration in the scanner report fails, just like missing application source. The report's `semgrepInputId` hashes every selected path and its bytes; a fresh traversal after scanning detects additions, edits, removals and unreadable input even outside the quality gate's fixed input scope.
+
 ## Automatic response
 
 Renovate's `vulnerabilityAlerts` proposes the lowest fixed dependency version immediately; automerge remains off. GitHub dependency graph/Dependabot alerts and the installed Renovate App's alert access must already be configured. Configuration validation and local dependency lookup do not prove the hosted App ran. The pnpm maturity/integrity policy and normal SDK/runtime tests remain mandatory, including for emergency PRs.

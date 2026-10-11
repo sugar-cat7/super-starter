@@ -1,8 +1,10 @@
-import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, unlinkSync, writeFileSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { expect, it } from 'vitest';
-import { execute, expectedSources } from './scan.ts';
+import { execute, expectedSources, semgrepInputId } from './scan.ts';
+import { contentId } from '../quality/gate.ts';
+import { semgrepReport } from './policy.ts';
 
 it('scans source directories named gen/target while excluding only owned build paths', () => {
   const root = mkdtempSync(path.join(os.tmpdir(), 'security-coverage-'));
@@ -15,6 +17,12 @@ it('scans source directories named gen/target while excluding only owned build p
       'packages/target/src/a.ts': 'export const y = 2;',
       'tools/config.json': '{}',
       '.github/workflows/test.yml': 'name: test',
+      'vite.config.ts': 'export default { rejectUnauthorized: false };',
+      'knip.ts': 'export default {};',
+      'scripts/task.mjs': 'export const task = 1;',
+      '.state/private.json': '{}',
+      'artifacts/report.json': '{}',
+      'node_modules/dependency/index.js': 'dependency',
     };
     for (const [filename, contents] of Object.entries(files)) {
       mkdirSync(path.dirname(path.join(root, filename)), { recursive: true });
@@ -22,12 +30,44 @@ it('scans source directories named gen/target while excluding only owned build p
     }
     expect(expectedSources(root)).toEqual([
       '.github/workflows/test.yml',
+      'knip.ts',
       'packages/target/package.json',
       'packages/target/src/a.ts',
       'packages/web/package.json',
       'packages/web/src/gen/a.ts',
+      'scripts/task.mjs',
       'tools/config.json',
+      'vite.config.ts',
     ]);
+    const scanned = expectedSources(root);
+    const report = {
+      version: '1.180.0',
+      engine_requested: 'OSS',
+      paths: { scanned },
+      errors: [],
+      results: [],
+    };
+    expect(() => semgrepReport(report, scanned)).not.toThrow();
+    for (const omitted of ['vite.config.ts', 'knip.ts', 'scripts/task.mjs'])
+      expect(() =>
+        semgrepReport(
+          { ...report, paths: { scanned: scanned.filter((file) => file !== omitted) } },
+          scanned,
+        ),
+      ).toThrow('Required source file was not scanned');
+    const initialInput = semgrepInputId(root);
+    const qualityInput = contentId(root);
+    writeFileSync(path.join(root, 'scripts/task.mjs'), 'export const task = false;');
+    expect(contentId(root)).toBe(qualityInput);
+    expect(semgrepInputId(root)).not.toBe(initialInput);
+    writeFileSync(path.join(root, 'scripts/task.mjs'), files['scripts/task.mjs']);
+    expect(semgrepInputId(root)).toBe(initialInput);
+    writeFileSync(path.join(root, 'custom-root.ts'), 'export const tls = false;');
+    expect(semgrepInputId(root)).not.toBe(initialInput);
+    unlinkSync(path.join(root, 'custom-root.ts'));
+    expect(semgrepInputId(root)).toBe(initialInput);
+    unlinkSync(path.join(root, 'scripts/task.mjs'));
+    expect(semgrepInputId(root)).not.toBe(initialInput);
   } finally {
     rmSync(root, { recursive: true, force: true });
   }

@@ -10,6 +10,7 @@ import {
   writeFileSync,
 } from 'node:fs';
 import path from 'node:path';
+import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { spawnOwned, stopTree } from '../process.ts';
 import { contentId } from '../quality/gate.ts';
@@ -28,6 +29,7 @@ export type SecurityReport = {
   schema: 1;
   sha: string | null;
   contentId: string;
+  semgrepInputId?: string;
   createdAt: string;
   status: 'passed' | 'failed';
   checks: {
@@ -88,25 +90,34 @@ export async function execute(
 }
 export function expectedSources(root: string): string[] {
   const files: string[] = [];
-  const excluded = new Set(
-    workspacePackages(root).flatMap((pkg) =>
+  const excluded = new Set([
+    '.git',
+    '.state',
+    '.template-cache',
+    'artifacts',
+    'generated',
+    'test-results',
+    'playwright-report',
+    ...workspacePackages(root).flatMap((pkg) =>
       [
         'dist',
         'artifacts',
         'test-results',
+        'playwright-report',
         '.cloudflare',
         '.wrangler',
         'src-tauri/target',
         'src-tauri/gen',
       ].map((suffix) => `${pkg.directory}/${suffix}`),
     ),
-  );
+  ]);
   const visit = (directory: string) => {
     for (const entry of readdirSync(path.join(root, directory), { withFileTypes: true })) {
-      const filename = `${directory}/${entry.name}`;
+      const filename = directory ? `${directory}/${entry.name}` : entry.name;
+      if (entry.name === 'node_modules' || excluded.has(filename)) continue;
       if (entry.isSymbolicLink()) throw new Error('Unexpected source symlink');
       if (entry.isDirectory()) {
-        if (entry.name !== 'node_modules' && !excluded.has(filename)) visit(filename);
+        visit(filename);
       } else if (
         /\.(?:[cm]?[jt]sx?|rs|ya?ml|json|html|sh|ps1)$/u.test(filename) &&
         !/^packages\/[\w-]+\/src\/routeTree\.gen\.ts$/u.test(filename)
@@ -114,8 +125,21 @@ export function expectedSources(root: string): string[] {
         files.push(filename);
     }
   };
-  for (const directory of ['packages', 'tools', '.github']) visit(directory);
+  visit('');
   return files.sort();
+}
+export function semgrepInputId(root: string, sources = expectedSources(root)): string {
+  const hash = createHash('sha256');
+  for (const filename of sources)
+    hash.update(
+      `${JSON.stringify([
+        filename,
+        createHash('sha256')
+          .update(readFileSync(path.join(root, filename)))
+          .digest('hex'),
+      ])}\n`,
+    );
+  return hash.digest('hex');
 }
 const policyFailures = new Set([
   'Invalid scanner object',
@@ -180,6 +204,9 @@ export async function scan(root: string, scanner?: string): Promise<SecurityRepo
     try {
       for (const lock of locks)
         if (!existsSync(path.join(root, lock))) throw new Error('Missing lockfile');
+      stage = 'source-coverage';
+      const sources = check.id === 'semgrep' ? expectedSources(root) : [];
+      if (check.id === 'semgrep') report.semgrepInputId = semgrepInputId(root, sources);
       const args =
         check.id === 'trivy'
           ? [
@@ -249,23 +276,9 @@ export async function scan(root: string, scanner?: string): Promise<SecurityRepo
               '--json',
               '--output',
               raw,
-              ...[
-                'node_modules',
-                ...workspacePackages(root).flatMap((pkg) =>
-                  [
-                    'dist',
-                    'artifacts',
-                    'test-results',
-                    '.cloudflare',
-                    '.wrangler',
-                    'src-tauri/target',
-                    'src-tauri/gen',
-                  ].map((suffix) => `${pkg.directory}/${suffix}`),
-                ),
-              ].flatMap((directory) => ['--exclude', directory]),
-              'packages',
-              'tools',
-              '.github',
+              // Exact first-party inputs also own mandatory report coverage.
+              // Prefix paths so a user-authored filename cannot become an option.
+              ...sources.map((filename) => `./${filename}`),
             ];
       stage = 'execution';
       const code = await execute(
@@ -284,7 +297,7 @@ export async function scan(root: string, scanner?: string): Promise<SecurityRepo
       const result =
         check.id === 'trivy'
           ? trivyReport(input, locks, report.sha)
-          : semgrepReport(input, expectedSources(root));
+          : semgrepReport(input, sources);
       stage = 'version';
       if (result.version !== expectedVersion(root, check.id))
         throw new Error('Unexpected scanner version');
@@ -331,6 +344,21 @@ export async function scan(root: string, scanner?: string): Promise<SecurityRepo
       milliseconds: 0,
       reason: 'Source changed during read-only scan',
     });
+  if (report.semgrepInputId) {
+    let unchanged = false;
+    try {
+      unchanged = semgrepInputId(root) === report.semgrepInputId;
+    } catch {
+      // Missing/unreadable/raced source remains an integrity failure.
+    }
+    if (!unchanged)
+      report.checks.push({
+        id: 'semgrep-source-integrity',
+        status: 'failed',
+        milliseconds: 0,
+        reason: 'SAST input changed or could not be verified after read-only scan',
+      });
+  }
   report.status =
     report.checks.length > 0 && report.checks.every((check) => check.status === 'passed')
       ? 'passed'
