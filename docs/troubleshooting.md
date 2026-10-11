@@ -10,4 +10,6 @@ Worker preparation builds SDK output/types, applies migrations and seeds only a 
 
 For an SDK transport failure, run the owning Worker's runtime test with `STARTER_RUNTIME_TRANSPORT_DIAGNOSTICS=true`. The SDK child reports only bounded error identifiers and whether a socket error exists; URLs, messages, headers, bodies and socket addresses are omitted. Windows Worker CI enables this diagnostic. Preserve the failed response and assertions while investigating the actual error code.
 
+The 2026-10-11 Windows run observed `ECONNRESET` in the selected Miniflare/Undici transport, followed by a Vite HTTP 500 on the absent-KV GET after its POST returned 404. Linux passed those same assertions. This remains an unresolved compatibility failure; the reset does not establish its cause. Do not report a successful Windows Worker gate or remote deployment from a local build/preflight, and retain early write-denial behavior while investigating.
+
 No-tests/timeout/cancel fails the command. Read `artifacts/gate-*.json` and rerun the named package command. A snapshot difference requires investigation and intentional design review. Native library/display failures require the actual target OS environment. Do not replace native tests with browser mocks.
