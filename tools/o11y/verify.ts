@@ -412,7 +412,7 @@ try {
         let rows: unknown[] = [];
         for (let attempt = 0; attempt < 40; attempt++) {
           rows = await query(q.query, q.params);
-          if (rows.length) break;
+          if (JSON.stringify(rows).includes(native.traceId)) break;
           await pause(250);
         }
         assert(rows.length, `Actual ${os} metrics did not reach ClickHouse`);

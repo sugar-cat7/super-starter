@@ -15,9 +15,16 @@ import path from 'node:path';
 import { mkdtempSync } from 'node:fs';
 import { pnpm, runSync, run } from '../process.ts';
 import { workspacePackages } from './graph.ts';
-import { assertCheckout } from './checkout.ts';
 
 const hookPath = 'tools/quality/git-hooks';
+export function foreignGitEnvironment(root: string): NodeJS.ProcessEnv {
+  const environment = { ...process.env };
+  // Git exports repository routing even for linked worktree hooks. Foreign
+  // checkouts and their test fixtures must discover their own Git metadata.
+  for (const name of runSync('git', ['rev-parse', '--local-env-vars'], root).split('\n'))
+    delete environment[name];
+  return environment;
+}
 export function removeOwnedWorktree(root: string, snapshot: string): void {
   runSync('git', ['-c', 'core.longpaths=true', 'worktree', 'remove', '--force', snapshot], root);
   // Git deliberately retains Windows junctions and their ancestors while
@@ -146,6 +153,7 @@ if (process.argv[1]?.endsWith(`${path.sep}hooks.ts`)) {
   if (event === 'install') installHooks(root);
   else if (event === 'pre-commit') await indexCheck(root);
   else if (event === 'pre-push') {
+    const environment = foreignGitEnvironment(root);
     let input = '';
     for await (const chunk of process.stdin) input += String(chunk);
     const commits = new Map<string, Set<string>>();
@@ -163,10 +171,13 @@ if (process.argv[1]?.endsWith(`${path.sep}hooks.ts`)) {
       rmSync(snapshot, { recursive: true });
       try {
         runSync('git', ['worktree', 'add', '--detach', snapshot, local], root);
-        await pnpm(['install', '--frozen-lockfile'], { cwd: snapshot });
-        await pnpm(['env:setup', '--', '--javascript'], { cwd: snapshot });
-        assertCheckout(snapshot, local);
-        await pnpm(['gate:push', '--', '--base', base], { cwd: snapshot });
+        await pnpm(['install', '--frozen-lockfile'], { cwd: snapshot, env: environment });
+        await pnpm(['env:setup', '--', '--javascript'], { cwd: snapshot, env: environment });
+        await run(process.execPath, ['tools/quality/checkout.ts', local], {
+          cwd: snapshot,
+          env: { ...environment, CI_HEAD_SHA: local },
+        });
+        await pnpm(['gate:push', '--', '--base', base], { cwd: snapshot, env: environment });
       } finally {
         removeOwnedWorktree(root, snapshot);
       }

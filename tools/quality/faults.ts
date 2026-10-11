@@ -150,10 +150,12 @@ async function injectFaults(root: string): Promise<void> {
     try {
       for (const [relative, contents] of Object.entries(changes))
         writeFileSync(path.join(root, relative), contents);
-      for (const { filename } of originals.filter((entry) => entry.filename.endsWith('.rs')))
-        await run('rustfmt', ['--edition', '2021', filename], {
-          cwd: path.dirname(path.dirname(filename)),
-        });
+      const nativeRoots = new Set(
+        originals
+          .filter((entry) => entry.filename.endsWith('.rs'))
+          .map((entry) => path.dirname(path.dirname(entry.filename))),
+      );
+      for (const cwd of nativeRoots) await run('cargo', ['fmt'], { cwd });
       const result = await capture(root, command, env);
       writeFileSync(path.join(directory, `${id}.log`), result.output);
       assert.notEqual(result.code, 0, `${id} must fail`);
@@ -516,6 +518,8 @@ async function injectFaults(root: string): Promise<void> {
   if (desktop) {
     const rust = `${desktop.directory}/src-tauri/src/main.rs`;
     const source = readFileSync(path.join(root, rust), 'utf8');
+    const telemetry = `${desktop.directory}/src-tauri/src/telemetry.rs`;
+    const telemetrySource = readFileSync(path.join(root, telemetry), 'utf8');
     const command = ['--filter', desktop.name, 'test:rust'];
     await fault(
       'rust-behavior',
@@ -531,7 +535,10 @@ async function injectFaults(root: string): Promise<void> {
     );
     await fault(
       'rust-zero',
-      { [rust]: source.slice(0, source.indexOf('#[cfg(test)]')) },
+      {
+        [rust]: source.slice(0, source.indexOf('#[cfg(test)]')),
+        [telemetry]: telemetrySource.slice(0, telemetrySource.indexOf('#[cfg(test)]')),
+      },
       command,
       /Required Rust tests must execute cases/u,
       command,

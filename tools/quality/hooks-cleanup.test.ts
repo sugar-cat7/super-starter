@@ -37,6 +37,56 @@ function fixture() {
 }
 
 describe('owned hook worktree cleanup', () => {
+  it('isolates foreign Git routing during an actual linked-worktree pre-push event', () => {
+    const { owned, root, snapshot, git } = fixture();
+    try {
+      const originalHead = git(['rev-parse', 'HEAD']);
+      writeFileSync(path.join(snapshot, 'tracked.txt'), 'Separate pushed input');
+      runSync('git', ['add', 'tracked.txt'], snapshot);
+      runSync('git', ['commit', '-qm', 'Linked input'], snapshot);
+      const pushedHead = runSync('git', ['rev-parse', 'HEAD'], snapshot);
+      expect(pushedHead).not.toBe(originalHead);
+      const hooks = path.join(owned, 'hooks');
+      const remote = path.join(owned, 'remote.git');
+      const probe = path.join(owned, 'probe.mjs');
+      const receipt = path.join(owned, 'routing.json');
+      mkdirSync(hooks);
+      writeFileSync(
+        probe,
+        `import { spawnSync } from 'node:child_process';
+import { writeFileSync } from 'node:fs';
+import { foreignGitEnvironment } from ${JSON.stringify(new URL('./hooks.ts', import.meta.url).href)};
+const environment = foreignGitEnvironment(${JSON.stringify(snapshot)});
+const head = spawnSync('git', ['rev-parse', 'HEAD'], { cwd: ${JSON.stringify(root)}, env: environment, encoding: 'utf8' });
+const unborn = spawnSync('git', ['rev-parse', '--verify', 'HEAD'], { cwd: ${JSON.stringify(owned)}, env: environment, encoding: 'utf8' });
+writeFileSync(${JSON.stringify(receipt)}, JSON.stringify({ exportedRouting: Boolean(process.env.GIT_DIR), head: head.stdout.trim(), unbornStatus: unborn.status }));
+if (head.status !== 0 || head.stdout.trim() !== ${JSON.stringify(originalHead)} || unborn.status === 0) process.exitCode = 1;
+`,
+      );
+      // Git's portable hook shell invokes the actual Node probe; no direct
+      // handler call substitutes for the linked-worktree push event.
+      writeFileSync(
+        path.join(hooks, 'pre-push'),
+        `#!/bin/sh\nexec node '${probe.replaceAll("'", "'\\''")}'\n`,
+        { mode: 0o755 },
+      );
+      git(['config', '--local', 'core.hooksPath', hooks]);
+      runSync('git', ['init', '--bare', '-q', remote], owned);
+      runSync('git', ['push', remote, 'HEAD:refs/heads/probe'], snapshot);
+      expect(JSON.parse(readFileSync(receipt, 'utf8'))).toEqual({
+        exportedRouting: true,
+        head: originalHead,
+        unbornStatus: 128,
+      });
+      expect(runSync('git', ['--git-dir', remote, 'rev-parse', 'refs/heads/probe'], owned)).toBe(
+        pushedHead,
+      );
+      expect(git(['rev-parse', 'HEAD'])).toBe(originalHead);
+    } finally {
+      rmSync(owned, { recursive: true, force: true });
+    }
+  });
+
   it('removes deep dependency paths without changing Git config or following an outside junction', () => {
     const { owned, root, snapshot, git, originalWorktrees } = fixture();
     try {
