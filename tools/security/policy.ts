@@ -151,11 +151,13 @@ export function trivyReport(input: unknown, expectedLocks: string[]): ScanResult
   return { version, scanned: scanned.sort(), findings };
 }
 
-export function semgrepReport(input: unknown): ScanResult {
+export function semgrepReport(input: unknown, expected: string[] = []): ScanResult {
   const report = object(input);
   if (array(report.errors).length) throw new Error('Semgrep parsing/engine errors');
   const scanned = array(object(report.paths).scanned).map(sourcePath).sort();
   if (!scanned.length) throw new Error('Semgrep scanned zero files');
+  for (const filename of expected)
+    if (!scanned.includes(filename)) throw new Error('Required source file was not scanned');
   if (report.engine_requested !== 'OSS') throw new Error('Expected OSS Semgrep engine');
   const findings = array(report.results).map((raw) => {
     const item = object(raw);

@@ -5,7 +5,22 @@ import { fileURLToPath } from 'node:url';
 import { runSync } from '../process.ts';
 import { execute, scan, type SecurityReport } from './scan.ts';
 
-type Item = { number: number; body?: string | null; html_url: string };
+type Item = {
+  number: number;
+  body?: string | null;
+  html_url: string;
+  pull_request?: unknown;
+  head?: { ref?: string; sha?: string; repo?: { full_name?: string } };
+  base?: { ref?: string; repo?: { full_name?: string } };
+};
+class GitHubFailure extends Error {
+  status: number;
+  constructor(status: number) {
+    super(`GitHub operation failed: HTTP ${status}`);
+    this.status = status;
+  }
+}
+type RepairIdentity = { branch: string; tree: string; parent: string };
 export class GitHub {
   repository: string;
   token: string;
@@ -28,16 +43,59 @@ export class GitHub {
       },
       ...(body === undefined ? {} : { body: JSON.stringify(body) }),
     });
-    if (!response.ok) throw new Error(`GitHub operation failed: HTTP ${response.status}`);
+    if (!response.ok) throw new GitHubFailure(response.status);
     return await response.json();
   }
-  async existing(kind: 'issues' | 'pulls', marker: string): Promise<Item | undefined> {
+  async matchesCommit(sha: string, identity: RepairIdentity): Promise<boolean> {
+    if (!/^[a-f0-9]{40}$/u.test(sha)) return false;
+    const commit = (await this.request(`git/commits/${sha}`)) as {
+      tree?: { sha?: string };
+      parents?: { sha?: string }[];
+    };
+    return (
+      commit.tree?.sha === identity.tree &&
+      commit.parents?.length === 1 &&
+      commit.parents[0]?.sha === identity.parent
+    );
+  }
+  async repairBranch(identity: RepairIdentity): Promise<string | undefined> {
+    let ref: { object?: { sha?: string } };
+    try {
+      ref = (await this.request(`git/ref/heads/${identity.branch}`)) as typeof ref;
+    } catch (error) {
+      if (error instanceof GitHubFailure && error.status === 404) return undefined;
+      throw error;
+    }
+    const sha = ref.object?.sha;
+    if (!sha || !(await this.matchesCommit(sha, identity)))
+      throw new Error('Existing repair branch differs; preserve it and require review');
+    return sha;
+  }
+  async existing(
+    kind: 'issues' | 'pulls',
+    marker: string,
+    identity?: RepairIdentity,
+  ): Promise<Item | undefined> {
+    if (kind === 'pulls' && !identity) throw new Error('Repair PR identity is required');
     for (let page = 1; page <= 10; page++) {
       const raw = await this.request(`${kind}?state=open&per_page=100&page=${page}`);
       if (!Array.isArray(raw)) throw new Error('Invalid GitHub list');
       const items = raw as Item[];
-      const match = items.find((item) => item.body?.includes(marker));
-      if (match) return match;
+      for (const item of items) {
+        if (!item.body?.includes(marker)) continue;
+        if (kind === 'issues') {
+          if (!item.pull_request) return item;
+        } else if (
+          identity &&
+          item.head?.repo?.full_name === this.repository &&
+          item.base?.repo?.full_name === this.repository &&
+          item.base.ref === 'main' &&
+          item.head.ref === identity.branch &&
+          item.head.sha &&
+          (await this.matchesCommit(item.head.sha, identity))
+        )
+          return item;
+      }
       if (items.length < 100) return undefined;
     }
     throw new Error('Unable to establish deduplication');
@@ -183,7 +241,10 @@ export async function remediate(root: string): Promise<void> {
       .digest('hex')
       .slice(0, 16);
     const marker = `<!-- security-remediation:${hash} -->`;
-    const previous = await github.existing('pulls', marker);
+    const branch = `security/verified-tls-${hash}`;
+    runSync('git', ['add', '--', ...files], root);
+    const identity = { branch, tree: runSync('git', ['write-tree'], root), parent: expected };
+    const previous = await github.existing('pulls', marker, identity);
     if (previous) {
       outcome.status = 'existing-pr-requires-current-ci';
       outcome.pullRequest = previous.html_url;
@@ -191,12 +252,11 @@ export async function remediate(root: string): Promise<void> {
     }
     const latest = (await github.request('git/ref/heads/main')) as { object?: { sha?: string } };
     if (latest.object?.sha !== expected) throw new Error('Main moved before commit');
-    const branch = `security/verified-tls-${hash}`;
+    const reusable = await github.repairBranch(identity);
     runSync('git', ['switch', '-c', branch], root);
     runSync('git', ['config', 'core.hooksPath', 'tools/quality/git-hooks'], root);
     runSync('git', ['config', 'user.name', 'Security remediation'], root);
     runSync('git', ['config', 'user.email', 'security-remediation@users.noreply.github.com'], root);
-    runSync('git', ['add', '--', ...files], root);
     if (
       (await execute(
         'git',
@@ -215,6 +275,7 @@ export async function remediate(root: string): Promise<void> {
       GIT_CONFIG_VALUE_0: `AUTHORIZATION: basic ${Buffer.from(`x-access-token:${token}`).toString('base64')}`,
     };
     if (
+      !reusable &&
       (await execute(
         'git',
         ['push', 'origin', `HEAD:refs/heads/${branch}`],
@@ -233,7 +294,9 @@ export async function remediate(root: string): Promise<void> {
         marker,
         'Enable certificate verification using the local reviewed Semgrep autofix rule.',
         `Source: ${expected}. Follow-up: ${outcome.issue}.`,
-        'Normal commit and pre-push hooks ran. Fresh Security and Quality CI, review and SDK/runtime validation remain mandatory; this workflow never merges.',
+        reusable
+          ? `Resumed matching remote branch ${reusable} after interrupted PR creation. Its exact tree and main parent were verified, and normal local commit hooks ran again. Fresh Security/Quality CI and review remain mandatory; this workflow never merges.`
+          : 'Normal commit and pre-push hooks ran. Fresh Security and Quality CI, review and SDK/runtime validation remain mandatory; this workflow never merges.',
         `Post-fix security result: ${after.status}; unresolved findings remain blocking.`,
       ].join('\n\n'),
     })) as Item;

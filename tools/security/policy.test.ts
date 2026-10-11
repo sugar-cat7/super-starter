@@ -117,6 +117,18 @@ describe('fail-closed security policy', () => {
     );
     expect(() => semgrepReport({ ...semgrep(), errors: null })).toThrow('Invalid scanner array');
   });
+  it('rejects skipped required source even when another file was scanned', () => {
+    const input = {
+      ...semgrep(),
+      paths: {
+        scanned: ['packages/web/src/a.ts'],
+        skipped: [{ path: 'packages/web/src/oversized.ts', reason: 'exceeded_size_limit' }],
+      },
+    };
+    expect(() =>
+      semgrepReport(input, ['packages/web/src/a.ts', 'packages/web/src/oversized.ts']),
+    ).toThrow('Required source file was not scanned');
+  });
   it.each(['../outside.ts', '/tmp/a.ts', 'C:\\a.ts', 'a/../b', 'a\nsecret', './a//b'])(
     'rejects unsafe scanner path %j',
     (filename) => {
@@ -205,6 +217,59 @@ describe('bounded, reviewed remediation', () => {
     expect(() => new GitHub('example/project', '')).toThrow(
       'Missing approved GitHub configuration',
     );
+  });
+  it('ignores PRs in the Issue API and unrelated fork repair markers', async () => {
+    const sha = 'a'.repeat(40);
+    const identity = {
+      branch: 'security/verified-tls-fixture',
+      tree: 'b'.repeat(40),
+      parent: 'c'.repeat(40),
+    };
+    const github = new GitHub('example/project', 'approved-fixture-credential');
+    const request = vi.spyOn(github, 'request');
+    request.mockResolvedValueOnce([
+      { number: 1, body: 'marker', pull_request: {}, html_url: 'pr' },
+      { number: 2, body: 'marker', html_url: 'issue' },
+    ]);
+    expect((await github.existing('issues', 'marker'))?.number).toBe(2);
+    const pull = {
+      number: 3,
+      body: 'marker',
+      html_url: 'trusted',
+      head: { ref: identity.branch, sha, repo: { full_name: 'example/project' } },
+      base: { ref: 'main', repo: { full_name: 'example/project' } },
+    };
+    request
+      .mockResolvedValueOnce([
+        { ...pull, number: 4, head: { ...pull.head, repo: { full_name: 'fork/project' } } },
+        pull,
+      ])
+      .mockResolvedValueOnce({ tree: { sha: identity.tree }, parents: [{ sha: identity.parent }] });
+    expect((await github.existing('pulls', 'marker', identity))?.number).toBe(3);
+    expect(request).toHaveBeenLastCalledWith(`git/commits/${sha}`);
+  });
+  it('resumes exact matching pushed branches and rejects conflicting ones without force', async () => {
+    const identity = {
+      branch: 'security/verified-tls-fixture',
+      tree: 'b'.repeat(40),
+      parent: 'c'.repeat(40),
+    };
+    const github = new GitHub('example/project', 'approved-fixture-credential');
+    const sha = 'a'.repeat(40);
+    const request = vi.spyOn(github, 'request');
+    request.mockResolvedValueOnce({ object: { sha } }).mockResolvedValueOnce({
+      tree: { sha: identity.tree },
+      parents: [{ sha: identity.parent }],
+    });
+    await expect(github.repairBranch(identity)).resolves.toBe(sha);
+    request.mockResolvedValueOnce({ object: { sha } }).mockResolvedValueOnce({
+      tree: { sha: 'd'.repeat(40) },
+      parents: [{ sha: identity.parent }],
+    });
+    await expect(github.repairBranch(identity)).rejects.toThrow('Existing repair branch differs');
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false, status: 404 }));
+    request.mockRestore();
+    await expect(github.repairBranch(identity)).resolves.toBeUndefined();
   });
   it('records unresolved findings with source identity and owner action', () => {
     const findings = trivyReport(trivy(), ['pnpm-lock.yaml']).findings;

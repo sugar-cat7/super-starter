@@ -12,15 +12,20 @@ it('retains scanner exit status and strips the remediation credential from subpr
       process.execPath,
       [
         '-e',
-        'console.log(process.env.SECURITY_REMEDIATION_TOKEN ?? "absent"); process.exitCode=1;',
+        'console.log([process.env.SECURITY_REMEDIATION_TOKEN,process.env.TRIVY_SEVERITY,process.env.SEMGREP_APP_TOKEN].map(x=>x??"absent").join(" ")); process.exitCode=1;',
       ],
       root,
       log,
       10_000,
-      { ...process.env, SECURITY_REMEDIATION_TOKEN: 'approved-fixture-credential' },
+      {
+        ...process.env,
+        SECURITY_REMEDIATION_TOKEN: 'approved-fixture-credential',
+        TRIVY_SEVERITY: 'LOW',
+        SEMGREP_APP_TOKEN: 'fixture-token',
+      },
     );
     expect(code).toBe(1);
-    expect(readFileSync(log, 'utf8').trim()).toBe('absent');
+    expect(readFileSync(log, 'utf8').trim()).toBe('absent absent absent');
   } finally {
     rmSync(root, { recursive: true, force: true });
   }

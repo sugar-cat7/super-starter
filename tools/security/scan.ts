@@ -5,6 +5,7 @@ import {
   mkdtempSync,
   openSync,
   readFileSync,
+  readdirSync,
   rmSync,
   writeFileSync,
 } from 'node:fs';
@@ -54,6 +55,10 @@ export async function execute(
       SEMGREP_SEND_METRICS: 'off',
     };
     delete childEnv.SECURITY_REMEDIATION_TOKEN;
+    // Scanner configuration must not suppress findings through inherited input.
+    for (const key of Object.keys(childEnv))
+      if (key.startsWith('TRIVY_') || key.startsWith('SEMGREP_')) delete childEnv[key];
+    childEnv.SEMGREP_SEND_METRICS = 'off';
     return await new Promise<number>((resolve, reject) => {
       const child = spawnOwned(command, args, {
         cwd,
@@ -80,6 +85,37 @@ export async function execute(
   } finally {
     closeSync(descriptor);
   }
+}
+export function expectedSources(root: string): string[] {
+  const files: string[] = [];
+  const excluded = new Set(
+    workspacePackages(root).flatMap((pkg) =>
+      [
+        'dist',
+        'artifacts',
+        'test-results',
+        '.cloudflare',
+        '.wrangler',
+        'src-tauri/target',
+        'src-tauri/gen',
+      ].map((suffix) => `${pkg.directory}/${suffix}`),
+    ),
+  );
+  const visit = (directory: string) => {
+    for (const entry of readdirSync(path.join(root, directory), { withFileTypes: true })) {
+      const filename = `${directory}/${entry.name}`;
+      if (entry.isSymbolicLink()) throw new Error('Unexpected source symlink');
+      if (entry.isDirectory()) {
+        if (entry.name !== 'node_modules' && !excluded.has(filename)) visit(filename);
+      } else if (
+        /\.(?:[cm]?[jt]sx?|rs|ya?ml|json|html|sh|ps1)$/u.test(filename) &&
+        !/^packages\/[\w-]+\/src\/routeTree\.gen\.ts$/u.test(filename)
+      )
+        files.push(filename);
+    }
+  };
+  for (const directory of ['packages', 'tools', '.github']) visit(directory);
+  return files.sort();
 }
 function expectedVersion(root: string, scanner: string): string {
   const profile = readFileSync(path.join(root, 'mise.security.toml'), 'utf8');
@@ -118,6 +154,8 @@ export async function scan(root: string, scanner?: string): Promise<SecurityRepo
   for (const check of securityChecks.filter((entry) => !scanner || entry.id === scanner)) {
     const started = performance.now();
     const raw = path.join(privateRun, `${check.id}.json`);
+    let stage = 'lockfile-coverage';
+    let exitCode: number | undefined;
     try {
       for (const lock of locks)
         if (!existsSync(path.join(root, lock))) throw new Error('Missing lockfile');
@@ -125,6 +163,19 @@ export async function scan(root: string, scanner?: string): Promise<SecurityRepo
         check.id === 'trivy'
           ? [
               'fs',
+              '--config',
+              '',
+              '--secret-config',
+              '',
+              '--severity',
+              'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL',
+              '--ignore-unfixed=false',
+              '--ignore-status',
+              '',
+              '--ignore-policy',
+              '',
+              '--vex',
+              '',
               '--scanners',
               'vuln,misconfig,secret',
               '--include-dev-deps',
@@ -169,6 +220,7 @@ export async function scan(root: string, scanner?: string): Promise<SecurityRepo
               'off',
               '--disable-version-check',
               '--disable-nosem',
+              '--no-git-ignore',
               '--strict',
               '--severity',
               'ERROR',
@@ -185,11 +237,13 @@ export async function scan(root: string, scanner?: string): Promise<SecurityRepo
                 'gen',
                 '.cloudflare',
                 '.wrangler',
+                'test-results',
               ].flatMap((directory) => ['--exclude', directory]),
               'packages',
               'tools',
               '.github',
             ];
+      stage = 'execution';
       const code = await execute(
         'mise',
         ['--env', 'security', 'exec', '--', check.id, ...args],
@@ -197,13 +251,21 @@ export async function scan(root: string, scanner?: string): Promise<SecurityRepo
         path.join(privateRun, `${check.id}.log`),
         check.timeout,
       );
+      exitCode = code;
       if (code !== 0 && !(check.id === 'semgrep' && code === 1))
         throw new Error('Scanner execution failed');
+      stage = 'report-json';
       const input: unknown = JSON.parse(readFileSync(raw, 'utf8'));
-      const result = check.id === 'trivy' ? trivyReport(input, locks) : semgrepReport(input);
+      stage = 'schema-and-coverage';
+      const result =
+        check.id === 'trivy'
+          ? trivyReport(input, locks)
+          : semgrepReport(input, expectedSources(root));
+      stage = 'version';
       if (result.version !== expectedVersion(root, check.id))
         throw new Error('Unexpected scanner version');
       if (check.id === 'trivy') {
+        stage = 'database-execution';
         const metadata = path.join(privateRun, 'trivy-database.json');
         if (
           (await execute(
@@ -215,8 +277,10 @@ export async function scan(root: string, scanner?: string): Promise<SecurityRepo
           )) !== 0
         )
           throw new Error('Database metadata unavailable');
+        stage = 'database-freshness';
         result.database = trivyDatabase(JSON.parse(readFileSync(metadata, 'utf8')) as unknown);
       }
+      stage = 'exit-consistency';
       if (check.id === 'semgrep' && code === 1 && !result.findings.some((item) => item.blocking))
         throw new Error('Unexplained scanner failure');
       report.findings.push(...result.findings);
@@ -232,8 +296,7 @@ export async function scan(root: string, scanner?: string): Promise<SecurityRepo
         id: check.id,
         status: 'failed',
         milliseconds: Math.round(performance.now() - started),
-        reason:
-          'Execution, parsing, coverage or version failure; inspect private .state/security logs',
+        reason: `${stage} failed${exitCode === undefined ? '' : `; scanner exit ${exitCode}`}; inspect private .state/security logs`,
       });
     }
   }
@@ -259,5 +322,6 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   console.log(
     `Security ${report.status}: ${report.findings.filter((item) => item.blocking).length} blocking findings; artifacts/security/report.json`,
   );
+  for (const check of report.checks) if (check.reason) console.log(`${check.id}: ${check.reason}`);
   if (report.status !== 'passed') process.exitCode = 1;
 }
