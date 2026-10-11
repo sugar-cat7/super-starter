@@ -8,4 +8,6 @@ Dev servers use strict ports and root startup allocates worktree-local ports, pe
 
 Worker preparation builds SDK output/types, applies migrations and seeds only a newly prepared local database. Repeated setup does not reseed deleted notes. Local state belongs to `.state/<package-directory>`; migration and dev share it. Back up user data before intentionally removing it. A missing remote resource ID never falls back to local or production.
 
+For an SDK transport failure, run the owning Worker's runtime test with `STARTER_RUNTIME_TRANSPORT_DIAGNOSTICS=true`. The SDK child reports only bounded error identifiers and whether a socket error exists; URLs, messages, headers, bodies and socket addresses are omitted. Windows Worker CI enables this diagnostic. Preserve the failed response and assertions while investigating the actual error code.
+
 No-tests/timeout/cancel fails the command. Read `artifacts/gate-*.json` and rerun the named package command. A snapshot difference requires investigation and intentional design review. Native library/display failures require the actual target OS environment. Do not replace native tests with browser mocks.
