@@ -1,5 +1,7 @@
 # super-starter
 
+[Security checks and automatic remediation](docs/security.md) cover Trivy, Semgrep and Renovate security PRs. Run `pnpm security:setup` then `pnpm security:check`; unresolved HIGH/CRITICAL or ERROR findings block security CI.
+
 ## Development
 
 Create a branch for your changes and open a pull request against `main`.

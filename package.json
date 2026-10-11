@@ -5,6 +5,9 @@
   "license": "Apache-2.0",
   "type": "module",
   "scripts": {
+    "security:setup": "mise --env security install",
+    "security:check": "node tools/security/scan.ts",
+    "security:remediate": "node tools/security/remediate.ts",
     "check": "node tools/quality/check.ts",
     "test": "node tools/quality/gate.ts test",
     "format": "vp fmt",

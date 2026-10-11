@@ -97,6 +97,12 @@ jobs:
       - name: Generated doctor
         working-directory: ${{ matrix.preset }}
         run: pnpm env:doctor
+      - name: Rendered preset SAST on Linux
+        if: runner.os == 'Linux'
+        working-directory: ${{ matrix.preset }}
+        run: |
+          pnpm security:setup
+          pnpm security:check -- --scanner semgrep
       - name: Selected full gate (native Linux)
         if: runner.os == 'Linux' && contains(matrix.preset, 'desktop')
         working-directory: ${{ matrix.preset }}
@@ -113,8 +119,10 @@ jobs:
         if: matrix.preset == 'desktop' || matrix.preset == 'api-bindings'
         working-directory: ${{ matrix.preset }}
         shell: bash
+        env:
+          PRESET: ${{ matrix.preset }}
         run: |
-          if [ "$RUNNER_OS" = Linux ] && [ "${{ matrix.preset }}" = desktop ]; then
+          if [ "$RUNNER_OS" = Linux ] && [ "$PRESET" = desktop ]; then
             dbus-run-session -- xvfb-run -a pnpm template:faults
           else
             pnpm template:faults

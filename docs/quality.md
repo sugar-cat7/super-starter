@@ -21,3 +21,5 @@ Use `pnpm acceptance:report -- --evidence <collected-artifacts-directory> --sha 
 `node tools/quality/sanitize.ts --rules <external-rules.json>` scans source, dependency manifests, configuration, documentation and built bundles against task-specific extraction rules. Supply entries with `id`, `pattern` and optional exact-file `allow` entries with a reason. Product identifiers belong in that review input, never in general downstream lint policy. Legal/source-provenance exceptions must be explicit. Scanner errors report file/rule identifiers without printing matching secret text.
 
 Hook, fault, lifecycle and template rehearsal reports include final owned-directory cleanup. They publish success only after cleanup; a cleanup failure replaces the report status with `failed` and propagates the error. Completed inner phases do not turn an unsuccessful wrapper into accepted mechanism evidence.
+
+[Security CI](security.md) additionally blocks HIGH/CRITICAL Trivy, ERROR Semgrep and incomplete scans. Its optional tools do not replace runtime gates. Never merge with an unresolved required security failure.

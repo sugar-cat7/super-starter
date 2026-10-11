@@ -1,4 +1,5 @@
 import type { ChildProcess } from 'node:child_process';
+import type * as childProcessModule from 'node:child_process';
 import { afterEach, expect, it, vi } from 'vitest';
 import { spawnOwned, stopTree } from './process.ts';
 
@@ -8,7 +9,7 @@ const mocks = vi.hoisted(() => ({
   kill: vi.fn<typeof process.kill>(),
 }));
 vi.mock('node:child_process', async (original) => ({
-  ...(await original<typeof import('node:child_process')>()),
+  ...(await original<typeof childProcessModule>()),
   spawn: mocks.spawn,
   spawnSync: mocks.spawnSync,
 }));

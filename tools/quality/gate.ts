@@ -52,6 +52,7 @@ export function contentId(root: string): string {
     'pnpm-lock.yaml',
     'pnpm-workspace.yaml',
     'mise.toml',
+    'mise.security.toml',
     'tsconfig.json',
     'vite.config.ts',
     '.template.json',
@@ -61,6 +62,7 @@ export function contentId(root: string): string {
     'knip.ts',
     '.gitignore',
     '.gitattributes',
+    '.semgrepignore',
     'renovate.json',
     'LICENSE',
   ])

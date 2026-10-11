@@ -14,12 +14,13 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
 import { describe, expect, it, vi } from 'vitest';
+import type * as fsModule from 'node:fs';
 import { applyFiles, recover, digest } from './files.ts';
 import { safeFile } from './safety.ts';
 
 const failure = vi.hoisted(() => ({ partial: false, prune: '', race: '', swap: '', outside: '' }));
 vi.mock('node:fs', async (original) => {
-  const fs = await original<typeof import('node:fs')>();
+  const fs = await original<typeof fsModule>();
   return {
     ...fs,
     mkdirSync: (...args: Parameters<typeof fs.mkdirSync>) => {

@@ -25,6 +25,25 @@ export const globalChecks: Check[] = [
   },
 ];
 
+// Security has its own optional tool profile and mandatory CI job, so native
+// setup never installs Python/scanners. Keep check metadata in this registry.
+export const securityChecks: Check[] = [
+  {
+    id: 'trivy',
+    requirements: ['vulnerabilities', 'misconfiguration', 'secrets', 'dev-dependencies'],
+    command: ['security:check', '--', '--scanner', 'trivy'],
+    timeout: 12 * 60_000,
+    reason: 'All selected lockfiles and first-party configuration/source; include unfixed findings',
+  },
+  {
+    id: 'semgrep',
+    requirements: ['sast', 'error-findings', 'complete-parsing'],
+    command: ['security:check', '--', '--scanner', 'semgrep'],
+    timeout: 12 * 60_000,
+    reason: 'OSS security rules plus local deterministic TLS remediation',
+  },
+];
+
 export function faultCheckIds(packages: WorkspacePackage[]): string[] {
   return [
     'format',

@@ -1,0 +1,33 @@
+# Security checks and remediation
+
+The Security workflow runs on every PR, main push, daily schedule and manual dispatch using the free `ubuntu-24.04` hosted runner. Existing Quality CI still validates Linux, macOS and Windows native execution. Security scanning is independent of native runtime testing.
+
+```sh
+pnpm security:setup
+pnpm security:check
+pnpm security:check -- --scanner semgrep
+```
+
+`mise.security.toml` is the optional security profile: aqua verifies/install Trivy and uv; mise's PyPI backend installs the pinned Semgrep CLI into its own virtual environment using uv. Supported system Python 3.10+ is required (Ubuntu 24.04 provides 3.12). Neither the application workspace nor ordinary preset setup installs Python dependencies. Node/pnpm remain in `mise.toml`; Vite+ remains project-local. Renovate manages both profiles.
+
+Trivy scans selected pnpm/Cargo lockfiles, including development dependencies, configuration and secrets. HIGH/CRITICAL findings block even when no fix exists. Semgrep uses its OSS engine, the upstream `p/default` security rules and local JavaScript/TypeScript and native Rust TLS rules in `tools/security/semgrep.yml`; ERROR findings block. Upstream rules are fetched on each run, so record the run/source identity when comparing results. Rule metrics and version telemetry are off. The JavaScript/TypeScript TLS rule is the only automatic source rewrite; upstream rules never receive `--autofix`.
+
+Missing/stale Trivy database metadata, missing locks, zero-package/file scans, unsupported report/version changes, parsing errors, engine failures, timeouts or source mutation also fail. Inline `nosem` suppression is disabled and Trivy's ignore file is disabled. Generated caches/build outputs are excluded; first-party source/tests are not blanket-excluded. Canonical blueprint files have `.template` suffixes and are not executable-language SAST targets; validate their rendered applications. A source-only security result does not establish that every preset was scanned.
+
+The public artifact `artifacts/security/report.json` contains source SHA, content ID, durations, versions, database timestamps/check bundle digest, coverage and finding identifiers/locations. Raw scanner reports/logs stay in ignored `.state/security` and can contain secrets or source; never upload them. A failed run does not reuse an old report. No scanner result authorizes deployment, distribution or merging.
+
+## Automatic response
+
+Renovate's `vulnerabilityAlerts` proposes the lowest fixed dependency version immediately; automerge remains off. GitHub dependency graph/Dependabot alerts and the installed Renovate App's alert access must already be configured. Configuration validation and local dependency lookup do not prove the hosted App ran. The pnpm maturity/integrity policy and normal SDK/runtime tests remain mandatory, including for emergency PRs.
+
+The main-only remediation job takes a fresh clean checkout and re-scans it. It deduplicates an unresolved security Issue, records unfixed findings and scanner failures, and applies the reviewed TLS autofix only to application source/tests. A second full scan must parse successfully and prove that the TLS finding disappeared. Normal Git commit/pre-push hooks run before pushing a separate branch and creating a PR; fresh Security/Quality CI and review are required. Remaining dependency findings stay blocking. The job never merges, force-pushes or consumes fork/PR artifacts with credentials. Existing matching PRs are reported for current CI/review; they are not silently rebased or declared verified.
+
+Remote remediation requires an **already approved** repository-scoped credential in `SECURITY_REMEDIATION_TOKEN` that can create Issues, push a branch and open PRs. The workflow keeps `GITHUB_TOKEN` read-only. An App/fine-grained credential also allows PR events to trigger normal CI, unlike PRs created using `GITHUB_TOKEN`. Provisioning credentials, changing App permissions, enabling alerts or changing branch rules is external configuration; this repository does not perform those actions. If a failed scan needs remediation but the approved credential is absent, remediation reports `blocked-missing-approved-credential` and fails; it never claims a PR was created.
+
+Secret findings require authorized revocation/rotation and exposure investigation; deleting a string alone is insufficient. No automatic secret revocation, arbitrary AI patching, scanner suppression or severity relaxation occurs. Use the [security skill](../.agents/skills/security/SKILL.md) and [dependency procedure](../.agents/skills/dependencies/SKILL.md).
+
+## Adoption and baseline
+
+On 2026-10-11, official releases and CLI behavior were checked for [Trivy 0.75.0](https://github.com/aquasecurity/trivy/releases/tag/v0.75.0), [Semgrep 1.180.0](https://github.com/semgrep/semgrep/releases/tag/v1.180.0) and [uv 0.13.0](https://github.com/astral-sh/uv/releases/tag/0.13.0). Sources: [Trivy filesystem SDK flags](https://github.com/aquasecurity/trivy/blob/v0.75.0/docs/guide/references/configuration/cli/trivy_filesystem.md), [pnpm development dependency coverage](https://github.com/aquasecurity/trivy/blob/v0.75.0/docs/guide/coverage/language/nodejs.md), [mise PyPI backend](https://github.com/jdx/mise/blob/v2026.10.4/docs/dev-tools/backends/pypi.md), [Semgrep rule-defined fixes](https://docs.semgrep.dev/writing-rules/rule-defined-fix) and [Renovate vulnerability alerts](https://docs.renovatebot.com/configuration-options/#vulnerabilityalerts).
+
+The initial real scan of main `63dc03962359d3164da0d34fbcdc1ccb2cec455f` found HIGH basic-ftp 5.3.1 (fixed 6.2.1), braces 3.0.3 (no published fix) and two extract-zip 2.0.1 advisories (no published fix). These are Desktop browser/native test tool dependencies and remain in scope. Native glib 0.18.5 has a MEDIUM advisory; moving to 0.20 requires parent SDK compatibility. The development Dockerfile's missing HEALTHCHECK is LOW. A fixed major version is not justification for an untested transitive override. The new HIGH gate intentionally fails until compatible repairs are available and verified; do not describe this baseline as clean.
