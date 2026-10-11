@@ -15,9 +15,12 @@ export async function availablePort(): Promise<number> {
     server.once('error', reject);
     server.listen(0, '127.0.0.1', () => {
       const address = server.address();
-      server.close();
-      if (!address || typeof address === 'string') reject(new Error('Unable to allocate port'));
-      else resolve(address.port);
+      server.close((error) => {
+        if (error) reject(error);
+        else if (!address || typeof address === 'string')
+          reject(new Error('Unable to allocate port'));
+        else resolve(address.port);
+      });
     });
   });
 }
@@ -44,10 +47,12 @@ export class Servers {
     }
     const signal = this.cancellation.signal;
     signal.throwIfAborted();
-    const port = await availablePort();
-    signal.throwIfAborted();
     if (pkg.runtime === 'worker')
       await prepareDatabase(path.join(this.root, pkg.directory), this.stateRoot, signal);
+    signal.throwIfAborted();
+    // Build/migration commands use sockets too. Select the listening port only
+    // after preparation; strictPort still reports any subsequent collision.
+    const port = await availablePort();
     signal.throwIfAborted();
     const invocation = pnpmCommand(['--filter', pkg.name, script]);
     // Forced native cleanup may leave fresh SDK registrations behind. Give each
