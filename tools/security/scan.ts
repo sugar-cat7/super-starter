@@ -125,6 +125,7 @@ const policyFailures = new Set([
   'Unknown scanner severity',
   'Unsupported Trivy report',
   'Trivy repository identity does not match checkout',
+  'Suppressed Trivy findings are not permitted',
   'Unexpected dependency ecosystem',
   'Zero-package dependency scan',
   'Required lockfile was not scanned',

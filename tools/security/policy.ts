@@ -112,7 +112,7 @@ export function trivyReport(
   const report = object(input);
   if (
     report.SchemaVersion !== 2 ||
-    !['filesystem', 'repository'].includes(String(report.ArtifactType))
+    (report.ArtifactType !== 'filesystem' && report.ArtifactType !== 'repository')
   )
     throw new Error('Unsupported Trivy report');
   if (
@@ -126,6 +126,8 @@ export function trivyReport(
   for (const entry of array(report.Results)) {
     const result = object(entry);
     const filename = sourcePath(result.Target);
+    if (array(result.ExperimentalModifiedFindings ?? []).length)
+      throw new Error('Suppressed Trivy findings are not permitted');
     if (result.Class === 'lang-pkgs') {
       if (!['pnpm', 'cargo'].includes(text(result.Type)))
         throw new Error('Unexpected dependency ecosystem');

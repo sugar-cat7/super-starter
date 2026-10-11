@@ -95,6 +95,25 @@ describe('fail-closed security policy', () => {
     expect(() => trivyReport(input, ['pnpm-lock.yaml'])).toThrow(
       'Trivy repository identity does not match checkout',
     );
+    expect(() =>
+      trivyReport({ ...input, ArtifactType: ['repository'] }, ['pnpm-lock.yaml'], sha),
+    ).toThrow('Unsupported Trivy report');
+    expect(() => trivyReport({ ...input, Metadata: undefined }, ['pnpm-lock.yaml'], sha)).toThrow(
+      'Invalid scanner object',
+    );
+    expect(() => trivyReport({ ...input, Metadata: {} }, ['pnpm-lock.yaml'], sha)).toThrow(
+      'Trivy repository identity does not match checkout',
+    );
+  });
+  it('rejects reports containing suppressed experimental findings', () => {
+    const input = trivy();
+    const result = {
+      ...input.Results[0],
+      ExperimentalModifiedFindings: [{ Status: 'not_affected' }],
+    };
+    expect(() => trivyReport({ ...input, Results: [result] }, ['pnpm-lock.yaml'])).toThrow(
+      'Suppressed Trivy findings are not permitted',
+    );
   });
   it('rejects missing native coverage, empty package scans and schema changes', () => {
     expect(() =>
