@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "catalog:",
+    "@cloudflare/build-output-utils": "catalog:",
     "@cloudflare/config": "catalog:",
     "@cloudflare/vite-plugin": "catalog:",
     "@playwright/test": "catalog:",

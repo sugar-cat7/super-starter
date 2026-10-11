@@ -24,6 +24,7 @@
     "zod": "catalog:"
   },
   "devDependencies": {
+    "@cloudflare/build-output-utils": "catalog:",
     "@cloudflare/config": "catalog:",
     "@cloudflare/vite-plugin": "catalog:",
     "cf": "catalog:",

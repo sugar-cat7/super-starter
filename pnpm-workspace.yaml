@@ -7,6 +7,7 @@ catalog:
   '@opentelemetry/sdk-trace-base': 2.12.0
   '@opentelemetry/resources': 2.12.0
   '@cloudflare/config': 0.24.1
+  '@cloudflare/build-output-utils': 0.9.0
   lighthouse: 13.5.0
   '@wdio/types': 9.32.0
   '@wdio/spec-reporter': 9.32.0

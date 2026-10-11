@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "@cloudflare/config": "catalog:",
+    "@cloudflare/build-output-utils": "catalog:",
     "@cloudflare/vite-plugin": "catalog:",
     "cf": "catalog:",
     "wrangler": "catalog:",
