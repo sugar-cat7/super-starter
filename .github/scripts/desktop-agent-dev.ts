@@ -1,6 +1,7 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { setTimeout as pause } from 'node:timers/promises';
 import path from 'node:path';
+import { assertExpectedInput } from './desktop-agent-input.ts';
 import { spawnOwned, pnpmCommand, stopTree } from '../../tools/process.ts';
 
 const directory = path.resolve('artifacts/agent-desktop');
@@ -11,6 +12,7 @@ const reports = JSON.parse(
 const log = `logs/${String(reports.length + 1).padStart(2, '0')}-dev.log`;
 const argv = ['pnpm', 'dev', '--', 'desktop'];
 const command = pnpmCommand(argv.slice(1));
+const inputBefore = assertExpectedInput();
 const start = performance.now();
 const startedAt = new Date().toISOString();
 const child = spawnOwned(command.command, command.args, {
@@ -51,6 +53,8 @@ try {
   writeFileSync(path.join(directory, log), `${output}\n${error}\n`, { mode: 0o600 });
   const entry = {
     phase: 'dev',
+    inputBefore,
+    inputAfter: assertExpectedInput(),
     completion: 'Actual native readiness followed by deliberate shutdown and owned process cleanup',
     processExitCode: child.exitCode,
     processSignal: child.signalCode,

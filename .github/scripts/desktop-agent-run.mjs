@@ -1,6 +1,7 @@
 import { spawn } from 'node:child_process';
 import { mkdirSync, openSync, closeSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
+import { inputIdentity } from './desktop-agent-input.ts';
 const [phase, ...argv] = process.argv.slice(2);
 if (!phase || !argv.length) throw new Error('phase and command required');
 const directory = path.resolve('artifacts/agent-desktop');
@@ -15,6 +16,8 @@ const reports = (() => {
 })();
 const filename = `logs/${String(reports.length + 1).padStart(2, '0')}-${phase}.log`;
 const fd = openSync(path.join(directory, filename), 'w', 0o600);
+const inputBefore = inputIdentity();
+writeFileSync(fd, `${JSON.stringify({ phase, argv, inputBefore })}\n`);
 const start = performance.now();
 const startedAt = new Date().toISOString();
 const child = spawn(argv[0], argv.slice(1), {
@@ -29,6 +32,8 @@ child.on('close', (exit, signal) => {
   closeSync(fd);
   const entry = {
     phase,
+    inputBefore,
+    inputAfter: inputIdentity(),
     argv,
     exit: exit ?? 1,
     signal,

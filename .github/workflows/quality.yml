@@ -10,6 +10,18 @@ on:
         description: Run the independent generated Desktop feature rehearsal on all three actual OS
         type: boolean
         default: false
+      agent_feature_content_id:
+        description: Exact committed generated-feature content ID
+        type: string
+        default: ''
+      agent_source_sha:
+        description: Exact clean generation-source SHA
+        type: string
+        default: ''
+      agent_source_content_id:
+        description: Exact clean generation-source content ID
+        type: string
+        default: ''
 
 permissions:
   contents: read
@@ -315,6 +327,10 @@ jobs:
           node -e 'const jobs=JSON.parse(process.env.RESULTS); const plan={source:"true",generated:process.env.FIXTURES,native:process.env.NATIVE,"worker-windows":process.env.WORKERS,observability:process.env.OBSERVABILITY}; for(const [name,required] of Object.entries(plan)) { if(!["true","false"].includes(required)) throw new Error(`Missing plan for ${name}`); const result=jobs[name]?.result; if(required==="true" && result!=="success") throw new Error(`${name} ${result}; planned checks must succeed`); if(required==="false" && result!=="skipped") throw new Error(`${name} unexpected result ${result}`); }'
 
   desktop-agent:
+    env:
+      AGENT_EXPECTED_CONTENT_ID: ${{ inputs.agent_feature_content_id }}
+      AGENT_EXPECTED_ORIGIN_SHA: ${{ inputs.agent_source_sha }}
+      AGENT_EXPECTED_ORIGIN_CONTENT_ID: ${{ inputs.agent_source_content_id }}
     if: github.event_name == 'workflow_dispatch' && inputs.agent_desktop == true
     strategy:
       fail-fast: false
@@ -342,10 +358,12 @@ jobs:
         run: |
           mkdir -p .state/tmp
           echo "TMPDIR=$GITHUB_WORKSPACE/.state/tmp" >> "$GITHUB_ENV"
+      - name: Exact clean feature and origin before setup
+        run: node .github/scripts/desktop-agent-input.ts before-setup
       - name: Native setup
         run: node .github/scripts/desktop-agent-run.mjs setup pnpm env:setup
-      - name: Immutable committed feature input
-        run: node tools/quality/checkout.ts "$GITHUB_SHA"
+      - name: Exact clean feature and origin after setup
+        run: node .github/scripts/desktop-agent-input.ts after-setup
       - name: Native doctor
         run: node .github/scripts/desktop-agent-run.mjs doctor pnpm env:doctor
       - name: Targeted count regressions
@@ -382,7 +400,10 @@ jobs:
         run: node .github/scripts/desktop-agent-run.mjs build pnpm build
       - name: Desktop deployment preflight
         run: node .github/scripts/desktop-agent-run.mjs preflight pnpm deploy:preflight -- --target desktop --environment local
-      - name: Exact input report
+      - name: Exact clean feature and origin after execution
+        if: always()
+        run: node .github/scripts/desktop-agent-input.ts after-execution
+      - name: Hosted supporting execution report
         if: always()
         run: node .github/scripts/desktop-agent-report.ts
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
