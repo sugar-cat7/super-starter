@@ -1,0 +1,333 @@
+Scope: all 5 workspace projects
+✓ Lockfile passes supply-chain policies (verified 17m ago)
+Lockfile is up to date, resolution step is skipped
+Packages are hard linked from the content-addressable store to the virtual store.
+  Content-addressable store is at: /home/runner/.local/share/pnpm/store/v11
+  Virtual store is at:             node_modules/.pnpm
+Packages: +532
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 532, reused 532, downloaded 0, added 532, done
+
+devDependencies:
++ @types/node 24.19.1
++ knip 6.41.0
++ oxc-parser 0.153.0
++ typescript 7.0.2
++ vite-plus 1.1.0
++ vitest 5.0.3
++ yaml 2.9.1
+
+Done in 351ms using pnpm v12.11.2
+$ node tools/dev-environment/setup.ts -- --javascript
+Scope: all 5 workspace projects
+✓ Lockfile passes supply-chain policies (verified 17m ago)
+Lockfile is up to date, resolution step is skipped
+Done in 34ms using pnpm v12.11.2
+Repository-local Git hooks installed
+Verified immutable checkout 105a27df985d71f797a1f313f9528c1021b59ad2
+$ node tools/quality/gate.ts push -- --base unknown
+CHECK static: Repository-wide static checks are lightweight and run once
+$ node tools/quality/check.ts
+pass: All 170 files are correctly formatted (267ms, 4 threads)
+pass: Found no warnings, lint errors, or type errors in 116 files (1.2s, 4 threads)
+Static quality, runtime boundaries and documentation passed
+CHECK tools-unit: Shared tooling contracts
+$ node tools/quality/vitest.ts
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/tmp/starter-push-TK41F3[39m
+
+ [32m✓[39m tools/generators/files.test.ts [2m([22m[2m23 tests[22m[2m)[22m[32m 286[2mms[22m[39m
+ [32m✓[39m tools/security/policy.test.ts [2m([22m[2m25 tests[22m[2m)[22m[32m 19[2mms[22m[39m
+ [32m✓[39m tools/quality/ci-plan.test.ts [2m([22m[2m17 tests[22m[2m)[22m[33m 1153[2mms[22m[39m
+   [32m✓[39m minimal CI execution with an actual committed diff [2m(16)[22m
+     [33m[2m✓[22m[39m selects real signal verification at application producer and Result boundaries[33m 586[2mms[22m[39m
+[90mstdout[2m | tools/generators/format.test.ts[2m > [22m[2mcold app addition[2m > [22m[2mfinalizes a cold add with absent SDK and preserves user edits
+[22m[39m{
+  "root": "/tmp/starter-cold-add-r8xyhP",
+  "writes": 14,
+  "remove": [],
+  "dryRun": false
+}
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2mkeeps added web shared UI owned when syncing an API reference
+[22m[39m{
+  "root": "/tmp/reference-shared-sync-WD4HTM",
+  "writes": 33,
+  "remove": [],
+  "dryRun": false
+}
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2mkeeps added web shared UI owned when syncing an API reference
+[22m[39m{
+  "root": "/tmp/reference-shared-sync-WD4HTM",
+  "writes": 26,
+  "remove": [],
+  "dryRun": false
+}
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2mkeeps added web shared UI owned when syncing an API reference
+[22m[39mReference matches canonical blueprints
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2mkeeps added desktop shared UI owned when syncing an API reference
+[22m[39m{
+  "root": "/tmp/reference-shared-sync-7uxRBU",
+  "writes": 29,
+  "remove": [],
+  "dryRun": false
+}
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2mkeeps added desktop shared UI owned when syncing an API reference
+[22m[39m{
+  "root": "/tmp/reference-shared-sync-7uxRBU",
+  "writes": 18,
+  "remove": [],
+  "dryRun": false
+}
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2mkeeps added desktop shared UI owned when syncing an API reference
+[22m[39mReference matches canonical blueprints
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2mregenerates an added reference service and protects edits without changing the original app
+[22m[39m{
+  "root": "/tmp/reference-service-sync-wjCAKD",
+  "writes": 14,
+  "remove": [],
+  "dryRun": false
+}
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2mregenerates an added reference service and protects edits without changing the original app
+[22m[39m{
+  "root": "/tmp/reference-service-sync-wjCAKD",
+  "writes": 11,
+  "remove": [],
+  "dryRun": false
+}
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2mregenerates an added reference service and protects edits without changing the original app
+[22m[39mReference matches canonical blueprints
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2msyncs the reference lock baseline after dependency updates without rewriting the lock
+[22m[39m{
+  "root": "/tmp/reference-lock-sync-7xc9AK",
+  "writes": 1,
+  "remove": [],
+  "dryRun": false
+}
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2msyncs the reference lock baseline after dependency updates without rewriting the lock
+[22m[39mReference matches canonical blueprints
+
+ [32m✓[39m tools/generators/baseline.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 13135[2mms[22m[39m
+   [33m[2m✓[22m[39m keeps added web shared UI owned when syncing an API reference[33m 5307[2mms[22m[39m
+   [33m[2m✓[22m[39m keeps added desktop shared UI owned when syncing an API reference[33m 2348[2mms[22m[39m
+   [33m[2m✓[22m[39m regenerates an added reference service and protects edits without changing the original app[33m 2913[2mms[22m[39m
+   [33m[2m✓[22m[39m syncs the reference lock baseline after dependency updates without rewriting the lock[33m 1883[2mms[22m[39m
+   [33m[2m✓[22m[39m renders identical frozen Cargo locks and binding-free config from LF and CRLF blueprints[33m 653[2mms[22m[39m
+[90mstdout[2m | tools/generators/format.test.ts[2m > [22m[2mcold app addition[2m > [22m[2mfinalizes a cold add with partial SDK and preserves user edits
+[22m[39m{
+  "root": "/tmp/starter-cold-add-tx03Lg",
+  "writes": 14,
+  "remove": [],
+  "dryRun": false
+}
+
+ [32m✓[39m tools/quality/acceptance.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 5635[2mms[22m[39m
+   [33m[2m✓[22m[39m selects a complete canonical baseline after an earlier passed feature report[33m 3460[2mms[22m[39m
+   [33m[2m✓[22m[39m requires exact-source actual Windows Worker commands and rejects other OS or incomplete reports[33m 2079[2mms[22m[39m
+ [32m✓[39m tools/process.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 2174[2mms[22m[39m
+   [33m[2m✓[22m[39m forwards Worker build interruption to its detached non-cooperating child[33m 1188[2mms[22m[39m
+   [33m[2m✓[22m[39m cleans an orphaned descendant while preserving an unrelated server[33m 449[2mms[22m[39m
+[startup-fixture] $ node server.cjs
+[startup-fixture] http://127.0.0.1:40667
+[90mstdout[2m | tools/dev-environment/servers.test.ts[2m > [22m[2mcancels a pending start before spawn and permits an explicit real-server restart
+[22m[39mREADY startup-fixture http://127.0.0.1:40667 142ms; registry /tmp/starter-cancel-meKEnc/.state/registry/session-FkXP6Y
+
+[startup-fixture] Error: [startup-fixture] ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in /tmp/starter-cancel-meKEnc
+
+[startup-fixture] $ node server.cjs
+[startup-fixture] http://127.0.0.1:33965
+[90mstdout[2m | tools/dev-environment/servers.test.ts[2m > [22m[2mcancels a pending start before spawn and permits an explicit real-server restart
+[22m[39mREADY startup-fixture http://127.0.0.1:33965 107ms; registry /tmp/starter-cancel-meKEnc/.state/registry/session-AHi2JL
+
+[startup-fixture] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+[startup-fixture]   × "pnpm recursive run" failed in /tmp/starter-cancel-meKEnc
+
+[lifecycle-exit-fixture] $ node server.cjs
+[lifecycle-exit-fixture] http://127.0.0.1:41193
+[90mstdout[2m | tools/dev-environment/servers.test.ts[2m > [22m[2mkeeps stopped lifecycle exits out of an immediate restart and reports unexpected termination
+[22m[39mREADY lifecycle-exit-fixture http://127.0.0.1:41193 106ms; registry /tmp/starter-lifecycle-exit-N3a6Pe/.state/registry/session-wt00RT
+
+[lifecycle-exit-fixture] $ node server.cjs
+[lifecycle-exit-fixture] http://127.0.0.1:33171
+[90mstdout[2m | tools/dev-environment/servers.test.ts[2m > [22m[2mkeeps stopped lifecycle exits out of an immediate restart and reports unexpected termination
+[22m[39mREADY lifecycle-exit-fixture http://127.0.0.1:33171 105ms; registry /tmp/starter-lifecycle-exit-N3a6Pe/.state/registry/session-gfsgTF
+
+[lifecycle-exit-fixture] $ node server.cjs
+[lifecycle-exit-fixture] http://127.0.0.1:35703
+[90mstdout[2m | tools/dev-environment/servers.test.ts[2m > [22m[2mkeeps stopped lifecycle exits out of an immediate restart and reports unexpected termination
+[22m[39mREADY lifecycle-exit-fixture http://127.0.0.1:35703 111ms; registry /tmp/starter-lifecycle-exit-N3a6Pe/.state/registry/session-g664xY
+
+[lifecycle-exit-fixture] $ node server.cjs
+[lifecycle-exit-fixture] http://127.0.0.1:42163
+[90mstdout[2m | tools/dev-environment/servers.test.ts[2m > [22m[2mkeeps stopped lifecycle exits out of an immediate restart and reports unexpected termination
+[22m[39mREADY lifecycle-exit-fixture http://127.0.0.1:42163 104ms; registry /tmp/starter-lifecycle-exit-N3a6Pe/.state/registry/session-0C0xnz
+
+[lifecycle-exit-fixture] Error: [lifecycle-exit-fixture] ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in /tmp/starter-lifecycle-exit-N3a6Pe
+
+[colored-url-fixture] $ node server.cjs
+[colored-url-fixture] Local: [36mhttp://127.0.0.1:[[colored-url-fixture] 1m36549[22m/[39m
+[90mstdout[2m | tools/dev-environment/servers.test.ts[2m > [22m[2mprobes an owned server whose logged URL contains split terminal color sequences
+[22m[39mREADY colored-url-fixture http://127.0.0.1:36549 106ms; registry /tmp/starter-colored-url-XxXW4H/.state/registry/session-bksc3U
+
+[colored-url-fixture] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+[colored-url-fixture]   × "pnpm recursive run" failed in /tmp/starter-colored-url-XxXW4H
+
+[health-body-fixture] $ node server.cjs
+[health-body-fixture] http://127.0.0.1:34229
+[90mstdout[2m | tools/dev-environment/servers.test.ts[2m > [22m[2mwaits for the health body and retries a probe whose body exceeds its deadline
+[22m[39mREADY health-body-fixture http://127.0.0.1:34229 1456ms; registry /tmp/starter-health-body-eORG8Q/.state/registry/session-9rPgNT
+
+[health-body-fixture] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+[health-body-fixture]   × "pnpm recursive run" failed in /tmp/starter-health-body-eORG8Q
+
+ [32m✓[39m tools/dev-environment/servers.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 2675[2mms[22m[39m
+   [33m[2m✓[22m[39m cancels a pending start before spawn and permits an explicit real-server restart[33m 378[2mms[22m[39m
+   [33m[2m✓[22m[39m keeps stopped lifecycle exits out of an immediate restart and reports unexpected termination[33m 471[2mms[22m[39m
+   [33m[2m✓[22m[39m waits for the health body and retries a probe whose body exceeds its deadline[33m 1662[2mms[22m[39m
+ [32m✓[39m tools/process.windows.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 24[2mms[22m[39m
+ [32m✓[39m tools/quality/hooks-cleanup.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 248[2mms[22m[39m
+ [32m✓[39m tools/quality/failure-handling.test.ts [2m([22m[2m14 tests[22m[2m)[22m[32m 39[2mms[22m[39m
+ [32m✓[39m tools/dev-environment/doctor.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m tools/quality/evidence.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 122[2mms[22m[39m
+ [32m✓[39m tools/security/execute.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 545[2mms[22m[39m
+   [33m[2m✓[22m[39m fails a hung real scanner process and rejects executable startup errors[33m 507[2mms[22m[39m
+[90mstdout[2m | tools/quality/fixture.test.ts[2m > [22m[2misolates retained verification output from parent ignore rules and hook configuration
+[22m[39mRepository-local Git hooks installed
+Repository-local Git hooks installed
+
+ [32m✓[39m tools/quality/fixture.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 73[2mms[22m[39m
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+ [32m✓[39m tools/quality/rehearsal-boundary.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 4940[2mms[22m[39m
+   [33m[2m✓[22m[39m isolates hooks before setup inside an ignored committed parent[33m 4408[2mms[22m[39m
+ [32m✓[39m tools/quality/lighthouse.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m tools/quality/structure.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 18[2mms[22m[39m
+ [32m✓[39m tools/process-darwin.test.ts [2m([22m[2m14 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+[90mstdout[2m | tools/quality/hooks-install.test.ts[2m > [22m[2mprotects parent Git metadata during foreign hook installation and linked cleanup
+[22m[39mRepository-local Git hooks installed
+
+ [32m✓[39m tools/quality/hooks-install.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 70[2mms[22m[39m
+ [32m✓[39m tools/o11y/identity.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 141[2mms[22m[39m
+ [32m✓[39m tools/errors/generate.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 18[2mms[22m[39m
+ [32m✓[39m tools/dev-environment/doctor-cli.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 216[2mms[22m[39m
+ [32m✓[39m tools/quality/graph.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+ [32m✓[39m tools/o11y/native-evidence.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m tools/generators/options.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m tools/o11y/verify.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 254[2mms[22m[39m
+[90mstdout[2m | tools/quality/checkout.test.ts[2m > [22m[2mrejects preparation edits and first-party untracked files against the requested commit
+[22m[39mVerified immutable checkout bad271b91236f9a2096fc170bf1865c125c89548
+
+ [32m✓[39m tools/quality/checkout.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 62[2mms[22m[39m
+ [32m✓[39m tools/cloudflare/database.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 121[2mms[22m[39m
+ [32m✓[39m tools/generators/format.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 34399[2mms[22m[39m
+   [32m✓[39m cold app addition [2m(2)[22m
+     [33m[2m✓[22m[39m finalizes a cold add with absent SDK and preserves user edits[33m 11707[2mms[22m[39m
+     [33m[2m✓[22m[39m finalizes a cold add with partial SDK and preserves user edits[33m 11006[2mms[22m[39m
+   [33m[2m✓[22m[39m matches the owning SDK CLI for mixed scripts, ignored build output and JSON[33m 1401[2mms[22m[39m
+   [33m[2m✓[22m[39m retains CLI semantics with custom formatter option[33m 716[2mms[22m[39m
+   [33m[2m✓[22m[39m retains CLI semantics with editorconfig[33m 741[2mms[22m[39m
+   [33m[2m✓[22m[39m invalidates cached formatting across roots and after a side configuration change[33m 1602[2mms[22m[39m
+   [33m[2m✓[22m[39m matches CLI stdin behavior for a gitignored source file and CLI runtime metadata[33m 451[2mms[22m[39m
+   [33m[2m✓[22m[39m reports malformed formatting before naturally draining a tracked SDK child[33m 3293[2mms[22m[39m
+ [32m✓[39m tools/quality/documentation.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 21[2mms[22m[39m
+ [32m✓[39m tools/cloudflare/preview.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m tools/o11y/policy.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+ [32m✓[39m tools/cloudflare/deployment.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m tools/cloudflare/transport-diagnostics.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 72[2mms[22m[39m
+ [32m✓[39m tools/quality/sanitize.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 4[2mms[22m[39m
+ [32m✓[39m tools/quality/test-results.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m tools/generators/verify-cli.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 422[2mms[22m[39m
+   [33m[2m✓[22m[39m rejects ambiguous, unknown and duplicate case selection before writing a generated destination[33m 421[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m37 passed[39m[22m[90m (37)[39m
+[2m      Tests [22m [1m[32m212 passed[39m[22m[90m (212)[39m
+[2m   Start at [22m 19:58:11
+[2m   Duration [22m 36.17s[2m (tests 98%, import 1%, transform 1%)[22m
+
+JSON report written to /tmp/starter-push-TK41F3/artifacts/tests-default.json
+Executed 212 required test cases
+CHECK @lantern-lab/contracts/unit: Selected library @lantern-lab/contracts; test phase
+$ node ../../tools/quality/vitest.ts
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/tmp/starter-push-TK41F3/packages/contracts[39m
+
+ [32m✓[39m src/index.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m src/result.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[32m8 passed[39m[22m[90m (8)[39m
+[2m   Start at [22m 19:58:48
+[2m   Duration [22m 200ms[2m (import 54%, transform 32%, tests 10%, worker 3%)[22m
+
+JSON report written to /tmp/starter-push-TK41F3/packages/contracts/artifacts/tests-default.json
+Executed 8 required test cases
+CHECK @lantern-lab/desktop/unit: Selected desktop @lantern-lab/desktop; test phase
+$ node ../../tools/quality/vitest.ts --config vitest.config.ts
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/tmp/starter-push-TK41F3/packages/desktop[39m
+
+ [32m✓[39m test/unit.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m test/counter-ui.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 249[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[32m6 passed[39m[22m[90m (6)[39m
+[2m   Start at [22m 19:58:48
+[2m   Duration [22m 976ms[2m (environment 44%, tests 24%, import 20%, transform 11%, worker 1%)[22m
+
+JSON report written to /tmp/starter-push-TK41F3/packages/desktop/artifacts/tests-vitest.config.ts.json
+Executed 6 required test cases
+CHECK @lantern-lab/observability/unit: Selected library @lantern-lab/observability; test phase
+$ node ../../tools/quality/vitest.ts
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/tmp/starter-push-TK41F3/packages/observability[39m
+
+ [32m✓[39m src/index.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 44[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m7 passed[39m[22m[90m (7)[39m
+[2m   Start at [22m 19:58:50
+[2m   Duration [22m 282ms[2m (import 45%, transform 31%, tests 23%, worker 2%)[22m
+
+JSON report written to /tmp/starter-push-TK41F3/packages/observability/artifacts/tests-default.json
+Executed 7 required test cases
+CHECK @lantern-lab/ui/unit: Selected library @lantern-lab/ui; test phase
+$ node ../../tools/quality/vitest.ts
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/tmp/starter-push-TK41F3/packages/ui[39m
+
+ [32m✓[39m src/index.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 365[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m3 passed[39m[22m[90m (3)[39m
+[2m   Start at [22m 19:58:50
+[2m   Duration [22m 1.07s[2m (environment 44%, tests 37%, import 12%, transform 7%)[22m
+
+JSON report written to /tmp/starter-push-TK41F3/packages/ui/artifacts/tests-default.json
+Executed 3 required test cases
+6/6 checks passed; content 49474ae1a1bf
+To /home/runner/work/super-starter/super-starter/desktop-counter-lantern-owned-review.git
+ * [new branch]      HEAD -> feature/counter

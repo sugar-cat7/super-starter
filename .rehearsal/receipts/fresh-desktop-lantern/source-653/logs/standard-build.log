@@ -1,0 +1,55 @@
+$ node tools/quality/gate.ts build
+CHECK @lantern-lab/contracts/build: Selected library @lantern-lab/contracts; build phase
+$ vp pack
+ℹ entry: src/index.ts
+ℹ tsconfig: tsconfig.json
+ℹ Build start
+ℹ Cleaning 2 files
+warn: TypeScript 7.0 does not yet have a stable API and is experimental. Some options will be unavailable.
+ℹ Emit types with typescript@7.0.2
+ℹ dist/index.mjs    5.49 kB │ gzip: 1.81 kB
+ℹ dist/index.d.mts  6.29 kB │ gzip: 1.54 kB
+ℹ 2 files, total: 11.77 kB
+✔ Build complete in 196ms
+CHECK @lantern-lab/desktop/build: Selected desktop @lantern-lab/desktop; build phase
+$ node ../../tools/quality/native.ts build
+        Info Looking up installed tauri packages to check mismatched versions...
+     Running beforeBuildCommand `pnpm build:renderer`
+$ vp build
+transforming...
+✓ 246 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.40 kB │ gzip:  0.27 kB
+dist/assets/index-BDXUfO3f.css    6.91 kB │ gzip:  2.27 kB
+dist/assets/index-ClP82EFs.js   289.56 kB │ gzip: 90.95 kB
+
+[32m✓ built in 203ms[39m
+   Compiling desktop-counter-lantern-desktop v0.1.0 (/home/runner/work/super-starter/super-starter/desktop-counter-lantern/packages/desktop/src-tauri)
+    Finished `release` profile [optimized] target(s) in 27.41s
+       Built application at: /home/runner/work/super-starter/super-starter/desktop-counter-lantern/.state/desktop/target-release/release/desktop-counter-lantern-desktop
+CHECK @lantern-lab/observability/build: Selected library @lantern-lab/observability; build phase
+$ vp pack
+ℹ entry: src/index.ts
+ℹ tsconfig: tsconfig.json
+ℹ Build start
+ℹ Cleaning 2 files
+warn: TypeScript 7.0 does not yet have a stable API and is experimental. Some options will be unavailable.
+ℹ Emit types with typescript@7.0.2
+ℹ dist/index.mjs    12.80 kB │ gzip: 4.23 kB
+ℹ dist/index.d.mts   1.87 kB │ gzip: 0.74 kB
+ℹ 2 files, total: 14.67 kB
+✔ Build complete in 182ms
+CHECK @lantern-lab/ui/build: Selected library @lantern-lab/ui; build phase
+$ vp pack
+ℹ entry: src/index.tsx
+ℹ tsconfig: tsconfig.json
+ℹ Build start
+ℹ Cleaning 2 files
+warn: TypeScript 7.0 does not yet have a stable API and is experimental. Some options will be unavailable.
+ℹ Emit types with typescript@7.0.2
+ℹ dist/index.mjs    5.11 kB │ gzip: 1.65 kB
+ℹ dist/index.d.mts  0.57 kB │ gzip: 0.30 kB
+ℹ 2 files, total: 5.68 kB
+✔ Build complete in 183ms
+4/4 checks passed; content 49474ae1a1bf

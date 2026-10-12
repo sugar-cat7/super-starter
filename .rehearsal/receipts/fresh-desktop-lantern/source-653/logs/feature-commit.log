@@ -1,0 +1,12 @@
+Checking formatting...
+
+All matched files use the correct format.
+Finished in 276ms on 170 files using 4 threads.
+Found 0 warnings and 0 errors.
+Finished in 276ms on 116 files with 165 rules using 4 threads.
+Workspace and runtime boundaries passed
+[master 105a27d] feat: add native Desktop counter with regression coverage
+ 20 files changed, 439 insertions(+), 10 deletions(-)
+ create mode 100644 docs/counter.md
+ create mode 100644 packages/desktop/src/counter.tsx
+ create mode 100644 packages/desktop/test/counter-ui.test.ts

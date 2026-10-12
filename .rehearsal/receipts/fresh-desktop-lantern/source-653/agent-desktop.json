@@ -1,0 +1,1632 @@
+{
+  "schema": 1,
+  "status": "passed",
+  "sha": "105a27df985d71f797a1f313f9528c1021b59ad2",
+  "featureSha": "105a27df985d71f797a1f313f9528c1021b59ad2",
+  "contentId": "49474ae1a1bf6e2319589b62975dba70da462a3d4ca6bd94994d0f3a56bc6722",
+  "origin": {
+    "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+    "dirty": false,
+    "contentId": "5cfea1fa40293bc8306021aad69eac2b98732b54ae419c62add83f569fef4747"
+  },
+  "sourceReferenceContentId": "8a91208bf0be87ea59f830dd11d700618bfc46c75493dd9799b0c5c3815fff25",
+  "task": "Independently generate Desktop-only desktop-counter-lantern and add a small counter with native IPC, meaningful unit/Rust/native regression coverage, and preserved Notes behavior.",
+  "agent": {
+    "version": "Codex (GPT-6), independent context fresh_460_desktop_context"
+  },
+  "execution": "agent",
+  "independentContext": true,
+  "classification": "Final Source653 Desktop feature rehearsal. This receipt was newly authored by the independent Agent after decoding and validating this run's own original evidence; historical Source460 outcomes are not credited to Source653.",
+  "configuration": {
+    "name": "desktop-counter-lantern",
+    "scope": "@lantern-lab",
+    "identifier": "dev.lantern.counter",
+    "preset": "desktop",
+    "features": []
+  },
+  "generation": {
+    "argv": [
+      "node",
+      "_source/tools/generators/cli.ts",
+      "init",
+      "--target",
+      "desktop-counter-lantern",
+      "--name",
+      "desktop-counter-lantern",
+      "--scope",
+      "@lantern-lab",
+      "--preset",
+      "desktop",
+      "--identifier",
+      "dev.lantern.counter",
+      "--no-install"
+    ],
+    "sourceSha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+    "sourceReferenceContentId": "8a91208bf0be87ea59f830dd11d700618bfc46c75493dd9799b0c5c3815fff25",
+    "sourceCleanBeforeGeneration": true,
+    "sourceCleanBeforeRemoval": true,
+    "renderedManagedRegularFiles": 263,
+    "sourceRemovedBeforeGeneratedProjectWork": true,
+    "generatedRootHasNoSourceGitParent": true,
+    "instructions": "Generated README, AGENTS, application/Desktop skills, native/dependency/error/template/quality guidance were read from the authenticated pristine snapshot in this independent Agent context. Their bytes were verified unchanged in the actual final Source653 generated snapshot. Normal documented commands and the counter design were selected by this Agent.",
+    "authoredPayload": "All15 independently authored payload files remained byte-identical; every freshly generated beforeimage and new-file absence guard passed. The complete prepared baseline, exact20 feature delta, owning error outputs, lock policy, and before/after phase identities were verified in this fresh execution."
+  },
+  "commands": [
+    {
+      "phase": "setup",
+      "argv": [
+        "pnpm",
+        "env:setup"
+      ],
+      "exit": 0,
+      "log": "logs/standard-setup.log",
+      "milliseconds": 1345,
+      "rawChildExitCode": 0,
+      "rawChildSignal": null,
+      "logBytes": 2706,
+      "logSha256": "9e84148f38f5610ea574f8c2c41d4b969185e722b7a1e65ef05d24f8fd85cb7f",
+      "inputIdentity": {
+        "head": "105a27df985d71f797a1f313f9528c1021b59ad2",
+        "contentId": "49474ae1a1bf6e2319589b62975dba70da462a3d4ca6bd94994d0f3a56bc6722",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "5cfea1fa40293bc8306021aad69eac2b98732b54ae419c62add83f569fef4747"
+        },
+        "clean": true,
+        "sourceAbsent": true
+      },
+      "outputIdentity": {
+        "head": "105a27df985d71f797a1f313f9528c1021b59ad2",
+        "contentId": "49474ae1a1bf6e2319589b62975dba70da462a3d4ca6bd94994d0f3a56bc6722",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "5cfea1fa40293bc8306021aad69eac2b98732b54ae419c62add83f569fef4747"
+        },
+        "clean": true,
+        "sourceAbsent": true
+      }
+    },
+    {
+      "phase": "doctor",
+      "argv": [
+        "pnpm",
+        "env:doctor"
+      ],
+      "exit": 0,
+      "log": "logs/standard-doctor.log",
+      "milliseconds": 272,
+      "rawChildExitCode": 0,
+      "rawChildSignal": null,
+      "logBytes": 1135,
+      "logSha256": "fc8936f59c9b586897178ff040717ccc6b17ce2abf41dbf2a367015939f8b002",
+      "inputIdentity": {
+        "head": "105a27df985d71f797a1f313f9528c1021b59ad2",
+        "contentId": "49474ae1a1bf6e2319589b62975dba70da462a3d4ca6bd94994d0f3a56bc6722",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "5cfea1fa40293bc8306021aad69eac2b98732b54ae419c62add83f569fef4747"
+        },
+        "clean": true,
+        "sourceAbsent": true
+      },
+      "outputIdentity": {
+        "head": "105a27df985d71f797a1f313f9528c1021b59ad2",
+        "contentId": "49474ae1a1bf6e2319589b62975dba70da462a3d4ca6bd94994d0f3a56bc6722",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "5cfea1fa40293bc8306021aad69eac2b98732b54ae419c62add83f569fef4747"
+        },
+        "clean": true,
+        "sourceAbsent": true
+      }
+    },
+    {
+      "phase": "dev",
+      "argv": [
+        "pnpm",
+        "dev",
+        "--",
+        "desktop"
+      ],
+      "exit": 0,
+      "log": "logs/standard-dev.log",
+      "milliseconds": 92846,
+      "rawChildExitCode": null,
+      "rawChildSignal": "SIGTERM",
+      "logBytes": 149732,
+      "logSha256": "8949d12ba32cb23193e66cbebd9ac7ad5dfedd086c9580b6e6eb0c35d235027f",
+      "inputIdentity": {
+        "head": "105a27df985d71f797a1f313f9528c1021b59ad2",
+        "contentId": "49474ae1a1bf6e2319589b62975dba70da462a3d4ca6bd94994d0f3a56bc6722",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "5cfea1fa40293bc8306021aad69eac2b98732b54ae419c62add83f569fef4747"
+        },
+        "clean": true,
+        "sourceAbsent": true
+      },
+      "outputIdentity": {
+        "head": "105a27df985d71f797a1f313f9528c1021b59ad2",
+        "contentId": "49474ae1a1bf6e2319589b62975dba70da462a3d4ca6bd94994d0f3a56bc6722",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "5cfea1fa40293bc8306021aad69eac2b98732b54ae419c62add83f569fef4747"
+        },
+        "clean": true,
+        "sourceAbsent": true
+      },
+      "lifecycle": {
+        "ready": true,
+        "origin": "http://127.0.0.1:41551",
+        "registry": "/home/runner/work/super-starter/super-starter/desktop-counter-lantern/.state/registry/session-E4ltiD",
+        "pid": 9201,
+        "requestedStop": "SDK.stopTree SIGTERM",
+        "cleanupCompleted": true,
+        "endpointStopped": true,
+        "registryRemoved": true,
+        "ownedGroupStopped": true
+      },
+      "observation": "Exit 0 is the successful dev lifecycle observation. The actual pnpm child was stopped with the requested SIGTERM after native and renderer readiness; its raw exitCode remains null and its signal remains SIGTERM. The owned endpoint refused connections, session registry was removed, and owned process group no longer existed."
+    },
+    {
+      "phase": "targeted-test",
+      "argv": [
+        "pnpm",
+        "test"
+      ],
+      "exit": 0,
+      "log": "logs/standard-test.log",
+      "milliseconds": 46902,
+      "rawChildExitCode": 0,
+      "rawChildSignal": null,
+      "logBytes": 19747,
+      "logSha256": "fdca8df6e0384a06b2046b85f0f64fe22df9cdcc640cb1716771656a9fbcb6b9",
+      "inputIdentity": {
+        "head": "105a27df985d71f797a1f313f9528c1021b59ad2",
+        "contentId": "49474ae1a1bf6e2319589b62975dba70da462a3d4ca6bd94994d0f3a56bc6722",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "5cfea1fa40293bc8306021aad69eac2b98732b54ae419c62add83f569fef4747"
+        },
+        "clean": true,
+        "sourceAbsent": true
+      },
+      "outputIdentity": {
+        "head": "105a27df985d71f797a1f313f9528c1021b59ad2",
+        "contentId": "49474ae1a1bf6e2319589b62975dba70da462a3d4ca6bd94994d0f3a56bc6722",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "5cfea1fa40293bc8306021aad69eac2b98732b54ae419c62add83f569fef4747"
+        },
+        "clean": true,
+        "sourceAbsent": true
+      }
+    },
+    {
+      "phase": "pre-pr",
+      "argv": [
+        "pnpm",
+        "gate:pre-pr",
+        "--",
+        "--base",
+        "5879403a1bd52f1cc694be1263227184b36c0a61"
+      ],
+      "exit": 0,
+      "log": "logs/standard-pre-pr.log",
+      "milliseconds": 525684,
+      "rawChildExitCode": 0,
+      "rawChildSignal": null,
+      "logBytes": 211241,
+      "logSha256": "f149cc3cf55ee4e0c26b3f733ce522ac1b7af2f0be2bd0223b6f1f26994ef004",
+      "inputIdentity": {
+        "head": "105a27df985d71f797a1f313f9528c1021b59ad2",
+        "contentId": "49474ae1a1bf6e2319589b62975dba70da462a3d4ca6bd94994d0f3a56bc6722",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "5cfea1fa40293bc8306021aad69eac2b98732b54ae419c62add83f569fef4747"
+        },
+        "clean": true,
+        "sourceAbsent": true
+      },
+      "outputIdentity": {
+        "head": "105a27df985d71f797a1f313f9528c1021b59ad2",
+        "contentId": "49474ae1a1bf6e2319589b62975dba70da462a3d4ca6bd94994d0f3a56bc6722",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "5cfea1fa40293bc8306021aad69eac2b98732b54ae419c62add83f569fef4747"
+        },
+        "clean": true,
+        "sourceAbsent": true
+      }
+    },
+    {
+      "phase": "full",
+      "argv": [
+        "pnpm",
+        "gate:full"
+      ],
+      "exit": 0,
+      "log": "logs/standard-full.log",
+      "milliseconds": 158282,
+      "rawChildExitCode": 0,
+      "rawChildSignal": null,
+      "logBytes": 177798,
+      "logSha256": "6e629753e1c5a9e89cba5fa8da0e3caedae26445eb2523d91a385064a2e408d4",
+      "inputIdentity": {
+        "head": "105a27df985d71f797a1f313f9528c1021b59ad2",
+        "contentId": "49474ae1a1bf6e2319589b62975dba70da462a3d4ca6bd94994d0f3a56bc6722",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "5cfea1fa40293bc8306021aad69eac2b98732b54ae419c62add83f569fef4747"
+        },
+        "clean": true,
+        "sourceAbsent": true
+      },
+      "outputIdentity": {
+        "head": "105a27df985d71f797a1f313f9528c1021b59ad2",
+        "contentId": "49474ae1a1bf6e2319589b62975dba70da462a3d4ca6bd94994d0f3a56bc6722",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "5cfea1fa40293bc8306021aad69eac2b98732b54ae419c62add83f569fef4747"
+        },
+        "clean": true,
+        "sourceAbsent": true
+      }
+    },
+    {
+      "phase": "build",
+      "argv": [
+        "pnpm",
+        "build"
+      ],
+      "exit": 0,
+      "log": "logs/standard-build.log",
+      "milliseconds": 30333,
+      "rawChildExitCode": 0,
+      "rawChildSignal": null,
+      "logBytes": 2484,
+      "logSha256": "292c7bfc0a0737b0f625b667baa18a58a5d6ebeb031962524313c3818e281301",
+      "inputIdentity": {
+        "head": "105a27df985d71f797a1f313f9528c1021b59ad2",
+        "contentId": "49474ae1a1bf6e2319589b62975dba70da462a3d4ca6bd94994d0f3a56bc6722",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "5cfea1fa40293bc8306021aad69eac2b98732b54ae419c62add83f569fef4747"
+        },
+        "clean": true,
+        "sourceAbsent": true
+      },
+      "outputIdentity": {
+        "head": "105a27df985d71f797a1f313f9528c1021b59ad2",
+        "contentId": "49474ae1a1bf6e2319589b62975dba70da462a3d4ca6bd94994d0f3a56bc6722",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "5cfea1fa40293bc8306021aad69eac2b98732b54ae419c62add83f569fef4747"
+        },
+        "clean": true,
+        "sourceAbsent": true
+      }
+    },
+    {
+      "phase": "preflight",
+      "argv": [
+        "pnpm",
+        "deploy:preflight",
+        "--",
+        "--target",
+        "desktop",
+        "--environment",
+        "local"
+      ],
+      "exit": 0,
+      "log": "logs/standard-preflight.log",
+      "milliseconds": 249,
+      "rawChildExitCode": 0,
+      "rawChildSignal": null,
+      "logBytes": 303,
+      "logSha256": "0105f93da0ca3ce19105ede94771a911ff7595198645e197eb88e108233664f3",
+      "inputIdentity": {
+        "head": "105a27df985d71f797a1f313f9528c1021b59ad2",
+        "contentId": "49474ae1a1bf6e2319589b62975dba70da462a3d4ca6bd94994d0f3a56bc6722",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "5cfea1fa40293bc8306021aad69eac2b98732b54ae419c62add83f569fef4747"
+        },
+        "clean": true,
+        "sourceAbsent": true
+      },
+      "outputIdentity": {
+        "head": "105a27df985d71f797a1f313f9528c1021b59ad2",
+        "contentId": "49474ae1a1bf6e2319589b62975dba70da462a3d4ca6bd94994d0f3a56bc6722",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "5cfea1fa40293bc8306021aad69eac2b98732b54ae419c62add83f569fef4747"
+        },
+        "clean": true,
+        "sourceAbsent": true
+      }
+    },
+    {
+      "phase": "commit",
+      "argv": [
+        "git",
+        "commit",
+        "-m",
+        "feat: add native Desktop counter with regression coverage"
+      ],
+      "exit": 0,
+      "log": "logs/feature-commit.log",
+      "milliseconds": 1027,
+      "rawChildExitCode": 0,
+      "rawChildSignal": null,
+      "logBytes": 527,
+      "logSha256": "e25bfe3ee01837571a66891362859804b8bc4120cc88884bb9458478d3158bc3",
+      "inputIdentity": null,
+      "outputIdentity": null,
+      "inputHead": "5879403a1bd52f1cc694be1263227184b36c0a61",
+      "resultHead": "105a27df985d71f797a1f313f9528c1021b59ad2",
+      "nonempty": true,
+      "normalInstalledHook": true
+    },
+    {
+      "phase": "push",
+      "argv": [
+        "git",
+        "push",
+        "review",
+        "HEAD:refs/heads/feature/counter"
+      ],
+      "exit": 0,
+      "log": "logs/genuine-feature-bare-push.log",
+      "milliseconds": 45726,
+      "rawChildExitCode": 0,
+      "rawChildSignal": null,
+      "logBytes": 20520,
+      "logSha256": "677c55c27ac5d38220281bf8896114478445b51eda54a9050ffd483a5f372e33",
+      "inputIdentity": {
+        "head": "105a27df985d71f797a1f313f9528c1021b59ad2",
+        "contentId": "49474ae1a1bf6e2319589b62975dba70da462a3d4ca6bd94994d0f3a56bc6722",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "5cfea1fa40293bc8306021aad69eac2b98732b54ae419c62add83f569fef4747"
+        },
+        "clean": true,
+        "sourceAbsent": true
+      },
+      "outputIdentity": {
+        "head": "105a27df985d71f797a1f313f9528c1021b59ad2",
+        "contentId": "49474ae1a1bf6e2319589b62975dba70da462a3d4ca6bd94994d0f3a56bc6722",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "5cfea1fa40293bc8306021aad69eac2b98732b54ae419c62add83f569fef4747"
+        },
+        "clean": true,
+        "sourceAbsent": true
+      }
+    }
+  ],
+  "tools": {
+    "node": "v24.21.0",
+    "pnpm": "12.11.2",
+    "@types/node": "24.19.1",
+    "knip": "6.41.0",
+    "oxc-parser": "0.153.0",
+    "typescript": "7.0.2",
+    "vite-plus": "1.1.0",
+    "vitest": "5.0.3",
+    "yaml": "2.9.1",
+    "zod": "4.6.5",
+    "@lantern-lab/contracts": "0.1.0",
+    "@lantern-lab/observability": "0.1.0",
+    "@lantern-lab/ui": "0.1.0",
+    "@tauri-apps/api": "2.12.2",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "@tailwindcss/vite": "4.3.3",
+    "@tauri-apps/cli": "2.12.1",
+    "@testing-library/react": "16.3.3",
+    "@testing-library/user-event": "14.6.7",
+    "@types/mocha": "10.0.10",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.2",
+    "@wdio/cli": "9.32.0",
+    "@wdio/globals": "9.31.3",
+    "@wdio/json-reporter": "9.32.0",
+    "@wdio/local-runner": "9.32.0",
+    "@wdio/mocha-framework": "9.32.0",
+    "@wdio/spec-reporter": "9.32.0",
+    "@wdio/tauri-plugin": "1.5.0",
+    "@wdio/tauri-service": "1.5.0",
+    "@wdio/types": "9.32.0",
+    "jsdom": "30.1.2",
+    "tailwindcss": "4.3.3",
+    "webdriverio": "9.32.0",
+    "@opentelemetry/api": "1.9.1",
+    "@opentelemetry/resources": "2.12.0",
+    "@opentelemetry/sdk-trace-base": "2.12.0"
+  },
+  "rustToolchain": "1.99.0, activated and validated by normal env:setup/env:doctor on each actual native runner",
+  "feature": {
+    "description": "Three narrowly permitted read/increment/reset Rust commands with mutex-protected u32 state, checked overflow and generated public error policy; typed validated renderer adapter and small Counter UI preserve last confirmed value and support recovery. Notes CRUD/export and its native error/cancel coverage remain.",
+    "authoredPaths": [
+      "tools/errors/catalog.json",
+      "packages/contracts/src/index.ts",
+      "packages/observability/src/index.ts",
+      "packages/desktop/src/native.ts",
+      "packages/desktop/src/counter.tsx",
+      "packages/desktop/src/main.tsx",
+      "packages/desktop/src-tauri/src/main.rs",
+      "packages/desktop/src-tauri/src/telemetry.rs",
+      "packages/desktop/src-tauri/build.rs",
+      "packages/desktop/src-tauri/capabilities/default.json",
+      "packages/desktop/package.json",
+      "packages/desktop/test/unit.test.ts",
+      "packages/desktop/test/counter-ui.test.ts",
+      "packages/desktop/test/native.e2e.ts",
+      "docs/counter.md"
+    ],
+    "actualDelta": [
+      ".template.json",
+      "docs/counter.md",
+      "docs/errors.generated.md",
+      "packages/contracts/src/errors.generated.ts",
+      "packages/contracts/src/index.ts",
+      "packages/desktop/package.json",
+      "packages/desktop/src-tauri/build.rs",
+      "packages/desktop/src-tauri/capabilities/default.json",
+      "packages/desktop/src-tauri/src/errors_generated.rs",
+      "packages/desktop/src-tauri/src/main.rs",
+      "packages/desktop/src-tauri/src/telemetry.rs",
+      "packages/desktop/src/counter.tsx",
+      "packages/desktop/src/main.tsx",
+      "packages/desktop/src/native.ts",
+      "packages/desktop/test/counter-ui.test.ts",
+      "packages/desktop/test/native.e2e.ts",
+      "packages/desktop/test/unit.test.ts",
+      "packages/observability/src/index.ts",
+      "pnpm-lock.yaml",
+      "tools/errors/catalog.json"
+    ],
+    "authoredPathsCount": 15,
+    "actualDeltaCount": 20,
+    "addedFiles": 3,
+    "regressionCases": {
+      "desktopUnit": 6,
+      "rust": 6,
+      "tools": 212,
+      "contracts": 8,
+      "observability": 7,
+      "ui": 3,
+      "nativeEachActualOS": {
+        "save": 2,
+        "cancel": 2,
+        "error": 2
+      },
+      "nativeCounter": "UI increment and reset, real Rust read, renderer reload retaining17, and16 concurrent increments producing exactly2..17."
+    }
+  },
+  "git": {
+    "featureHead": "105a27df985d71f797a1f313f9528c1021b59ad2",
+    "featureTree": "36c1323284353dfdbef7e5a2280689a70d37fdc8",
+    "featureCID": "49474ae1a1bf6e2319589b62975dba70da462a3d4ca6bd94994d0f3a56bc6722",
+    "baseline": "5879403a1bd52f1cc694be1263227184b36c0a61",
+    "tracked": 268,
+    "validObjects": 353,
+    "pristineHead": "aa6e2c48b9d16b7d3bd7bfb3b29dcd8c4fd5e1bb",
+    "pristineTree": "3c175931b61bec9c8ae551959f319a9d28686c0d",
+    "pristineObjects": 310,
+    "pristineTracked": 264,
+    "delta": [
+      ".template.json",
+      "docs/counter.md",
+      "docs/errors.generated.md",
+      "packages/contracts/src/errors.generated.ts",
+      "packages/contracts/src/index.ts",
+      "packages/desktop/package.json",
+      "packages/desktop/src-tauri/build.rs",
+      "packages/desktop/src-tauri/capabilities/default.json",
+      "packages/desktop/src-tauri/src/errors_generated.rs",
+      "packages/desktop/src-tauri/src/main.rs",
+      "packages/desktop/src-tauri/src/telemetry.rs",
+      "packages/desktop/src/counter.tsx",
+      "packages/desktop/src/main.tsx",
+      "packages/desktop/src/native.ts",
+      "packages/desktop/test/counter-ui.test.ts",
+      "packages/desktop/test/native.e2e.ts",
+      "packages/desktop/test/unit.test.ts",
+      "packages/observability/src/index.ts",
+      "pnpm-lock.yaml",
+      "tools/errors/catalog.json"
+    ],
+    "barePush": {
+      "remote": "/home/runner/work/super-starter/super-starter/desktop-counter-lantern-owned-review.git",
+      "ref": "refs/heads/feature/counter",
+      "head": "105a27df985d71f797a1f313f9528c1021b59ad2",
+      "normalHook": true
+    },
+    "proof": "Actual generated-project normal nonempty Git commit and local owned bare Git push executed through installed repository hooks. GitHub API commits are only mechanical evidence transport; they are not these feature or push operations."
+  },
+  "standardPhases": [
+    {
+      "id": "cold-setup",
+      "command": "pnpm",
+      "args": [
+        "env:setup"
+      ],
+      "status": "passed",
+      "milliseconds": 4642,
+      "phaseExitCode": 0,
+      "rawChildExitCode": 0,
+      "rawChildSignal": null
+    },
+    {
+      "id": "cold-doctor",
+      "command": "pnpm",
+      "args": [
+        "env:doctor"
+      ],
+      "status": "passed",
+      "milliseconds": 143,
+      "phaseExitCode": 0,
+      "rawChildExitCode": 0,
+      "rawChildSignal": null
+    },
+    {
+      "id": "setup-stage",
+      "command": "git",
+      "args": [
+        "add",
+        "."
+      ],
+      "status": "passed",
+      "milliseconds": 26,
+      "phaseExitCode": 0,
+      "rawChildExitCode": 0,
+      "rawChildSignal": null
+    },
+    {
+      "id": "bootstrap-prepared-commit",
+      "command": "git",
+      "args": [
+        "commit",
+        "-m",
+        "chore: prepare generated Desktop toolchain"
+      ],
+      "status": "passed",
+      "milliseconds": 1112,
+      "phaseExitCode": 0,
+      "rawChildExitCode": 0,
+      "rawChildSignal": null
+    },
+    {
+      "id": "normal-dependency-install",
+      "command": "pnpm",
+      "args": [
+        "install",
+        "--no-frozen-lockfile"
+      ],
+      "status": "passed",
+      "milliseconds": 342,
+      "phaseExitCode": 0,
+      "rawChildExitCode": 0,
+      "rawChildSignal": null
+    },
+    {
+      "id": "feature-dependency-setup",
+      "command": "pnpm",
+      "args": [
+        "env:setup"
+      ],
+      "status": "passed",
+      "milliseconds": 1175,
+      "phaseExitCode": 0,
+      "rawChildExitCode": 0,
+      "rawChildSignal": null
+    },
+    {
+      "id": "error-codegen",
+      "command": "pnpm",
+      "args": [
+        "errors:generate"
+      ],
+      "status": "passed",
+      "milliseconds": 581,
+      "phaseExitCode": 0,
+      "rawChildExitCode": 0,
+      "rawChildSignal": null
+    },
+    {
+      "id": "format-authored",
+      "command": "pnpm",
+      "args": [
+        "format"
+      ],
+      "status": "passed",
+      "milliseconds": 404,
+      "phaseExitCode": 0,
+      "rawChildExitCode": 0,
+      "rawChildSignal": null
+    },
+    {
+      "id": "format-native",
+      "command": "cargo",
+      "args": [
+        "fmt"
+      ],
+      "status": "passed",
+      "milliseconds": 61,
+      "phaseExitCode": 0,
+      "rawChildExitCode": 0,
+      "rawChildSignal": null
+    },
+    {
+      "id": "targeted-unit-before-commit",
+      "command": "pnpm",
+      "args": [
+        "--filter",
+        "@lantern-lab/desktop",
+        "test"
+      ],
+      "status": "passed",
+      "milliseconds": 1493,
+      "phaseExitCode": 0,
+      "rawChildExitCode": 0,
+      "rawChildSignal": null
+    },
+    {
+      "id": "check-before-commit",
+      "command": "pnpm",
+      "args": [
+        "check"
+      ],
+      "status": "passed",
+      "milliseconds": 3620,
+      "phaseExitCode": 0,
+      "rawChildExitCode": 0,
+      "rawChildSignal": null
+    },
+    {
+      "id": "feature-stage",
+      "command": "git",
+      "args": [
+        "add",
+        "tools/errors/catalog.json",
+        "packages/contracts/src/index.ts",
+        "packages/observability/src/index.ts",
+        "packages/desktop/src/native.ts",
+        "packages/desktop/src/counter.tsx",
+        "packages/desktop/src/main.tsx",
+        "packages/desktop/src-tauri/src/main.rs",
+        "packages/desktop/src-tauri/src/telemetry.rs",
+        "packages/desktop/src-tauri/build.rs",
+        "packages/desktop/src-tauri/capabilities/default.json",
+        "packages/desktop/package.json",
+        "packages/desktop/test/unit.test.ts",
+        "packages/desktop/test/counter-ui.test.ts",
+        "packages/desktop/test/native.e2e.ts",
+        "docs/counter.md",
+        "packages/contracts/src/errors.generated.ts",
+        "packages/desktop/src-tauri/src/errors_generated.rs",
+        "docs/errors.generated.md",
+        "pnpm-lock.yaml",
+        ".template.json"
+      ],
+      "status": "passed",
+      "milliseconds": 17,
+      "phaseExitCode": 0,
+      "rawChildExitCode": 0,
+      "rawChildSignal": null
+    },
+    {
+      "id": "feature-commit",
+      "command": "git",
+      "args": [
+        "commit",
+        "-m",
+        "feat: add native Desktop counter with regression coverage"
+      ],
+      "status": "passed",
+      "milliseconds": 1027,
+      "phaseExitCode": 0,
+      "rawChildExitCode": 0,
+      "rawChildSignal": null
+    },
+    {
+      "id": "standard-setup",
+      "command": "pnpm",
+      "args": [
+        "env:setup"
+      ],
+      "status": "passed",
+      "milliseconds": 1345,
+      "phaseExitCode": 0,
+      "rawChildExitCode": 0,
+      "rawChildSignal": null
+    },
+    {
+      "id": "standard-doctor",
+      "command": "pnpm",
+      "args": [
+        "env:doctor"
+      ],
+      "status": "passed",
+      "milliseconds": 272,
+      "phaseExitCode": 0,
+      "rawChildExitCode": 0,
+      "rawChildSignal": null
+    },
+    {
+      "id": "standard-dev",
+      "command": "pnpm",
+      "args": [
+        "dev",
+        "--",
+        "desktop"
+      ],
+      "status": "passed",
+      "milliseconds": 92846,
+      "phaseExitCode": 0,
+      "rawChildExitCode": null,
+      "rawChildSignal": "SIGTERM"
+    },
+    {
+      "id": "standard-check",
+      "command": "pnpm",
+      "args": [
+        "check"
+      ],
+      "status": "passed",
+      "milliseconds": 3321,
+      "phaseExitCode": 0,
+      "rawChildExitCode": 0,
+      "rawChildSignal": null
+    },
+    {
+      "id": "standard-test",
+      "command": "pnpm",
+      "args": [
+        "test"
+      ],
+      "status": "passed",
+      "milliseconds": 46902,
+      "phaseExitCode": 0,
+      "rawChildExitCode": 0,
+      "rawChildSignal": null
+    },
+    {
+      "id": "standard-pre-pr",
+      "command": "pnpm",
+      "args": [
+        "gate:pre-pr",
+        "--",
+        "--base",
+        "5879403a1bd52f1cc694be1263227184b36c0a61"
+      ],
+      "status": "passed",
+      "milliseconds": 525684,
+      "phaseExitCode": 0,
+      "rawChildExitCode": 0,
+      "rawChildSignal": null
+    },
+    {
+      "id": "standard-full",
+      "command": "pnpm",
+      "args": [
+        "gate:full"
+      ],
+      "status": "passed",
+      "milliseconds": 158282,
+      "phaseExitCode": 0,
+      "rawChildExitCode": 0,
+      "rawChildSignal": null
+    },
+    {
+      "id": "standard-ci",
+      "command": "pnpm",
+      "args": [
+        "gate:ci",
+        "--",
+        "--base",
+        "5879403a1bd52f1cc694be1263227184b36c0a61"
+      ],
+      "status": "passed",
+      "milliseconds": 157692,
+      "phaseExitCode": 0,
+      "rawChildExitCode": 0,
+      "rawChildSignal": null
+    },
+    {
+      "id": "standard-build",
+      "command": "pnpm",
+      "args": [
+        "build"
+      ],
+      "status": "passed",
+      "milliseconds": 30333,
+      "phaseExitCode": 0,
+      "rawChildExitCode": 0,
+      "rawChildSignal": null
+    },
+    {
+      "id": "standard-preflight",
+      "command": "pnpm",
+      "args": [
+        "deploy:preflight",
+        "--",
+        "--target",
+        "desktop",
+        "--environment",
+        "local"
+      ],
+      "status": "passed",
+      "milliseconds": 249,
+      "phaseExitCode": 0,
+      "rawChildExitCode": 0,
+      "rawChildSignal": null
+    },
+    {
+      "id": "owned-bare-init",
+      "command": "git",
+      "args": [
+        "init",
+        "--bare",
+        "--template=",
+        "/home/runner/work/super-starter/super-starter/desktop-counter-lantern-owned-review.git"
+      ],
+      "status": "passed",
+      "milliseconds": 151,
+      "phaseExitCode": 0,
+      "rawChildExitCode": 0,
+      "rawChildSignal": null
+    },
+    {
+      "id": "owned-bare-origin",
+      "command": "git",
+      "args": [
+        "remote",
+        "add",
+        "review",
+        "/home/runner/work/super-starter/super-starter/desktop-counter-lantern-owned-review.git"
+      ],
+      "status": "passed",
+      "milliseconds": 155,
+      "phaseExitCode": 0,
+      "rawChildExitCode": 0,
+      "rawChildSignal": null
+    },
+    {
+      "id": "genuine-feature-bare-push",
+      "command": "git",
+      "args": [
+        "push",
+        "review",
+        "HEAD:refs/heads/feature/counter"
+      ],
+      "status": "passed",
+      "milliseconds": 45726,
+      "phaseExitCode": 0,
+      "rawChildExitCode": 0,
+      "rawChildSignal": null
+    },
+    {
+      "id": "bundle-actual-feature",
+      "command": "git",
+      "args": [
+        "bundle",
+        "create",
+        "/home/runner/work/super-starter/super-starter/lantern-feature-transport/feature.bundle",
+        "--all"
+      ],
+      "status": "passed",
+      "milliseconds": 162,
+      "phaseExitCode": 0,
+      "rawChildExitCode": 0,
+      "rawChildSignal": null
+    }
+  ],
+  "standardGates": [
+    {
+      "path": "artifacts/gate-build-all-linux.json",
+      "status": "passed",
+      "os": "linux/x64",
+      "checks": 4,
+      "allPassed": true
+    },
+    {
+      "path": "artifacts/gate-ci-all-linux.json",
+      "status": "passed",
+      "os": "linux/x64",
+      "checks": 13,
+      "allPassed": true
+    },
+    {
+      "path": "artifacts/gate-full-all-linux.json",
+      "status": "passed",
+      "os": "linux/x64",
+      "checks": 13,
+      "allPassed": true
+    },
+    {
+      "path": "artifacts/gate-pre-pr-all-linux.json",
+      "status": "passed",
+      "os": "linux/x64",
+      "checks": 13,
+      "allPassed": true
+    },
+    {
+      "path": "artifacts/gate-test-all-linux.json",
+      "status": "passed",
+      "os": "linux/x64",
+      "checks": 6,
+      "allPassed": true
+    }
+  ],
+  "native": [
+    {
+      "os": "Linux",
+      "actualOS": "linux/x64",
+      "checks": [
+        {
+          "id": "@lantern-lab/desktop/rust",
+          "status": "passed",
+          "command": [
+            "--filter",
+            "@lantern-lab/desktop",
+            "test:rust"
+          ],
+          "milliseconds": 142882
+        },
+        {
+          "id": "@lantern-lab/desktop/native",
+          "status": "passed",
+          "command": [
+            "--filter",
+            "@lantern-lab/desktop",
+            "test:native"
+          ],
+          "milliseconds": 226522
+        },
+        {
+          "id": "@lantern-lab/desktop/release",
+          "status": "passed",
+          "command": [
+            "--filter",
+            "@lantern-lab/desktop",
+            "test:release"
+          ],
+          "milliseconds": 160873
+        }
+      ],
+      "counts": [
+        "test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "Executed 6 Rust cases",
+        "Executed 2 real native cases (save)",
+        "Executed 2 real native cases (cancel)",
+        "Executed 2 real native cases (error)",
+        "Release native startup passed on linux; WebDriver disabled",
+        "3/3 checks passed; content 49474ae1a1bf"
+      ],
+      "phaseDurations": [
+        {
+          "id": "native-setup",
+          "milliseconds": 12761
+        },
+        {
+          "id": "native-doctor",
+          "milliseconds": 159
+        },
+        {
+          "id": "native-ci",
+          "milliseconds": 530469
+        }
+      ],
+      "scenarios": [
+        {
+          "scenario": "save",
+          "cases": 2,
+          "state": {
+            "passed": 2,
+            "failed": 0,
+            "skipped": 0
+          },
+          "browser": "WebKitGTK",
+          "browserVersion": "605.1.15",
+          "platform": "linux",
+          "tests": [
+            {
+              "name": "keeps the counter in real Rust state across renderer reload and concurrent IPC",
+              "state": "passed",
+              "duration": 495
+            },
+            {
+              "name": "renders offline UI and validates real CRUD/export permissions",
+              "state": "passed",
+              "duration": 400
+            }
+          ]
+        },
+        {
+          "scenario": "cancel",
+          "cases": 2,
+          "state": {
+            "passed": 2,
+            "failed": 0,
+            "skipped": 0
+          },
+          "browser": "WebKitGTK",
+          "browserVersion": "605.1.15",
+          "platform": "linux",
+          "tests": [
+            {
+              "name": "keeps the counter in real Rust state across renderer reload and concurrent IPC",
+              "state": "passed",
+              "duration": 422
+            },
+            {
+              "name": "renders offline UI and validates real CRUD/export permissions",
+              "state": "passed",
+              "duration": 359
+            }
+          ]
+        },
+        {
+          "scenario": "error",
+          "cases": 2,
+          "state": {
+            "passed": 2,
+            "failed": 0,
+            "skipped": 0
+          },
+          "browser": "WebKitGTK",
+          "browserVersion": "605.1.15",
+          "platform": "linux",
+          "tests": [
+            {
+              "name": "keeps the counter in real Rust state across renderer reload and concurrent IPC",
+              "state": "passed",
+              "duration": 439
+            },
+            {
+              "name": "renders offline UI and validates real CRUD/export permissions",
+              "state": "passed",
+              "duration": 367
+            }
+          ]
+        }
+      ],
+      "release": {
+        "nativeReady": true,
+        "startupPassed": true,
+        "driverDisabled": true
+      },
+      "evidence": {
+        "bytes": 841909,
+        "sha256": "cd93ac71ab5a97521c239884eb53a542573d02608e79b21c920f3b1d3873482d",
+        "parts": 2,
+        "files": 21
+      }
+    },
+    {
+      "os": "macOS",
+      "actualOS": "darwin/arm64",
+      "checks": [
+        {
+          "id": "@lantern-lab/desktop/rust",
+          "status": "passed",
+          "command": [
+            "--filter",
+            "@lantern-lab/desktop",
+            "test:rust"
+          ],
+          "milliseconds": 154911
+        },
+        {
+          "id": "@lantern-lab/desktop/native",
+          "status": "passed",
+          "command": [
+            "--filter",
+            "@lantern-lab/desktop",
+            "test:native"
+          ],
+          "milliseconds": 264537
+        },
+        {
+          "id": "@lantern-lab/desktop/release",
+          "status": "passed",
+          "command": [
+            "--filter",
+            "@lantern-lab/desktop",
+            "test:release"
+          ],
+          "milliseconds": 181088
+        }
+      ],
+      "counts": [
+        "test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "Executed 6 Rust cases",
+        "Executed 2 real native cases (save)",
+        "Executed 2 real native cases (cancel)",
+        "Executed 2 real native cases (error)",
+        "Release native startup passed on darwin; WebDriver disabled",
+        "3/3 checks passed; content 49474ae1a1bf"
+      ],
+      "phaseDurations": [
+        {
+          "id": "native-setup",
+          "milliseconds": 21379
+        },
+        {
+          "id": "native-doctor",
+          "milliseconds": 186
+        },
+        {
+          "id": "native-ci",
+          "milliseconds": 600883
+        }
+      ],
+      "scenarios": [
+        {
+          "scenario": "save",
+          "cases": 2,
+          "state": {
+            "passed": 2,
+            "failed": 0,
+            "skipped": 0
+          },
+          "browser": "webkit",
+          "browserVersion": "605.1.15",
+          "platform": "macos",
+          "tests": [
+            {
+              "name": "keeps the counter in real Rust state across renderer reload and concurrent IPC",
+              "state": "passed",
+              "duration": 540
+            },
+            {
+              "name": "renders offline UI and validates real CRUD/export permissions",
+              "state": "passed",
+              "duration": 418
+            }
+          ]
+        },
+        {
+          "scenario": "cancel",
+          "cases": 2,
+          "state": {
+            "passed": 2,
+            "failed": 0,
+            "skipped": 0
+          },
+          "browser": "webkit",
+          "browserVersion": "605.1.15",
+          "platform": "macos",
+          "tests": [
+            {
+              "name": "keeps the counter in real Rust state across renderer reload and concurrent IPC",
+              "state": "passed",
+              "duration": 507
+            },
+            {
+              "name": "renders offline UI and validates real CRUD/export permissions",
+              "state": "passed",
+              "duration": 369
+            }
+          ]
+        },
+        {
+          "scenario": "error",
+          "cases": 2,
+          "state": {
+            "passed": 2,
+            "failed": 0,
+            "skipped": 0
+          },
+          "browser": "webkit",
+          "browserVersion": "605.1.15",
+          "platform": "macos",
+          "tests": [
+            {
+              "name": "keeps the counter in real Rust state across renderer reload and concurrent IPC",
+              "state": "passed",
+              "duration": 438
+            },
+            {
+              "name": "renders offline UI and validates real CRUD/export permissions",
+              "state": "passed",
+              "duration": 373
+            }
+          ]
+        }
+      ],
+      "release": {
+        "nativeReady": true,
+        "startupPassed": true,
+        "driverDisabled": true
+      },
+      "evidence": {
+        "bytes": 823619,
+        "sha256": "438f1d712df5f7f204728971d5669a8d0236e37f23a7b073e2f529bfa2d98b87",
+        "parts": 2,
+        "files": 21
+      }
+    },
+    {
+      "os": "Windows",
+      "actualOS": "win32/x64",
+      "checks": [
+        {
+          "id": "@lantern-lab/desktop/rust",
+          "status": "passed",
+          "command": [
+            "--filter",
+            "@lantern-lab/desktop",
+            "test:rust"
+          ],
+          "milliseconds": 238173
+        },
+        {
+          "id": "@lantern-lab/desktop/native",
+          "status": "passed",
+          "command": [
+            "--filter",
+            "@lantern-lab/desktop",
+            "test:native"
+          ],
+          "milliseconds": 369396
+        },
+        {
+          "id": "@lantern-lab/desktop/release",
+          "status": "passed",
+          "command": [
+            "--filter",
+            "@lantern-lab/desktop",
+            "test:release"
+          ],
+          "milliseconds": 262293
+        }
+      ],
+      "counts": [
+        "test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "Executed 6 Rust cases",
+        "Executed 2 real native cases (save)",
+        "Executed 2 real native cases (cancel)",
+        "Executed 2 real native cases (error)",
+        "Release native startup passed on win32; WebDriver disabled",
+        "3/3 checks passed; content 49474ae1a1bf"
+      ],
+      "phaseDurations": [
+        {
+          "id": "native-setup",
+          "milliseconds": 24844
+        },
+        {
+          "id": "native-doctor",
+          "milliseconds": 1384
+        },
+        {
+          "id": "native-ci",
+          "milliseconds": 870946
+        }
+      ],
+      "scenarios": [
+        {
+          "scenario": "save",
+          "cases": 2,
+          "state": {
+            "passed": 2,
+            "failed": 0,
+            "skipped": 0
+          },
+          "browser": "msedge",
+          "browserVersion": "153.0.0.0",
+          "platform": "windows",
+          "tests": [
+            {
+              "name": "keeps the counter in real Rust state across renderer reload and concurrent IPC",
+              "state": "passed",
+              "duration": 554
+            },
+            {
+              "name": "renders offline UI and validates real CRUD/export permissions",
+              "state": "passed",
+              "duration": 471
+            }
+          ]
+        },
+        {
+          "scenario": "cancel",
+          "cases": 2,
+          "state": {
+            "passed": 2,
+            "failed": 0,
+            "skipped": 0
+          },
+          "browser": "msedge",
+          "browserVersion": "153.0.0.0",
+          "platform": "windows",
+          "tests": [
+            {
+              "name": "keeps the counter in real Rust state across renderer reload and concurrent IPC",
+              "state": "passed",
+              "duration": 532
+            },
+            {
+              "name": "renders offline UI and validates real CRUD/export permissions",
+              "state": "passed",
+              "duration": 452
+            }
+          ]
+        },
+        {
+          "scenario": "error",
+          "cases": 2,
+          "state": {
+            "passed": 2,
+            "failed": 0,
+            "skipped": 0
+          },
+          "browser": "msedge",
+          "browserVersion": "153.0.0.0",
+          "platform": "windows",
+          "tests": [
+            {
+              "name": "keeps the counter in real Rust state across renderer reload and concurrent IPC",
+              "state": "passed",
+              "duration": 538
+            },
+            {
+              "name": "renders offline UI and validates real CRUD/export permissions",
+              "state": "passed",
+              "duration": 456
+            }
+          ]
+        }
+      ],
+      "release": {
+        "nativeReady": true,
+        "startupPassed": true,
+        "driverDisabled": true
+      },
+      "evidence": {
+        "bytes": 824008,
+        "sha256": "e41280c81248afb559acf2623ca6ca8e39101c2b51f5ee117754810acb56ef47",
+        "parts": 2,
+        "files": 21
+      }
+    }
+  ],
+  "evidence": {
+    "workflowRun": 38299006278,
+    "mechanicalWorkflowHead": "b28579ea5ac2ed7c4e7c7895ed56a551a788883d",
+    "url": "https://github.com/sugar-cat7/super-starter/actions/runs/38299006278",
+    "actorJob": 114977039939,
+    "actorArchive": {
+      "parts": 27,
+      "bytes": 13877687,
+      "sha256": "25f7133fcbf048105a1826f04d3b98f50529839b887fa77a7d0d9ef901cb9f6f",
+      "files": 54
+    },
+    "actorEvidenceJobs": [
+      {
+        "name": "actor-evidence (0)",
+        "id": 114984373397,
+        "conclusion": "success"
+      },
+      {
+        "name": "actor-evidence (2)",
+        "id": 114984373407,
+        "conclusion": "success"
+      },
+      {
+        "name": "actor-evidence (4)",
+        "id": 114984373409,
+        "conclusion": "success"
+      },
+      {
+        "name": "actor-evidence (9)",
+        "id": 114984373422,
+        "conclusion": "success"
+      },
+      {
+        "name": "actor-evidence (7)",
+        "id": 114984373439,
+        "conclusion": "success"
+      },
+      {
+        "name": "actor-evidence (5)",
+        "id": 114984373459,
+        "conclusion": "success"
+      },
+      {
+        "name": "actor-evidence (8)",
+        "id": 114984373472,
+        "conclusion": "success"
+      },
+      {
+        "name": "actor-evidence (18)",
+        "id": 114984373484,
+        "conclusion": "success"
+      },
+      {
+        "name": "actor-evidence (6)",
+        "id": 114984373486,
+        "conclusion": "success"
+      },
+      {
+        "name": "actor-evidence (12)",
+        "id": 114984373512,
+        "conclusion": "success"
+      },
+      {
+        "name": "actor-evidence (10)",
+        "id": 114984373522,
+        "conclusion": "success"
+      },
+      {
+        "name": "actor-evidence (16)",
+        "id": 114984373534,
+        "conclusion": "success"
+      },
+      {
+        "name": "actor-evidence (3)",
+        "id": 114984373560,
+        "conclusion": "success"
+      },
+      {
+        "name": "actor-evidence (26)",
+        "id": 114984373564,
+        "conclusion": "success"
+      },
+      {
+        "name": "actor-evidence (20)",
+        "id": 114984373568,
+        "conclusion": "success"
+      },
+      {
+        "name": "actor-evidence (21)",
+        "id": 114984373573,
+        "conclusion": "success"
+      },
+      {
+        "name": "actor-evidence (1)",
+        "id": 114984373577,
+        "conclusion": "success"
+      },
+      {
+        "name": "actor-evidence (14)",
+        "id": 114984373592,
+        "conclusion": "success"
+      },
+      {
+        "name": "actor-evidence (25)",
+        "id": 114984373604,
+        "conclusion": "success"
+      },
+      {
+        "name": "actor-evidence (17)",
+        "id": 114984373606,
+        "conclusion": "success"
+      },
+      {
+        "name": "actor-evidence (15)",
+        "id": 114984373618,
+        "conclusion": "success"
+      },
+      {
+        "name": "actor-evidence (13)",
+        "id": 114984373621,
+        "conclusion": "success"
+      },
+      {
+        "name": "actor-evidence (22)",
+        "id": 114984373629,
+        "conclusion": "success"
+      },
+      {
+        "name": "actor-evidence (24)",
+        "id": 114984373671,
+        "conclusion": "success"
+      },
+      {
+        "name": "actor-evidence (11)",
+        "id": 114984373676,
+        "conclusion": "success"
+      },
+      {
+        "name": "actor-evidence (23)",
+        "id": 114984373701,
+        "conclusion": "success"
+      },
+      {
+        "name": "actor-evidence (19)",
+        "id": 114984373737,
+        "conclusion": "success"
+      }
+    ],
+    "nativeJobs": [
+      {
+        "name": "native (ubuntu-24.04)",
+        "id": 114984372953,
+        "conclusion": "success"
+      },
+      {
+        "name": "native (windows-2025)",
+        "id": 114984373044,
+        "conclusion": "success"
+      },
+      {
+        "name": "native (macos-15)",
+        "id": 114984373204,
+        "conclusion": "success"
+      },
+      {
+        "name": "native-evidence-plan",
+        "id": 114989894007,
+        "conclusion": "success"
+      },
+      {
+        "name": "native-evidence (macOS, 1)",
+        "id": 114989940260,
+        "conclusion": "success"
+      },
+      {
+        "name": "native-evidence (Linux, 1)",
+        "id": 114989940274,
+        "conclusion": "success"
+      },
+      {
+        "name": "native-evidence (Linux, 0)",
+        "id": 114989940275,
+        "conclusion": "success"
+      },
+      {
+        "name": "native-evidence (Windows, 1)",
+        "id": 114989940355,
+        "conclusion": "success"
+      },
+      {
+        "name": "native-evidence (Windows, 0)",
+        "id": 114989940441,
+        "conclusion": "success"
+      },
+      {
+        "name": "native-evidence (macOS, 0)",
+        "id": 114989940451,
+        "conclusion": "success"
+      }
+    ],
+    "validation": "Every ordinary-log base64 chunk was contiguous; every raw part, complete archive, and all117 contained files matched their SHA256. All310 pristine and353 final Git object SHA1s and raw tree/tracked blob inventories were independently validated. All263 managed regular-file hashes and insertion-order generation-origin fingerprint matched. The canonical feature content ID was recomputed from raw tracked bytes. Native result files and raw SDK logs showed each required test and release check passing on each actual OS with zero skipped/ignored cases.",
+    "preflight": "Normal Desktop local preflight exited0 with status not_required and deployed:false."
+  },
+  "historicalEvidence": {
+    "sourceSha": "460ad19c970adaab7231795f3438943d9158b135",
+    "positiveRun": 38287439461,
+    "receiptTransport": "9e62e981eb445e4d743360b72b61a92f069b7bb9",
+    "negativeRuns": [
+      38284157898,
+      38285160916,
+      38285963258
+    ],
+    "classification": "Preserved unchanged and separate; none is acceptance for this Source653 execution."
+  },
+  "finalClean": true
+}

@@ -1,0 +1,42 @@
+$ node tools/dev-environment/doctor.ts
+{
+  "os": "linux",
+  "scope": "all",
+  "checks": [
+    {
+      "id": "node",
+      "ok": true,
+      "detail": "Node 24.21.0; required 24.21.0 (mise install)"
+    },
+    {
+      "id": "pnpm",
+      "ok": true,
+      "detail": "pnpm 12.11.2 required (mise install aqua:pnpm/pnpm@12.11.2); mise pin 12.11.2"
+    },
+    {
+      "id": "vite-plus",
+      "ok": true,
+      "detail": "Project-local Vite+ required (pnpm install --frozen-lockfile)"
+    },
+    {
+      "id": "initialized",
+      "ok": true,
+      "detail": "Template state required (README cold start)"
+    },
+    {
+      "id": "@lantern-lab/desktop/rust",
+      "ok": true,
+      "detail": "Rust 1.99.0 required; see docs/native.md for OS prerequisites"
+    },
+    {
+      "id": "@lantern-lab/desktop/native-libraries",
+      "ok": true,
+      "detail": "GTK3/WebKitGTK4.1 required; install listed OS libraries through your existing environment provisioning"
+    },
+    {
+      "id": "hooks",
+      "ok": true,
+      "detail": "Repository hooks required (pnpm env:setup); existing hook conflicts require explicit migration"
+    }
+  ]
+}

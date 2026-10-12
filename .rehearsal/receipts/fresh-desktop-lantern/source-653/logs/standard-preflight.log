@@ -1,0 +1,7 @@
+$ node tools/cloudflare/deploy.ts preflight -- --target desktop --environment local
+{
+  "target": "@lantern-lab/desktop",
+  "status": "not_required",
+  "reason": "Selected package has no Cloudflare runtime. Native builds and public distribution are separate; see docs/native.md.",
+  "deployed": false
+}

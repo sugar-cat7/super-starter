@@ -1,0 +1,2598 @@
+$ node tools/quality/gate.ts full
+CHECK static: Repository-wide static checks are lightweight and run once
+$ node tools/quality/check.ts
+pass: All 170 files are correctly formatted (279ms, 4 threads)
+pass: Found no warnings, lint errors, or type errors in 116 files (1.2s, 4 threads)
+Static quality, runtime boundaries and documentation passed
+CHECK tools-unit: Shared tooling contracts
+$ node tools/quality/vitest.ts
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/home/runner/work/super-starter/super-starter/desktop-counter-lantern[39m
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2mkeeps added web shared UI owned when syncing an API reference
+[22m[39m{
+  "root": "/tmp/reference-shared-sync-cKwg0E",
+  "writes": 33,
+  "remove": [],
+  "dryRun": false
+}
+
+[90mstdout[2m | tools/generators/format.test.ts[2m > [22m[2mcold app addition[2m > [22m[2mfinalizes a cold add with absent SDK and preserves user edits
+[22m[39m{
+  "root": "/tmp/starter-cold-add-O8PtTF",
+  "writes": 14,
+  "remove": [],
+  "dryRun": false
+}
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2mkeeps added web shared UI owned when syncing an API reference
+[22m[39m{
+  "root": "/tmp/reference-shared-sync-cKwg0E",
+  "writes": 26,
+  "remove": [],
+  "dryRun": false
+}
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2mkeeps added web shared UI owned when syncing an API reference
+[22m[39mReference matches canonical blueprints
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2mkeeps added desktop shared UI owned when syncing an API reference
+[22m[39m{
+  "root": "/tmp/reference-shared-sync-B4LbnY",
+  "writes": 29,
+  "remove": [],
+  "dryRun": false
+}
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2mkeeps added desktop shared UI owned when syncing an API reference
+[22m[39m{
+  "root": "/tmp/reference-shared-sync-B4LbnY",
+  "writes": 18,
+  "remove": [],
+  "dryRun": false
+}
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2mkeeps added desktop shared UI owned when syncing an API reference
+[22m[39mReference matches canonical blueprints
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2mregenerates an added reference service and protects edits without changing the original app
+[22m[39m{
+  "root": "/tmp/reference-service-sync-7bf4d4",
+  "writes": 14,
+  "remove": [],
+  "dryRun": false
+}
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2mregenerates an added reference service and protects edits without changing the original app
+[22m[39m{
+  "root": "/tmp/reference-service-sync-7bf4d4",
+  "writes": 11,
+  "remove": [],
+  "dryRun": false
+}
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2mregenerates an added reference service and protects edits without changing the original app
+[22m[39mReference matches canonical blueprints
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2msyncs the reference lock baseline after dependency updates without rewriting the lock
+[22m[39m{
+  "root": "/tmp/reference-lock-sync-IOnXQ0",
+  "writes": 1,
+  "remove": [],
+  "dryRun": false
+}
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2msyncs the reference lock baseline after dependency updates without rewriting the lock
+[22m[39mReference matches canonical blueprints
+
+ [32m✓[39m tools/generators/baseline.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 13349[2mms[22m[39m
+   [33m[2m✓[22m[39m keeps added web shared UI owned when syncing an API reference[33m 5353[2mms[22m[39m
+   [33m[2m✓[22m[39m keeps added desktop shared UI owned when syncing an API reference[33m 2383[2mms[22m[39m
+   [33m[2m✓[22m[39m regenerates an added reference service and protects edits without changing the original app[33m 2936[2mms[22m[39m
+   [33m[2m✓[22m[39m syncs the reference lock baseline after dependency updates without rewriting the lock[33m 1882[2mms[22m[39m
+   [33m[2m✓[22m[39m renders identical frozen Cargo locks and binding-free config from LF and CRLF blueprints[33m 724[2mms[22m[39m
+[90mstdout[2m | tools/generators/format.test.ts[2m > [22m[2mcold app addition[2m > [22m[2mfinalizes a cold add with partial SDK and preserves user edits
+[22m[39m{
+  "root": "/tmp/starter-cold-add-84oZfH",
+  "writes": 14,
+  "remove": [],
+  "dryRun": false
+}
+
+ [32m✓[39m tools/quality/acceptance.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 5698[2mms[22m[39m
+   [33m[2m✓[22m[39m selects a complete canonical baseline after an earlier passed feature report[33m 3486[2mms[22m[39m
+   [33m[2m✓[22m[39m requires exact-source actual Windows Worker commands and rejects other OS or incomplete reports[33m 2119[2mms[22m[39m
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+ [32m✓[39m tools/quality/rehearsal-boundary.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 5073[2mms[22m[39m
+   [33m[2m✓[22m[39m isolates hooks before setup inside an ignored committed parent[33m 4447[2mms[22m[39m
+   [33m[2m✓[22m[39m isolates faults before setup inside an ignored committed parent[33m 315[2mms[22m[39m
+   [33m[2m✓[22m[39m isolates lifecycle before setup inside an ignored committed parent[33m 311[2mms[22m[39m
+[startup-fixture] $ node server.cjs
+[startup-fixture] http://127.0.0.1:35383
+[90mstdout[2m | tools/dev-environment/servers.test.ts[2m > [22m[2mcancels a pending start before spawn and permits an explicit real-server restart
+[22m[39mREADY startup-fixture http://127.0.0.1:35383 136ms; registry /tmp/starter-cancel-ApMe6e/.state/registry/session-YfN11v
+
+[startup-fixture] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+[startup-fixture] 
+  × "pnpm recursive run" failed in /tmp/starter-cancel-ApMe6e
+
+[startup-fixture] $ node server.cjs
+[startup-fixture] http://127.0.0.1:33015
+[90mstdout[2m | tools/dev-environment/servers.test.ts[2m > [22m[2mcancels a pending start before spawn and permits an explicit real-server restart
+[22m[39mREADY startup-fixture http://127.0.0.1:33015 106ms; registry /tmp/starter-cancel-ApMe6e/.state/registry/session-Fe9SJq
+
+[startup-fixture] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in /tmp/starter-cancel-ApMe6e
+
+[lifecycle-exit-fixture] $ node server.cjs
+[lifecycle-exit-fixture] http://127.0.0.1:45615
+[90mstdout[2m | tools/dev-environment/servers.test.ts[2m > [22m[2mkeeps stopped lifecycle exits out of an immediate restart and reports unexpected termination
+[22m[39mREADY lifecycle-exit-fixture http://127.0.0.1:45615 107ms; registry /tmp/starter-lifecycle-exit-GBexqI/.state/registry/session-MwRk5u
+
+[lifecycle-exit-fixture] $ node server.cjs
+[lifecycle-exit-fixture] http://127.0.0.1:42627
+[90mstdout[2m | tools/dev-environment/servers.test.ts[2m > [22m[2mkeeps stopped lifecycle exits out of an immediate restart and reports unexpected termination
+[22m[39mREADY lifecycle-exit-fixture http://127.0.0.1:42627 106ms; registry /tmp/starter-lifecycle-exit-GBexqI/.state/registry/session-wYPSBu
+
+[lifecycle-exit-fixture] $ node server.cjs
+[lifecycle-exit-fixture] http://127.0.0.1:35151
+[90mstdout[2m | tools/dev-environment/servers.test.ts[2m > [22m[2mkeeps stopped lifecycle exits out of an immediate restart and reports unexpected termination
+[22m[39mREADY lifecycle-exit-fixture http://127.0.0.1:35151 106ms; registry /tmp/starter-lifecycle-exit-GBexqI/.state/registry/session-G57Urj
+
+[lifecycle-exit-fixture] $ node server.cjs
+[lifecycle-exit-fixture] http://127.0.0.1:44049
+[90mstdout[2m | tools/dev-environment/servers.test.ts[2m > [22m[2mkeeps stopped lifecycle exits out of an immediate restart and reports unexpected termination
+[22m[39mREADY lifecycle-exit-fixture http://127.0.0.1:44049 104ms; registry /tmp/starter-lifecycle-exit-GBexqI/.state/registry/session-PA0BoX
+
+[lifecycle-exit-fixture] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL[lifecycle-exit-fixture] 
+
+  × "pnpm recursive run" failed in /tmp/starter-lifecycle-exit-GBexqI
+
+[colored-url-fixture] $ node server.cjs
+[colored-url-fixture] Local: [36mhttp://127.0.0.1:[[colored-url-fixture] 1m36937[22m/[39m
+[90mstdout[2m | tools/dev-environment/servers.test.ts[2m > [22m[2mprobes an owned server whose logged URL contains split terminal color sequences
+[22m[39mREADY colored-url-fixture http://127.0.0.1:36937 105ms; registry /tmp/starter-colored-url-hWwdEX/.state/registry/session-wWrxqN
+
+[colored-url-fixture] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+[colored-url-fixture]   × "pnpm recursive run" failed in /tmp/starter-colored-url-hWwdEX
+
+[health-body-fixture] $ node server.cjs
+[health-body-fixture] http://127.0.0.1:46813
+[90mstdout[2m | tools/dev-environment/servers.test.ts[2m > [22m[2mwaits for the health body and retries a probe whose body exceeds its deadline
+[22m[39mREADY health-body-fixture http://127.0.0.1:46813 1453ms; registry /tmp/starter-health-body-tWBboe/.state/registry/session-EZxXeF
+
+[health-body-fixture] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+[health-body-fixture]   × "pnpm recursive run" failed in /tmp/starter-health-body-tWBboe
+
+ [32m✓[39m tools/dev-environment/servers.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 2664[2mms[22m[39m
+   [33m[2m✓[22m[39m cancels a pending start before spawn and permits an explicit real-server restart[33m 369[2mms[22m[39m
+   [33m[2m✓[22m[39m keeps stopped lifecycle exits out of an immediate restart and reports unexpected termination[33m 472[2mms[22m[39m
+   [33m[2m✓[22m[39m waits for the health body and retries a probe whose body exceeds its deadline[33m 1660[2mms[22m[39m
+ [32m✓[39m tools/process.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 2209[2mms[22m[39m
+   [33m[2m✓[22m[39m forwards Worker build interruption to its detached non-cooperating child[33m 1190[2mms[22m[39m
+   [33m[2m✓[22m[39m cleans an orphaned descendant while preserving an unrelated server[33m 450[2mms[22m[39m
+ [32m✓[39m tools/quality/ci-plan.test.ts [2m([22m[2m17 tests[22m[2m)[22m[33m 1295[2mms[22m[39m
+   [32m✓[39m minimal CI execution with an actual committed diff [2m(16)[22m
+     [33m[2m✓[22m[39m selects real signal verification at application producer and Result boundaries[33m 569[2mms[22m[39m
+ [32m✓[39m tools/security/execute.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 557[2mms[22m[39m
+   [33m[2m✓[22m[39m fails a hung real scanner process and rejects executable startup errors[33m 509[2mms[22m[39m
+ [32m✓[39m tools/generators/verify-cli.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 461[2mms[22m[39m
+   [33m[2m✓[22m[39m rejects ambiguous, unknown and duplicate case selection before writing a generated destination[33m 460[2mms[22m[39m
+ [32m✓[39m tools/generators/files.test.ts [2m([22m[2m23 tests[22m[2m)[22m[32m 266[2mms[22m[39m
+ [32m✓[39m tools/o11y/verify.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 256[2mms[22m[39m
+ [32m✓[39m tools/quality/hooks-cleanup.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 240[2mms[22m[39m
+ [32m✓[39m tools/dev-environment/doctor-cli.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 226[2mms[22m[39m
+ [32m✓[39m tools/o11y/identity.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 143[2mms[22m[39m
+ [32m✓[39m tools/cloudflare/database.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 124[2mms[22m[39m
+ [32m✓[39m tools/quality/evidence.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 104[2mms[22m[39m
+ [32m✓[39m tools/cloudflare/transport-diagnostics.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 64[2mms[22m[39m
+[90mstdout[2m | tools/quality/hooks-install.test.ts[2m > [22m[2mprotects parent Git metadata during foreign hook installation and linked cleanup
+[22m[39mRepository-local Git hooks installed
+
+ [32m✓[39m tools/quality/hooks-install.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 71[2mms[22m[39m
+ [32m✓[39m tools/generators/format.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 34956[2mms[22m[39m
+   [32m✓[39m cold app addition [2m(2)[22m
+     [33m[2m✓[22m[39m finalizes a cold add with absent SDK and preserves user edits[33m 11796[2mms[22m[39m
+     [33m[2m✓[22m[39m finalizes a cold add with partial SDK and preserves user edits[33m 11481[2mms[22m[39m
+   [33m[2m✓[22m[39m matches the owning SDK CLI for mixed scripts, ignored build output and JSON[33m 1439[2mms[22m[39m
+   [33m[2m✓[22m[39m retains CLI semantics with custom formatter option[33m 637[2mms[22m[39m
+   [33m[2m✓[22m[39m retains CLI semantics with editorconfig[33m 679[2mms[22m[39m
+   [33m[2m✓[22m[39m invalidates cached formatting across roots and after a side configuration change[33m 1653[2mms[22m[39m
+   [33m[2m✓[22m[39m matches CLI stdin behavior for a gitignored source file and CLI runtime metadata[33m 418[2mms[22m[39m
+   [33m[2m✓[22m[39m reports malformed formatting before naturally draining a tracked SDK child[33m 3301[2mms[22m[39m
+[90mstdout[2m | tools/quality/fixture.test.ts[2m > [22m[2misolates retained verification output from parent ignore rules and hook configuration
+[22m[39mRepository-local Git hooks installed
+Repository-local Git hooks installed
+
+ [32m✓[39m tools/quality/fixture.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 69[2mms[22m[39m
+[90mstdout[2m | tools/quality/checkout.test.ts[2m > [22m[2mrejects preparation edits and first-party untracked files against the requested commit
+[22m[39mVerified immutable checkout d813051046add20a5645c31d856329ebf0252ded
+
+ [32m✓[39m tools/quality/checkout.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 72[2mms[22m[39m
+ [32m✓[39m tools/quality/failure-handling.test.ts [2m([22m[2m14 tests[22m[2m)[22m[32m 36[2mms[22m[39m
+ [32m✓[39m tools/quality/documentation.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 24[2mms[22m[39m
+ [32m✓[39m tools/process.windows.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 24[2mms[22m[39m
+ [32m✓[39m tools/quality/structure.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 22[2mms[22m[39m
+ [32m✓[39m tools/errors/generate.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 21[2mms[22m[39m
+ [32m✓[39m tools/dev-environment/doctor.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m tools/security/policy.test.ts [2m([22m[2m25 tests[22m[2m)[22m[32m 17[2mms[22m[39m
+ [32m✓[39m tools/o11y/native-evidence.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m tools/process-darwin.test.ts [2m([22m[2m14 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m tools/generators/options.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m tools/quality/lighthouse.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m tools/quality/graph.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m tools/o11y/policy.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m tools/cloudflare/preview.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m tools/quality/test-results.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 4[2mms[22m[39m
+ [32m✓[39m tools/quality/sanitize.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m tools/cloudflare/deployment.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 4[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m37 passed[39m[22m[90m (37)[39m
+[2m      Tests [22m [1m[32m212 passed[39m[22m[90m (212)[39m
+[2m   Start at [22m 19:52:22
+[2m   Duration [22m 36.64s[2m (tests 98%, import 1%, transform 1%)[22m
+
+JSON report written to /home/runner/work/super-starter/super-starter/desktop-counter-lantern/artifacts/tests-default.json
+Executed 212 required test cases
+CHECK @lantern-lab/contracts/unit: Selected library @lantern-lab/contracts; full phase
+$ node ../../tools/quality/vitest.ts
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/home/runner/work/super-starter/super-starter/desktop-counter-lantern/packages/contracts[39m
+
+ [32m✓[39m src/index.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m src/result.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[32m8 passed[39m[22m[90m (8)[39m
+[2m   Start at [22m 19:52:59
+[2m   Duration [22m 217ms[2m (import 50%, transform 36%, tests 11%, worker 3%)[22m
+
+JSON report written to /home/runner/work/super-starter/super-starter/desktop-counter-lantern/packages/contracts/artifacts/tests-default.json
+Executed 8 required test cases
+CHECK @lantern-lab/contracts/build: Selected library @lantern-lab/contracts; full phase
+$ vp pack
+ℹ entry: src/index.ts
+ℹ tsconfig: tsconfig.json
+ℹ Build start
+ℹ Cleaning 2 files
+warn: TypeScript 7.0 does not yet have a stable API and is experimental. Some options will be unavailable.
+ℹ Emit types with typescript@7.0.2
+ℹ dist/index.mjs    5.49 kB │ gzip: 1.81 kB
+ℹ dist/index.d.mts  6.29 kB │ gzip: 1.54 kB
+ℹ 2 files, total: 11.77 kB
+✔ Build complete in 189ms
+CHECK @lantern-lab/desktop/unit: Selected desktop @lantern-lab/desktop; full phase
+$ node ../../tools/quality/vitest.ts --config vitest.config.ts
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/home/runner/work/super-starter/super-starter/desktop-counter-lantern/packages/desktop[39m
+
+ [32m✓[39m test/unit.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m test/counter-ui.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 245[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[32m6 passed[39m[22m[90m (6)[39m
+[2m   Start at [22m 19:53:00
+[2m   Duration [22m 992ms[2m (environment 43%, tests 23%, import 22%, transform 11%, worker 1%)[22m
+
+JSON report written to /home/runner/work/super-starter/super-starter/desktop-counter-lantern/packages/desktop/artifacts/tests-vitest.config.ts.json
+Executed 6 required test cases
+CHECK @lantern-lab/desktop/build: Selected desktop @lantern-lab/desktop; full phase
+$ node ../../tools/quality/native.ts build
+        Info Looking up installed tauri packages to check mismatched versions...
+     Running beforeBuildCommand `pnpm build:renderer`
+$ vp build
+transforming...
+✓ 246 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.40 kB │ gzip:  0.27 kB
+dist/assets/index-BDXUfO3f.css    6.91 kB │ gzip:  2.27 kB
+dist/assets/index-ClP82EFs.js   289.56 kB │ gzip: 90.95 kB
+
+[32m✓ built in 193ms[39m
+   Compiling desktop-counter-lantern-desktop v0.1.0 (/home/runner/work/super-starter/super-starter/desktop-counter-lantern/packages/desktop/src-tauri)
+    Finished `release` profile [optimized] target(s) in 27.69s
+       Built application at: /home/runner/work/super-starter/super-starter/desktop-counter-lantern/.state/desktop/target-release/release/desktop-counter-lantern-desktop
+CHECK @lantern-lab/desktop/rust: Selected desktop @lantern-lab/desktop; full phase
+$ node ../../tools/quality/native.ts rust
+    Checking desktop-counter-lantern-desktop v0.1.0 (/home/runner/work/super-starter/super-starter/desktop-counter-lantern/packages/desktop/src-tauri)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.73s
+   Compiling desktop-counter-lantern-desktop v0.1.0 (/home/runner/work/super-starter/super-starter/desktop-counter-lantern/packages/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.27s
+     Running unittests src/main.rs (/home/runner/work/super-starter/super-starter/desktop-counter-lantern/.state/desktop/target-release/debug/deps/desktop_counter_lantern_desktop-9f0e8176620dd9a2)
+
+running 6 tests
+test telemetry::tests::refuses_invalid_parent_and_reports_the_file_boundary ... ok
+test tests::counter_is_native_state_and_reset_recovers_from_its_limit ... ok
+test tests::saves_json_and_reports_an_unwritable_destination ... ok
+test telemetry::tests::propagates_native_parent_and_keeps_raw_failure_out_of_wire ... ok
+test tests::validates_text_and_serializes_portable_contract ... ok
+test tests::concurrent_counter_increments_do_not_lose_updates ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+Executed 6 Rust cases
+CHECK @lantern-lab/desktop/native: Selected desktop @lantern-lab/desktop; full phase
+$ node ../../tools/quality/native.ts e2e
+        Info Looking up installed tauri packages to check mismatched versions...
+     Running beforeBuildCommand `pnpm build:renderer --mode e2e`
+$ vp build --mode e2e
+transforming...
+✓ 250 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                           0.49 kB │ gzip:  0.30 kB
+dist/assets/index-BDXUfO3f.css            6.91 kB │ gzip:  2.27 kB
+dist/assets/core-B_7XDIRk.js              0.05 kB │ gzip:  0.07 kB
+dist/assets/core-B3IRXRGI.js              0.20 kB │ gzip:  0.16 kB
+dist/assets/event-C5LDQCVX.js             1.04 kB │ gzip:  0.54 kB
+dist/assets/preload-helper-DjzSQ1t3.js    1.38 kB │ gzip:  0.75 kB
+dist/assets/dist-js-Dj0aRydg.js          16.35 kB │ gzip:  4.55 kB
+dist/assets/index-RdQtWucI.js           289.81 kB │ gzip: 91.13 kB
+
+[32m✓ built in 207ms[39m
+   Compiling desktop-counter-lantern-desktop v0.1.0 (/home/runner/work/super-starter/super-starter/desktop-counter-lantern/packages/desktop/src-tauri)
+    Finished `release` profile [optimized] target(s) in 35.60s
+       Built application at: /home/runner/work/super-starter/super-starter/desktop-counter-lantern/.state/desktop/target-e2e/release/desktop-counter-lantern-desktop
+2026-10-12T19:54:10.854Z INFO @wdio/cli:launcher: Run onPrepare hook
+2026-10-12T19:54:10.855Z INFO tauri-service:launcher: Using embedded WebDriver provider (tauri-plugin-wdio-webdriver) - no external driver needed
+2026-10-12T19:54:10.856Z INFO tauri-service:launcher: Embedded provider mode - spawning Tauri app with embedded WebDriver server
+2026-10-12T19:54:10.860Z INFO tauri-service:launcher: Tauri app spawned (PID: 62732)
+2026-10-12T19:54:11.377Z INFO tauri-service:launcher: WebDriver server ready on port 35595
+
+Execution of 1 workers started at 2026-10-12T19:54:12.383Z
+
+2026-10-12T19:54:12.385Z INFO @wdio/cli:launcher: Run onWorkerStart hook
+2026-10-12T19:54:12.387Z INFO @wdio/xvfb: XvfbManager.init() called
+2026-10-12T19:54:12.387Z INFO @wdio/xvfb: Xvfb not needed on current platform
+2026-10-12T19:54:12.388Z INFO @wdio/local-runner: Start worker 0-0 with arg: run wdio.conf.ts
+2026-10-12T19:54:12.392Z INFO @wdio/xvfb:ProcessFactory: xvfb-run found in PATH
+2026-10-12T19:54:12.392Z INFO @wdio/xvfb:ProcessFactory: ProcessFactory: shouldRun=false, isAvailable=true
+2026-10-12T19:54:12.392Z INFO @wdio/xvfb:ProcessFactory: Creating worker process with regular fork
+[0-0] 2026-10-12T19:54:13.041Z INFO @wdio/local-runner: Run worker command: run
+[0-0] RUNNING in undefined - file:///test/native.e2e.ts
+[0-0] 2026-10-12T19:54:13.270Z INFO webdriver: Initiate new session using the WebDriver protocol
+[0-0] 2026-10-12T19:54:13.270Z INFO @wdio/utils: Connecting to existing driver at http://127.0.0.1:35595/
+[0-0] 2026-10-12T19:54:13.271Z INFO webdriver: [POST] http://127.0.0.1:35595/session
+[0-0] 2026-10-12T19:54:13.291Z INFO webdriver: COMMAND getWindowHandle()
+[0-0] 2026-10-12T19:54:13.292Z INFO webdriver: [GET] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/window
+[0-0] 2026-10-12T19:54:13.294Z INFO webdriver: RESULT main
+[0-0] 2026-10-12T19:54:13.295Z INFO tauri-service:service: before() start — mode=binary provider=embedded multiremote=undefined instances=n/a
+[0-0] 2026-10-12T19:54:13.295Z INFO tauri-service:service: Initializing standard browser
+[0-0] 2026-10-12T19:54:13.296Z INFO webdriver: COMMAND getWindowHandles()
+[0-0] 2026-10-12T19:54:13.296Z INFO webdriver: [GET] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/window/handles
+[0-0] 2026-10-12T19:54:13.298Z INFO webdriver: RESULT [ 'main' ]
+[0-0] 2026-10-12T19:54:13.299Z INFO tauri-service:service: Standard browser window available
+[0-0] 2026-10-12T19:54:13.299Z INFO tauri-service:service: Waiting for Tauri plugin initialization...
+[0-0] 2026-10-12T19:54:13.299Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:13.300Z INFO webdriver: [POST] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/execute/sync
+[0-0] 2026-10-12T19:54:13.300Z INFO webdriver: DATA { script: 'checkPluginInit(...) [875 bytes]', args: [] }
+[0-0] 2026-10-12T19:54:13.304Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:13.304Z INFO tauri-service:service: Tauri plugin initialization complete
+[0-0] 2026-10-12T19:54:13.304Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:13.305Z INFO webdriver: [POST] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/execute/sync
+[0-0] 2026-10-12T19:54:13.305Z INFO webdriver: DATA { script: 'clearStaleMocks(...) [698 bytes]', args: [] }
+[0-0] 2026-10-12T19:54:13.308Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:13.308Z INFO tauri-service:service: before() complete
+[0-0] 2026-10-12T19:54:13.321Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:13.321Z INFO webdriver: [POST] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/execute/sync
+[0-0] 2026-10-12T19:54:13.322Z INFO webdriver: DATA {
+[0-0]   script: '\n' +
+[0-0]     '            function webdriverioPolyfill() {\n' +
+[0-0]     '  var __defProp = Object.defineProperty;\n' +
+[0-0]     '  var __name = function(target, _value) {\n' +
+[0-0]     '    return __defProp(target, "name", { value: _value, configurable: true });\n' +
+[0-0]     '  };\n' +
+[0-0]     '  var __globalThis = typeof globalThis === "object" && globalThis || typeof window === "object" && window;\n' +
+[0-0]     '  __globalThis.__name = __name;\n' +
+[0-0]     '}\n' +
+[0-0]     '            webdriverioPolyfill();\n' +
+[0-0]     '            return (value=>{document.documentElement.dataset.nativeReload=value}).apply(null, arguments)\n' +
+[0-0]     '        ',
+[0-0]   args: [ '034e8ea4-4ccb-4c04-b6c3-3296c332c4a8' ]
+[0-0] }
+[0-0] 2026-10-12T19:54:13.325Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:13.325Z INFO webdriver: COMMAND refresh()
+[0-0] 2026-10-12T19:54:13.325Z INFO webdriver: [POST] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/refresh
+[0-0] 2026-10-12T19:54:13.327Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:13.428Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:13.429Z INFO webdriver: [POST] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/execute/sync
+[0-0] 2026-10-12T19:54:13.429Z INFO webdriver: DATA {
+[0-0]   script: '\n' +
+[0-0]     '            function webdriverioPolyfill() {\n' +
+[0-0]     '  var __defProp = Object.defineProperty;\n' +
+[0-0]     '  var __name = function(target, _value) {\n' +
+[0-0]     '    return __defProp(target, "name", { value: _value, configurable: true });\n' +
+[0-0]     '  };\n' +
+[0-0]     '  var __globalThis = typeof globalThis === "object" && globalThis || typeof window === "object" && window;\n' +
+[0-0]     '  __globalThis.__name = __name;\n' +
+[0-0]     '}\n' +
+[0-0]     '            webdriverioPolyfill();\n' +
+[0-0]     '            return (value=>document.documentElement.dataset.nativeReload!==value&&document.readyState==="complete"&&typeof window.wdioTauri?.waitForInit==="function"&&typeof window.__wdio_original_core__?.invoke==="function").apply(null, arguments)\n' +
+[0-0]     '        ',
+[0-0]   args: [ '034e8ea4-4ccb-4c04-b6c3-3296c332c4a8' ]
+[0-0] }
+[0-0] 2026-10-12T19:54:13.433Z INFO webdriver: RESULT true
+[0-0] 2026-10-12T19:54:13.433Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:13.433Z INFO webdriver: [POST] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/execute/sync
+[0-0] 2026-10-12T19:54:13.434Z INFO webdriver: DATA {
+[0-0]   script: '\n' +
+[0-0]     '            function webdriverioPolyfill() {\n' +
+[0-0]     '  var __defProp = Object.defineProperty;\n' +
+[0-0]     '  var __name = function(target, _value) {\n' +
+[0-0]     '    return __defProp(target, "name", { value: _value, configurable: true });\n' +
+[0-0]     '  };\n' +
+[0-0]     '  var __globalThis = typeof globalThis === "object" && globalThis || typeof window === "object" && window;\n' +
+[0-0]     '  __globalThis.__name = __name;\n' +
+[0-0]     '}\n' +
+[0-0]     '            webdriverioPolyfill();\n' +
+[0-0]     '            return (async()=>{await window.wdioTauri?.waitForInit()}).apply(null, arguments)\n' +
+[0-0]     '        ',
+[0-0]   args: []
+[0-0] }
+[0-0] 2026-10-12T19:54:13.436Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:13.442Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:13.442Z INFO webdriver: [GET] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/title
+[0-0] 2026-10-12T19:54:13.444Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:13.448Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:13.448Z INFO webdriver: [GET] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/title
+[0-0] 2026-10-12T19:54:13.452Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:13.452Z INFO webdriver: COMMAND findElement("css selector", "output[aria-label="Counter value"]")
+[0-0] 2026-10-12T19:54:13.452Z INFO webdriver: [POST] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/element
+[0-0] 2026-10-12T19:54:13.452Z INFO webdriver: DATA { using: 'css selector', value: 'output[aria-label="Counter value"]' }
+[0-0] 2026-10-12T19:54:13.454Z INFO webdriver: RESULT {
+[0-0]   'element-6066-11e4-a52e-4f735466cecf': '42d53089-c37e-4980-983e-b85e5bdad2e3'
+[0-0] }
+[0-0] 2026-10-12T19:54:13.462Z INFO webdriver: COMMAND getElementText("42d53089-c37e-4980-983e-b85e5bdad2e3")
+[0-0] 2026-10-12T19:54:13.463Z INFO webdriver: [GET] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/element/42d53089-c37e-4980-983e-b85e5bdad2e3/text
+[0-0] 2026-10-12T19:54:13.464Z INFO webdriver: RESULT 0
+[0-0] 2026-10-12T19:54:13.469Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:13.469Z INFO webdriver: [GET] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/title
+[0-0] 2026-10-12T19:54:13.471Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:13.475Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:13.475Z INFO webdriver: [GET] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/title
+[0-0] 2026-10-12T19:54:13.476Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:13.476Z INFO webdriver: COMMAND findElement("xpath", ".//button[normalize-space(text()) = "Increment counter"] | .//button[not(.//button[normalize-space(text()) = "Increment counter"]) and normalize-space() = "Increment counter"]")
+[0-0] 2026-10-12T19:54:13.476Z INFO webdriver: [POST] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/element
+[0-0] 2026-10-12T19:54:13.476Z INFO webdriver: DATA {
+[0-0]   using: 'xpath',
+[0-0]   value: './/button[normalize-space(text()) = "Increment counter"] | .//button[not(.//button[normalize-space(text()) = "Increment counter"]) and normalize-space() = "Increment counter"]'
+[0-0] }
+[0-0] 2026-10-12T19:54:13.478Z INFO webdriver: RESULT {
+[0-0]   'element-6066-11e4-a52e-4f735466cecf': '1a404e2e-e353-4e64-b54d-21de4d7ce029'
+[0-0] }
+[0-0] 2026-10-12T19:54:13.483Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:13.483Z INFO webdriver: [GET] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/title
+[0-0] 2026-10-12T19:54:13.486Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:13.489Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:13.489Z INFO webdriver: [GET] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/title
+[0-0] 2026-10-12T19:54:13.490Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:13.492Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:13.492Z INFO webdriver: [GET] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/title
+[0-0] 2026-10-12T19:54:13.493Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:13.494Z INFO webdriver: COMMAND elementClick("1a404e2e-e353-4e64-b54d-21de4d7ce029")
+[0-0] 2026-10-12T19:54:13.494Z INFO webdriver: [POST] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/element/1a404e2e-e353-4e64-b54d-21de4d7ce029/click
+[0-0] 2026-10-12T19:54:13.498Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:13.501Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:13.501Z INFO webdriver: [GET] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/title
+[0-0] 2026-10-12T19:54:13.502Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:13.505Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:13.505Z INFO webdriver: [GET] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/title
+[0-0] 2026-10-12T19:54:13.506Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:13.507Z INFO webdriver: COMMAND findElement("css selector", "output[aria-label="Counter value"]")
+[0-0] 2026-10-12T19:54:13.507Z INFO webdriver: [POST] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/element
+[0-0] 2026-10-12T19:54:13.507Z INFO webdriver: DATA { using: 'css selector', value: 'output[aria-label="Counter value"]' }
+[0-0] 2026-10-12T19:54:13.508Z INFO webdriver: RESULT {
+[0-0]   'element-6066-11e4-a52e-4f735466cecf': 'fadd4040-ccb7-4a1d-be0d-938ad56ad0a2'
+[0-0] }
+[0-0] 2026-10-12T19:54:13.510Z INFO webdriver: COMMAND getElementText("fadd4040-ccb7-4a1d-be0d-938ad56ad0a2")
+[0-0] 2026-10-12T19:54:13.510Z INFO webdriver: [GET] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/element/fadd4040-ccb7-4a1d-be0d-938ad56ad0a2/text
+[0-0] 2026-10-12T19:54:13.512Z INFO webdriver: RESULT 1
+[0-0] 2026-10-12T19:54:13.527Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:13.527Z INFO webdriver: [POST] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/execute/sync
+[0-0] 2026-10-12T19:54:13.527Z INFO webdriver: DATA {
+[0-0]   script: '\n' +
+[0-0]     '            function webdriverioPolyfill() {\n' +
+[0-0]     '  var __defProp = Object.defineProperty;\n' +
+[0-0]     '  var __name = function(target, _value) {\n' +
+[0-0]     '    return __defProp(target, "name", { value: _value, configurable: true });\n' +
+[0-0]     '  };\n' +
+[0-0]     '  var __globalThis = typeof globalThis === "object" && globalThis || typeof window === "object" && window;\n' +
+[0-0]     '  __globalThis.__name = __name;\n' +
+[0-0]     '}\n' +
+[0-0]     '            webdriverioPolyfill();\n' +
+[0-0]     '            return (value=>{document.documentElement.dataset.nativeReload=value}).apply(null, arguments)\n' +
+[0-0]     '        ',
+[0-0]   args: [ '094a2445-3c02-4f14-a4b6-73ac7aad0621' ]
+[0-0] }
+[0-0] 2026-10-12T19:54:13.529Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:13.529Z INFO webdriver: COMMAND refresh()
+[0-0] 2026-10-12T19:54:13.529Z INFO webdriver: [POST] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/refresh
+[0-0] 2026-10-12T19:54:13.532Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:13.632Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:13.633Z INFO webdriver: [POST] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/execute/sync
+[0-0] 2026-10-12T19:54:13.633Z INFO webdriver: DATA {
+[0-0]   script: '\n' +
+[0-0]     '            function webdriverioPolyfill() {\n' +
+[0-0]     '  var __defProp = Object.defineProperty;\n' +
+[0-0]     '  var __name = function(target, _value) {\n' +
+[0-0]     '    return __defProp(target, "name", { value: _value, configurable: true });\n' +
+[0-0]     '  };\n' +
+[0-0]     '  var __globalThis = typeof globalThis === "object" && globalThis || typeof window === "object" && window;\n' +
+[0-0]     '  __globalThis.__name = __name;\n' +
+[0-0]     '}\n' +
+[0-0]     '            webdriverioPolyfill();\n' +
+[0-0]     '            return (value=>document.documentElement.dataset.nativeReload!==value&&document.readyState==="complete"&&typeof window.wdioTauri?.waitForInit==="function"&&typeof window.__wdio_original_core__?.invoke==="function").apply(null, arguments)\n' +
+[0-0]     '        ',
+[0-0]   args: [ '094a2445-3c02-4f14-a4b6-73ac7aad0621' ]
+[0-0] }
+[0-0] 2026-10-12T19:54:13.639Z INFO webdriver: RESULT true
+[0-0] 2026-10-12T19:54:13.639Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:13.639Z INFO webdriver: [POST] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/execute/sync
+[0-0] 2026-10-12T19:54:13.639Z INFO webdriver: DATA {
+[0-0]   script: '\n' +
+[0-0]     '            function webdriverioPolyfill() {\n' +
+[0-0]     '  var __defProp = Object.defineProperty;\n' +
+[0-0]     '  var __name = function(target, _value) {\n' +
+[0-0]     '    return __defProp(target, "name", { value: _value, configurable: true });\n' +
+[0-0]     '  };\n' +
+[0-0]     '  var __globalThis = typeof globalThis === "object" && globalThis || typeof window === "object" && window;\n' +
+[0-0]     '  __globalThis.__name = __name;\n' +
+[0-0]     '}\n' +
+[0-0]     '            webdriverioPolyfill();\n' +
+[0-0]     '            return (async()=>{await window.wdioTauri?.waitForInit()}).apply(null, arguments)\n' +
+[0-0]     '        ',
+[0-0]   args: []
+[0-0] }
+[0-0] 2026-10-12T19:54:13.642Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:13.645Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:13.645Z INFO webdriver: [GET] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/title
+[0-0] 2026-10-12T19:54:13.647Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:13.649Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:13.649Z INFO webdriver: [GET] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/title
+[0-0] 2026-10-12T19:54:13.650Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:13.650Z INFO webdriver: COMMAND findElement("css selector", "output[aria-label="Counter value"]")
+[0-0] 2026-10-12T19:54:13.650Z INFO webdriver: [POST] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/element
+[0-0] 2026-10-12T19:54:13.650Z INFO webdriver: DATA { using: 'css selector', value: 'output[aria-label="Counter value"]' }
+[0-0] 2026-10-12T19:54:13.652Z INFO webdriver: RESULT {
+[0-0]   'element-6066-11e4-a52e-4f735466cecf': '38d90065-01ed-4cad-8f51-b782e25d68b3'
+[0-0] }
+[0-0] 2026-10-12T19:54:13.653Z INFO webdriver: COMMAND getElementText("38d90065-01ed-4cad-8f51-b782e25d68b3")
+[0-0] 2026-10-12T19:54:13.653Z INFO webdriver: [GET] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/element/38d90065-01ed-4cad-8f51-b782e25d68b3/text
+[0-0] 2026-10-12T19:54:13.654Z INFO webdriver: RESULT 17
+[0-0] 2026-10-12T19:54:13.657Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:13.657Z INFO webdriver: [GET] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/title
+[0-0] 2026-10-12T19:54:13.658Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:13.660Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:13.660Z INFO webdriver: [GET] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/title
+[0-0] 2026-10-12T19:54:13.661Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:13.661Z INFO webdriver: COMMAND findElement("xpath", ".//button[normalize-space(text()) = "Reset counter"] | .//button[not(.//button[normalize-space(text()) = "Reset counter"]) and normalize-space() = "Reset counter"]")
+[0-0] 2026-10-12T19:54:13.661Z INFO webdriver: [POST] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/element
+[0-0] 2026-10-12T19:54:13.661Z INFO webdriver: DATA {
+[0-0]   using: 'xpath',
+[0-0]   value: './/button[normalize-space(text()) = "Reset counter"] | .//button[not(.//button[normalize-space(text()) = "Reset counter"]) and normalize-space() = "Reset counter"]'
+[0-0] }
+[0-0] 2026-10-12T19:54:13.663Z INFO webdriver: RESULT {
+[0-0]   'element-6066-11e4-a52e-4f735466cecf': '11a84bd8-038d-447b-ad11-8811504266f5'
+[0-0] }
+[0-0] 2026-10-12T19:54:13.666Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:13.666Z INFO webdriver: [GET] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/title
+[0-0] 2026-10-12T19:54:13.667Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:13.670Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:13.670Z INFO webdriver: [GET] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/title
+[0-0] 2026-10-12T19:54:13.671Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:13.673Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:13.673Z INFO webdriver: [GET] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/title
+[0-0] 2026-10-12T19:54:13.674Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:13.674Z INFO webdriver: COMMAND elementClick("11a84bd8-038d-447b-ad11-8811504266f5")
+[0-0] 2026-10-12T19:54:13.674Z INFO webdriver: [POST] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/element/11a84bd8-038d-447b-ad11-8811504266f5/click
+[0-0] 2026-10-12T19:54:13.677Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:13.680Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:13.680Z INFO webdriver: [GET] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/title
+[0-0] 2026-10-12T19:54:13.681Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:13.684Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:13.684Z INFO webdriver: [GET] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/title
+[0-0] 2026-10-12T19:54:13.685Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:13.685Z INFO webdriver: COMMAND findElement("css selector", "output[aria-label="Counter value"]")
+[0-0] 2026-10-12T19:54:13.685Z INFO webdriver: [POST] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/element
+[0-0] 2026-10-12T19:54:13.685Z INFO webdriver: DATA { using: 'css selector', value: 'output[aria-label="Counter value"]' }
+[0-0] 2026-10-12T19:54:13.686Z INFO webdriver: RESULT {
+[0-0]   'element-6066-11e4-a52e-4f735466cecf': '7fcc63f4-702b-4566-b3d6-acd5fdd0bb63'
+[0-0] }
+[0-0] 2026-10-12T19:54:13.688Z INFO webdriver: COMMAND getElementText("7fcc63f4-702b-4566-b3d6-acd5fdd0bb63")
+[0-0] 2026-10-12T19:54:13.688Z INFO webdriver: [GET] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/element/7fcc63f4-702b-4566-b3d6-acd5fdd0bb63/text
+[0-0] 2026-10-12T19:54:13.689Z INFO webdriver: RESULT 0
+[0-0] 2026-10-12T19:54:13.698Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:13.698Z INFO webdriver: [GET] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/title
+[0-0] 2026-10-12T19:54:13.699Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:13.701Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:13.701Z INFO webdriver: [GET] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/title
+[0-0] 2026-10-12T19:54:13.702Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:13.702Z INFO webdriver: COMMAND findElement("css selector", "h1")
+[0-0] 2026-10-12T19:54:13.702Z INFO webdriver: [POST] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/element
+[0-0] 2026-10-12T19:54:13.702Z INFO webdriver: DATA { using: 'css selector', value: 'h1' }
+[0-0] 2026-10-12T19:54:13.704Z INFO webdriver: RESULT {
+[0-0]   'element-6066-11e4-a52e-4f735466cecf': 'b02e8e74-d320-404f-b04c-333d7bf47691'
+[0-0] }
+[0-0] 2026-10-12T19:54:13.705Z INFO webdriver: COMMAND getElementText("b02e8e74-d320-404f-b04c-333d7bf47691")
+[0-0] 2026-10-12T19:54:13.705Z INFO webdriver: [GET] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/element/b02e8e74-d320-404f-b04c-333d7bf47691/text
+[0-0] 2026-10-12T19:54:13.707Z INFO webdriver: RESULT Notes
+[0-0] 2026-10-12T19:54:13.710Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:13.710Z INFO webdriver: [GET] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/title
+[0-0] 2026-10-12T19:54:13.711Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:13.713Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:13.713Z INFO webdriver: [GET] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/title
+[0-0] 2026-10-12T19:54:13.714Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:13.714Z INFO webdriver: COMMAND findElement("css selector", "h1")
+[0-0] 2026-10-12T19:54:13.714Z INFO webdriver: [POST] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/element
+[0-0] 2026-10-12T19:54:13.714Z INFO webdriver: DATA { using: 'css selector', value: 'h1' }
+[0-0] 2026-10-12T19:54:13.716Z INFO webdriver: RESULT {
+[0-0]   'element-6066-11e4-a52e-4f735466cecf': '1de54f04-449f-474f-be23-faaaafd33e91'
+[0-0] }
+[0-0] 2026-10-12T19:54:13.717Z INFO webdriver: COMMAND getElementText("1de54f04-449f-474f-be23-faaaafd33e91")
+[0-0] 2026-10-12T19:54:13.717Z INFO webdriver: [GET] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/element/1de54f04-449f-474f-be23-faaaafd33e91/text
+[0-0] 2026-10-12T19:54:13.718Z INFO webdriver: RESULT Notes
+[0-0] 2026-10-12T19:54:13.787Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:13.787Z INFO webdriver: [POST] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/execute/sync
+[0-0] 2026-10-12T19:54:13.787Z INFO webdriver: DATA {
+[0-0]   script: '\n' +
+[0-0]     '            function webdriverioPolyfill() {\n' +
+[0-0]     '  var __defProp = Object.defineProperty;\n' +
+[0-0]     '  var __name = function(target, _value) {\n' +
+[0-0]     '    return __defProp(target, "name", { value: _value, configurable: true });\n' +
+[0-0]     '  };\n' +
+[0-0]     '  var __globalThis = typeof globalThis === "object" && globalThis || typeof window === "object" && window;\n' +
+[0-0]     '  __globalThis.__name = __name;\n' +
+[0-0]     '}\n' +
+[0-0]     '            webdriverioPolyfill();\n' +
+[0-0]     '            return (value=>{document.documentElement.dataset.nativeReload=value}).apply(null, arguments)\n' +
+[0-0]     '        ',
+[0-0]   args: [ 'ce2eea13-df4f-4b22-980c-02227fbe4ec5' ]
+[0-0] }
+[0-0] 2026-10-12T19:54:13.790Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:13.790Z INFO webdriver: COMMAND refresh()
+[0-0] 2026-10-12T19:54:13.790Z INFO webdriver: [POST] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/refresh
+[0-0] 2026-10-12T19:54:13.791Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:13.892Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:13.892Z INFO webdriver: [POST] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/execute/sync
+[0-0] 2026-10-12T19:54:13.892Z INFO webdriver: DATA {
+[0-0]   script: '\n' +
+[0-0]     '            function webdriverioPolyfill() {\n' +
+[0-0]     '  var __defProp = Object.defineProperty;\n' +
+[0-0]     '  var __name = function(target, _value) {\n' +
+[0-0]     '    return __defProp(target, "name", { value: _value, configurable: true });\n' +
+[0-0]     '  };\n' +
+[0-0]     '  var __globalThis = typeof globalThis === "object" && globalThis || typeof window === "object" && window;\n' +
+[0-0]     '  __globalThis.__name = __name;\n' +
+[0-0]     '}\n' +
+[0-0]     '            webdriverioPolyfill();\n' +
+[0-0]     '            return (value=>document.documentElement.dataset.nativeReload!==value&&document.readyState==="complete"&&typeof window.wdioTauri?.waitForInit==="function"&&typeof window.__wdio_original_core__?.invoke==="function").apply(null, arguments)\n' +
+[0-0]     '        ',
+[0-0]   args: [ 'ce2eea13-df4f-4b22-980c-02227fbe4ec5' ]
+[0-0] }
+[0-0] 2026-10-12T19:54:13.896Z INFO webdriver: RESULT true
+[0-0] 2026-10-12T19:54:13.896Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:13.896Z INFO webdriver: [POST] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/execute/sync
+[0-0] 2026-10-12T19:54:13.896Z INFO webdriver: DATA {
+[0-0]   script: '\n' +
+[0-0]     '            function webdriverioPolyfill() {\n' +
+[0-0]     '  var __defProp = Object.defineProperty;\n' +
+[0-0]     '  var __name = function(target, _value) {\n' +
+[0-0]     '    return __defProp(target, "name", { value: _value, configurable: true });\n' +
+[0-0]     '  };\n' +
+[0-0]     '  var __globalThis = typeof globalThis === "object" && globalThis || typeof window === "object" && window;\n' +
+[0-0]     '  __globalThis.__name = __name;\n' +
+[0-0]     '}\n' +
+[0-0]     '            webdriverioPolyfill();\n' +
+[0-0]     '            return (async()=>{await window.wdioTauri?.waitForInit()}).apply(null, arguments)\n' +
+[0-0]     '        ',
+[0-0]   args: []
+[0-0] }
+[0-0] 2026-10-12T19:54:13.902Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:13.906Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:13.906Z INFO webdriver: [GET] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/title
+[0-0] 2026-10-12T19:54:13.907Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:13.909Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:13.909Z INFO webdriver: [GET] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/title
+[0-0] 2026-10-12T19:54:13.910Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:13.910Z INFO webdriver: COMMAND findElement("css selector", "button[aria-label="Delete Native note"]")
+[0-0] 2026-10-12T19:54:13.910Z INFO webdriver: [POST] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/element
+[0-0] 2026-10-12T19:54:13.910Z INFO webdriver: DATA {
+[0-0]   using: 'css selector',
+[0-0]   value: 'button[aria-label="Delete Native note"]'
+[0-0] }
+[0-0] 2026-10-12T19:54:13.912Z INFO webdriver: RESULT {
+[0-0]   'element-6066-11e4-a52e-4f735466cecf': '78fc998b-4985-402f-8344-887ffa60cd8b'
+[0-0] }
+[0-0] 2026-10-12T19:54:13.916Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:13.916Z INFO webdriver: [GET] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/title
+[0-0] 2026-10-12T19:54:13.917Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:13.919Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:13.920Z INFO webdriver: [GET] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/title
+[0-0] 2026-10-12T19:54:13.921Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:13.921Z INFO webdriver: COMMAND findElements("css selector", "button[aria-label="Delete Native note"]")
+[0-0] 2026-10-12T19:54:13.921Z INFO webdriver: [POST] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/elements
+[0-0] 2026-10-12T19:54:13.921Z INFO webdriver: DATA {
+[0-0]   using: 'css selector',
+[0-0]   value: 'button[aria-label="Delete Native note"]'
+[0-0] }
+[0-0] 2026-10-12T19:54:13.923Z INFO webdriver: RESULT [
+[0-0]   {
+[0-0]     'element-6066-11e4-a52e-4f735466cecf': '18210ecc-878a-45e4-9249-b8223520d85c'
+[0-0]   }
+[0-0] ]
+[0-0] 2026-10-12T19:54:13.935Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:13.935Z INFO webdriver: [POST] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/execute/sync
+[0-0] 2026-10-12T19:54:13.935Z INFO webdriver: DATA {
+[0-0]   script: '\n' +
+[0-0]     '            function webdriverioPolyfill() {\n' +
+[0-0]     '  var __defProp = Object.defineProperty;\n' +
+[0-0]     '  var __name = function(target, _value) {\n' +
+[0-0]     '    return __defProp(target, "name", { value: _value, configurable: true });\n' +
+[0-0]     '  };\n' +
+[0-0]     '  var __globalThis = typeof globalThis === "object" && globalThis || typeof window === "object" && window;\n' +
+[0-0]     '  __globalThis.__name = __name;\n' +
+[0-0]     '}\n' +
+[0-0]     '            webdriverioPolyfill();\n' +
+[0-0]     '            return (value=>{document.documentElement.dataset.nativeReload=value}).apply(null, arguments)\n' +
+[0-0]     '        ',
+[0-0]   args: [ '93c67d93-24ed-46f2-b359-2015865d2432' ]
+[0-0] }
+[0-0] 2026-10-12T19:54:13.937Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:13.937Z INFO webdriver: COMMAND refresh()
+[0-0] 2026-10-12T19:54:13.937Z INFO webdriver: [POST] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/refresh
+[0-0] 2026-10-12T19:54:13.938Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:14.039Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:14.039Z INFO webdriver: [POST] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/execute/sync
+[0-0] 2026-10-12T19:54:14.040Z INFO webdriver: DATA {
+[0-0]   script: '\n' +
+[0-0]     '            function webdriverioPolyfill() {\n' +
+[0-0]     '  var __defProp = Object.defineProperty;\n' +
+[0-0]     '  var __name = function(target, _value) {\n' +
+[0-0]     '    return __defProp(target, "name", { value: _value, configurable: true });\n' +
+[0-0]     '  };\n' +
+[0-0]     '  var __globalThis = typeof globalThis === "object" && globalThis || typeof window === "object" && window;\n' +
+[0-0]     '  __globalThis.__name = __name;\n' +
+[0-0]     '}\n' +
+[0-0]     '            webdriverioPolyfill();\n' +
+[0-0]     '            return (value=>document.documentElement.dataset.nativeReload!==value&&document.readyState==="complete"&&typeof window.wdioTauri?.waitForInit==="function"&&typeof window.__wdio_original_core__?.invoke==="function").apply(null, arguments)\n' +
+[0-0]     '        ',
+[0-0]   args: [ '93c67d93-24ed-46f2-b359-2015865d2432' ]
+[0-0] }
+[0-0] 2026-10-12T19:54:14.043Z INFO webdriver: RESULT true
+[0-0] 2026-10-12T19:54:14.043Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:14.043Z INFO webdriver: [POST] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/execute/sync
+[0-0] 2026-10-12T19:54:14.043Z INFO webdriver: DATA {
+[0-0]   script: '\n' +
+[0-0]     '            function webdriverioPolyfill() {\n' +
+[0-0]     '  var __defProp = Object.defineProperty;\n' +
+[0-0]     '  var __name = function(target, _value) {\n' +
+[0-0]     '    return __defProp(target, "name", { value: _value, configurable: true });\n' +
+[0-0]     '  };\n' +
+[0-0]     '  var __globalThis = typeof globalThis === "object" && globalThis || typeof window === "object" && window;\n' +
+[0-0]     '  __globalThis.__name = __name;\n' +
+[0-0]     '}\n' +
+[0-0]     '            webdriverioPolyfill();\n' +
+[0-0]     '            return (async()=>{await window.wdioTauri?.waitForInit()}).apply(null, arguments)\n' +
+[0-0]     '        ',
+[0-0]   args: []
+[0-0] }
+[0-0] 2026-10-12T19:54:14.046Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:14.049Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:14.049Z INFO webdriver: [GET] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/title
+[0-0] 2026-10-12T19:54:14.050Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:14.053Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:14.053Z INFO webdriver: [GET] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/title
+[0-0] 2026-10-12T19:54:14.054Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:14.054Z INFO webdriver: COMMAND findElement("css selector", "section")
+[0-0] 2026-10-12T19:54:14.054Z INFO webdriver: [POST] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/element
+[0-0] 2026-10-12T19:54:14.054Z INFO webdriver: DATA { using: 'css selector', value: 'section' }
+[0-0] 2026-10-12T19:54:14.055Z INFO webdriver: RESULT {
+[0-0]   'element-6066-11e4-a52e-4f735466cecf': 'f42a1e5c-5c90-40b5-befd-ee7899a15222'
+[0-0] }
+[0-0] 2026-10-12T19:54:14.057Z INFO webdriver: COMMAND getElementText("f42a1e5c-5c90-40b5-befd-ee7899a15222")
+[0-0] 2026-10-12T19:54:14.057Z INFO webdriver: [GET] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086/element/f42a1e5c-5c90-40b5-befd-ee7899a15222/text
+[0-0] 2026-10-12T19:54:14.058Z INFO webdriver: RESULT NotesOffline sample: notes are kept in memory until this window closes. JSON exports use the save destination you choose.New noteUp to 1000 characters. Data is private to this local sample.Add noteNo notes yet. Add your first note.Export JSON
+[0-0] 2026-10-12T19:54:14.060Z INFO webdriver: COMMAND deleteSession()
+[0-0] 2026-10-12T19:54:14.060Z INFO webdriver: [DELETE] http://127.0.0.1:35595/session/4f66b85b-ab5a-441d-937e-658872155086
+[0-0] 2026-10-12T19:54:14.062Z INFO webdriver: RESULT null
+[0-0] PASSED in undefined - file:///test/native.e2e.ts
+2026-10-12T19:54:14.176Z INFO @wdio/cli:launcher: Run onWorkerEnd hook
+
+ "spec" Reporter:
+------------------------------------------------------------------
+[WebKitGTK 605.1.15 linux #0-0] Running: WebKitGTK (v605.1.15) on linux
+[WebKitGTK 605.1.15 linux #0-0] Session ID: 4f66b85b-ab5a-441d-937e-658872155086
+[WebKitGTK 605.1.15 linux #0-0]
+[WebKitGTK 605.1.15 linux #0-0] » test/native.e2e.ts
+[WebKitGTK 605.1.15 linux #0-0] real native Tauri window and Rust IPC
+[WebKitGTK 605.1.15 linux #0-0]    ✓ keeps the counter in real Rust state across renderer reload and concurrent IPC
+[WebKitGTK 605.1.15 linux #0-0]    ✓ renders offline UI and validates real CRUD/export permissions
+[WebKitGTK 605.1.15 linux #0-0]
+[WebKitGTK 605.1.15 linux #0-0] 2 passing (755ms)
+
+
+Spec Files:	 1 passed, 1 total (100% completed) in 00:00:01  
+
+2026-10-12T19:54:14.177Z INFO @wdio/local-runner: Shutting down spawned worker
+2026-10-12T19:54:14.427Z INFO @wdio/local-runner: Waiting for 0 to shut down gracefully
+2026-10-12T19:54:14.427Z INFO @wdio/local-runner: shutting down
+2026-10-12T19:54:14.428Z INFO @wdio/cli:launcher: Run onComplete hook
+2026-10-12T19:54:14.428Z INFO tauri-service:launcher: Stopping 1 embedded driver process(es)...
+Executed 2 real native cases (save)
+2026-10-12T19:54:15.061Z INFO @wdio/cli:launcher: Run onPrepare hook
+2026-10-12T19:54:15.063Z INFO tauri-service:launcher: Using embedded WebDriver provider (tauri-plugin-wdio-webdriver) - no external driver needed
+2026-10-12T19:54:15.063Z INFO tauri-service:launcher: Embedded provider mode - spawning Tauri app with embedded WebDriver server
+2026-10-12T19:54:15.067Z INFO tauri-service:launcher: Tauri app spawned (PID: 62887)
+2026-10-12T19:54:15.584Z INFO tauri-service:launcher: WebDriver server ready on port 38405
+
+Execution of 1 workers started at 2026-10-12T19:54:16.591Z
+
+2026-10-12T19:54:16.592Z INFO @wdio/cli:launcher: Run onWorkerStart hook
+2026-10-12T19:54:16.594Z INFO @wdio/xvfb: XvfbManager.init() called
+2026-10-12T19:54:16.595Z INFO @wdio/xvfb: Xvfb not needed on current platform
+2026-10-12T19:54:16.595Z INFO @wdio/local-runner: Start worker 0-0 with arg: run wdio.conf.ts
+2026-10-12T19:54:16.599Z INFO @wdio/xvfb:ProcessFactory: xvfb-run found in PATH
+2026-10-12T19:54:16.599Z INFO @wdio/xvfb:ProcessFactory: ProcessFactory: shouldRun=false, isAvailable=true
+2026-10-12T19:54:16.599Z INFO @wdio/xvfb:ProcessFactory: Creating worker process with regular fork
+[0-0] 2026-10-12T19:54:17.263Z INFO @wdio/local-runner: Run worker command: run
+[0-0] RUNNING in undefined - file:///test/native.e2e.ts
+[0-0] 2026-10-12T19:54:17.492Z INFO webdriver: Initiate new session using the WebDriver protocol
+[0-0] 2026-10-12T19:54:17.492Z INFO @wdio/utils: Connecting to existing driver at http://127.0.0.1:38405/
+[0-0] 2026-10-12T19:54:17.494Z INFO webdriver: [POST] http://127.0.0.1:38405/session
+[0-0] 2026-10-12T19:54:17.514Z INFO webdriver: COMMAND getWindowHandle()
+[0-0] 2026-10-12T19:54:17.515Z INFO webdriver: [GET] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/window
+[0-0] 2026-10-12T19:54:17.517Z INFO webdriver: RESULT main
+[0-0] 2026-10-12T19:54:17.518Z INFO tauri-service:service: before() start — mode=binary provider=embedded multiremote=undefined instances=n/a
+[0-0] 2026-10-12T19:54:17.518Z INFO tauri-service:service: Initializing standard browser
+[0-0] 2026-10-12T19:54:17.519Z INFO webdriver: COMMAND getWindowHandles()
+[0-0] 2026-10-12T19:54:17.519Z INFO webdriver: [GET] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/window/handles
+[0-0] 2026-10-12T19:54:17.521Z INFO webdriver: RESULT [ 'main' ]
+[0-0] 2026-10-12T19:54:17.522Z INFO tauri-service:service: Standard browser window available
+[0-0] 2026-10-12T19:54:17.522Z INFO tauri-service:service: Waiting for Tauri plugin initialization...
+[0-0] 2026-10-12T19:54:17.522Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:17.523Z INFO webdriver: [POST] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/execute/sync
+[0-0] 2026-10-12T19:54:17.523Z INFO webdriver: DATA { script: 'checkPluginInit(...) [875 bytes]', args: [] }
+[0-0] 2026-10-12T19:54:17.527Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:17.527Z INFO tauri-service:service: Tauri plugin initialization complete
+[0-0] 2026-10-12T19:54:17.528Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:17.528Z INFO webdriver: [POST] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/execute/sync
+[0-0] 2026-10-12T19:54:17.528Z INFO webdriver: DATA { script: 'clearStaleMocks(...) [698 bytes]', args: [] }
+[0-0] 2026-10-12T19:54:17.532Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:17.532Z INFO tauri-service:service: before() complete
+[0-0] 2026-10-12T19:54:17.545Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:17.545Z INFO webdriver: [POST] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/execute/sync
+[0-0] 2026-10-12T19:54:17.545Z INFO webdriver: DATA {
+[0-0]   script: '\n' +
+[0-0]     '            function webdriverioPolyfill() {\n' +
+[0-0]     '  var __defProp = Object.defineProperty;\n' +
+[0-0]     '  var __name = function(target, _value) {\n' +
+[0-0]     '    return __defProp(target, "name", { value: _value, configurable: true });\n' +
+[0-0]     '  };\n' +
+[0-0]     '  var __globalThis = typeof globalThis === "object" && globalThis || typeof window === "object" && window;\n' +
+[0-0]     '  __globalThis.__name = __name;\n' +
+[0-0]     '}\n' +
+[0-0]     '            webdriverioPolyfill();\n' +
+[0-0]     '            return (value=>{document.documentElement.dataset.nativeReload=value}).apply(null, arguments)\n' +
+[0-0]     '        ',
+[0-0]   args: [ 'fba14096-98a4-4fe0-afda-bb85db0ae151' ]
+[0-0] }
+[0-0] 2026-10-12T19:54:17.549Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:17.549Z INFO webdriver: COMMAND refresh()
+[0-0] 2026-10-12T19:54:17.549Z INFO webdriver: [POST] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/refresh
+[0-0] 2026-10-12T19:54:17.551Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:17.652Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:17.653Z INFO webdriver: [POST] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/execute/sync
+[0-0] 2026-10-12T19:54:17.653Z INFO webdriver: DATA {
+[0-0]   script: '\n' +
+[0-0]     '            function webdriverioPolyfill() {\n' +
+[0-0]     '  var __defProp = Object.defineProperty;\n' +
+[0-0]     '  var __name = function(target, _value) {\n' +
+[0-0]     '    return __defProp(target, "name", { value: _value, configurable: true });\n' +
+[0-0]     '  };\n' +
+[0-0]     '  var __globalThis = typeof globalThis === "object" && globalThis || typeof window === "object" && window;\n' +
+[0-0]     '  __globalThis.__name = __name;\n' +
+[0-0]     '}\n' +
+[0-0]     '            webdriverioPolyfill();\n' +
+[0-0]     '            return (value=>document.documentElement.dataset.nativeReload!==value&&document.readyState==="complete"&&typeof window.wdioTauri?.waitForInit==="function"&&typeof window.__wdio_original_core__?.invoke==="function").apply(null, arguments)\n' +
+[0-0]     '        ',
+[0-0]   args: [ 'fba14096-98a4-4fe0-afda-bb85db0ae151' ]
+[0-0] }
+[0-0] 2026-10-12T19:54:17.657Z INFO webdriver: RESULT true
+[0-0] 2026-10-12T19:54:17.657Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:17.657Z INFO webdriver: [POST] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/execute/sync
+[0-0] 2026-10-12T19:54:17.657Z INFO webdriver: DATA {
+[0-0]   script: '\n' +
+[0-0]     '            function webdriverioPolyfill() {\n' +
+[0-0]     '  var __defProp = Object.defineProperty;\n' +
+[0-0]     '  var __name = function(target, _value) {\n' +
+[0-0]     '    return __defProp(target, "name", { value: _value, configurable: true });\n' +
+[0-0]     '  };\n' +
+[0-0]     '  var __globalThis = typeof globalThis === "object" && globalThis || typeof window === "object" && window;\n' +
+[0-0]     '  __globalThis.__name = __name;\n' +
+[0-0]     '}\n' +
+[0-0]     '            webdriverioPolyfill();\n' +
+[0-0]     '            return (async()=>{await window.wdioTauri?.waitForInit()}).apply(null, arguments)\n' +
+[0-0]     '        ',
+[0-0]   args: []
+[0-0] }
+[0-0] 2026-10-12T19:54:17.660Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:17.666Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:17.666Z INFO webdriver: [GET] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/title
+[0-0] 2026-10-12T19:54:17.668Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:17.671Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:17.672Z INFO webdriver: [GET] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/title
+[0-0] 2026-10-12T19:54:17.673Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:17.673Z INFO webdriver: COMMAND findElement("css selector", "output[aria-label="Counter value"]")
+[0-0] 2026-10-12T19:54:17.673Z INFO webdriver: [POST] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/element
+[0-0] 2026-10-12T19:54:17.673Z INFO webdriver: DATA { using: 'css selector', value: 'output[aria-label="Counter value"]' }
+[0-0] 2026-10-12T19:54:17.675Z INFO webdriver: RESULT {
+[0-0]   'element-6066-11e4-a52e-4f735466cecf': 'f3e8524d-3ace-4be9-8d73-f6fc7f13f258'
+[0-0] }
+[0-0] 2026-10-12T19:54:17.679Z INFO webdriver: COMMAND getElementText("f3e8524d-3ace-4be9-8d73-f6fc7f13f258")
+[0-0] 2026-10-12T19:54:17.679Z INFO webdriver: [GET] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/element/f3e8524d-3ace-4be9-8d73-f6fc7f13f258/text
+[0-0] 2026-10-12T19:54:17.681Z INFO webdriver: RESULT 0
+[0-0] 2026-10-12T19:54:17.685Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:17.685Z INFO webdriver: [GET] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/title
+[0-0] 2026-10-12T19:54:17.686Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:17.689Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:17.689Z INFO webdriver: [GET] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/title
+[0-0] 2026-10-12T19:54:17.690Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:17.690Z INFO webdriver: COMMAND findElement("xpath", ".//button[normalize-space(text()) = "Increment counter"] | .//button[not(.//button[normalize-space(text()) = "Increment counter"]) and normalize-space() = "Increment counter"]")
+[0-0] 2026-10-12T19:54:17.690Z INFO webdriver: [POST] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/element
+[0-0] 2026-10-12T19:54:17.690Z INFO webdriver: DATA {
+[0-0]   using: 'xpath',
+[0-0]   value: './/button[normalize-space(text()) = "Increment counter"] | .//button[not(.//button[normalize-space(text()) = "Increment counter"]) and normalize-space() = "Increment counter"]'
+[0-0] }
+[0-0] 2026-10-12T19:54:17.692Z INFO webdriver: RESULT {
+[0-0]   'element-6066-11e4-a52e-4f735466cecf': '438f6b5a-59a1-42fb-b6be-23a1e4f18710'
+[0-0] }
+[0-0] 2026-10-12T19:54:17.704Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:17.704Z INFO webdriver: [GET] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/title
+[0-0] 2026-10-12T19:54:17.710Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:17.714Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:17.714Z INFO webdriver: [GET] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/title
+[0-0] 2026-10-12T19:54:17.718Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:17.721Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:17.722Z INFO webdriver: [GET] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/title
+[0-0] 2026-10-12T19:54:17.723Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:17.723Z INFO webdriver: COMMAND elementClick("438f6b5a-59a1-42fb-b6be-23a1e4f18710")
+[0-0] 2026-10-12T19:54:17.723Z INFO webdriver: [POST] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/element/438f6b5a-59a1-42fb-b6be-23a1e4f18710/click
+[0-0] 2026-10-12T19:54:17.727Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:17.730Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:17.730Z INFO webdriver: [GET] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/title
+[0-0] 2026-10-12T19:54:17.731Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:17.734Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:17.734Z INFO webdriver: [GET] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/title
+[0-0] 2026-10-12T19:54:17.735Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:17.735Z INFO webdriver: COMMAND findElement("css selector", "output[aria-label="Counter value"]")
+[0-0] 2026-10-12T19:54:17.735Z INFO webdriver: [POST] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/element
+[0-0] 2026-10-12T19:54:17.735Z INFO webdriver: DATA { using: 'css selector', value: 'output[aria-label="Counter value"]' }
+[0-0] 2026-10-12T19:54:17.740Z INFO webdriver: RESULT {
+[0-0]   'element-6066-11e4-a52e-4f735466cecf': '7cb40cf7-f6a2-4be5-8d76-dbed682982a5'
+[0-0] }
+[0-0] 2026-10-12T19:54:17.742Z INFO webdriver: COMMAND getElementText("7cb40cf7-f6a2-4be5-8d76-dbed682982a5")
+[0-0] 2026-10-12T19:54:17.743Z INFO webdriver: [GET] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/element/7cb40cf7-f6a2-4be5-8d76-dbed682982a5/text
+[0-0] 2026-10-12T19:54:17.746Z INFO webdriver: RESULT 1
+[0-0] 2026-10-12T19:54:17.756Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:17.756Z INFO webdriver: [POST] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/execute/sync
+[0-0] 2026-10-12T19:54:17.756Z INFO webdriver: DATA {
+[0-0]   script: '\n' +
+[0-0]     '            function webdriverioPolyfill() {\n' +
+[0-0]     '  var __defProp = Object.defineProperty;\n' +
+[0-0]     '  var __name = function(target, _value) {\n' +
+[0-0]     '    return __defProp(target, "name", { value: _value, configurable: true });\n' +
+[0-0]     '  };\n' +
+[0-0]     '  var __globalThis = typeof globalThis === "object" && globalThis || typeof window === "object" && window;\n' +
+[0-0]     '  __globalThis.__name = __name;\n' +
+[0-0]     '}\n' +
+[0-0]     '            webdriverioPolyfill();\n' +
+[0-0]     '            return (value=>{document.documentElement.dataset.nativeReload=value}).apply(null, arguments)\n' +
+[0-0]     '        ',
+[0-0]   args: [ '633d4b2f-8f02-444a-a445-29102dfbd0ca' ]
+[0-0] }
+[0-0] 2026-10-12T19:54:17.758Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:17.759Z INFO webdriver: COMMAND refresh()
+[0-0] 2026-10-12T19:54:17.759Z INFO webdriver: [POST] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/refresh
+[0-0] 2026-10-12T19:54:17.763Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:17.864Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:17.864Z INFO webdriver: [POST] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/execute/sync
+[0-0] 2026-10-12T19:54:17.864Z INFO webdriver: DATA {
+[0-0]   script: '\n' +
+[0-0]     '            function webdriverioPolyfill() {\n' +
+[0-0]     '  var __defProp = Object.defineProperty;\n' +
+[0-0]     '  var __name = function(target, _value) {\n' +
+[0-0]     '    return __defProp(target, "name", { value: _value, configurable: true });\n' +
+[0-0]     '  };\n' +
+[0-0]     '  var __globalThis = typeof globalThis === "object" && globalThis || typeof window === "object" && window;\n' +
+[0-0]     '  __globalThis.__name = __name;\n' +
+[0-0]     '}\n' +
+[0-0]     '            webdriverioPolyfill();\n' +
+[0-0]     '            return (value=>document.documentElement.dataset.nativeReload!==value&&document.readyState==="complete"&&typeof window.wdioTauri?.waitForInit==="function"&&typeof window.__wdio_original_core__?.invoke==="function").apply(null, arguments)\n' +
+[0-0]     '        ',
+[0-0]   args: [ '633d4b2f-8f02-444a-a445-29102dfbd0ca' ]
+[0-0] }
+[0-0] 2026-10-12T19:54:17.868Z INFO webdriver: RESULT true
+[0-0] 2026-10-12T19:54:17.868Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:17.868Z INFO webdriver: [POST] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/execute/sync
+[0-0] 2026-10-12T19:54:17.868Z INFO webdriver: DATA {
+[0-0]   script: '\n' +
+[0-0]     '            function webdriverioPolyfill() {\n' +
+[0-0]     '  var __defProp = Object.defineProperty;\n' +
+[0-0]     '  var __name = function(target, _value) {\n' +
+[0-0]     '    return __defProp(target, "name", { value: _value, configurable: true });\n' +
+[0-0]     '  };\n' +
+[0-0]     '  var __globalThis = typeof globalThis === "object" && globalThis || typeof window === "object" && window;\n' +
+[0-0]     '  __globalThis.__name = __name;\n' +
+[0-0]     '}\n' +
+[0-0]     '            webdriverioPolyfill();\n' +
+[0-0]     '            return (async()=>{await window.wdioTauri?.waitForInit()}).apply(null, arguments)\n' +
+[0-0]     '        ',
+[0-0]   args: []
+[0-0] }
+[0-0] 2026-10-12T19:54:17.871Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:17.874Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:17.874Z INFO webdriver: [GET] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/title
+[0-0] 2026-10-12T19:54:17.875Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:17.877Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:17.877Z INFO webdriver: [GET] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/title
+[0-0] 2026-10-12T19:54:17.878Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:17.878Z INFO webdriver: COMMAND findElement("css selector", "output[aria-label="Counter value"]")
+[0-0] 2026-10-12T19:54:17.879Z INFO webdriver: [POST] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/element
+[0-0] 2026-10-12T19:54:17.879Z INFO webdriver: DATA { using: 'css selector', value: 'output[aria-label="Counter value"]' }
+[0-0] 2026-10-12T19:54:17.880Z INFO webdriver: RESULT {
+[0-0]   'element-6066-11e4-a52e-4f735466cecf': '809ca11c-0180-4d79-9fae-1e259bd94f8c'
+[0-0] }
+[0-0] 2026-10-12T19:54:17.881Z INFO webdriver: COMMAND getElementText("809ca11c-0180-4d79-9fae-1e259bd94f8c")
+[0-0] 2026-10-12T19:54:17.882Z INFO webdriver: [GET] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/element/809ca11c-0180-4d79-9fae-1e259bd94f8c/text
+[0-0] 2026-10-12T19:54:17.883Z INFO webdriver: RESULT 17
+[0-0] 2026-10-12T19:54:17.885Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:17.885Z INFO webdriver: [GET] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/title
+[0-0] 2026-10-12T19:54:17.886Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:17.888Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:17.889Z INFO webdriver: [GET] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/title
+[0-0] 2026-10-12T19:54:17.889Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:17.890Z INFO webdriver: COMMAND findElement("xpath", ".//button[normalize-space(text()) = "Reset counter"] | .//button[not(.//button[normalize-space(text()) = "Reset counter"]) and normalize-space() = "Reset counter"]")
+[0-0] 2026-10-12T19:54:17.890Z INFO webdriver: [POST] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/element
+[0-0] 2026-10-12T19:54:17.890Z INFO webdriver: DATA {
+[0-0]   using: 'xpath',
+[0-0]   value: './/button[normalize-space(text()) = "Reset counter"] | .//button[not(.//button[normalize-space(text()) = "Reset counter"]) and normalize-space() = "Reset counter"]'
+[0-0] }
+[0-0] 2026-10-12T19:54:17.891Z INFO webdriver: RESULT {
+[0-0]   'element-6066-11e4-a52e-4f735466cecf': '9f259704-7edd-47a7-8b7c-96bf014464c1'
+[0-0] }
+[0-0] 2026-10-12T19:54:17.895Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:17.895Z INFO webdriver: [GET] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/title
+[0-0] 2026-10-12T19:54:17.896Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:17.898Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:17.898Z INFO webdriver: [GET] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/title
+[0-0] 2026-10-12T19:54:17.899Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:17.901Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:17.901Z INFO webdriver: [GET] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/title
+[0-0] 2026-10-12T19:54:17.902Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:17.902Z INFO webdriver: COMMAND elementClick("9f259704-7edd-47a7-8b7c-96bf014464c1")
+[0-0] 2026-10-12T19:54:17.902Z INFO webdriver: [POST] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/element/9f259704-7edd-47a7-8b7c-96bf014464c1/click
+[0-0] 2026-10-12T19:54:17.905Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:17.907Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:17.907Z INFO webdriver: [GET] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/title
+[0-0] 2026-10-12T19:54:17.908Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:17.911Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:17.911Z INFO webdriver: [GET] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/title
+[0-0] 2026-10-12T19:54:17.912Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:17.912Z INFO webdriver: COMMAND findElement("css selector", "output[aria-label="Counter value"]")
+[0-0] 2026-10-12T19:54:17.912Z INFO webdriver: [POST] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/element
+[0-0] 2026-10-12T19:54:17.912Z INFO webdriver: DATA { using: 'css selector', value: 'output[aria-label="Counter value"]' }
+[0-0] 2026-10-12T19:54:17.916Z INFO webdriver: RESULT {
+[0-0]   'element-6066-11e4-a52e-4f735466cecf': '8e398528-b2c7-4099-9159-70ab6ddd934a'
+[0-0] }
+[0-0] 2026-10-12T19:54:17.918Z INFO webdriver: COMMAND getElementText("8e398528-b2c7-4099-9159-70ab6ddd934a")
+[0-0] 2026-10-12T19:54:17.918Z INFO webdriver: [GET] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/element/8e398528-b2c7-4099-9159-70ab6ddd934a/text
+[0-0] 2026-10-12T19:54:17.919Z INFO webdriver: RESULT 0
+[0-0] 2026-10-12T19:54:17.927Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:17.927Z INFO webdriver: [GET] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/title
+[0-0] 2026-10-12T19:54:17.928Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:17.930Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:17.930Z INFO webdriver: [GET] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/title
+[0-0] 2026-10-12T19:54:17.931Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:17.932Z INFO webdriver: COMMAND findElement("css selector", "h1")
+[0-0] 2026-10-12T19:54:17.932Z INFO webdriver: [POST] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/element
+[0-0] 2026-10-12T19:54:17.932Z INFO webdriver: DATA { using: 'css selector', value: 'h1' }
+[0-0] 2026-10-12T19:54:17.933Z INFO webdriver: RESULT {
+[0-0]   'element-6066-11e4-a52e-4f735466cecf': 'f9903ebc-c526-4b05-8a4f-bb6bcb1dff3e'
+[0-0] }
+[0-0] 2026-10-12T19:54:17.934Z INFO webdriver: COMMAND getElementText("f9903ebc-c526-4b05-8a4f-bb6bcb1dff3e")
+[0-0] 2026-10-12T19:54:17.934Z INFO webdriver: [GET] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/element/f9903ebc-c526-4b05-8a4f-bb6bcb1dff3e/text
+[0-0] 2026-10-12T19:54:17.936Z INFO webdriver: RESULT Notes
+[0-0] 2026-10-12T19:54:17.939Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:17.939Z INFO webdriver: [GET] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/title
+[0-0] 2026-10-12T19:54:17.940Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:17.942Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:17.942Z INFO webdriver: [GET] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/title
+[0-0] 2026-10-12T19:54:17.943Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:17.943Z INFO webdriver: COMMAND findElement("css selector", "h1")
+[0-0] 2026-10-12T19:54:17.943Z INFO webdriver: [POST] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/element
+[0-0] 2026-10-12T19:54:17.943Z INFO webdriver: DATA { using: 'css selector', value: 'h1' }
+[0-0] 2026-10-12T19:54:17.945Z INFO webdriver: RESULT {
+[0-0]   'element-6066-11e4-a52e-4f735466cecf': 'bed13bff-aebc-4d3d-ab0c-f6f12c010dd5'
+[0-0] }
+[0-0] 2026-10-12T19:54:17.946Z INFO webdriver: COMMAND getElementText("bed13bff-aebc-4d3d-ab0c-f6f12c010dd5")
+[0-0] 2026-10-12T19:54:17.946Z INFO webdriver: [GET] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/element/bed13bff-aebc-4d3d-ab0c-f6f12c010dd5/text
+[0-0] 2026-10-12T19:54:17.947Z INFO webdriver: RESULT Notes
+[0-0] 2026-10-12T19:54:18.019Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:18.019Z INFO webdriver: [POST] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/execute/sync
+[0-0] 2026-10-12T19:54:18.019Z INFO webdriver: DATA {
+[0-0]   script: '\n' +
+[0-0]     '            function webdriverioPolyfill() {\n' +
+[0-0]     '  var __defProp = Object.defineProperty;\n' +
+[0-0]     '  var __name = function(target, _value) {\n' +
+[0-0]     '    return __defProp(target, "name", { value: _value, configurable: true });\n' +
+[0-0]     '  };\n' +
+[0-0]     '  var __globalThis = typeof globalThis === "object" && globalThis || typeof window === "object" && window;\n' +
+[0-0]     '  __globalThis.__name = __name;\n' +
+[0-0]     '}\n' +
+[0-0]     '            webdriverioPolyfill();\n' +
+[0-0]     '            return (value=>{document.documentElement.dataset.nativeReload=value}).apply(null, arguments)\n' +
+[0-0]     '        ',
+[0-0]   args: [ '18883be1-676e-486d-a4e7-b6ce88977aee' ]
+[0-0] }
+[0-0] 2026-10-12T19:54:18.022Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:18.022Z INFO webdriver: COMMAND refresh()
+[0-0] 2026-10-12T19:54:18.022Z INFO webdriver: [POST] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/refresh
+[0-0] 2026-10-12T19:54:18.023Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:18.124Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:18.124Z INFO webdriver: [POST] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/execute/sync
+[0-0] 2026-10-12T19:54:18.124Z INFO webdriver: DATA {
+[0-0]   script: '\n' +
+[0-0]     '            function webdriverioPolyfill() {\n' +
+[0-0]     '  var __defProp = Object.defineProperty;\n' +
+[0-0]     '  var __name = function(target, _value) {\n' +
+[0-0]     '    return __defProp(target, "name", { value: _value, configurable: true });\n' +
+[0-0]     '  };\n' +
+[0-0]     '  var __globalThis = typeof globalThis === "object" && globalThis || typeof window === "object" && window;\n' +
+[0-0]     '  __globalThis.__name = __name;\n' +
+[0-0]     '}\n' +
+[0-0]     '            webdriverioPolyfill();\n' +
+[0-0]     '            return (value=>document.documentElement.dataset.nativeReload!==value&&document.readyState==="complete"&&typeof window.wdioTauri?.waitForInit==="function"&&typeof window.__wdio_original_core__?.invoke==="function").apply(null, arguments)\n' +
+[0-0]     '        ',
+[0-0]   args: [ '18883be1-676e-486d-a4e7-b6ce88977aee' ]
+[0-0] }
+[0-0] 2026-10-12T19:54:18.127Z INFO webdriver: RESULT true
+[0-0] 2026-10-12T19:54:18.127Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:18.128Z INFO webdriver: [POST] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/execute/sync
+[0-0] 2026-10-12T19:54:18.128Z INFO webdriver: DATA {
+[0-0]   script: '\n' +
+[0-0]     '            function webdriverioPolyfill() {\n' +
+[0-0]     '  var __defProp = Object.defineProperty;\n' +
+[0-0]     '  var __name = function(target, _value) {\n' +
+[0-0]     '    return __defProp(target, "name", { value: _value, configurable: true });\n' +
+[0-0]     '  };\n' +
+[0-0]     '  var __globalThis = typeof globalThis === "object" && globalThis || typeof window === "object" && window;\n' +
+[0-0]     '  __globalThis.__name = __name;\n' +
+[0-0]     '}\n' +
+[0-0]     '            webdriverioPolyfill();\n' +
+[0-0]     '            return (async()=>{await window.wdioTauri?.waitForInit()}).apply(null, arguments)\n' +
+[0-0]     '        ',
+[0-0]   args: []
+[0-0] }
+[0-0] 2026-10-12T19:54:18.134Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:18.137Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:18.138Z INFO webdriver: [GET] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/title
+[0-0] 2026-10-12T19:54:18.139Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:18.141Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:18.141Z INFO webdriver: [GET] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/title
+[0-0] 2026-10-12T19:54:18.142Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:18.142Z INFO webdriver: COMMAND findElement("css selector", "button[aria-label="Delete Native note"]")
+[0-0] 2026-10-12T19:54:18.142Z INFO webdriver: [POST] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/element
+[0-0] 2026-10-12T19:54:18.142Z INFO webdriver: DATA {
+[0-0]   using: 'css selector',
+[0-0]   value: 'button[aria-label="Delete Native note"]'
+[0-0] }
+[0-0] 2026-10-12T19:54:18.144Z INFO webdriver: RESULT {
+[0-0]   'element-6066-11e4-a52e-4f735466cecf': 'e2ef3da6-52db-4a87-8fae-339765de83c0'
+[0-0] }
+[0-0] 2026-10-12T19:54:18.148Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:18.148Z INFO webdriver: [GET] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/title
+[0-0] 2026-10-12T19:54:18.149Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:18.151Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:18.151Z INFO webdriver: [GET] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/title
+[0-0] 2026-10-12T19:54:18.152Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:18.152Z INFO webdriver: COMMAND findElements("css selector", "button[aria-label="Delete Native note"]")
+[0-0] 2026-10-12T19:54:18.152Z INFO webdriver: [POST] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/elements
+[0-0] 2026-10-12T19:54:18.152Z INFO webdriver: DATA {
+[0-0]   using: 'css selector',
+[0-0]   value: 'button[aria-label="Delete Native note"]'
+[0-0] }
+[0-0] 2026-10-12T19:54:18.154Z INFO webdriver: RESULT [
+[0-0]   {
+[0-0]     'element-6066-11e4-a52e-4f735466cecf': '2d496a5a-30d7-4a0a-91c5-4201125a7392'
+[0-0]   }
+[0-0] ]
+[0-0] 2026-10-12T19:54:18.165Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:18.165Z INFO webdriver: [POST] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/execute/sync
+[0-0] 2026-10-12T19:54:18.165Z INFO webdriver: DATA {
+[0-0]   script: '\n' +
+[0-0]     '            function webdriverioPolyfill() {\n' +
+[0-0]     '  var __defProp = Object.defineProperty;\n' +
+[0-0]     '  var __name = function(target, _value) {\n' +
+[0-0]     '    return __defProp(target, "name", { value: _value, configurable: true });\n' +
+[0-0]     '  };\n' +
+[0-0]     '  var __globalThis = typeof globalThis === "object" && globalThis || typeof window === "object" && window;\n' +
+[0-0]     '  __globalThis.__name = __name;\n' +
+[0-0]     '}\n' +
+[0-0]     '            webdriverioPolyfill();\n' +
+[0-0]     '            return (value=>{document.documentElement.dataset.nativeReload=value}).apply(null, arguments)\n' +
+[0-0]     '        ',
+[0-0]   args: [ '91b2bf8e-b255-49f8-8754-94fded952610' ]
+[0-0] }
+[0-0] 2026-10-12T19:54:18.168Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:18.168Z INFO webdriver: COMMAND refresh()
+[0-0] 2026-10-12T19:54:18.168Z INFO webdriver: [POST] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/refresh
+[0-0] 2026-10-12T19:54:18.169Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:18.270Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:18.270Z INFO webdriver: [POST] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/execute/sync
+[0-0] 2026-10-12T19:54:18.270Z INFO webdriver: DATA {
+[0-0]   script: '\n' +
+[0-0]     '            function webdriverioPolyfill() {\n' +
+[0-0]     '  var __defProp = Object.defineProperty;\n' +
+[0-0]     '  var __name = function(target, _value) {\n' +
+[0-0]     '    return __defProp(target, "name", { value: _value, configurable: true });\n' +
+[0-0]     '  };\n' +
+[0-0]     '  var __globalThis = typeof globalThis === "object" && globalThis || typeof window === "object" && window;\n' +
+[0-0]     '  __globalThis.__name = __name;\n' +
+[0-0]     '}\n' +
+[0-0]     '            webdriverioPolyfill();\n' +
+[0-0]     '            return (value=>document.documentElement.dataset.nativeReload!==value&&document.readyState==="complete"&&typeof window.wdioTauri?.waitForInit==="function"&&typeof window.__wdio_original_core__?.invoke==="function").apply(null, arguments)\n' +
+[0-0]     '        ',
+[0-0]   args: [ '91b2bf8e-b255-49f8-8754-94fded952610' ]
+[0-0] }
+[0-0] 2026-10-12T19:54:18.274Z INFO webdriver: RESULT true
+[0-0] 2026-10-12T19:54:18.274Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:18.274Z INFO webdriver: [POST] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/execute/sync
+[0-0] 2026-10-12T19:54:18.274Z INFO webdriver: DATA {
+[0-0]   script: '\n' +
+[0-0]     '            function webdriverioPolyfill() {\n' +
+[0-0]     '  var __defProp = Object.defineProperty;\n' +
+[0-0]     '  var __name = function(target, _value) {\n' +
+[0-0]     '    return __defProp(target, "name", { value: _value, configurable: true });\n' +
+[0-0]     '  };\n' +
+[0-0]     '  var __globalThis = typeof globalThis === "object" && globalThis || typeof window === "object" && window;\n' +
+[0-0]     '  __globalThis.__name = __name;\n' +
+[0-0]     '}\n' +
+[0-0]     '            webdriverioPolyfill();\n' +
+[0-0]     '            return (async()=>{await window.wdioTauri?.waitForInit()}).apply(null, arguments)\n' +
+[0-0]     '        ',
+[0-0]   args: []
+[0-0] }
+[0-0] 2026-10-12T19:54:18.276Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:18.280Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:18.280Z INFO webdriver: [GET] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/title
+[0-0] 2026-10-12T19:54:18.281Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:18.283Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:18.283Z INFO webdriver: [GET] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/title
+[0-0] 2026-10-12T19:54:18.284Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:18.284Z INFO webdriver: COMMAND findElement("css selector", "section")
+[0-0] 2026-10-12T19:54:18.284Z INFO webdriver: [POST] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/element
+[0-0] 2026-10-12T19:54:18.284Z INFO webdriver: DATA { using: 'css selector', value: 'section' }
+[0-0] 2026-10-12T19:54:18.286Z INFO webdriver: RESULT {
+[0-0]   'element-6066-11e4-a52e-4f735466cecf': '28928b56-e87e-4c46-b6df-67f7882c12a3'
+[0-0] }
+[0-0] 2026-10-12T19:54:18.287Z INFO webdriver: COMMAND getElementText("28928b56-e87e-4c46-b6df-67f7882c12a3")
+[0-0] 2026-10-12T19:54:18.288Z INFO webdriver: [GET] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204/element/28928b56-e87e-4c46-b6df-67f7882c12a3/text
+[0-0] 2026-10-12T19:54:18.289Z INFO webdriver: RESULT NotesOffline sample: notes are kept in memory until this window closes. JSON exports use the save destination you choose.New noteUp to 1000 characters. Data is private to this local sample.Add noteNo notes yet. Add your first note.Export JSON
+[0-0] 2026-10-12T19:54:18.291Z INFO webdriver: COMMAND deleteSession()
+[0-0] 2026-10-12T19:54:18.291Z INFO webdriver: [DELETE] http://127.0.0.1:38405/session/7847298c-ef5d-400b-b04e-02d8197eb204
+[0-0] 2026-10-12T19:54:18.292Z INFO webdriver: RESULT null
+[0-0] PASSED in undefined - file:///test/native.e2e.ts
+2026-10-12T19:54:18.407Z INFO @wdio/cli:launcher: Run onWorkerEnd hook
+
+ "spec" Reporter:
+------------------------------------------------------------------
+[WebKitGTK 605.1.15 linux #0-0] Running: WebKitGTK (v605.1.15) on linux
+[WebKitGTK 605.1.15 linux #0-0] Session ID: 7847298c-ef5d-400b-b04e-02d8197eb204
+[WebKitGTK 605.1.15 linux #0-0]
+[WebKitGTK 605.1.15 linux #0-0] » test/native.e2e.ts
+[WebKitGTK 605.1.15 linux #0-0] real native Tauri window and Rust IPC
+[WebKitGTK 605.1.15 linux #0-0]    ✓ keeps the counter in real Rust state across renderer reload and concurrent IPC
+[WebKitGTK 605.1.15 linux #0-0]    ✓ renders offline UI and validates real CRUD/export permissions
+[WebKitGTK 605.1.15 linux #0-0]
+[WebKitGTK 605.1.15 linux #0-0] 2 passing (761ms)
+
+
+Spec Files:	 1 passed, 1 total (100% completed) in 00:00:01  
+
+2026-10-12T19:54:18.408Z INFO @wdio/local-runner: Shutting down spawned worker
+2026-10-12T19:54:18.658Z INFO @wdio/local-runner: Waiting for 0 to shut down gracefully
+2026-10-12T19:54:18.659Z INFO @wdio/local-runner: shutting down
+2026-10-12T19:54:18.659Z INFO @wdio/cli:launcher: Run onComplete hook
+2026-10-12T19:54:18.659Z INFO tauri-service:launcher: Stopping 1 embedded driver process(es)...
+Executed 2 real native cases (cancel)
+2026-10-12T19:54:19.293Z INFO @wdio/cli:launcher: Run onPrepare hook
+2026-10-12T19:54:19.295Z INFO tauri-service:launcher: Using embedded WebDriver provider (tauri-plugin-wdio-webdriver) - no external driver needed
+2026-10-12T19:54:19.295Z INFO tauri-service:launcher: Embedded provider mode - spawning Tauri app with embedded WebDriver server
+2026-10-12T19:54:19.298Z INFO tauri-service:launcher: Tauri app spawned (PID: 63043)
+2026-10-12T19:54:19.815Z INFO tauri-service:launcher: WebDriver server ready on port 39769
+
+Execution of 1 workers started at 2026-10-12T19:54:20.821Z
+
+2026-10-12T19:54:20.823Z INFO @wdio/cli:launcher: Run onWorkerStart hook
+2026-10-12T19:54:20.825Z INFO @wdio/xvfb: XvfbManager.init() called
+2026-10-12T19:54:20.826Z INFO @wdio/xvfb: Xvfb not needed on current platform
+2026-10-12T19:54:20.826Z INFO @wdio/local-runner: Start worker 0-0 with arg: run wdio.conf.ts
+2026-10-12T19:54:20.830Z INFO @wdio/xvfb:ProcessFactory: xvfb-run found in PATH
+2026-10-12T19:54:20.831Z INFO @wdio/xvfb:ProcessFactory: ProcessFactory: shouldRun=false, isAvailable=true
+2026-10-12T19:54:20.831Z INFO @wdio/xvfb:ProcessFactory: Creating worker process with regular fork
+[0-0] 2026-10-12T19:54:21.500Z INFO @wdio/local-runner: Run worker command: run
+[0-0] RUNNING in undefined - file:///test/native.e2e.ts
+[0-0] 2026-10-12T19:54:21.722Z INFO webdriver: Initiate new session using the WebDriver protocol
+[0-0] 2026-10-12T19:54:21.723Z INFO @wdio/utils: Connecting to existing driver at http://127.0.0.1:39769/
+[0-0] 2026-10-12T19:54:21.724Z INFO webdriver: [POST] http://127.0.0.1:39769/session
+[0-0] 2026-10-12T19:54:21.744Z INFO webdriver: COMMAND getWindowHandle()
+[0-0] 2026-10-12T19:54:21.744Z INFO webdriver: [GET] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/window
+[0-0] 2026-10-12T19:54:21.747Z INFO webdriver: RESULT main
+[0-0] 2026-10-12T19:54:21.748Z INFO tauri-service:service: before() start — mode=binary provider=embedded multiremote=undefined instances=n/a
+[0-0] 2026-10-12T19:54:21.748Z INFO tauri-service:service: Initializing standard browser
+[0-0] 2026-10-12T19:54:21.749Z INFO webdriver: COMMAND getWindowHandles()
+[0-0] 2026-10-12T19:54:21.749Z INFO webdriver: [GET] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/window/handles
+[0-0] 2026-10-12T19:54:21.751Z INFO webdriver: RESULT [ 'main' ]
+[0-0] 2026-10-12T19:54:21.751Z INFO tauri-service:service: Standard browser window available
+[0-0] 2026-10-12T19:54:21.751Z INFO tauri-service:service: Waiting for Tauri plugin initialization...
+[0-0] 2026-10-12T19:54:21.752Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:21.752Z INFO webdriver: [POST] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/execute/sync
+[0-0] 2026-10-12T19:54:21.753Z INFO webdriver: DATA { script: 'checkPluginInit(...) [875 bytes]', args: [] }
+[0-0] 2026-10-12T19:54:21.757Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:21.757Z INFO tauri-service:service: Tauri plugin initialization complete
+[0-0] 2026-10-12T19:54:21.757Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:21.758Z INFO webdriver: [POST] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/execute/sync
+[0-0] 2026-10-12T19:54:21.758Z INFO webdriver: DATA { script: 'clearStaleMocks(...) [698 bytes]', args: [] }
+[0-0] 2026-10-12T19:54:21.761Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:21.762Z INFO tauri-service:service: before() complete
+[0-0] 2026-10-12T19:54:21.775Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:21.775Z INFO webdriver: [POST] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/execute/sync
+[0-0] 2026-10-12T19:54:21.775Z INFO webdriver: DATA {
+[0-0]   script: '\n' +
+[0-0]     '            function webdriverioPolyfill() {\n' +
+[0-0]     '  var __defProp = Object.defineProperty;\n' +
+[0-0]     '  var __name = function(target, _value) {\n' +
+[0-0]     '    return __defProp(target, "name", { value: _value, configurable: true });\n' +
+[0-0]     '  };\n' +
+[0-0]     '  var __globalThis = typeof globalThis === "object" && globalThis || typeof window === "object" && window;\n' +
+[0-0]     '  __globalThis.__name = __name;\n' +
+[0-0]     '}\n' +
+[0-0]     '            webdriverioPolyfill();\n' +
+[0-0]     '            return (value=>{document.documentElement.dataset.nativeReload=value}).apply(null, arguments)\n' +
+[0-0]     '        ',
+[0-0]   args: [ 'ab5c40da-4d31-4379-aefc-9aadb5a4f042' ]
+[0-0] }
+[0-0] 2026-10-12T19:54:21.779Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:21.779Z INFO webdriver: COMMAND refresh()
+[0-0] 2026-10-12T19:54:21.779Z INFO webdriver: [POST] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/refresh
+[0-0] 2026-10-12T19:54:21.781Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:21.882Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:21.882Z INFO webdriver: [POST] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/execute/sync
+[0-0] 2026-10-12T19:54:21.882Z INFO webdriver: DATA {
+[0-0]   script: '\n' +
+[0-0]     '            function webdriverioPolyfill() {\n' +
+[0-0]     '  var __defProp = Object.defineProperty;\n' +
+[0-0]     '  var __name = function(target, _value) {\n' +
+[0-0]     '    return __defProp(target, "name", { value: _value, configurable: true });\n' +
+[0-0]     '  };\n' +
+[0-0]     '  var __globalThis = typeof globalThis === "object" && globalThis || typeof window === "object" && window;\n' +
+[0-0]     '  __globalThis.__name = __name;\n' +
+[0-0]     '}\n' +
+[0-0]     '            webdriverioPolyfill();\n' +
+[0-0]     '            return (value=>document.documentElement.dataset.nativeReload!==value&&document.readyState==="complete"&&typeof window.wdioTauri?.waitForInit==="function"&&typeof window.__wdio_original_core__?.invoke==="function").apply(null, arguments)\n' +
+[0-0]     '        ',
+[0-0]   args: [ 'ab5c40da-4d31-4379-aefc-9aadb5a4f042' ]
+[0-0] }
+[0-0] 2026-10-12T19:54:21.886Z INFO webdriver: RESULT true
+[0-0] 2026-10-12T19:54:21.887Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:21.887Z INFO webdriver: [POST] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/execute/sync
+[0-0] 2026-10-12T19:54:21.887Z INFO webdriver: DATA {
+[0-0]   script: '\n' +
+[0-0]     '            function webdriverioPolyfill() {\n' +
+[0-0]     '  var __defProp = Object.defineProperty;\n' +
+[0-0]     '  var __name = function(target, _value) {\n' +
+[0-0]     '    return __defProp(target, "name", { value: _value, configurable: true });\n' +
+[0-0]     '  };\n' +
+[0-0]     '  var __globalThis = typeof globalThis === "object" && globalThis || typeof window === "object" && window;\n' +
+[0-0]     '  __globalThis.__name = __name;\n' +
+[0-0]     '}\n' +
+[0-0]     '            webdriverioPolyfill();\n' +
+[0-0]     '            return (async()=>{await window.wdioTauri?.waitForInit()}).apply(null, arguments)\n' +
+[0-0]     '        ',
+[0-0]   args: []
+[0-0] }
+[0-0] 2026-10-12T19:54:21.890Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:21.896Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:21.896Z INFO webdriver: [GET] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/title
+[0-0] 2026-10-12T19:54:21.897Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:21.901Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:21.901Z INFO webdriver: [GET] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/title
+[0-0] 2026-10-12T19:54:21.902Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:21.903Z INFO webdriver: COMMAND findElement("css selector", "output[aria-label="Counter value"]")
+[0-0] 2026-10-12T19:54:21.903Z INFO webdriver: [POST] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/element
+[0-0] 2026-10-12T19:54:21.903Z INFO webdriver: DATA { using: 'css selector', value: 'output[aria-label="Counter value"]' }
+[0-0] 2026-10-12T19:54:21.905Z INFO webdriver: RESULT {
+[0-0]   'element-6066-11e4-a52e-4f735466cecf': 'd7159d8a-1018-44b7-91aa-8de48b195145'
+[0-0] }
+[0-0] 2026-10-12T19:54:21.909Z INFO webdriver: COMMAND getElementText("d7159d8a-1018-44b7-91aa-8de48b195145")
+[0-0] 2026-10-12T19:54:21.909Z INFO webdriver: [GET] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/element/d7159d8a-1018-44b7-91aa-8de48b195145/text
+[0-0] 2026-10-12T19:54:21.911Z INFO webdriver: RESULT 0
+[0-0] 2026-10-12T19:54:21.914Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:21.914Z INFO webdriver: [GET] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/title
+[0-0] 2026-10-12T19:54:21.916Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:21.918Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:21.919Z INFO webdriver: [GET] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/title
+[0-0] 2026-10-12T19:54:21.920Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:21.920Z INFO webdriver: COMMAND findElement("xpath", ".//button[normalize-space(text()) = "Increment counter"] | .//button[not(.//button[normalize-space(text()) = "Increment counter"]) and normalize-space() = "Increment counter"]")
+[0-0] 2026-10-12T19:54:21.920Z INFO webdriver: [POST] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/element
+[0-0] 2026-10-12T19:54:21.920Z INFO webdriver: DATA {
+[0-0]   using: 'xpath',
+[0-0]   value: './/button[normalize-space(text()) = "Increment counter"] | .//button[not(.//button[normalize-space(text()) = "Increment counter"]) and normalize-space() = "Increment counter"]'
+[0-0] }
+[0-0] 2026-10-12T19:54:21.922Z INFO webdriver: RESULT {
+[0-0]   'element-6066-11e4-a52e-4f735466cecf': '7c686d2e-9168-47bb-a386-e5d3c5423555'
+[0-0] }
+[0-0] 2026-10-12T19:54:21.926Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:21.927Z INFO webdriver: [GET] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/title
+[0-0] 2026-10-12T19:54:21.928Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:21.930Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:21.930Z INFO webdriver: [GET] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/title
+[0-0] 2026-10-12T19:54:21.933Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:21.937Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:21.937Z INFO webdriver: [GET] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/title
+[0-0] 2026-10-12T19:54:21.939Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:21.939Z INFO webdriver: COMMAND elementClick("7c686d2e-9168-47bb-a386-e5d3c5423555")
+[0-0] 2026-10-12T19:54:21.939Z INFO webdriver: [POST] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/element/7c686d2e-9168-47bb-a386-e5d3c5423555/click
+[0-0] 2026-10-12T19:54:21.953Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:21.962Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:21.963Z INFO webdriver: [GET] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/title
+[0-0] 2026-10-12T19:54:21.969Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:21.972Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:21.972Z INFO webdriver: [GET] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/title
+[0-0] 2026-10-12T19:54:21.973Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:21.973Z INFO webdriver: COMMAND findElement("css selector", "output[aria-label="Counter value"]")
+[0-0] 2026-10-12T19:54:21.973Z INFO webdriver: [POST] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/element
+[0-0] 2026-10-12T19:54:21.973Z INFO webdriver: DATA { using: 'css selector', value: 'output[aria-label="Counter value"]' }
+[0-0] 2026-10-12T19:54:21.975Z INFO webdriver: RESULT {
+[0-0]   'element-6066-11e4-a52e-4f735466cecf': '72e94ffd-26bc-485c-be44-140f5147b0db'
+[0-0] }
+[0-0] 2026-10-12T19:54:21.977Z INFO webdriver: COMMAND getElementText("72e94ffd-26bc-485c-be44-140f5147b0db")
+[0-0] 2026-10-12T19:54:21.977Z INFO webdriver: [GET] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/element/72e94ffd-26bc-485c-be44-140f5147b0db/text
+[0-0] 2026-10-12T19:54:21.978Z INFO webdriver: RESULT 1
+[0-0] 2026-10-12T19:54:21.991Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:21.991Z INFO webdriver: [POST] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/execute/sync
+[0-0] 2026-10-12T19:54:21.991Z INFO webdriver: DATA {
+[0-0]   script: '\n' +
+[0-0]     '            function webdriverioPolyfill() {\n' +
+[0-0]     '  var __defProp = Object.defineProperty;\n' +
+[0-0]     '  var __name = function(target, _value) {\n' +
+[0-0]     '    return __defProp(target, "name", { value: _value, configurable: true });\n' +
+[0-0]     '  };\n' +
+[0-0]     '  var __globalThis = typeof globalThis === "object" && globalThis || typeof window === "object" && window;\n' +
+[0-0]     '  __globalThis.__name = __name;\n' +
+[0-0]     '}\n' +
+[0-0]     '            webdriverioPolyfill();\n' +
+[0-0]     '            return (value=>{document.documentElement.dataset.nativeReload=value}).apply(null, arguments)\n' +
+[0-0]     '        ',
+[0-0]   args: [ 'cfe28431-01fb-4dbe-b30d-be8577c5e4ad' ]
+[0-0] }
+[0-0] 2026-10-12T19:54:21.994Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:21.994Z INFO webdriver: COMMAND refresh()
+[0-0] 2026-10-12T19:54:21.994Z INFO webdriver: [POST] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/refresh
+[0-0] 2026-10-12T19:54:21.995Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:22.096Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:22.096Z INFO webdriver: [POST] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/execute/sync
+[0-0] 2026-10-12T19:54:22.097Z INFO webdriver: DATA {
+[0-0]   script: '\n' +
+[0-0]     '            function webdriverioPolyfill() {\n' +
+[0-0]     '  var __defProp = Object.defineProperty;\n' +
+[0-0]     '  var __name = function(target, _value) {\n' +
+[0-0]     '    return __defProp(target, "name", { value: _value, configurable: true });\n' +
+[0-0]     '  };\n' +
+[0-0]     '  var __globalThis = typeof globalThis === "object" && globalThis || typeof window === "object" && window;\n' +
+[0-0]     '  __globalThis.__name = __name;\n' +
+[0-0]     '}\n' +
+[0-0]     '            webdriverioPolyfill();\n' +
+[0-0]     '            return (value=>document.documentElement.dataset.nativeReload!==value&&document.readyState==="complete"&&typeof window.wdioTauri?.waitForInit==="function"&&typeof window.__wdio_original_core__?.invoke==="function").apply(null, arguments)\n' +
+[0-0]     '        ',
+[0-0]   args: [ 'cfe28431-01fb-4dbe-b30d-be8577c5e4ad' ]
+[0-0] }
+[0-0] 2026-10-12T19:54:22.100Z INFO webdriver: RESULT true
+[0-0] 2026-10-12T19:54:22.100Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:22.101Z INFO webdriver: [POST] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/execute/sync
+[0-0] 2026-10-12T19:54:22.101Z INFO webdriver: DATA {
+[0-0]   script: '\n' +
+[0-0]     '            function webdriverioPolyfill() {\n' +
+[0-0]     '  var __defProp = Object.defineProperty;\n' +
+[0-0]     '  var __name = function(target, _value) {\n' +
+[0-0]     '    return __defProp(target, "name", { value: _value, configurable: true });\n' +
+[0-0]     '  };\n' +
+[0-0]     '  var __globalThis = typeof globalThis === "object" && globalThis || typeof window === "object" && window;\n' +
+[0-0]     '  __globalThis.__name = __name;\n' +
+[0-0]     '}\n' +
+[0-0]     '            webdriverioPolyfill();\n' +
+[0-0]     '            return (async()=>{await window.wdioTauri?.waitForInit()}).apply(null, arguments)\n' +
+[0-0]     '        ',
+[0-0]   args: []
+[0-0] }
+[0-0] 2026-10-12T19:54:22.110Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:22.113Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:22.113Z INFO webdriver: [GET] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/title
+[0-0] 2026-10-12T19:54:22.114Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:22.116Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:22.117Z INFO webdriver: [GET] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/title
+[0-0] 2026-10-12T19:54:22.118Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:22.118Z INFO webdriver: COMMAND findElement("css selector", "output[aria-label="Counter value"]")
+[0-0] 2026-10-12T19:54:22.118Z INFO webdriver: [POST] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/element
+[0-0] 2026-10-12T19:54:22.118Z INFO webdriver: DATA { using: 'css selector', value: 'output[aria-label="Counter value"]' }
+[0-0] 2026-10-12T19:54:22.119Z INFO webdriver: RESULT {
+[0-0]   'element-6066-11e4-a52e-4f735466cecf': '91362cf9-c0b3-4cb8-9612-fa9cd666f8c6'
+[0-0] }
+[0-0] 2026-10-12T19:54:22.121Z INFO webdriver: COMMAND getElementText("91362cf9-c0b3-4cb8-9612-fa9cd666f8c6")
+[0-0] 2026-10-12T19:54:22.121Z INFO webdriver: [GET] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/element/91362cf9-c0b3-4cb8-9612-fa9cd666f8c6/text
+[0-0] 2026-10-12T19:54:22.122Z INFO webdriver: RESULT 17
+[0-0] 2026-10-12T19:54:22.124Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:22.125Z INFO webdriver: [GET] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/title
+[0-0] 2026-10-12T19:54:22.126Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:22.128Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:22.128Z INFO webdriver: [GET] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/title
+[0-0] 2026-10-12T19:54:22.129Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:22.129Z INFO webdriver: COMMAND findElement("xpath", ".//button[normalize-space(text()) = "Reset counter"] | .//button[not(.//button[normalize-space(text()) = "Reset counter"]) and normalize-space() = "Reset counter"]")
+[0-0] 2026-10-12T19:54:22.129Z INFO webdriver: [POST] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/element
+[0-0] 2026-10-12T19:54:22.129Z INFO webdriver: DATA {
+[0-0]   using: 'xpath',
+[0-0]   value: './/button[normalize-space(text()) = "Reset counter"] | .//button[not(.//button[normalize-space(text()) = "Reset counter"]) and normalize-space() = "Reset counter"]'
+[0-0] }
+[0-0] 2026-10-12T19:54:22.130Z INFO webdriver: RESULT {
+[0-0]   'element-6066-11e4-a52e-4f735466cecf': '4870afa0-1e91-4f79-ac65-8339a807fc7f'
+[0-0] }
+[0-0] 2026-10-12T19:54:22.134Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:22.134Z INFO webdriver: [GET] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/title
+[0-0] 2026-10-12T19:54:22.135Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:22.137Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:22.137Z INFO webdriver: [GET] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/title
+[0-0] 2026-10-12T19:54:22.138Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:22.140Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:22.141Z INFO webdriver: [GET] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/title
+[0-0] 2026-10-12T19:54:22.141Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:22.142Z INFO webdriver: COMMAND elementClick("4870afa0-1e91-4f79-ac65-8339a807fc7f")
+[0-0] 2026-10-12T19:54:22.142Z INFO webdriver: [POST] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/element/4870afa0-1e91-4f79-ac65-8339a807fc7f/click
+[0-0] 2026-10-12T19:54:22.145Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:22.147Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:22.147Z INFO webdriver: [GET] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/title
+[0-0] 2026-10-12T19:54:22.148Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:22.150Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:22.151Z INFO webdriver: [GET] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/title
+[0-0] 2026-10-12T19:54:22.151Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:22.152Z INFO webdriver: COMMAND findElement("css selector", "output[aria-label="Counter value"]")
+[0-0] 2026-10-12T19:54:22.152Z INFO webdriver: [POST] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/element
+[0-0] 2026-10-12T19:54:22.152Z INFO webdriver: DATA { using: 'css selector', value: 'output[aria-label="Counter value"]' }
+[0-0] 2026-10-12T19:54:22.153Z INFO webdriver: RESULT {
+[0-0]   'element-6066-11e4-a52e-4f735466cecf': 'd37aa38d-2467-46b7-a64d-8c45f458e070'
+[0-0] }
+[0-0] 2026-10-12T19:54:22.155Z INFO webdriver: COMMAND getElementText("d37aa38d-2467-46b7-a64d-8c45f458e070")
+[0-0] 2026-10-12T19:54:22.155Z INFO webdriver: [GET] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/element/d37aa38d-2467-46b7-a64d-8c45f458e070/text
+[0-0] 2026-10-12T19:54:22.156Z INFO webdriver: RESULT 0
+[0-0] 2026-10-12T19:54:22.162Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:22.162Z INFO webdriver: [GET] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/title
+[0-0] 2026-10-12T19:54:22.167Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:22.169Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:22.169Z INFO webdriver: [GET] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/title
+[0-0] 2026-10-12T19:54:22.170Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:22.170Z INFO webdriver: COMMAND findElement("css selector", "h1")
+[0-0] 2026-10-12T19:54:22.170Z INFO webdriver: [POST] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/element
+[0-0] 2026-10-12T19:54:22.170Z INFO webdriver: DATA { using: 'css selector', value: 'h1' }
+[0-0] 2026-10-12T19:54:22.172Z INFO webdriver: RESULT {
+[0-0]   'element-6066-11e4-a52e-4f735466cecf': '39a09701-0661-4776-ae19-2993427564ca'
+[0-0] }
+[0-0] 2026-10-12T19:54:22.173Z INFO webdriver: COMMAND getElementText("39a09701-0661-4776-ae19-2993427564ca")
+[0-0] 2026-10-12T19:54:22.173Z INFO webdriver: [GET] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/element/39a09701-0661-4776-ae19-2993427564ca/text
+[0-0] 2026-10-12T19:54:22.174Z INFO webdriver: RESULT Notes
+[0-0] 2026-10-12T19:54:22.178Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:22.178Z INFO webdriver: [GET] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/title
+[0-0] 2026-10-12T19:54:22.179Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:22.181Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:22.181Z INFO webdriver: [GET] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/title
+[0-0] 2026-10-12T19:54:22.182Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:22.182Z INFO webdriver: COMMAND findElement("css selector", "h1")
+[0-0] 2026-10-12T19:54:22.182Z INFO webdriver: [POST] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/element
+[0-0] 2026-10-12T19:54:22.182Z INFO webdriver: DATA { using: 'css selector', value: 'h1' }
+[0-0] 2026-10-12T19:54:22.183Z INFO webdriver: RESULT {
+[0-0]   'element-6066-11e4-a52e-4f735466cecf': '525c4a46-3751-41ef-8ac8-bd1b479599ab'
+[0-0] }
+[0-0] 2026-10-12T19:54:22.185Z INFO webdriver: COMMAND getElementText("525c4a46-3751-41ef-8ac8-bd1b479599ab")
+[0-0] 2026-10-12T19:54:22.185Z INFO webdriver: [GET] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/element/525c4a46-3751-41ef-8ac8-bd1b479599ab/text
+[0-0] 2026-10-12T19:54:22.186Z INFO webdriver: RESULT Notes
+[0-0] 2026-10-12T19:54:22.255Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:22.255Z INFO webdriver: [POST] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/execute/sync
+[0-0] 2026-10-12T19:54:22.255Z INFO webdriver: DATA {
+[0-0]   script: '\n' +
+[0-0]     '            function webdriverioPolyfill() {\n' +
+[0-0]     '  var __defProp = Object.defineProperty;\n' +
+[0-0]     '  var __name = function(target, _value) {\n' +
+[0-0]     '    return __defProp(target, "name", { value: _value, configurable: true });\n' +
+[0-0]     '  };\n' +
+[0-0]     '  var __globalThis = typeof globalThis === "object" && globalThis || typeof window === "object" && window;\n' +
+[0-0]     '  __globalThis.__name = __name;\n' +
+[0-0]     '}\n' +
+[0-0]     '            webdriverioPolyfill();\n' +
+[0-0]     '            return (value=>{document.documentElement.dataset.nativeReload=value}).apply(null, arguments)\n' +
+[0-0]     '        ',
+[0-0]   args: [ 'b9c75d0a-854a-44c0-8705-1b781cc50ff8' ]
+[0-0] }
+[0-0] 2026-10-12T19:54:22.258Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:22.258Z INFO webdriver: COMMAND refresh()
+[0-0] 2026-10-12T19:54:22.258Z INFO webdriver: [POST] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/refresh
+[0-0] 2026-10-12T19:54:22.260Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:22.359Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:22.359Z INFO webdriver: [POST] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/execute/sync
+[0-0] 2026-10-12T19:54:22.360Z INFO webdriver: DATA {
+[0-0]   script: '\n' +
+[0-0]     '            function webdriverioPolyfill() {\n' +
+[0-0]     '  var __defProp = Object.defineProperty;\n' +
+[0-0]     '  var __name = function(target, _value) {\n' +
+[0-0]     '    return __defProp(target, "name", { value: _value, configurable: true });\n' +
+[0-0]     '  };\n' +
+[0-0]     '  var __globalThis = typeof globalThis === "object" && globalThis || typeof window === "object" && window;\n' +
+[0-0]     '  __globalThis.__name = __name;\n' +
+[0-0]     '}\n' +
+[0-0]     '            webdriverioPolyfill();\n' +
+[0-0]     '            return (value=>document.documentElement.dataset.nativeReload!==value&&document.readyState==="complete"&&typeof window.wdioTauri?.waitForInit==="function"&&typeof window.__wdio_original_core__?.invoke==="function").apply(null, arguments)\n' +
+[0-0]     '        ',
+[0-0]   args: [ 'b9c75d0a-854a-44c0-8705-1b781cc50ff8' ]
+[0-0] }
+[0-0] 2026-10-12T19:54:22.363Z INFO webdriver: RESULT true
+[0-0] 2026-10-12T19:54:22.363Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:22.363Z INFO webdriver: [POST] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/execute/sync
+[0-0] 2026-10-12T19:54:22.363Z INFO webdriver: DATA {
+[0-0]   script: '\n' +
+[0-0]     '            function webdriverioPolyfill() {\n' +
+[0-0]     '  var __defProp = Object.defineProperty;\n' +
+[0-0]     '  var __name = function(target, _value) {\n' +
+[0-0]     '    return __defProp(target, "name", { value: _value, configurable: true });\n' +
+[0-0]     '  };\n' +
+[0-0]     '  var __globalThis = typeof globalThis === "object" && globalThis || typeof window === "object" && window;\n' +
+[0-0]     '  __globalThis.__name = __name;\n' +
+[0-0]     '}\n' +
+[0-0]     '            webdriverioPolyfill();\n' +
+[0-0]     '            return (async()=>{await window.wdioTauri?.waitForInit()}).apply(null, arguments)\n' +
+[0-0]     '        ',
+[0-0]   args: []
+[0-0] }
+[0-0] 2026-10-12T19:54:22.369Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:22.373Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:22.373Z INFO webdriver: [GET] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/title
+[0-0] 2026-10-12T19:54:22.374Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:22.376Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:22.376Z INFO webdriver: [GET] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/title
+[0-0] 2026-10-12T19:54:22.377Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:22.377Z INFO webdriver: COMMAND findElement("css selector", "button[aria-label="Delete Native note"]")
+[0-0] 2026-10-12T19:54:22.377Z INFO webdriver: [POST] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/element
+[0-0] 2026-10-12T19:54:22.377Z INFO webdriver: DATA {
+[0-0]   using: 'css selector',
+[0-0]   value: 'button[aria-label="Delete Native note"]'
+[0-0] }
+[0-0] 2026-10-12T19:54:22.378Z INFO webdriver: RESULT {
+[0-0]   'element-6066-11e4-a52e-4f735466cecf': '23770563-3a29-4601-95ec-e3f0e1b96dbf'
+[0-0] }
+[0-0] 2026-10-12T19:54:22.382Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:22.382Z INFO webdriver: [GET] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/title
+[0-0] 2026-10-12T19:54:22.383Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:22.385Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:22.386Z INFO webdriver: [GET] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/title
+[0-0] 2026-10-12T19:54:22.387Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:22.387Z INFO webdriver: COMMAND findElements("css selector", "button[aria-label="Delete Native note"]")
+[0-0] 2026-10-12T19:54:22.387Z INFO webdriver: [POST] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/elements
+[0-0] 2026-10-12T19:54:22.387Z INFO webdriver: DATA {
+[0-0]   using: 'css selector',
+[0-0]   value: 'button[aria-label="Delete Native note"]'
+[0-0] }
+[0-0] 2026-10-12T19:54:22.389Z INFO webdriver: RESULT [
+[0-0]   {
+[0-0]     'element-6066-11e4-a52e-4f735466cecf': '0c13f19b-1e30-409f-b8c0-47bd8a0e6e43'
+[0-0]   }
+[0-0] ]
+[0-0] 2026-10-12T19:54:22.400Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:22.400Z INFO webdriver: [POST] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/execute/sync
+[0-0] 2026-10-12T19:54:22.400Z INFO webdriver: DATA {
+[0-0]   script: '\n' +
+[0-0]     '            function webdriverioPolyfill() {\n' +
+[0-0]     '  var __defProp = Object.defineProperty;\n' +
+[0-0]     '  var __name = function(target, _value) {\n' +
+[0-0]     '    return __defProp(target, "name", { value: _value, configurable: true });\n' +
+[0-0]     '  };\n' +
+[0-0]     '  var __globalThis = typeof globalThis === "object" && globalThis || typeof window === "object" && window;\n' +
+[0-0]     '  __globalThis.__name = __name;\n' +
+[0-0]     '}\n' +
+[0-0]     '            webdriverioPolyfill();\n' +
+[0-0]     '            return (value=>{document.documentElement.dataset.nativeReload=value}).apply(null, arguments)\n' +
+[0-0]     '        ',
+[0-0]   args: [ 'e4a9e15a-2d0d-4b06-bbac-79cd7d6a2afd' ]
+[0-0] }
+[0-0] 2026-10-12T19:54:22.402Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:22.402Z INFO webdriver: COMMAND refresh()
+[0-0] 2026-10-12T19:54:22.402Z INFO webdriver: [POST] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/refresh
+[0-0] 2026-10-12T19:54:22.404Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:22.504Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:22.505Z INFO webdriver: [POST] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/execute/sync
+[0-0] 2026-10-12T19:54:22.505Z INFO webdriver: DATA {
+[0-0]   script: '\n' +
+[0-0]     '            function webdriverioPolyfill() {\n' +
+[0-0]     '  var __defProp = Object.defineProperty;\n' +
+[0-0]     '  var __name = function(target, _value) {\n' +
+[0-0]     '    return __defProp(target, "name", { value: _value, configurable: true });\n' +
+[0-0]     '  };\n' +
+[0-0]     '  var __globalThis = typeof globalThis === "object" && globalThis || typeof window === "object" && window;\n' +
+[0-0]     '  __globalThis.__name = __name;\n' +
+[0-0]     '}\n' +
+[0-0]     '            webdriverioPolyfill();\n' +
+[0-0]     '            return (value=>document.documentElement.dataset.nativeReload!==value&&document.readyState==="complete"&&typeof window.wdioTauri?.waitForInit==="function"&&typeof window.__wdio_original_core__?.invoke==="function").apply(null, arguments)\n' +
+[0-0]     '        ',
+[0-0]   args: [ 'e4a9e15a-2d0d-4b06-bbac-79cd7d6a2afd' ]
+[0-0] }
+[0-0] 2026-10-12T19:54:22.508Z INFO webdriver: RESULT true
+[0-0] 2026-10-12T19:54:22.508Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T19:54:22.508Z INFO webdriver: [POST] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/execute/sync
+[0-0] 2026-10-12T19:54:22.509Z INFO webdriver: DATA {
+[0-0]   script: '\n' +
+[0-0]     '            function webdriverioPolyfill() {\n' +
+[0-0]     '  var __defProp = Object.defineProperty;\n' +
+[0-0]     '  var __name = function(target, _value) {\n' +
+[0-0]     '    return __defProp(target, "name", { value: _value, configurable: true });\n' +
+[0-0]     '  };\n' +
+[0-0]     '  var __globalThis = typeof globalThis === "object" && globalThis || typeof window === "object" && window;\n' +
+[0-0]     '  __globalThis.__name = __name;\n' +
+[0-0]     '}\n' +
+[0-0]     '            webdriverioPolyfill();\n' +
+[0-0]     '            return (async()=>{await window.wdioTauri?.waitForInit()}).apply(null, arguments)\n' +
+[0-0]     '        ',
+[0-0]   args: []
+[0-0] }
+[0-0] 2026-10-12T19:54:22.511Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T19:54:22.514Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:22.514Z INFO webdriver: [GET] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/title
+[0-0] 2026-10-12T19:54:22.515Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:22.518Z INFO webdriver: COMMAND getTitle()
+[0-0] 2026-10-12T19:54:22.518Z INFO webdriver: [GET] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/title
+[0-0] 2026-10-12T19:54:22.519Z INFO webdriver: RESULT desktop-counter-lantern
+[0-0] 2026-10-12T19:54:22.519Z INFO webdriver: COMMAND findElement("css selector", "section")
+[0-0] 2026-10-12T19:54:22.519Z INFO webdriver: [POST] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/element
+[0-0] 2026-10-12T19:54:22.519Z INFO webdriver: DATA { using: 'css selector', value: 'section' }
+[0-0] 2026-10-12T19:54:22.520Z INFO webdriver: RESULT {
+[0-0]   'element-6066-11e4-a52e-4f735466cecf': 'e1ee0e16-fa5e-451c-8d58-5158dff8fe74'
+[0-0] }
+[0-0] 2026-10-12T19:54:22.522Z INFO webdriver: COMMAND getElementText("e1ee0e16-fa5e-451c-8d58-5158dff8fe74")
+[0-0] 2026-10-12T19:54:22.522Z INFO webdriver: [GET] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9/element/e1ee0e16-fa5e-451c-8d58-5158dff8fe74/text
+[0-0] 2026-10-12T19:54:22.523Z INFO webdriver: RESULT NotesOffline sample: notes are kept in memory until this window closes. JSON exports use the save destination you choose.New noteUp to 1000 characters. Data is private to this local sample.Add noteNo notes yet. Add your first note.Export JSON
+[0-0] 2026-10-12T19:54:22.525Z INFO webdriver: COMMAND deleteSession()
+[0-0] 2026-10-12T19:54:22.525Z INFO webdriver: [DELETE] http://127.0.0.1:39769/session/072502c0-6f7a-47c9-a46a-14b27b265ec9
+[0-0] 2026-10-12T19:54:22.527Z INFO webdriver: RESULT null
+[0-0] PASSED in undefined - file:///test/native.e2e.ts
+2026-10-12T19:54:22.644Z INFO @wdio/cli:launcher: Run onWorkerEnd hook
+
+ "spec" Reporter:
+------------------------------------------------------------------
+[WebKitGTK 605.1.15 linux #0-0] Running: WebKitGTK (v605.1.15) on linux
+[WebKitGTK 605.1.15 linux #0-0] Session ID: 072502c0-6f7a-47c9-a46a-14b27b265ec9
+[WebKitGTK 605.1.15 linux #0-0]
+[WebKitGTK 605.1.15 linux #0-0] » test/native.e2e.ts
+[WebKitGTK 605.1.15 linux #0-0] real native Tauri window and Rust IPC
+[WebKitGTK 605.1.15 linux #0-0]    ✓ keeps the counter in real Rust state across renderer reload and concurrent IPC
+[WebKitGTK 605.1.15 linux #0-0]    ✓ renders offline UI and validates real CRUD/export permissions
+[WebKitGTK 605.1.15 linux #0-0]
+[WebKitGTK 605.1.15 linux #0-0] 2 passing (765ms)
+
+
+Spec Files:	 1 passed, 1 total (100% completed) in 00:00:01  
+
+2026-10-12T19:54:22.645Z INFO @wdio/local-runner: Shutting down spawned worker
+2026-10-12T19:54:22.895Z INFO @wdio/local-runner: Waiting for 0 to shut down gracefully
+2026-10-12T19:54:22.895Z INFO @wdio/local-runner: shutting down
+2026-10-12T19:54:22.895Z INFO @wdio/cli:launcher: Run onComplete hook
+2026-10-12T19:54:22.896Z INFO tauri-service:launcher: Stopping 1 embedded driver process(es)...
+Executed 2 real native cases (error)
+CHECK @lantern-lab/desktop/release: Selected desktop @lantern-lab/desktop; full phase
+$ node ../../tools/quality/native.ts release
+        Info Looking up installed tauri packages to check mismatched versions...
+     Running beforeBuildCommand `pnpm build:renderer`
+$ vp build
+transforming...
+✓ 246 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.40 kB │ gzip:  0.27 kB
+dist/assets/index-BDXUfO3f.css    6.91 kB │ gzip:  2.27 kB
+dist/assets/index-ClP82EFs.js   289.56 kB │ gzip: 90.95 kB
+
+[32m✓ built in 195ms[39m
+   Compiling desktop-counter-lantern-desktop v0.1.0 (/home/runner/work/super-starter/super-starter/desktop-counter-lantern/packages/desktop/src-tauri)
+    Finished `release` profile [optimized] target(s) in 27.55s
+       Built application at: /home/runner/work/super-starter/super-starter/desktop-counter-lantern/.state/desktop/target-release/release/desktop-counter-lantern-desktop
+desktop-counter-lantern-desktop v0.1.0 (/home/runner/work/super-starter/super-starter/desktop-counter-lantern/packages/desktop/src-tauri)
+├── serde v1.0.229
+│   ├── serde_core v1.0.229
+│   └── serde_derive v1.0.229 (proc-macro)
+│       ├── proc-macro2 v1.0.107
+│       │   └── unicode-ident v1.0.26
+│       ├── quote v1.0.47
+│       │   └── proc-macro2 v1.0.107 (*)
+│       └── syn v3.0.6
+│           ├── proc-macro2 v1.0.107 (*)
+│           ├── quote v1.0.47 (*)
+│           └── unicode-ident v1.0.26
+├── serde_json v1.0.151
+│   ├── itoa v1.0.18
+│   ├── memchr v2.8.3
+│   ├── serde_core v1.0.229
+│   └── zmij v1.0.23
+├── tauri v2.12.2
+│   ├── anyhow v1.0.104
+│   ├── cookie v0.18.2
+│   │   └── time v0.3.55
+│   │       ├── deranged v0.5.8
+│   │       ├── num-conv v0.2.2
+│   │       ├── powerfmt v0.2.1
+│   │       ├── time-core v0.1.9
+│   │       └── time-macros v0.2.32 (proc-macro)
+│   │           ├── num-conv v0.2.2
+│   │           └── time-core v0.1.9
+│   ├── dirs v7.0.0
+│   │   └── dirs-sys v0.5.0
+│   │       ├── libc v0.2.190
+│   │       └── option-ext v0.2.0
+│   ├── dunce v1.0.5
+│   ├── getrandom v0.3.4
+│   │   ├── cfg-if v1.0.5
+│   │   └── libc v0.2.190
+│   ├── glob v0.3.4
+│   ├── gtk v0.18.2
+│   │   ├── atk v0.18.2
+│   │   │   ├── atk-sys v0.18.2
+│   │   │   │   ├── glib-sys v0.18.1
+│   │   │   │   │   └── libc v0.2.190
+│   │   │   │   ├── gobject-sys v0.18.0
+│   │   │   │   │   ├── glib-sys v0.18.1 (*)
+│   │   │   │   │   └── libc v0.2.190
+│   │   │   │   └── libc v0.2.190
+│   │   │   ├── glib v0.18.5
+│   │   │   │   ├── bitflags v2.13.2
+│   │   │   │   │   └── serde_core v1.0.229
+│   │   │   │   ├── futures-channel v0.3.34
+│   │   │   │   │   └── futures-core v0.3.34
+│   │   │   │   ├── futures-core v0.3.34
+│   │   │   │   ├── futures-executor v0.3.34
+│   │   │   │   │   ├── futures-core v0.3.34
+│   │   │   │   │   ├── futures-task v0.3.34
+│   │   │   │   │   └── futures-util v0.3.34
+│   │   │   │   │       ├── futures-core v0.3.34
+│   │   │   │   │       ├── futures-macro v0.3.34 (proc-macro)
+│   │   │   │   │       │   ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   │       │   ├── quote v1.0.47 (*)
+│   │   │   │   │       │   └── syn v3.0.6 (*)
+│   │   │   │   │       ├── futures-task v0.3.34
+│   │   │   │   │       ├── pin-project-lite v0.2.17
+│   │   │   │   │       └── slab v0.4.12
+│   │   │   │   ├── futures-task v0.3.34
+│   │   │   │   ├── futures-util v0.3.34 (*)
+│   │   │   │   ├── gio-sys v0.18.1
+│   │   │   │   │   ├── glib-sys v0.18.1 (*)
+│   │   │   │   │   ├── gobject-sys v0.18.0 (*)
+│   │   │   │   │   └── libc v0.2.190
+│   │   │   │   ├── glib-macros v0.18.5 (proc-macro)
+│   │   │   │   │   ├── heck v0.4.1
+│   │   │   │   │   ├── proc-macro-crate v2.0.2
+│   │   │   │   │   │   ├── toml_datetime v0.6.3
+│   │   │   │   │   │   │   └── serde v1.0.229
+│   │   │   │   │   │   │       ├── serde_core v1.0.229
+│   │   │   │   │   │   │       └── serde_derive v1.0.229 (proc-macro) (*)
+│   │   │   │   │   │   └── toml_edit v0.20.2
+│   │   │   │   │   │       ├── indexmap v2.14.2
+│   │   │   │   │   │       │   ├── equivalent v1.0.2
+│   │   │   │   │   │       │   └── hashbrown v0.17.1
+│   │   │   │   │   │       ├── serde v1.0.229 (*)
+│   │   │   │   │   │       ├── serde_spanned v0.6.9
+│   │   │   │   │   │       │   └── serde v1.0.229 (*)
+│   │   │   │   │   │       ├── toml_datetime v0.6.3 (*)
+│   │   │   │   │   │       └── winnow v0.5.40
+│   │   │   │   │   ├── proc-macro-error v1.0.4
+│   │   │   │   │   │   ├── proc-macro-error-attr v1.0.4 (proc-macro)
+│   │   │   │   │   │   │   ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   │   │   │   └── quote v1.0.47 (*)
+│   │   │   │   │   │   ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   │   │   ├── quote v1.0.47 (*)
+│   │   │   │   │   │   └── syn v1.0.109
+│   │   │   │   │   │       ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   │   │       └── unicode-ident v1.0.26
+│   │   │   │   │   ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   │   ├── quote v1.0.47 (*)
+│   │   │   │   │   └── syn v2.0.119
+│   │   │   │   │       ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   │       ├── quote v1.0.47 (*)
+│   │   │   │   │       └── unicode-ident v1.0.26
+│   │   │   │   ├── glib-sys v0.18.1 (*)
+│   │   │   │   ├── gobject-sys v0.18.0 (*)
+│   │   │   │   ├── libc v0.2.190
+│   │   │   │   ├── memchr v2.8.3
+│   │   │   │   ├── once_cell v1.21.4
+│   │   │   │   ├── smallvec v1.16.2
+│   │   │   │   └── thiserror v1.0.69
+│   │   │   │       └── thiserror-impl v1.0.69 (proc-macro)
+│   │   │   │           ├── proc-macro2 v1.0.107 (*)
+│   │   │   │           ├── quote v1.0.47 (*)
+│   │   │   │           └── syn v2.0.119 (*)
+│   │   │   └── libc v0.2.190
+│   │   ├── cairo-rs v0.18.5
+│   │   │   ├── bitflags v2.13.2 (*)
+│   │   │   ├── cairo-sys-rs v0.18.2
+│   │   │   │   ├── glib-sys v0.18.1 (*)
+│   │   │   │   └── libc v0.2.190
+│   │   │   ├── glib v0.18.5 (*)
+│   │   │   ├── libc v0.2.190
+│   │   │   ├── once_cell v1.21.4
+│   │   │   └── thiserror v1.0.69 (*)
+│   │   ├── field-offset v0.3.6
+│   │   │   └── memoffset v0.9.1
+│   │   ├── futures-channel v0.3.34 (*)
+│   │   ├── gdk v0.18.2
+│   │   │   ├── cairo-rs v0.18.5 (*)
+│   │   │   ├── gdk-pixbuf v0.18.5
+│   │   │   │   ├── gdk-pixbuf-sys v0.18.0
+│   │   │   │   │   ├── gio-sys v0.18.1 (*)
+│   │   │   │   │   ├── glib-sys v0.18.1 (*)
+│   │   │   │   │   ├── gobject-sys v0.18.0 (*)
+│   │   │   │   │   └── libc v0.2.190
+│   │   │   │   ├── gio v0.18.4
+│   │   │   │   │   ├── futures-channel v0.3.34 (*)
+│   │   │   │   │   ├── futures-core v0.3.34
+│   │   │   │   │   ├── futures-io v0.3.34
+│   │   │   │   │   ├── futures-util v0.3.34 (*)
+│   │   │   │   │   ├── gio-sys v0.18.1 (*)
+│   │   │   │   │   ├── glib v0.18.5 (*)
+│   │   │   │   │   ├── libc v0.2.190
+│   │   │   │   │   ├── once_cell v1.21.4
+│   │   │   │   │   ├── pin-project-lite v0.2.17
+│   │   │   │   │   ├── smallvec v1.16.2
+│   │   │   │   │   └── thiserror v1.0.69 (*)
+│   │   │   │   ├── glib v0.18.5 (*)
+│   │   │   │   ├── libc v0.2.190
+│   │   │   │   └── once_cell v1.21.4
+│   │   │   ├── gdk-sys v0.18.2
+│   │   │   │   ├── cairo-sys-rs v0.18.2 (*)
+│   │   │   │   ├── gdk-pixbuf-sys v0.18.0 (*)
+│   │   │   │   ├── gio-sys v0.18.1 (*)
+│   │   │   │   ├── glib-sys v0.18.1 (*)
+│   │   │   │   ├── gobject-sys v0.18.0 (*)
+│   │   │   │   ├── libc v0.2.190
+│   │   │   │   └── pango-sys v0.18.0
+│   │   │   │       ├── glib-sys v0.18.1 (*)
+│   │   │   │       ├── gobject-sys v0.18.0 (*)
+│   │   │   │       └── libc v0.2.190
+│   │   │   ├── gio v0.18.4 (*)
+│   │   │   ├── glib v0.18.5 (*)
+│   │   │   ├── libc v0.2.190
+│   │   │   └── pango v0.18.3
+│   │   │       ├── gio v0.18.4 (*)
+│   │   │       ├── glib v0.18.5 (*)
+│   │   │       ├── libc v0.2.190
+│   │   │       ├── once_cell v1.21.4
+│   │   │       └── pango-sys v0.18.0 (*)
+│   │   ├── gdk-pixbuf v0.18.5 (*)
+│   │   ├── gio v0.18.4 (*)
+│   │   ├── glib v0.18.5 (*)
+│   │   ├── gtk-sys v0.18.2
+│   │   │   ├── atk-sys v0.18.2 (*)
+│   │   │   ├── cairo-sys-rs v0.18.2 (*)
+│   │   │   ├── gdk-pixbuf-sys v0.18.0 (*)
+│   │   │   ├── gdk-sys v0.18.2 (*)
+│   │   │   ├── gio-sys v0.18.1 (*)
+│   │   │   ├── glib-sys v0.18.1 (*)
+│   │   │   ├── gobject-sys v0.18.0 (*)
+│   │   │   ├── libc v0.2.190
+│   │   │   └── pango-sys v0.18.0 (*)
+│   │   ├── gtk3-macros v0.18.2 (proc-macro)
+│   │   │   ├── proc-macro-crate v1.3.1
+│   │   │   │   ├── once_cell v1.21.4
+│   │   │   │   └── toml_edit v0.19.15
+│   │   │   │       ├── indexmap v2.14.2 (*)
+│   │   │   │       ├── toml_datetime v0.6.3 (*)
+│   │   │   │       └── winnow v0.5.40
+│   │   │   ├── proc-macro-error v1.0.4 (*)
+│   │   │   ├── proc-macro2 v1.0.107 (*)
+│   │   │   ├── quote v1.0.47 (*)
+│   │   │   └── syn v2.0.119 (*)
+│   │   ├── libc v0.2.190
+│   │   └── pango v0.18.3 (*)
+│   ├── heck v0.5.0
+│   ├── http v1.5.0
+│   │   ├── bytes v1.12.1
+│   │   └── itoa v1.0.18
+│   ├── log v0.4.34
+│   ├── mime v0.3.17
+│   ├── muda v0.20.0
+│   │   ├── crossbeam-channel v0.5.17
+│   │   │   └── crossbeam-utils v0.8.23
+│   │   ├── dpi v0.1.2
+│   │   │   └── serde v1.0.229 (*)
+│   │   ├── gtk v0.18.2 (*)
+│   │   ├── keyboard-types v0.8.3
+│   │   │   ├── bitflags v2.13.2 (*)
+│   │   │   └── serde v1.0.229 (*)
+│   │   ├── once_cell v1.21.4
+│   │   ├── serde v1.0.229 (*)
+│   │   └── thiserror v2.0.21
+│   │       └── thiserror-impl v2.0.21 (proc-macro)
+│   │           ├── proc-macro2 v1.0.107 (*)
+│   │           ├── quote v1.0.47 (*)
+│   │           └── syn v3.0.6 (*)
+│   ├── percent-encoding v2.3.2
+│   ├── raw-window-handle v0.6.2
+│   ├── serde v1.0.229 (*)
+│   ├── serde_json v1.0.151 (*)
+│   ├── serde_repr v0.1.21 (proc-macro)
+│   │   ├── proc-macro2 v1.0.107 (*)
+│   │   ├── quote v1.0.47 (*)
+│   │   └── syn v3.0.6 (*)
+│   ├── serialize-to-javascript v0.1.2
+│   │   ├── serde v1.0.229 (*)
+│   │   ├── serde_json v1.0.151 (*)
+│   │   └── serialize-to-javascript-impl v0.1.2 (proc-macro)
+│   │       ├── proc-macro2 v1.0.107 (*)
+│   │       ├── quote v1.0.47 (*)
+│   │       └── syn v2.0.119 (*)
+│   ├── tauri-macros v2.7.1 (proc-macro)
+│   │   ├── heck v0.5.0
+│   │   ├── proc-macro2 v1.0.107 (*)
+│   │   ├── quote v1.0.47 (*)
+│   │   ├── syn v2.0.119 (*)
+│   │   ├── tauri-codegen v2.7.1
+│   │   │   ├── base64 v0.22.1
+│   │   │   ├── brotli v9.0.0
+│   │   │   │   ├── alloc-no-stdlib v3.0.0
+│   │   │   │   ├── alloc-stdlib v0.3.0
+│   │   │   │   │   └── alloc-no-stdlib v3.0.0
+│   │   │   │   └── brotli-decompressor v6.0.1
+│   │   │   │       ├── alloc-no-stdlib v3.0.0
+│   │   │   │       └── alloc-stdlib v0.3.0 (*)
+│   │   │   ├── ico v0.5.0
+│   │   │   │   ├── byteorder v1.5.0
+│   │   │   │   └── png v0.17.16
+│   │   │   │       ├── bitflags v1.3.2
+│   │   │   │       ├── crc32fast v1.5.2
+│   │   │   │       │   └── cfg-if v1.0.5
+│   │   │   │       ├── fdeflate v0.3.7
+│   │   │   │       │   └── simd-adler32 v0.3.10
+│   │   │   │       ├── flate2 v1.1.10
+│   │   │   │       │   ├── crc32fast v1.5.2 (*)
+│   │   │   │       │   └── miniz_oxide v0.9.1
+│   │   │   │       │       ├── adler2 v2.0.1
+│   │   │   │       │       └── simd-adler32 v0.3.10
+│   │   │   │       └── miniz_oxide v0.8.9
+│   │   │   │           ├── adler2 v2.0.1
+│   │   │   │           └── simd-adler32 v0.3.10
+│   │   │   ├── json-patch v4.2.0
+│   │   │   │   ├── jsonptr v0.7.1
+│   │   │   │   │   ├── serde v1.0.229 (*)
+│   │   │   │   │   └── serde_json v1.0.151
+│   │   │   │   │       ├── itoa v1.0.18
+│   │   │   │   │       ├── memchr v2.8.3
+│   │   │   │   │       ├── serde_core v1.0.229
+│   │   │   │   │       └── zmij v1.0.23
+│   │   │   │   ├── serde v1.0.229 (*)
+│   │   │   │   ├── serde_json v1.0.151 (*)
+│   │   │   │   └── thiserror v2.0.21 (*)
+│   │   │   ├── png v0.18.1
+│   │   │   │   ├── bitflags v2.13.2
+│   │   │   │   ├── crc32fast v1.5.2 (*)
+│   │   │   │   ├── fdeflate v0.3.7 (*)
+│   │   │   │   ├── flate2 v1.1.10 (*)
+│   │   │   │   └── miniz_oxide v0.8.9 (*)
+│   │   │   ├── proc-macro2 v1.0.107 (*)
+│   │   │   ├── quote v1.0.47 (*)
+│   │   │   ├── semver v1.0.28
+│   │   │   │   └── serde_core v1.0.229
+│   │   │   ├── serde v1.0.229 (*)
+│   │   │   ├── serde_json v1.0.151 (*)
+│   │   │   ├── sha2 v0.10.9
+│   │   │   │   ├── cfg-if v1.0.5
+│   │   │   │   ├── cpufeatures v0.2.17
+│   │   │   │   └── digest v0.10.7
+│   │   │   │       ├── block-buffer v0.10.4
+│   │   │   │       │   └── generic-array v0.14.7
+│   │   │   │       │       └── typenum v1.20.1
+│   │   │   │       └── crypto-common v0.1.7
+│   │   │   │           ├── generic-array v0.14.7 (*)
+│   │   │   │           └── typenum v1.20.1
+│   │   │   ├── syn v2.0.119 (*)
+│   │   │   ├── tauri-utils v2.10.1
+│   │   │   │   ├── anyhow v1.0.104
+│   │   │   │   ├── brotli v9.0.0 (*)
+│   │   │   │   ├── cargo_metadata v0.19.2
+│   │   │   │   │   ├── camino v1.2.6
+│   │   │   │   │   │   └── serde_core v1.0.229
+│   │   │   │   │   ├── cargo-platform v0.1.9
+│   │   │   │   │   │   └── serde v1.0.229 (*)
+│   │   │   │   │   ├── semver v1.0.28 (*)
+│   │   │   │   │   ├── serde v1.0.229 (*)
+│   │   │   │   │   ├── serde_json v1.0.151 (*)
+│   │   │   │   │   └── thiserror v2.0.21 (*)
+│   │   │   │   ├── ctor v1.0.13
+│   │   │   │   ├── dom_query v0.28.0
+│   │   │   │   │   ├── bit-set v0.8.0
+│   │   │   │   │   │   └── bit-vec v0.8.0
+│   │   │   │   │   ├── cssparser v0.37.0
+│   │   │   │   │   │   ├── cssparser-macros v0.7.1 (proc-macro)
+│   │   │   │   │   │   │   ├── quote v1.0.47 (*)
+│   │   │   │   │   │   │   └── syn v3.0.6 (*)
+│   │   │   │   │   │   ├── dtoa-short v0.3.5
+│   │   │   │   │   │   │   └── dtoa v1.0.11
+│   │   │   │   │   │   ├── itoa v1.0.18
+│   │   │   │   │   │   ├── phf v0.13.1
+│   │   │   │   │   │   │   ├── phf_macros v0.13.1 (proc-macro)
+│   │   │   │   │   │   │   │   ├── phf_generator v0.13.1
+│   │   │   │   │   │   │   │   │   ├── fastrand v2.5.0
+│   │   │   │   │   │   │   │   │   └── phf_shared v0.13.1
+│   │   │   │   │   │   │   │   │       └── siphasher v1.0.4
+│   │   │   │   │   │   │   │   ├── phf_shared v0.13.1 (*)
+│   │   │   │   │   │   │   │   ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   │   │   │   │   ├── quote v1.0.47 (*)
+│   │   │   │   │   │   │   │   └── syn v2.0.119 (*)
+│   │   │   │   │   │   │   └── phf_shared v0.13.1 (*)
+│   │   │   │   │   │   └── smallvec v1.16.2
+│   │   │   │   │   ├── foldhash v0.2.0
+│   │   │   │   │   ├── html5ever v0.39.0
+│   │   │   │   │   │   ├── log v0.4.34
+│   │   │   │   │   │   └── markup5ever v0.39.0
+│   │   │   │   │   │       ├── log v0.4.34
+│   │   │   │   │   │       ├── tendril v0.5.1
+│   │   │   │   │   │       │   └── new_debug_unreachable v1.0.6
+│   │   │   │   │   │       └── web_atoms v0.2.6
+│   │   │   │   │   │           ├── phf v0.13.1 (*)
+│   │   │   │   │   │           └── string_cache v0.9.0
+│   │   │   │   │   │               ├── new_debug_unreachable v1.0.6
+│   │   │   │   │   │               ├── parking_lot v0.12.5
+│   │   │   │   │   │               │   ├── lock_api v0.4.14
+│   │   │   │   │   │               │   │   └── scopeguard v1.2.0
+│   │   │   │   │   │               │   └── parking_lot_core v0.9.12
+│   │   │   │   │   │               │       ├── cfg-if v1.0.5
+│   │   │   │   │   │               │       ├── libc v0.2.190
+│   │   │   │   │   │               │       └── smallvec v1.16.2
+│   │   │   │   │   │               ├── phf_shared v0.13.1 (*)
+│   │   │   │   │   │               └── precomputed-hash v0.1.1
+│   │   │   │   │   ├── precomputed-hash v0.1.1
+│   │   │   │   │   ├── selectors v0.38.0
+│   │   │   │   │   │   ├── bitflags v2.13.2
+│   │   │   │   │   │   ├── cssparser v0.37.0 (*)
+│   │   │   │   │   │   ├── derive_more v2.1.1
+│   │   │   │   │   │   │   └── derive_more-impl v2.1.1 (proc-macro)
+│   │   │   │   │   │   │       ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   │   │   │       ├── quote v1.0.47 (*)
+│   │   │   │   │   │   │       └── syn v2.0.119 (*)
+│   │   │   │   │   │   ├── log v0.4.34
+│   │   │   │   │   │   ├── new_debug_unreachable v1.0.6
+│   │   │   │   │   │   ├── phf v0.13.1 (*)
+│   │   │   │   │   │   ├── precomputed-hash v0.1.1
+│   │   │   │   │   │   ├── rustc-hash v2.1.3
+│   │   │   │   │   │   ├── servo_arc v0.4.3
+│   │   │   │   │   │   │   └── stable_deref_trait v1.2.1
+│   │   │   │   │   │   └── smallvec v1.16.2
+│   │   │   │   │   └── tendril v0.5.1 (*)
+│   │   │   │   ├── dunce v1.0.5
+│   │   │   │   ├── glob v0.3.4
+│   │   │   │   ├── http v1.5.0 (*)
+│   │   │   │   ├── infer v0.22.0
+│   │   │   │   │   └── cfb v0.14.0
+│   │   │   │   │       ├── fnv v1.0.7
+│   │   │   │   │       ├── uuid v1.27.0
+│   │   │   │   │       │   ├── getrandom v0.4.3
+│   │   │   │   │       │   │   ├── cfg-if v1.0.5
+│   │   │   │   │       │   │   └── libc v0.2.190
+│   │   │   │   │       │   └── serde_core v1.0.229
+│   │   │   │   │       └── web-time v1.1.0
+│   │   │   │   ├── json-patch v4.2.0 (*)
+│   │   │   │   ├── log v0.4.34
+│   │   │   │   ├── memchr v2.8.3
+│   │   │   │   ├── phf v0.13.1 (*)
+│   │   │   │   ├── plist v1.10.1
+│   │   │   │   │   ├── base64 v0.23.1
+│   │   │   │   │   ├── indexmap v2.14.2 (*)
+│   │   │   │   │   ├── quick-xml v0.42.0
+│   │   │   │   │   │   └── memchr v2.8.3
+│   │   │   │   │   ├── serde v1.0.229 (*)
+│   │   │   │   │   └── time v0.3.55
+│   │   │   │   │       ├── deranged v0.5.8
+│   │   │   │   │       ├── num-conv v0.2.2
+│   │   │   │   │       ├── powerfmt v0.2.1
+│   │   │   │   │       └── time-core v0.1.9
+│   │   │   │   ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   ├── quote v1.0.47 (*)
+│   │   │   │   ├── regex v1.13.1
+│   │   │   │   │   ├── aho-corasick v1.1.5
+│   │   │   │   │   │   └── memchr v2.8.3
+│   │   │   │   │   ├── memchr v2.8.3
+│   │   │   │   │   ├── regex-automata v0.4.18
+│   │   │   │   │   │   ├── aho-corasick v1.1.5 (*)
+│   │   │   │   │   │   ├── memchr v2.8.3
+│   │   │   │   │   │   └── regex-syntax v0.8.11
+│   │   │   │   │   └── regex-syntax v0.8.11
+│   │   │   │   ├── schemars v0.8.22
+│   │   │   │   │   ├── dyn-clone v1.0.20
+│   │   │   │   │   ├── indexmap v1.9.3
+│   │   │   │   │   │   ├── hashbrown v0.12.3
+│   │   │   │   │   │   └── serde v1.0.229 (*)
+│   │   │   │   │   ├── schemars_derive v0.8.22 (proc-macro)
+│   │   │   │   │   │   ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   │   │   ├── quote v1.0.47 (*)
+│   │   │   │   │   │   ├── serde_derive_internals v0.29.1
+│   │   │   │   │   │   │   ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   │   │   │   ├── quote v1.0.47 (*)
+│   │   │   │   │   │   │   └── syn v2.0.119 (*)
+│   │   │   │   │   │   └── syn v2.0.119 (*)
+│   │   │   │   │   ├── serde v1.0.229 (*)
+│   │   │   │   │   ├── serde_json v1.0.151 (*)
+│   │   │   │   │   ├── url v2.5.8
+│   │   │   │   │   │   ├── form_urlencoded v1.2.2
+│   │   │   │   │   │   │   └── percent-encoding v2.3.2
+│   │   │   │   │   │   ├── idna v1.1.0
+│   │   │   │   │   │   │   ├── idna_adapter v1.2.2
+│   │   │   │   │   │   │   │   ├── icu_normalizer v2.3.0
+│   │   │   │   │   │   │   │   │   ├── icu_collections v2.3.0
+│   │   │   │   │   │   │   │   │   │   ├── displaydoc v0.2.7 (proc-macro)
+│   │   │   │   │   │   │   │   │   │   │   ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   │   │   │   │   │   │   │   ├── quote v1.0.47 (*)
+│   │   │   │   │   │   │   │   │   │   │   └── syn v3.0.6 (*)
+│   │   │   │   │   │   │   │   │   │   ├── potential_utf v0.1.6
+│   │   │   │   │   │   │   │   │   │   │   └── zerovec v0.11.8
+│   │   │   │   │   │   │   │   │   │   │       ├── yoke v0.8.3
+│   │   │   │   │   │   │   │   │   │   │       │   ├── stable_deref_trait v1.2.1
+│   │   │   │   │   │   │   │   │   │   │       │   ├── yoke-derive v0.8.4 (proc-macro)
+│   │   │   │   │   │   │   │   │   │   │       │   │   ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   │   │   │   │   │   │   │       │   │   ├── quote v1.0.47 (*)
+│   │   │   │   │   │   │   │   │   │   │       │   │   ├── syn v3.0.6 (*)
+│   │   │   │   │   │   │   │   │   │   │       │   │   └── synstructure v0.14.0
+│   │   │   │   │   │   │   │   │   │   │       │   │       ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   │   │   │   │   │   │   │       │   │       ├── quote v1.0.47 (*)
+│   │   │   │   │   │   │   │   │   │   │       │   │       └── syn v3.0.6 (*)
+│   │   │   │   │   │   │   │   │   │   │       │   └── zerofrom v0.1.8
+│   │   │   │   │   │   │   │   │   │   │       │       └── zerofrom-derive v0.1.8 (proc-macro)
+│   │   │   │   │   │   │   │   │   │   │       │           ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   │   │   │   │   │   │   │       │           ├── quote v1.0.47 (*)
+│   │   │   │   │   │   │   │   │   │   │       │           ├── syn v3.0.6 (*)
+│   │   │   │   │   │   │   │   │   │   │       │           └── synstructure v0.14.0 (*)
+│   │   │   │   │   │   │   │   │   │   │       ├── zerofrom v0.1.8 (*)
+│   │   │   │   │   │   │   │   │   │   │       └── zerovec-derive v0.11.6 (proc-macro)
+│   │   │   │   │   │   │   │   │   │   │           ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   │   │   │   │   │   │   │           ├── quote v1.0.47 (*)
+│   │   │   │   │   │   │   │   │   │   │           └── syn v3.0.6 (*)
+│   │   │   │   │   │   │   │   │   │   ├── utf8_iter v1.0.4
+│   │   │   │   │   │   │   │   │   │   ├── yoke v0.8.3 (*)
+│   │   │   │   │   │   │   │   │   │   ├── zerofrom v0.1.8 (*)
+│   │   │   │   │   │   │   │   │   │   └── zerovec v0.11.8 (*)
+│   │   │   │   │   │   │   │   │   ├── icu_normalizer_data v2.3.0
+│   │   │   │   │   │   │   │   │   ├── icu_provider v2.3.1
+│   │   │   │   │   │   │   │   │   │   ├── displaydoc v0.2.7 (proc-macro) (*)
+│   │   │   │   │   │   │   │   │   │   ├── icu_locale_core v2.3.0
+│   │   │   │   │   │   │   │   │   │   │   ├── displaydoc v0.2.7 (proc-macro) (*)
+│   │   │   │   │   │   │   │   │   │   │   ├── litemap v0.8.3
+│   │   │   │   │   │   │   │   │   │   │   ├── tinystr v0.8.4
+│   │   │   │   │   │   │   │   │   │   │   │   ├── displaydoc v0.2.7 (proc-macro) (*)
+│   │   │   │   │   │   │   │   │   │   │   │   └── zerovec v0.11.8 (*)
+│   │   │   │   │   │   │   │   │   │   │   ├── writeable v0.6.4
+│   │   │   │   │   │   │   │   │   │   │   └── zerovec v0.11.8 (*)
+│   │   │   │   │   │   │   │   │   │   ├── writeable v0.6.4
+│   │   │   │   │   │   │   │   │   │   ├── yoke v0.8.3 (*)
+│   │   │   │   │   │   │   │   │   │   ├── zerofrom v0.1.8 (*)
+│   │   │   │   │   │   │   │   │   │   ├── zerotrie v0.2.5
+│   │   │   │   │   │   │   │   │   │   │   ├── displaydoc v0.2.7 (proc-macro) (*)
+│   │   │   │   │   │   │   │   │   │   │   ├── yoke v0.8.3 (*)
+│   │   │   │   │   │   │   │   │   │   │   └── zerofrom v0.1.8 (*)
+│   │   │   │   │   │   │   │   │   │   └── zerovec v0.11.8 (*)
+│   │   │   │   │   │   │   │   │   ├── smallvec v1.16.2
+│   │   │   │   │   │   │   │   │   └── zerovec v0.11.8 (*)
+│   │   │   │   │   │   │   │   └── icu_properties v2.3.0
+│   │   │   │   │   │   │   │       ├── displaydoc v0.2.7 (proc-macro) (*)
+│   │   │   │   │   │   │   │       ├── icu_collections v2.3.0 (*)
+│   │   │   │   │   │   │   │       ├── icu_locale_core v2.3.0 (*)
+│   │   │   │   │   │   │   │       ├── icu_properties_data v2.3.0
+│   │   │   │   │   │   │   │       ├── icu_provider v2.3.1 (*)
+│   │   │   │   │   │   │   │       ├── zerotrie v0.2.5 (*)
+│   │   │   │   │   │   │   │       └── zerovec v0.11.8 (*)
+│   │   │   │   │   │   │   ├── smallvec v1.16.2
+│   │   │   │   │   │   │   └── utf8_iter v1.0.4
+│   │   │   │   │   │   ├── percent-encoding v2.3.2
+│   │   │   │   │   │   ├── serde v1.0.229 (*)
+│   │   │   │   │   │   └── serde_derive v1.0.229 (proc-macro) (*)
+│   │   │   │   │   └── uuid v1.27.0 (*)
+│   │   │   │   ├── semver v1.0.28 (*)
+│   │   │   │   ├── serde v1.0.229 (*)
+│   │   │   │   ├── serde-untagged v0.1.9
+│   │   │   │   │   ├── erased-serde v0.4.10
+│   │   │   │   │   │   ├── serde_core v1.0.229
+│   │   │   │   │   │   └── typeid v1.0.3
+│   │   │   │   │   ├── serde_core v1.0.229
+│   │   │   │   │   └── typeid v1.0.3
+│   │   │   │   ├── serde_json v1.0.151 (*)
+│   │   │   │   ├── serde_with v3.24.0
+│   │   │   │   │   ├── serde_core v1.0.229
+│   │   │   │   │   └── serde_with_macros v3.24.0 (proc-macro)
+│   │   │   │   │       ├── darling v0.24.1
+│   │   │   │   │       │   ├── darling_core v0.24.1
+│   │   │   │   │       │   │   ├── ident_case v1.0.1
+│   │   │   │   │       │   │   ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   │       │   │   ├── quote v1.0.47 (*)
+│   │   │   │   │       │   │   ├── strsim v0.11.1
+│   │   │   │   │       │   │   └── syn v3.0.6 (*)
+│   │   │   │   │       │   └── darling_macro v0.24.1 (proc-macro)
+│   │   │   │   │       │       ├── darling_core v0.24.1 (*)
+│   │   │   │   │       │       ├── quote v1.0.47 (*)
+│   │   │   │   │       │       └── syn v3.0.6 (*)
+│   │   │   │   │       ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   │       ├── quote v1.0.47 (*)
+│   │   │   │   │       └── syn v3.0.6 (*)
+│   │   │   │   ├── thiserror v2.0.21 (*)
+│   │   │   │   ├── toml v1.1.8+spec-1.1.0
+│   │   │   │   │   ├── serde_core v1.0.229
+│   │   │   │   │   ├── serde_spanned v1.1.2
+│   │   │   │   │   │   └── serde_core v1.0.229
+│   │   │   │   │   ├── toml_datetime v1.1.2+spec-1.1.0
+│   │   │   │   │   │   └── serde_core v1.0.229
+│   │   │   │   │   ├── toml_parser v1.1.5+spec-1.1.0
+│   │   │   │   │   │   └── winnow v1.0.4
+│   │   │   │   │   ├── toml_writer v1.1.3+spec-1.1.0
+│   │   │   │   │   └── winnow v1.0.4
+│   │   │   │   ├── url v2.5.8 (*)
+│   │   │   │   ├── urlpattern v0.6.0
+│   │   │   │   │   ├── icu_properties v2.3.0 (*)
+│   │   │   │   │   ├── regex v1.13.1 (*)
+│   │   │   │   │   ├── serde v1.0.229 (*)
+│   │   │   │   │   └── url v2.5.8 (*)
+│   │   │   │   ├── uuid v1.27.0 (*)
+│   │   │   │   └── walkdir v2.5.0
+│   │   │   │       └── same-file v1.0.6
+│   │   │   ├── thiserror v2.0.21 (*)
+│   │   │   ├── url v2.5.8 (*)
+│   │   │   ├── uuid v1.27.0 (*)
+│   │   │   └── walkdir v2.5.0 (*)
+│   │   └── tauri-utils v2.10.1 (*)
+│   ├── tauri-runtime v2.12.1
+│   │   ├── cookie v0.18.2 (*)
+│   │   ├── dpi v0.1.2 (*)
+│   │   ├── gtk v0.18.2 (*)
+│   │   ├── http v1.5.0 (*)
+│   │   ├── raw-window-handle v0.6.2
+│   │   ├── serde v1.0.229 (*)
+│   │   ├── serde_json v1.0.151 (*)
+│   │   ├── tauri-utils v2.10.1
+│   │   │   ├── anyhow v1.0.104
+│   │   │   ├── brotli v9.0.0 (*)
+│   │   │   ├── ctor v1.0.13
+│   │   │   ├── dunce v1.0.5
+│   │   │   ├── glob v0.3.4
+│   │   │   ├── http v1.5.0 (*)
+│   │   │   ├── infer v0.22.0 (*)
+│   │   │   ├── json-patch v4.2.0 (*)
+│   │   │   ├── log v0.4.34
+│   │   │   ├── memchr v2.8.3
+│   │   │   ├── phf v0.13.1 (*)
+│   │   │   ├── plist v1.10.1 (*)
+│   │   │   ├── regex v1.13.1 (*)
+│   │   │   ├── semver v1.0.28
+│   │   │   ├── serde v1.0.229 (*)
+│   │   │   ├── serde-untagged v0.1.9 (*)
+│   │   │   ├── serde_json v1.0.151 (*)
+│   │   │   ├── serde_with v3.24.0 (*)
+│   │   │   ├── thiserror v2.0.21 (*)
+│   │   │   ├── toml v1.1.8+spec-1.1.0 (*)
+│   │   │   ├── url v2.5.8 (*)
+│   │   │   ├── urlpattern v0.6.0 (*)
+│   │   │   ├── uuid v1.27.0 (*)
+│   │   │   └── walkdir v2.5.0 (*)
+│   │   ├── thiserror v2.0.21 (*)
+│   │   ├── url v2.5.8 (*)
+│   │   └── webkit2gtk v2.0.2
+│   │       ├── bitflags v1.3.2
+│   │       ├── cairo-rs v0.18.5 (*)
+│   │       ├── gdk v0.18.2 (*)
+│   │       ├── gdk-sys v0.18.2 (*)
+│   │       ├── gio v0.18.4 (*)
+│   │       ├── gio-sys v0.18.1 (*)
+│   │       ├── glib v0.18.5 (*)
+│   │       ├── glib-sys v0.18.1 (*)
+│   │       ├── gobject-sys v0.18.0 (*)
+│   │       ├── gtk v0.18.2 (*)
+│   │       ├── gtk-sys v0.18.2 (*)
+│   │       ├── javascriptcore-rs v1.1.2
+│   │       │   ├── bitflags v1.3.2
+│   │       │   ├── glib v0.18.5 (*)
+│   │       │   └── javascriptcore-rs-sys v1.1.1
+│   │       │       ├── glib-sys v0.18.1 (*)
+│   │       │       ├── gobject-sys v0.18.0 (*)
+│   │       │       └── libc v0.2.190
+│   │       ├── libc v0.2.190
+│   │       ├── once_cell v1.21.4
+│   │       ├── soup3 v0.5.0
+│   │       │   ├── futures-channel v0.3.34 (*)
+│   │       │   ├── gio v0.18.4 (*)
+│   │       │   ├── glib v0.18.5 (*)
+│   │       │   ├── libc v0.2.190
+│   │       │   └── soup3-sys v0.5.0
+│   │       │       ├── gio-sys v0.18.1 (*)
+│   │       │       ├── glib-sys v0.18.1 (*)
+│   │       │       ├── gobject-sys v0.18.0 (*)
+│   │       │       └── libc v0.2.190
+│   │       └── webkit2gtk-sys v2.0.2
+│   │           ├── bitflags v1.3.2
+│   │           ├── cairo-sys-rs v0.18.2 (*)
+│   │           ├── gdk-sys v0.18.2 (*)
+│   │           ├── gio-sys v0.18.1 (*)
+│   │           ├── glib-sys v0.18.1 (*)
+│   │           ├── gobject-sys v0.18.0 (*)
+│   │           ├── gtk-sys v0.18.2 (*)
+│   │           ├── javascriptcore-rs-sys v1.1.1 (*)
+│   │           ├── libc v0.2.190
+│   │           └── soup3-sys v0.5.0 (*)
+│   ├── tauri-runtime-wry v2.12.1
+│   │   ├── gtk v0.18.2 (*)
+│   │   ├── http v1.5.0 (*)
+│   │   ├── log v0.4.34
+│   │   ├── percent-encoding v2.3.2
+│   │   ├── raw-window-handle v0.6.2
+│   │   ├── tao v0.37.1
+│   │   │   ├── bitflags v2.13.2 (*)
+│   │   │   ├── crossbeam-channel v0.5.17 (*)
+│   │   │   ├── dbus v0.9.12
+│   │   │   │   ├── libc v0.2.190
+│   │   │   │   └── libdbus-sys v0.2.7
+│   │   │   ├── dlopen2 v0.8.2
+│   │   │   │   ├── dlopen2_derive v0.4.3 (proc-macro)
+│   │   │   │   │   ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   │   ├── quote v1.0.47 (*)
+│   │   │   │   │   └── syn v2.0.119 (*)
+│   │   │   │   ├── libc v0.2.190
+│   │   │   │   └── once_cell v1.21.4
+│   │   │   ├── dpi v0.1.2 (*)
+│   │   │   ├── gdkwayland-sys v0.18.2
+│   │   │   │   ├── gdk-sys v0.18.2 (*)
+│   │   │   │   ├── glib-sys v0.18.1 (*)
+│   │   │   │   ├── gobject-sys v0.18.0 (*)
+│   │   │   │   └── libc v0.2.190
+│   │   │   ├── gdkx11-sys v0.18.2
+│   │   │   │   ├── gdk-sys v0.18.2 (*)
+│   │   │   │   ├── glib-sys v0.18.1 (*)
+│   │   │   │   ├── libc v0.2.190
+│   │   │   │   └── x11 v2.21.0
+│   │   │   │       └── libc v0.2.190
+│   │   │   ├── gtk v0.18.2 (*)
+│   │   │   ├── libc v0.2.190
+│   │   │   ├── log v0.4.34
+│   │   │   ├── parking_lot v0.12.5 (*)
+│   │   │   ├── raw-window-handle v0.6.2
+│   │   │   ├── url v2.5.8 (*)
+│   │   │   └── x11-dl v2.21.0
+│   │   │       ├── libc v0.2.190
+│   │   │       └── once_cell v1.21.4
+│   │   ├── tauri-runtime v2.12.1 (*)
+│   │   ├── tauri-utils v2.10.1 (*)
+│   │   ├── url v2.5.8 (*)
+│   │   ├── webkit2gtk v2.0.2 (*)
+│   │   └── wry v0.57.0
+│   │       ├── cookie v0.18.2 (*)
+│   │       ├── dirs v7.0.0 (*)
+│   │       ├── dpi v0.1.2 (*)
+│   │       ├── gdkx11 v0.18.2
+│   │       │   ├── gdk v0.18.2 (*)
+│   │       │   ├── gdkx11-sys v0.18.2 (*)
+│   │       │   ├── gio v0.18.4 (*)
+│   │       │   ├── glib v0.18.5 (*)
+│   │       │   ├── libc v0.2.190
+│   │       │   └── x11 v2.21.0 (*)
+│   │       ├── gtk v0.18.2 (*)
+│   │       ├── http v1.5.0 (*)
+│   │       ├── javascriptcore-rs v1.1.2 (*)
+│   │       ├── once_cell v1.21.4
+│   │       ├── percent-encoding v2.3.2
+│   │       ├── raw-window-handle v0.6.2
+│   │       ├── soup3 v0.5.0 (*)
+│   │       ├── thiserror v2.0.21 (*)
+│   │       ├── webkit2gtk v2.0.2 (*)
+│   │       ├── webkit2gtk-sys v2.0.2 (*)
+│   │       └── x11-dl v2.21.0 (*)
+│   ├── tauri-utils v2.10.1 (*)
+│   ├── thiserror v2.0.21 (*)
+│   ├── tokio v1.53.2
+│   │   ├── bytes v1.12.1
+│   │   └── pin-project-lite v0.2.17
+│   ├── url v2.5.8 (*)
+│   └── webkit2gtk v2.0.2 (*)
+├── tauri-plugin-dialog v2.8.1
+│   ├── log v0.4.34
+│   ├── raw-window-handle v0.6.2
+│   ├── rfd v0.16.0
+│   │   ├── glib-sys v0.18.1 (*)
+│   │   ├── gobject-sys v0.18.0 (*)
+│   │   ├── gtk-sys v0.18.2 (*)
+│   │   ├── log v0.4.34
+│   │   └── raw-window-handle v0.6.2
+│   ├── serde v1.0.229 (*)
+│   ├── serde_json v1.0.151 (*)
+│   ├── tauri v2.12.2 (*)
+│   ├── tauri-plugin-fs v2.6.0
+│   │   ├── anyhow v1.0.104
+│   │   ├── dunce v1.0.5
+│   │   ├── glob v0.3.4
+│   │   ├── log v0.4.34
+│   │   ├── percent-encoding v2.3.2
+│   │   ├── serde v1.0.229 (*)
+│   │   ├── serde_json v1.0.151 (*)
+│   │   ├── serde_repr v0.1.21 (proc-macro) (*)
+│   │   ├── tauri v2.12.2 (*)
+│   │   ├── thiserror v2.0.21 (*)
+│   │   └── url v2.5.8 (*)
+│   ├── thiserror v2.0.21 (*)
+│   └── url v2.5.8 (*)
+└── uuid v1.27.0 (*)
+Release native startup passed on linux; WebDriver disabled
+CHECK @lantern-lab/observability/unit: Selected library @lantern-lab/observability; full phase
+$ node ../../tools/quality/vitest.ts
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/home/runner/work/super-starter/super-starter/desktop-counter-lantern/packages/observability[39m
+
+ [32m✓[39m src/index.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 44[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m7 passed[39m[22m[90m (7)[39m
+[2m   Start at [22m 19:54:54
+[2m   Duration [22m 302ms[2m (import 45%, transform 32%, tests 21%, worker 2%)[22m
+
+JSON report written to /home/runner/work/super-starter/super-starter/desktop-counter-lantern/packages/observability/artifacts/tests-default.json
+Executed 7 required test cases
+CHECK @lantern-lab/observability/build: Selected library @lantern-lab/observability; full phase
+$ vp pack
+ℹ entry: src/index.ts
+ℹ tsconfig: tsconfig.json
+ℹ Build start
+ℹ Cleaning 2 files
+warn: TypeScript 7.0 does not yet have a stable API and is experimental. Some options will be unavailable.
+ℹ Emit types with typescript@7.0.2
+ℹ dist/index.mjs    12.80 kB │ gzip: 4.23 kB
+ℹ dist/index.d.mts   1.87 kB │ gzip: 0.74 kB
+ℹ 2 files, total: 14.67 kB
+✔ Build complete in 182ms
+CHECK @lantern-lab/ui/unit: Selected library @lantern-lab/ui; full phase
+$ node ../../tools/quality/vitest.ts
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/home/runner/work/super-starter/super-starter/desktop-counter-lantern/packages/ui[39m
+
+ [32m✓[39m src/index.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 375[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m3 passed[39m[22m[90m (3)[39m
+[2m   Start at [22m 19:54:55
+[2m   Duration [22m 1.13s[2m (environment 44%, tests 36%, import 12%, transform 7%)[22m
+
+JSON report written to /home/runner/work/super-starter/super-starter/desktop-counter-lantern/packages/ui/artifacts/tests-default.json
+Executed 3 required test cases
+CHECK @lantern-lab/ui/build: Selected library @lantern-lab/ui; full phase
+$ vp pack
+ℹ entry: src/index.tsx
+ℹ tsconfig: tsconfig.json
+ℹ Build start
+ℹ Cleaning 2 files
+warn: TypeScript 7.0 does not yet have a stable API and is experimental. Some options will be unavailable.
+ℹ Emit types with typescript@7.0.2
+ℹ dist/index.mjs    5.11 kB │ gzip: 1.65 kB
+ℹ dist/index.d.mts  0.57 kB │ gzip: 0.30 kB
+ℹ 2 files, total: 5.68 kB
+✔ Build complete in 178ms
+13/13 checks passed; content 49474ae1a1bf
