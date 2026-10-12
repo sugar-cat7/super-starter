@@ -10,8 +10,176 @@
   },
   "sourcePayload": null,
   "agents": {
-    "web-api": null,
-    "desktop": null,
+    "web-api": {
+      "commit": "c5e1b48150a5521faf3a481762b93fbc3d9757be",
+      "receiptPath": "artifacts/agent-web-api/agent-web-api.json",
+      "receiptSha256": "1932e00f632aa56fd898234f9412f73a673a8a89fb583685ba0ce2d33162a4a0",
+      "featureSha": "cbbbebea7045e1971b2fbf29af800201129c11f4",
+      "contentId": "57491160f7a8246813051efe63b845a79014e9c2c08a24d641d5c408ef6c610d",
+      "originContentId": "00587edc5d0a1e4aea804ef2c5f0d75783222fdddfa32000dce438e3dfa3cb39",
+      "files": [
+        {
+          "path": "artifacts/agent-web-api/agent-web-api.json",
+          "target": "agents/web-api/agent-web-api.json",
+          "size": 17636,
+          "sha256": "1932e00f632aa56fd898234f9412f73a673a8a89fb583685ba0ce2d33162a4a0"
+        },
+        {
+          "path": "artifacts/agent-web-api/logs/13-setup.log",
+          "target": "agents/web-api/logs/13-setup.log",
+          "size": 7671,
+          "sha256": "beee9dd9bde9cfa499c647c39f6fa833c965a0f60cb963801007a361a127f7b8"
+        },
+        {
+          "path": "artifacts/agent-web-api/logs/14-doctor.log",
+          "target": "agents/web-api/logs/14-doctor.log",
+          "size": 3974,
+          "sha256": "3ac28f7a9e76701d5e64f5fcf5151b8e710216104b79992e111b8b8ca015802f"
+        },
+        {
+          "path": "artifacts/agent-web-api/logs/16-dev.log",
+          "target": "agents/web-api/logs/16-dev.log",
+          "size": 4384,
+          "sha256": "f1c14defd57a2a05464e89ce19b173f85488106d846cefdfa0f5d3ae6154d1e5"
+        },
+        {
+          "path": "artifacts/agent-web-api/logs/17-targeted-test.log",
+          "target": "agents/web-api/logs/17-targeted-test.log",
+          "size": 3828,
+          "sha256": "9441535e11b71e4bc0b255b0b7c63ac4aaf90bec39b683b6fd50311c7ba7de2e"
+        },
+        {
+          "path": "artifacts/agent-web-api/logs/18-targeted-test.log",
+          "target": "agents/web-api/logs/18-targeted-test.log",
+          "size": 3738,
+          "sha256": "97e9892e4416f58ee03de59b1a4276846cf94285c991ea9346ea849c163c6a9d"
+        },
+        {
+          "path": "artifacts/agent-web-api/logs/19-pre-pr.log",
+          "target": "agents/web-api/logs/19-pre-pr.log",
+          "size": 94461,
+          "sha256": "cf95a0acb72e01046d48b3bdbb1d8e50a3f3bfd91df8f2aff334709586e85767"
+        },
+        {
+          "path": "artifacts/agent-web-api/logs/20-full.log",
+          "target": "agents/web-api/logs/20-full.log",
+          "size": 98288,
+          "sha256": "bc79d78a41b054fe1695320b50d0523b3fd8efd6252da31918572d591b8e1d3d"
+        },
+        {
+          "path": "artifacts/agent-web-api/logs/21-ci.log",
+          "target": "agents/web-api/logs/21-ci.log",
+          "size": 94715,
+          "sha256": "aba549e8ef3de081d4d5dc0ede0eee2d3c9086914c5eacbc2cb43800d1820d40"
+        },
+        {
+          "path": "artifacts/agent-web-api/logs/22-build.log",
+          "target": "agents/web-api/logs/22-build.log",
+          "size": 8008,
+          "sha256": "f05336ac54410509f6cc6ac50169ae12c9df83b65af573c8c74bb4a6e35e8754"
+        },
+        {
+          "path": "artifacts/agent-web-api/logs/23-preflight.log",
+          "target": "agents/web-api/logs/23-preflight.log",
+          "size": 9152,
+          "sha256": "03d6f0005370b667ea79c55f4c2a30338aab667e951838c413ea5fd19054cac1"
+        },
+        {
+          "path": "artifacts/agent-web-api/logs/24-preflight.log",
+          "target": "agents/web-api/logs/24-preflight.log",
+          "size": 11931,
+          "sha256": "970b92ab4121820adf0c48ab7b689c1df4d9c1546bd6c4f03f577014c49817d4"
+        },
+        {
+          "path": "artifacts/agent-web-api/logs/09-commit.log",
+          "target": "agents/web-api/logs/09-commit.log",
+          "size": 3427,
+          "sha256": "48520a6709de3b5ed3d22a56c4ca53039cff2caccdc6ec5ee229d5d80cacdef5"
+        },
+        {
+          "path": "artifacts/agent-web-api/logs/12-push.log",
+          "target": "agents/web-api/logs/12-push.log",
+          "size": 32817,
+          "sha256": "c3a91abdd9de2ab645f2650f171712894da0b2bba677ddcd7b0d542c7eb02d5e"
+        }
+      ]
+    },
+    "desktop": {
+      "commit": "69ce67e0777073a9a11dcc58acd64c79989d9447",
+      "receiptPath": ".rehearsal/receipts/fresh-desktop-lantern/source-653/agent-desktop.json",
+      "receiptSha256": "32391b8e29e99139eebd09ace4e88a21c8a85e448effcefb76a6817068b98112",
+      "featureSha": "105a27df985d71f797a1f313f9528c1021b59ad2",
+      "contentId": "49474ae1a1bf6e2319589b62975dba70da462a3d4ca6bd94994d0f3a56bc6722",
+      "originContentId": "5cfea1fa40293bc8306021aad69eac2b98732b54ae419c62add83f569fef4747",
+      "files": [
+        {
+          "path": ".rehearsal/receipts/fresh-desktop-lantern/source-653/agent-desktop.json",
+          "target": "agents/desktop/agent-desktop.json",
+          "size": 48646,
+          "sha256": "32391b8e29e99139eebd09ace4e88a21c8a85e448effcefb76a6817068b98112"
+        },
+        {
+          "path": ".rehearsal/receipts/fresh-desktop-lantern/source-653/logs/standard-setup.log",
+          "target": "agents/desktop/logs/standard-setup.log",
+          "size": 2706,
+          "sha256": "9e84148f38f5610ea574f8c2c41d4b969185e722b7a1e65ef05d24f8fd85cb7f"
+        },
+        {
+          "path": ".rehearsal/receipts/fresh-desktop-lantern/source-653/logs/standard-doctor.log",
+          "target": "agents/desktop/logs/standard-doctor.log",
+          "size": 1135,
+          "sha256": "fc8936f59c9b586897178ff040717ccc6b17ce2abf41dbf2a367015939f8b002"
+        },
+        {
+          "path": ".rehearsal/receipts/fresh-desktop-lantern/source-653/logs/standard-dev.log",
+          "target": "agents/desktop/logs/standard-dev.log",
+          "size": 149732,
+          "sha256": "8949d12ba32cb23193e66cbebd9ac7ad5dfedd086c9580b6e6eb0c35d235027f"
+        },
+        {
+          "path": ".rehearsal/receipts/fresh-desktop-lantern/source-653/logs/standard-test.log",
+          "target": "agents/desktop/logs/standard-test.log",
+          "size": 19747,
+          "sha256": "fdca8df6e0384a06b2046b85f0f64fe22df9cdcc640cb1716771656a9fbcb6b9"
+        },
+        {
+          "path": ".rehearsal/receipts/fresh-desktop-lantern/source-653/logs/standard-pre-pr.log",
+          "target": "agents/desktop/logs/standard-pre-pr.log",
+          "size": 211241,
+          "sha256": "f149cc3cf55ee4e0c26b3f733ce522ac1b7af2f0be2bd0223b6f1f26994ef004"
+        },
+        {
+          "path": ".rehearsal/receipts/fresh-desktop-lantern/source-653/logs/standard-full.log",
+          "target": "agents/desktop/logs/standard-full.log",
+          "size": 177798,
+          "sha256": "6e629753e1c5a9e89cba5fa8da0e3caedae26445eb2523d91a385064a2e408d4"
+        },
+        {
+          "path": ".rehearsal/receipts/fresh-desktop-lantern/source-653/logs/standard-build.log",
+          "target": "agents/desktop/logs/standard-build.log",
+          "size": 2484,
+          "sha256": "292c7bfc0a0737b0f625b667baa18a58a5d6ebeb031962524313c3818e281301"
+        },
+        {
+          "path": ".rehearsal/receipts/fresh-desktop-lantern/source-653/logs/standard-preflight.log",
+          "target": "agents/desktop/logs/standard-preflight.log",
+          "size": 303,
+          "sha256": "0105f93da0ca3ce19105ede94771a911ff7595198645e197eb88e108233664f3"
+        },
+        {
+          "path": ".rehearsal/receipts/fresh-desktop-lantern/source-653/logs/feature-commit.log",
+          "target": "agents/desktop/logs/feature-commit.log",
+          "size": 527,
+          "sha256": "e25bfe3ee01837571a66891362859804b8bc4120cc88884bb9458478d3158bc3"
+        },
+        {
+          "path": ".rehearsal/receipts/fresh-desktop-lantern/source-653/logs/genuine-feature-bare-push.log",
+          "target": "agents/desktop/logs/genuine-feature-bare-push.log",
+          "size": 20520,
+          "sha256": "677c55c27ac5d38220281bf8896114478445b51eda54a9050ffd483a5f372e33"
+        }
+      ]
+    },
     "package-add": {
       "commit": "8d03fa1f39cd80e5e5c57e2d8f71ca44754932bd",
       "receiptPath": "artifacts/agent-package-add-653/agent-package-add.json",
