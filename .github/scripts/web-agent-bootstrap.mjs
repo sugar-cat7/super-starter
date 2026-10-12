@@ -1,12 +1,14 @@
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { appendFileSync, chmodSync, readFileSync, writeFileSync } from 'node:fs';
+import { appendFileSync, chmodSync, existsSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { assertSource, bootstrapContentId, identify, transport } from './web-agent-input.mjs';
 import { recordCommand, directory } from './web-agent-run.mjs';
 
 const digest = body => createHash('sha256').update(body).digest('hex');
+const removal = JSON.parse(readFileSync(path.join(directory, 'source-removal-receipt.json'), 'utf8'));
+if (existsSync(removal.removedSource) || !removal.noSourceCheckoutRemains || removal.sourceSha !== '460ad19c970adaab7231795f3438943d9158b135') throw new Error('Fresh Source removal proof missing');
 const initial = () => {
   const state = assertSource('pristine');
   if (digest(readFileSync('.template.json')) !== transport.files['.template.json'].sha256 ||
@@ -50,7 +52,7 @@ for (const [file, expected] of Object.entries(transport.files)) {
 }
 writeFileSync(path.join(directory, 'pristine-baseline-proof.json'), JSON.stringify({
   baseSha, input: baseline, sourceFiles: transport.files, actualFiles: baselineFiles,
-  scope: 'All 282 original files present; canonical setup alone finalized metadata and added the lock',
+  scope: 'All fresh generated files present; canonical setup alone finalized metadata and added the lock',
 }, null, 2) + '\n');
 await recordCommand('bootstrap-branch', ['git', 'switch', '-c', 'feat/notes-count'], samePristine, samePristine);
 const metadataBefore = digest(readFileSync('.template.json'));

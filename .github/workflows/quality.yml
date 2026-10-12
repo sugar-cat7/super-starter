@@ -1,406 +1,127 @@
-name: Quality
-
+name: Independent final Web Agent support
 on:
-  pull_request:
   push:
-    branches: [main]
-  workflow_dispatch:
-    inputs:
-      agent_web:
-        type: boolean
-        default: false
-        required: false
-        description: Run only fresh-source immutable Web Agent mechanical execution
-
+    branches: [codex/agent-web-983]
 permissions:
   contents: read
-
 concurrency:
-  group: quality-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
+  group: independent-web-agent-${{ github.ref }}
+  cancel-in-progress: false
 jobs:
-  source:
-    if: github.event_name != 'workflow_dispatch' || inputs.agent_web != true || github.ref != 'refs/heads/codex/agent-web-983'
-    outputs:
-      fixtures: ${{ steps.plan.outputs.fixtures }}
-      native: ${{ steps.plan.outputs.native }}
-      workers: ${{ steps.plan.outputs.workers }}
-      observability: ${{ steps.plan.outputs.observability }}
-      native_matrix: ${{ steps.plan.outputs.native_matrix }}
-      fixtures_matrix: ${{ steps.plan.outputs.fixtures_matrix }}
-      native_base: ${{ steps.plan.outputs.native_base }}
-    env:
-      CI_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
-      CI_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
-      CI_FULL: ${{ github.event_name == 'workflow_dispatch' }}
+  reject:
+    if: github.event_name != 'push' || github.ref != 'refs/heads/codex/agent-web-983'
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          fetch-depth: 0
-          ref: ${{ github.event.pull_request.head.sha || github.sha }}
-          persist-credentials: false
-      - uses: jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca # v5.1.1
-        with:
-          version: 2026.10.7
-          cache: false
-          persist_github_token: false
-      - run: pnpm install --frozen-lockfile
-      - id: plan
-        run: node tools/quality/ci-plan.ts
-      - run: pnpm env:setup -- --javascript
-      - run: node tools/quality/checkout.ts
-      - name: Actual application browser prerequisites
-        run: node tools/quality/ci-plan.ts browsers
-      - name: Actual checkout affected runtime, UI and build checks
-        run: pnpm gate:ci -- --base "$CI_BASE_SHA" --checks javascript
-      - name: Reference blueprint integrity
-        run: node -e 'const s=JSON.parse(require("fs").readFileSync(".template.json","utf8")); if(s.kind==="reference") require("child_process").execFileSync(process.execPath,["tools/generators/cli.ts","sync","--check","--no-install"],{stdio:"inherit"}); else console.log("Reference sync not_required for a generated project");'
-      - if: steps.plan.outputs.fixtures == 'true' || steps.plan.outputs.observability == 'true'
-        run: node tools/quality/ci-plan.ts generate
-      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
-        if: steps.plan.outputs.fixtures == 'true' || steps.plan.outputs.observability == 'true'
-        with:
-          name: generated-projects
-          path: generated
-          include-hidden-files: true
-      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
-        if: always()
-        with:
-          name: source-evidence
-          path: |
-            artifacts
-            packages/*/artifacts
-            packages/*/test-results
-          if-no-files-found: error
-  generated:
-    if: needs.source.outputs.fixtures == 'true'
-    needs: source
-    strategy:
-      fail-fast: false
-      matrix: ${{ fromJSON(needs.source.outputs.fixtures_matrix) }}
-    runs-on: ${{ matrix.os }}
-    timeout-minutes: 60
-    steps:
-      # Deliberately no source checkout. Each artifact is a separate named/scoped project.
-      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
-        with:
-          name: generated-projects
-      - uses: jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca # v5.1.1
-        with:
-          version: 2026.10.7
-          working_directory: ${{ matrix.preset }}
-          cache: false
-          persist_github_token: false
-      - name: Native Linux prerequisites
-        if: runner.os == 'Linux' && matrix.native
-        run: sudo apt-get update && sudo apt-get install -y libwebkit2gtk-4.1-dev build-essential libayatana-appindicator3-dev librsvg2-dev patchelf xvfb dbus-x11 at-spi2-core
-      - name: Setup generated native project
-        if: matrix.native
-        working-directory: ${{ matrix.preset }}
-        run: pnpm env:setup
-      - name: Setup generated JavaScript project
-        if: '!matrix.native'
-        working-directory: ${{ matrix.preset }}
-        run: pnpm env:setup -- --javascript
-      - name: Browser prerequisite
-        if: runner.os == 'Linux' && !contains(matrix.preset, 'api') && matrix.preset != 'desktop'
-        working-directory: ${{ matrix.preset }}
-        run: pnpm --filter ./packages/web exec playwright install --with-deps chromium
-      - name: Generated native doctor
-        if: matrix.native
-        working-directory: ${{ matrix.preset }}
-        run: pnpm env:doctor
-      - name: Generated JavaScript doctor
-        if: '!matrix.native'
-        working-directory: ${{ matrix.preset }}
-        run: pnpm env:doctor -- --javascript
-      - name: Rendered preset SAST on Linux
-        if: runner.os == 'Linux'
-        working-directory: ${{ matrix.preset }}
-        run: |
-          pnpm security:setup
-          pnpm security:check -- --scanner semgrep
-      - name: Selected full gate (native Linux)
-        if: runner.os == 'Linux' && matrix.native
-        working-directory: ${{ matrix.preset }}
-        run: dbus-run-session -- xvfb-run -a pnpm gate:full
-      - name: Selected native full gate
-        if: runner.os != 'Linux' && matrix.native
-        working-directory: ${{ matrix.preset }}
-        run: pnpm gate:full
-      - name: Selected full gate without native work
-        if: "!matrix.native && !contains(matrix.preset, 'desktop')"
-        working-directory: ${{ matrix.preset }}
-        run: pnpm gate:full
-      - name: Selected renderer gate
-        if: "!matrix.native && contains(matrix.preset, 'desktop')"
-        working-directory: ${{ matrix.preset }}
-        run: pnpm gate:full -- --checks javascript
-      - name: Native and persistence failure propagation
-        if: matrix.faults
-        working-directory: ${{ matrix.preset }}
-        shell: bash
-        env:
-          PRESET: ${{ matrix.preset }}
-        run: |
-          if [ "$RUNNER_OS" = Linux ] && [ "$PRESET" = desktop ]; then
-            dbus-run-session -- xvfb-run -a pnpm template:faults
-          else
-            pnpm template:faults
-          fi
-      - name: Real Git events and process cleanup
-        if: matrix.hooks
-        working-directory: ${{ matrix.preset }}
-        run: pnpm template:hooks
-      - name: Cold, warm and lifecycle rehearsal
-        if: matrix.lifecycle
-        working-directory: ${{ matrix.preset }}
-        run: pnpm template:lifecycle
-      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
-        if: always()
-        with:
-          name: generated-evidence-${{ matrix.preset }}-${{ runner.os }}
-          path: |
-            ${{ matrix.preset }}/artifacts
-            ${{ matrix.preset }}/packages/*/artifacts
-            ${{ matrix.preset }}/packages/*/test-results
-          if-no-files-found: error
-  native:
-    if: needs.source.outputs.native == 'true'
-    needs: source
-    strategy:
-      fail-fast: false
-      matrix: ${{ fromJSON(needs.source.outputs.native_matrix) }}
-    runs-on: ${{ matrix.os }}
-    timeout-minutes: 60
-    env:
-      CI_BASE_SHA: ${{ needs.source.outputs.native_base }}
-      CI_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          fetch-depth: 0
-          ref: ${{ github.event.pull_request.head.sha || github.sha }}
-          persist-credentials: false
-      - uses: jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca # v5.1.1
-        with:
-          version: 2026.10.7
-          cache: false
-          persist_github_token: false
-      - name: Native Linux prerequisites
-        if: runner.os == 'Linux'
-        run: sudo apt-get update && sudo apt-get install -y libwebkit2gtk-4.1-dev build-essential libayatana-appindicator3-dev librsvg2-dev patchelf xvfb dbus-x11 at-spi2-core
-      - run: pnpm env:setup
-      - run: node tools/quality/checkout.ts
-      - name: Actual native checks on Linux
-        if: runner.os == 'Linux'
-        run: dbus-run-session -- xvfb-run -a pnpm gate:ci -- --base "$CI_BASE_SHA" --checks native
-      - name: Actual native checks on macOS or Windows
-        if: runner.os != 'Linux'
-        shell: bash
-        run: pnpm gate:ci -- --base "$CI_BASE_SHA" --checks native
-      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
-        if: always()
-        with:
-          name: actual-native-evidence-${{ runner.os }}
-          path: |
-            artifacts
-            packages/*/artifacts
-            packages/*/test-results
-          if-no-files-found: error
-  worker-windows:
-    if: needs.source.outputs.workers == 'true'
-    needs: source
-    runs-on: windows-2025
-    timeout-minutes: 30
-    env:
-      CI_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
-      CI_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
-      STARTER_RUNTIME_TRANSPORT_DIAGNOSTICS: 'true'
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          fetch-depth: 0
-          ref: ${{ github.event.pull_request.head.sha || github.sha }}
-          persist-credentials: false
-      - uses: jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca # v5.1.1
-        with:
-          version: 2026.10.7
-          cache: false
-          persist_github_token: false
-      - run: pnpm env:setup -- --javascript
-      - run: node tools/quality/checkout.ts
-      - shell: bash
-        run: pnpm gate:ci -- --base "$CI_BASE_SHA" --checks worker
-      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
-        if: always()
-        with:
-          name: actual-worker-evidence-Windows
-          path: |
-            artifacts
-            packages/*/artifacts
-            packages/*/test-results
-          if-no-files-found: error
-  observability:
-    if: always() && !cancelled() && needs.source.result == 'success' && needs.source.outputs.observability == 'true'
-    needs: [source, native]
-    runs-on: ubuntu-24.04
-    timeout-minutes: 30
-    steps:
-      # The renamed/scoped project runs without access to the original repository.
-      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
-        with:
-          name: generated-projects
-      - uses: jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca # v5.1.1
-        with:
-          version: 2026.10.7
-          working_directory: fullstack
-          cache: false
-          persist_github_token: false
-      - working-directory: fullstack
-        run: pnpm env:setup
-      - working-directory: fullstack
-        run: pnpm --filter ./packages/web exec playwright install --with-deps chromium
-      - working-directory: fullstack
-        run: pnpm o11y:setup
-      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
-        if: needs.source.outputs.native == 'true'
-        with:
-          pattern: actual-native-evidence-*
-          path: native-input
-      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
-        if: needs.source.outputs.native == 'true'
-        with:
-          name: source-evidence
-          path: source-input
-      - working-directory: fullstack
-        run: pnpm o11y:up
-      - name: Real signals and official bounded MCP
-        working-directory: fullstack
-        shell: bash
-        env:
-          NATIVE_REQUIRED: ${{ needs.source.outputs.native }}
-          CI_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
-        run: |
-          if [ "$NATIVE_REQUIRED" = true ]; then
-            pnpm o11y:verify -- --native-artifacts ../native-input --native-source-evidence ../source-input/artifacts/ci-plan.json
-          else
-            pnpm o11y:verify
-          fi
-      - if: always()
-        working-directory: fullstack
-        run: pnpm o11y:down
-      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
-        if: always()
-        with:
-          name: observability-evidence
-          path: fullstack/artifacts/o11y
-          if-no-files-found: error
-  required:
-    if: always() && (github.event_name != 'workflow_dispatch' || inputs.agent_web != true || github.ref != 'refs/heads/codex/agent-web-983')
-    needs: [source, generated, native, worker-windows, observability]
-    runs-on: ubuntu-24.04
-    timeout-minutes: 5
-    steps:
-      - name: Require every planned job
-        env:
-          RESULTS: ${{ toJSON(needs) }}
-          FIXTURES: ${{ needs.source.outputs.fixtures }}
-          NATIVE: ${{ needs.source.outputs.native }}
-          WORKERS: ${{ needs.source.outputs.workers }}
-          OBSERVABILITY: ${{ needs.source.outputs.observability }}
-        run: >-
-          node -e 'const jobs=JSON.parse(process.env.RESULTS); const plan={source:"true",generated:process.env.FIXTURES,native:process.env.NATIVE,"worker-windows":process.env.WORKERS,observability:process.env.OBSERVABILITY}; for(const [name,required] of Object.entries(plan)) { if(!["true","false"].includes(required)) throw new Error(`Missing plan for ${name}`); const result=jobs[name]?.result; if(required==="true" && result!=="success") throw new Error(`${name} ${result}; planned checks must succeed`); if(required==="false" && result!=="skipped") throw new Error(`${name} unexpected result ${result}`); }'
+      - run: exit 1
   agent-web-support:
-    if: github.event_name == 'workflow_dispatch' && inputs.agent_web == true && github.ref == 'refs/heads/codex/agent-web-983'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/codex/agent-web-983'
     runs-on: ubuntu-24.04
     timeout-minutes: 60
-    defaults:
-      run:
-        shell: bash
-        working-directory: feature
-    env:
-      CI_FULL: 'false'
     steps:
-      - name: Reviewed mechanical carrier checkout
+      - name: Immutable reviewed mechanical support
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           ref: ${{ github.sha }}
           path: support
           persist-credentials: false
-      - name: Reconstruct complete hash-verified pristine fresh project
-        working-directory: .
+      - name: Readonly clean final source solely for cold own generation
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: 460ad19c970adaab7231795f3438943d9158b135
+          path: source
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Owned Source preparation paths
+        shell: bash
         run: |
-          base64 --decode support/payload/project-pristine.tar.gz.b64 > support/payload/project-pristine.tar.gz
-          echo "eb3db4665872da23665f85b8dc28e3a5e98634168046aa39968771eaa113c05e  support/payload/project-pristine.tar.gz" | sha256sum --check --strict
-          mkdir feature
-          tar --extract --gzip --file support/payload/project-pristine.tar.gz --directory feature --no-same-owner
-          mkdir -p feature/artifacts/agent-web-api/hosted-helpers feature/.state/t feature/artifacts/agent-web-api/wrangler-logs
-          cp support/.github/scripts/web-agent-*.mjs feature/artifacts/agent-web-api/hosted-helpers/
-          cp support/payload/transport-input.json feature/artifacts/agent-web-api/transport-input.json
-          echo "TMPDIR=$GITHUB_WORKSPACE/feature/.state/t" >> "$GITHUB_ENV"
-          echo "TMP=$GITHUB_WORKSPACE/feature/.state/t" >> "$GITHUB_ENV"
-          echo "TEMP=$GITHUB_WORKSPACE/feature/.state/t" >> "$GITHUB_ENV"
-          echo "WRANGLER_LOG_PATH=$GITHUB_WORKSPACE/feature/artifacts/agent-web-api/wrangler-logs" >> "$GITHUB_ENV"
+          mkdir -p source/.state/t support/generation-evidence/wrangler-logs
+          echo "TMPDIR=$GITHUB_WORKSPACE/source/.state/t" >> "$GITHUB_ENV"
+          echo "TMP=$GITHUB_WORKSPACE/source/.state/t" >> "$GITHUB_ENV"
+          echo "TEMP=$GITHUB_WORKSPACE/source/.state/t" >> "$GITHUB_ENV"
+          echo "WRANGLER_LOG_PATH=$GITHUB_WORKSPACE/support/generation-evidence/wrangler-logs" >> "$GITHUB_ENV"
       - uses: jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca
         with:
           version: 2026.10.7
-          working_directory: feature
+          working_directory: source
           cache: false
           persist_github_token: false
-      - name: Standard setup and genuine normal nonempty feature commit
+      - name: SDK first actual fresh CLI origin and owned Source removal
+        run: node support/.github/scripts/web-agent-generate.mjs
+      - name: Complete pristine baseline then genuine seven-file nonempty commit
+        working-directory: feature
         run: node artifacts/agent-web-api/hosted-helpers/web-agent-bootstrap.mjs
-      - name: Actual normal hook-verified owned bare push
+      - name: Actual normal hook verified owned bare push
+        working-directory: feature
         run: node artifacts/agent-web-api/hosted-helpers/web-agent-push.mjs
-      - name: Fixed feature input before mandatory setup
+      - name: Canonical input before mandatory setup
+        working-directory: feature
         run: node artifacts/agent-web-api/hosted-helpers/web-agent-input.mjs before-setup
-      - name: Standard setup on exact committed feature
+      - name: Standard setup on immutable genuine feature
+        working-directory: feature
         run: node artifacts/agent-web-api/hosted-helpers/web-agent-run.mjs setup pnpm env:setup
-      - name: Fixed canonical input after setup
+      - name: Canonical input after setup
+        working-directory: feature
         run: node artifacts/agent-web-api/hosted-helpers/web-agent-input.mjs after-setup
       - name: Standard doctor
+        working-directory: feature
         run: node artifacts/agent-web-api/hosted-helpers/web-agent-run.mjs doctor pnpm env:doctor
       - name: Official browser prerequisite
+        working-directory: feature
         run: node artifacts/agent-web-api/hosted-helpers/web-agent-run.mjs browser-prerequisites pnpm --filter @independent-web/web exec playwright install --with-deps chromium
-      - name: Standard dev and actual D1 count CRUD SSR smoke
+      - name: Standard dev with actual D1 count CRUD and SSR
+        working-directory: feature
         run: node artifacts/agent-web-api/hosted-helpers/web-agent-dev.mjs
-      - name: API normal and failure regressions
+      - name: API meaningful normal and failure regressions
+        working-directory: feature
         run: node artifacts/agent-web-api/hosted-helpers/web-agent-run.mjs targeted-test pnpm --filter @independent-web/api test
       - name: Web count response regressions
+        working-directory: feature
         run: node artifacts/agent-web-api/hosted-helpers/web-agent-run.mjs targeted-test pnpm --filter @independent-web/web test
-      - name: Standard pre-PR including original dev production and Lighthouse checks
+      - name: Standard pre PR complete browser and official Lighthouse100
+        working-directory: feature
         run: node artifacts/agent-web-api/hosted-helpers/web-agent-gates.mjs pre-pr
-      - name: Complete selected full gate
+      - name: Complete full gate no narrowing
+        working-directory: feature
         run: node artifacts/agent-web-api/hosted-helpers/web-agent-gates.mjs full
-      - name: Same actual source CI entry
+      - name: Same actual source JavaScript CI entry
+        working-directory: feature
         run: node artifacts/agent-web-api/hosted-helpers/web-agent-gates.mjs ci
       - name: Standard full build
+        working-directory: feature
         run: node artifacts/agent-web-api/hosted-helpers/web-agent-run.mjs build pnpm build
-      - name: Local API deployment preflight
+      - name: Actual local API deployment preflight
+        working-directory: feature
         run: node artifacts/agent-web-api/hosted-helpers/web-agent-run.mjs preflight pnpm deploy:preflight -- --target api --environment local
-      - name: Local Web deployment preflight
+      - name: Actual local Web deployment preflight
+        working-directory: feature
         run: node artifacts/agent-web-api/hosted-helpers/web-agent-run.mjs preflight pnpm deploy:preflight -- --target web --environment local
-      - name: Dev connection observations preserve blocked negative exits
+      - name: Dev actual negative observations remain blocked
+        working-directory: feature
         run: node artifacts/agent-web-api/hosted-helpers/web-agent-dev-preflight.mjs
-      - name: Final canonical fixed input
+      - name: Final immutable input
         if: always()
+        working-directory: feature
         run: node artifacts/agent-web-api/hosted-helpers/web-agent-input.mjs after-execution
-      - name: Preserve exact committed feature history
+      - name: Preserve actual new feature history
         if: always()
+        working-directory: feature
         run: node artifacts/agent-web-api/hosted-helpers/web-agent-bundle.mjs
-      - name: Mechanical report only; no script generated Agent approval
+      - name: Mechanical support report only
         if: always()
+        working-directory: feature
         run: node artifacts/agent-web-api/hosted-helpers/web-agent-report.mjs
+      - name: Uncompressed digest checked plain JSON and raw Git evidence
+        if: always()
+        working-directory: feature
+        run: node artifacts/agent-web-api/hosted-helpers/web-agent-audit.mjs
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: always()
         with:
-          name: independent-web-api-0f9611c
+          name: independent-web-api-final460
           path: |
             feature/artifacts
             feature/packages/*/artifacts
             feature/packages/*/test-results
+            support/generation-evidence
           include-hidden-files: true
           if-no-files-found: error
