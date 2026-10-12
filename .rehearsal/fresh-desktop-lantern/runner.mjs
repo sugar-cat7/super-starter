@@ -77,7 +77,7 @@ async function phase(id,command,args,timeout=30*60_000,ready=false,cwd=root){
   if(failure)throw new Error(failure);
 }
 const pnpmPhase=(id,args,timeout,ready)=>{const c=pnpmCommand(args);return phase(id,c.command,c.args,timeout,ready);};
-const finalReport={schema:1,actor:'fresh_460_desktop_context',independentContext:true,sourceSHA:'460ad19c970adaab7231795f3438943d9158b135',sourceReferenceCID:'d674216f6fd7d5a03b3b0f2bbf3b54f0ee83f75779542f6b7d0a8eab62499337',os:process.platform,status:'failed',phases};
+const finalReport={schema:1,actor:'fresh_460_desktop_context',independentContext:true,sourceSHA:'653abf13ae3a54b2434c422ab8dc6800822387c3',sourceReferenceCID:'8a91208bf0be87ea59f830dd11d700618bfc46c75493dd9799b0c5c3815fff25',os:process.platform,status:'failed',phases};
 try{
   const state=JSON.parse(fs.readFileSync('.template.json','utf8'));finalReport.sourceOrigin=state.origin;finalReport.pristine=git('rev-parse','HEAD');
   await pnpmPhase('cold-setup',['env:setup']);
@@ -162,7 +162,7 @@ try{
   finalReport.featureCID=contentId(root);
   phaseGuard=label=>{
     const identity={head:git('rev-parse','HEAD'),contentId:contentId(root),origin:JSON.parse(fs.readFileSync('.template.json','utf8')).origin,clean:git('status','--porcelain')==='',sourceAbsent:!fs.existsSync(path.resolve(root,'../_source'))&&!fs.existsSync(path.resolve(root,'../_mechanical'))};
-    assert.equal(identity.head,head,label+' HEAD');assert.equal(identity.contentId,finalReport.featureCID,label+' CID');assert.deepEqual(identity.origin,state.origin,label+' SourceOrigin');assert.equal(identity.origin.sha,'460ad19c970adaab7231795f3438943d9158b135');assert.equal(identity.clean,true,label+' clean');assert.equal(identity.sourceAbsent,true,label+' Source absence');assertScoped();return identity;
+    assert.equal(identity.head,head,label+' HEAD');assert.equal(identity.contentId,finalReport.featureCID,label+' CID');assert.deepEqual(identity.origin,state.origin,label+' SourceOrigin');assert.equal(identity.origin.sha,'653abf13ae3a54b2434c422ab8dc6800822387c3');assert.equal(identity.clean,true,label+' clean');assert.equal(identity.sourceAbsent,true,label+' Source absence');assertScoped();return identity;
   };
   phaseGuard('fixed feature input');
   finalReport.tools=toolVersions(root);finalReport.featureDelta=git('diff','--name-status',baseline,head);

@@ -77,7 +77,7 @@ function contentId(root) {
 
 function guard(label){
   const identity={head:git('rev-parse','HEAD'),contentId:contentId(root),origin:JSON.parse(fs.readFileSync('.template.json','utf8')).origin,clean:git('status','--porcelain')==='',sourceAbsent:!fs.existsSync(path.resolve(root,'../_source'))&&!fs.existsSync(path.resolve(root,'../_mechanical'))};
-  assert.equal(identity.head,handoff.head,label+' HEAD');assert.equal(identity.contentId,handoff.contentId,label+' CID');assert.deepEqual(identity.origin,handoff.sourceOrigin,label+' SourceOrigin');assert.equal(identity.origin.sha,'460ad19c970adaab7231795f3438943d9158b135');assert.equal(identity.clean,true,label+' clean');assert.equal(identity.sourceAbsent,true,label+' Source absence');return identity;
+  assert.equal(identity.head,handoff.head,label+' HEAD');assert.equal(identity.contentId,handoff.contentId,label+' CID');assert.deepEqual(identity.origin,handoff.sourceOrigin,label+' SourceOrigin');assert.equal(identity.origin.sha,'653abf13ae3a54b2434c422ab8dc6800822387c3');assert.equal(identity.clean,true,label+' clean');assert.equal(identity.sourceAbsent,true,label+' Source absence');return identity;
 }
 guard('downloaded feature');
 const {run,pnpmCommand}=await import(pathToFileURL(path.join(root,'tools/process.ts')).href);

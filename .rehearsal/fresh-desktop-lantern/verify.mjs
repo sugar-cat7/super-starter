@@ -4,8 +4,8 @@ import crypto from 'node:crypto';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
-const sourceSHA='460ad19c970adaab7231795f3438943d9158b135';
-const sourceCID='d674216f6fd7d5a03b3b0f2bbf3b54f0ee83f75779542f6b7d0a8eab62499337';
+const sourceSHA='653abf13ae3a54b2434c422ab8dc6800822387c3';
+const sourceCID='8a91208bf0be87ea59f830dd11d700618bfc46c75493dd9799b0c5c3815fff25';
 const root=path.resolve(process.argv[3]);
 const hash=bytes=>crypto.createHash('sha256').update(bytes).digest('hex');
 if(process.argv[2]==='source'){

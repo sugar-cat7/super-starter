@@ -22,7 +22,7 @@ jobs:
           rm -rf _mechanical
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          ref: 460ad19c970adaab7231795f3438943d9158b135
+          ref: 653abf13ae3a54b2434c422ab8dc6800822387c3
           path: _source
           persist-credentials: false
       - uses: jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca
