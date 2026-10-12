@@ -5,10 +5,11 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { assertSource, bootstrapContentId, identify, transport } from './web-agent-input.mjs';
 import { recordCommand, directory } from './web-agent-run.mjs';
+import { rebaseFeature } from './web-agent-rebase.mjs';
 
 const digest = body => createHash('sha256').update(body).digest('hex');
 const removal = JSON.parse(readFileSync(path.join(directory, 'source-removal-receipt.json'), 'utf8'));
-if (existsSync(removal.removedSource) || !removal.noSourceCheckoutRemains || removal.sourceSha !== '460ad19c970adaab7231795f3438943d9158b135') throw new Error('Fresh Source removal proof missing');
+if (existsSync(removal.removedSource) || !removal.noSourceCheckoutRemains || removal.sourceSha !== '653abf13ae3a54b2434c422ab8dc6800822387c3') throw new Error('Fresh Source removal proof missing');
 const initial = () => {
   const state = assertSource('pristine');
   if (digest(readFileSync('.template.json')) !== transport.files['.template.json'].sha256 ||
@@ -55,6 +56,10 @@ writeFileSync(path.join(directory, 'pristine-baseline-proof.json'), JSON.stringi
   scope: 'All fresh generated files present; canonical setup alone finalized metadata and added the lock',
 }, null, 2) + '\n');
 await recordCommand('bootstrap-branch', ['git', 'switch', '-c', 'feat/notes-count'], samePristine, samePristine);
+// Source is removed and a complete pristine normal baseline commit exists before any feature insertion.
+const rebaseProof = rebaseFeature(transport, directory);
+if (!Object.values(rebaseProof.files).every(file => file.allFreshBaselineBytesPreserved))
+  throw new Error('Fresh owning storage fix or source unit assertions were not preserved');
 const metadataBefore = digest(readFileSync('.template.json'));
 const lockBefore = digest(readFileSync('pnpm-lock.yaml'));
 for (const [file, feature] of Object.entries(transport.featureSeven)) {

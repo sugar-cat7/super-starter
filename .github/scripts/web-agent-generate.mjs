@@ -12,8 +12,8 @@ const feature = path.join(workspace, 'feature');
 const support = path.join(workspace, 'support');
 const out = path.join(support, 'generation-evidence');
 mkdirSync(path.join(out, 'logs'), { recursive: true });
-const sourceSha = '460ad19c970adaab7231795f3438943d9158b135';
-const referenceCid = 'd674216f6fd7d5a03b3b0f2bbf3b54f0ee83f75779542f6b7d0a8eab62499337';
+const sourceSha = '653abf13ae3a54b2434c422ab8dc6800822387c3';
+const referenceCid = '8a91208bf0be87ea59f830dd11d700618bfc46c75493dd9799b0c5c3815fff25';
 const authors = JSON.parse(readFileSync(path.join(support, 'payload/authored-seven.json'), 'utf8'));
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
 const commands = [];
@@ -45,6 +45,10 @@ function safe(relative) {
 try {
   assert.equal(process.env.GITHUB_REF, 'refs/heads/codex/agent-web-983');
   assert.equal(process.env.GITHUB_EVENT_NAME, 'push');
+  assert.equal(authors.schema, 2);
+  // Fail closed if this pinned candidate has not become the approved public Source boundary.
+  const published = command('published-source-boundary', ['git', 'ls-remote', '--exit-code', 'origin', 'refs/pull/4/head']);
+  assert.equal(published, sourceSha + '\trefs/pull/4/head', 'Pinned candidate is not published as canonical PR4 Source');
   cleanSource('initial-source');
   command('source-sdk-setup', ['pnpm', 'env:setup', '--', '--javascript']);
   cleanSource('prepared-source');
@@ -81,11 +85,22 @@ try {
   assert.deepEqual(walk(feature), [...Object.keys(state.managed), '.template.json'].sort());
   const metadata = readFileSync(path.join(feature, '.template.json'));
   snapshots['.template.json'] = { sha256: hash(metadata), mode: lstatSync(path.join(feature, '.template.json')).mode & 0o777 };
-  assert.deepEqual(Object.keys(authors.featureSeven).sort(), ["packages/api/src/notes.ts","packages/api/test/runtime.test.ts","packages/api/test/unit.test.ts","packages/web/src/client/notes.ts","packages/web/src/routes/index.tsx","packages/web/test/browser/notes.spec.ts","packages/web/test/unit.test.ts"]);
-  for (const [relative, entry] of Object.entries(authors.featureSeven)) {
+  const fivePaths = ["packages/api/test/runtime.test.ts","packages/web/src/client/notes.ts","packages/web/src/routes/index.tsx","packages/web/test/browser/notes.spec.ts","packages/web/test/unit.test.ts"];
+  const contextPaths = ["packages/api/src/notes.ts","packages/api/test/unit.test.ts"];
+  assert.deepEqual(Object.keys(authors.featureFive).sort(), fivePaths.sort());
+  assert.deepEqual(Object.keys(authors.beforeFive).sort(), fivePaths.sort());
+  assert.deepEqual(Object.keys(authors.contextDeltas).sort(), contextPaths.sort());
+  for (const [relative, entry] of Object.entries(authors.featureFive)) {
     assert.equal(hash(Buffer.from(entry.base64, 'base64')), entry.sha256, relative);
     safe(relative);
-    assert.equal(snapshots[relative].sha256, authors.beforeSeven[relative], 'Fresh authored before-image changed: ' + relative);
+    assert.equal(snapshots[relative].sha256, authors.beforeFive[relative], 'Fresh unchanged authored before-image changed: ' + relative);
+  }
+  for (const [relative, delta] of Object.entries(authors.contextDeltas)) {
+    safe(relative);
+    assert.equal(delta.kind, 'unique-context-insertion');
+    assert.equal(hash(Buffer.from(delta.replacement)), delta.replacementSha256);
+    assert.match(delta.beforeImageSha256, /^[a-f0-9]{64}$/u);
+    assert.match(delta.authenticatedOldFeatureSha256, /^[a-f0-9]{64}$/u);
   }
   const destination = path.join(feature, 'artifacts/agent-web-api');
   mkdirSync(path.join(destination, 'hosted-helpers'), { recursive: true });
@@ -95,7 +110,8 @@ try {
     if (entry.startsWith('web-agent-') && entry.endsWith('.mjs'))
       writeFileSync(path.join(destination, 'hosted-helpers', entry), readFileSync(path.join(support, '.github/scripts', entry)));
   const spec = { schema: 1, origin: state.origin, configuration: state.options,
-    pendingContentId: bootstrapContentId(feature), files: snapshots, featureSeven: authors.featureSeven,
+    pendingContentId: bootstrapContentId(feature), files: snapshots, featureSeven: authors.featureFive, contextDeltas: authors.contextDeltas,
+    authenticatedActorLineage: authors.lineage,
     authoredCarrierSha: authors.authenticatedCarrierSha, sourceReferenceCid: referenceCid };
   writeFileSync(path.join(destination, 'transport-input.json'), JSON.stringify(spec, null, 2) + '\n');
   writeFileSync(path.join(destination, 'fresh-generation-receipt.json'), JSON.stringify({ sourceSha, referenceCid,
