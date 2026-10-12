@@ -56,8 +56,16 @@ try{
   await phase('bootstrap-prepared-commit','git',['commit','-m','chore: prepare generated Desktop toolchain']);
   const baseline=git('rev-parse','HEAD');finalReport.baseline=baseline;
   const baselineState=JSON.parse(fs.readFileSync('.template.json','utf8'));
-  const {createRequire}=await import('node:module');const require=createRequire(path.join(root,'package.json'));const {parse:parseYaml}=require('yaml');
-  const baselineLock=parseYaml(fs.readFileSync('pnpm-lock.yaml','utf8'));
+  const {createRequire}=await import('node:module');const require=createRequire(path.join(root,'package.json'));const {parseAllDocuments}=require('yaml');
+  function lockDocuments(text){
+    const documents=parseAllDocuments(text,{strict:true,uniqueKeys:true});assert(documents.length>0,'lock contains documents');
+    return documents.map((document,index)=>{
+      assert.deepEqual(document.errors,[],'lock document '+index+' has no parse errors');
+      const value=document.toJSON();assert(value&&typeof value==='object'&&!Array.isArray(value),'lock document '+index+' is a mapping');
+      return value;
+    });
+  }
+  const baselineLock=lockDocuments(fs.readFileSync('pnpm-lock.yaml','utf8'));
   const baselineFiles=Object.fromEntries(execFileSync('git',['ls-tree','-r','-z','HEAD'],{cwd:root,encoding:'utf8'}).split('\0').filter(Boolean).map(row=>{
     const [header,file]=row.split('\t');return [file,{mode:fs.statSync(file).mode&0o777,sha256:crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex')}];
   }));
@@ -98,10 +106,16 @@ try{
     for(const [file,old] of Object.entries(baselineState.managed))
       assert.equal(current.managed[file],derivedPaths.includes(file)?crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex'):old,file+' managed change limited to codegen');
     for(const [file,expected] of generatedErrors(root))assert(fs.readFileSync(file).equals(expected),file+' actual derived bytes');
-    const lock=parseYaml(fs.readFileSync('pnpm-lock.yaml','utf8')),expected=structuredClone(baselineLock);
-    for(const name of ['@testing-library/react','@testing-library/user-event','jsdom'])
-      expected.importers['packages/desktop'].devDependencies[name]=baselineLock.importers['packages/ui'].devDependencies[name];
-    assert.deepEqual(lock,expected,'lock changes only owning Desktop existing-catalog test dependencies');
+    const lock=lockDocuments(fs.readFileSync('pnpm-lock.yaml','utf8')),expected=structuredClone(baselineLock);
+    assert.equal(lock.length,baselineLock.length,'all lock documents retained');
+    const owningIndexes=baselineLock.flatMap((document,index)=>document.importers?.['packages/desktop']?[index]:[]);
+    assert.equal(owningIndexes.length,1,'one owning Desktop importer document');
+    const index=owningIndexes[0];
+    for(const name of ['@testing-library/react','@testing-library/user-event','jsdom']){
+      const dependency=baselineLock[index].importers['packages/ui'].devDependencies[name];assert(dependency,'existing catalog dependency '+name);
+      expected[index].importers['packages/desktop'].devDependencies[name]=dependency;
+    }
+    assert.deepEqual(lock,expected,'every document unchanged except owning Desktop three existing-catalog dependency entries');
   }
   assertScoped();
   await phase('feature-stage','git',['add',...allowed]);
