@@ -69,16 +69,26 @@ export async function handleNotes(request: Request, env: SampleBindings): Promis
       },
     });
   const route = async (): Promise<Result<Response>> => {
-    let response: Response;
     if (url.pathname === '/health')
-      response = json({
-        ok: true,
-        storage: env.NOTES ? 'd1' : 'volatile',
-        writeMode: env.WRITE_MODE,
-      });
-    else if (request.method !== 'GET' && env.WRITE_MODE !== 'allow')
+      return Ok(
+        json({
+          ok: true,
+          storage: env.NOTES ? 'd1' : 'volatile',
+          writeMode: env.WRITE_MODE,
+        }),
+      );
+    if (request.method !== 'GET' && env.WRITE_MODE !== 'allow')
       return Err(failure('write_forbidden'));
-    else if (url.pathname === '/api/notes' && request.method === 'GET') {
+    // Authorized JSON ingress owns the body even when an optional binding is absent.
+    // Keep write-denial before any read; never wait for an unauthenticated body.
+    const text =
+      request.method === 'POST' &&
+      ['/api/notes', '/extensions/kv', '/extensions/r2'].includes(url.pathname)
+        ? await readBodyText(request)
+        : Ok('');
+    if (!text.ok) return text;
+    let response: Response;
+    if (url.pathname === '/api/notes' && request.method === 'GET') {
       let raw: unknown = [...volatileNotes.values()];
       if (env.NOTES) {
         const stored = await binding(
@@ -98,7 +108,7 @@ export async function handleNotes(request: Request, env: SampleBindings): Promis
       if (!notes.ok) return notes;
       response = json(notes.value);
     } else if (url.pathname === '/api/notes' && request.method === 'POST') {
-      const body = await parseBody(request);
+      const body = parseBody(text.value);
       if (!body.ok) return body;
       const parsed = noteInput.safeParse(body.value);
       if (!parsed.success) return Err(failure('input_invalid'));
@@ -141,7 +151,7 @@ export async function handleNotes(request: Request, env: SampleBindings): Promis
       }
     } else if (url.pathname === '/extensions/kv' && env.NOTE_CACHE) {
       if (request.method === 'POST') {
-        const body = await parseBody(request);
+        const body = parseBody(text.value);
         if (!body.ok) return body;
         const parsed = extensionInput.safeParse(body.value);
         if (!parsed.success) return Err(failure('input_invalid'));
@@ -161,7 +171,7 @@ export async function handleNotes(request: Request, env: SampleBindings): Promis
       }
     } else if (url.pathname === '/extensions/r2' && env.NOTE_EXPORTS) {
       if (request.method === 'POST') {
-        const body = await parseBody(request);
+        const body = parseBody(text.value);
         if (!body.ok) return body;
         const parsed = extensionInput.safeParse(body.value);
         if (!parsed.success) return Err(failure('input_invalid'));
@@ -204,9 +214,64 @@ export async function handleNotes(request: Request, env: SampleBindings): Promis
   return response;
 }
 
-async function parseBody(request: Request): Promise<Result<unknown>> {
-  const text = await capture(() => request.text(), 'request_json_invalid');
-  return text.ok
-    ? captureSync(() => JSON.parse(text.value) as unknown, 'request_json_invalid')
-    : text;
+function parseBody(text: string): Result<unknown> {
+  return captureSync(() => JSON.parse(text) as unknown, 'request_json_invalid');
+}
+
+async function readBodyText(request: Request): Promise<Result<string>> {
+  const opened = captureSync(() => request.body?.getReader(), 'request_json_invalid');
+  if (!opened.ok) return opened;
+  if (!opened.value) return Ok('');
+  const reader = opened.value;
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const deadline = new Promise<never>((_, reject) => {
+    timer = setTimeout(() => reject(failure('request_json_invalid')), 3000);
+  });
+  const chunks: Uint8Array[] = [];
+  let bytes = 0;
+  let complete = false;
+  let result: Result<string> = Err(failure('request_json_invalid'));
+  const expires = performance.now() + 3000;
+  let accepting = true;
+  const collect = async (): Promise<Result<string>> => {
+    // Check wall time as well as bytes/chunks even when a producer starves timers.
+    for (let count = 0; count < 65536; count += 1) {
+      if (!accepting || performance.now() >= expires) return Err(failure('request_json_invalid'));
+      const chunk = await capture(() => reader.read(), 'request_json_invalid');
+      if (!chunk.ok) return chunk;
+      if (!accepting || performance.now() >= expires) return Err(failure('request_json_invalid'));
+      if (chunk.value.done) {
+        complete = true;
+        const data = new Uint8Array(bytes);
+        let offset = 0;
+        for (const part of chunks) {
+          data.set(part, offset);
+          offset += part.byteLength;
+        }
+        return captureSync(() => new TextDecoder().decode(data), 'request_json_invalid');
+      }
+      if (!(chunk.value.value instanceof Uint8Array)) return Err(failure('request_json_invalid'));
+      bytes += chunk.value.value.byteLength;
+      if (bytes > 32768) return Err(failure('input_invalid'));
+      if (chunk.value.value.byteLength) chunks.push(chunk.value.value);
+    }
+    return Err(failure('input_invalid'));
+  };
+  // One race owns the deadline, rather than retaining a reaction per chunk.
+  const collected = await capture(
+    () => Promise.race([collect(), deadline]),
+    'request_json_invalid',
+  );
+  accepting = false;
+  result = collected.ok ? collected.value : collected;
+  if (!complete) {
+    const cancelled = await capture(
+      () => Promise.race([reader.cancel(), deadline]),
+      'request_json_invalid',
+    );
+    if (!cancelled.ok) result = cancelled;
+  }
+  if (timer) clearTimeout(timer);
+  const released = captureSync(() => reader.releaseLock(), 'request_json_invalid');
+  return released.ok ? result : released;
 }

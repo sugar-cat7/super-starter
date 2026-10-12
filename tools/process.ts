@@ -1,9 +1,24 @@
 import { spawn, spawnSync, type SpawnOptions } from 'node:child_process';
 import type { ChildProcess } from 'node:child_process';
 import { readFileSync } from 'node:fs';
+import { randomUUID } from 'node:crypto';
 import { setTimeout as pause } from 'node:timers/promises';
 
 const owned = new WeakSet<ChildProcess>();
+const windowsJobs = new WeakMap<
+  ChildProcess,
+  {
+    guardian: ChildProcess;
+    guardianClosed: Promise<void>;
+    closed: Promise<void>;
+    stopped: Promise<void>;
+    terminationRequested: boolean;
+    requestStop: () => void;
+    cleanup?: Promise<void>;
+  }
+>();
+const closed = (child: ChildProcess): Promise<void> =>
+  new Promise((resolve) => child.once('close', () => resolve()));
 const quoteWindows = (value: string): string =>
   `"${value.replace(/(\\*)"/gu, '$1$1\\"').replace(/\\+$/u, '$&$&')}"`;
 
@@ -15,17 +30,95 @@ export function spawnOwned(
   let child: ChildProcess;
   if (process.platform === 'win32') {
     const script = readFileSync(new URL('./windows-job.ps1', import.meta.url), 'utf8');
-    child = spawn('powershell.exe', ['-NoProfile', '-NonInteractive', '-Command', script], {
+    const jobName = `Local\\Starter-${process.pid}-${randomUUID()}`;
+    const environment = options.env ?? process.env;
+    const launchOptions = {
       ...options,
       detached: false,
       env: {
-        ...(options.env ?? process.env),
+        ...environment,
         STARTER_PROCESS_SPEC: Buffer.from(
           JSON.stringify({
+            role: 'launch',
+            jobName,
             commandLine: [command, ...args].map(quoteWindows).join(' '),
           }),
         ).toString('base64'),
       },
+    };
+    const guardian = spawn(
+      'powershell.exe',
+      ['-NoProfile', '-NonInteractive', '-Command', script],
+      {
+        cwd: options.cwd,
+        stdio: ['pipe', 'pipe', 'pipe'],
+        env: {
+          ...environment,
+          STARTER_PROCESS_SPEC: Buffer.from(
+            JSON.stringify({ role: 'guard', jobName, parentPid: process.pid }),
+          ).toString('base64'),
+        },
+      },
+    );
+    const guardianClosed = closed(guardian);
+    let acknowledged = false;
+    let requested = false;
+    let output = '';
+    guardian.stdout?.on('data', (chunk: Buffer) => {
+      output = (output + chunk.toString()).slice(-1024);
+      acknowledged ||= output.split(/\r?\n/u).includes('STOPPED');
+    });
+    // Guard errors are propagated by its exit/ack contract; never publish its raw stderr.
+    guardian.stderr?.resume();
+    const stopped = new Promise<void>((resolve, reject) => {
+      guardian.once('error', reject);
+      guardian.stdin?.on('error', (error) => {
+        if (!acknowledged) reject(error);
+      });
+      void guardianClosed.then(() => {
+        if (guardian.exitCode === 0 && acknowledged) resolve();
+        else reject(new Error('Owned Windows Job guard failed to confirm termination'));
+      }, reject);
+    });
+    const stopGuard = () => {
+      if (requested) return;
+      requested = true;
+      guardian.stdin?.end('STOP\n');
+    };
+    try {
+      child = spawn(
+        'powershell.exe',
+        ['-NoProfile', '-NonInteractive', '-Command', script],
+        launchOptions,
+      );
+    } catch (error) {
+      stopGuard();
+      // No application was created; retain a handler while the guard closes its empty Job.
+      void stopped.catch(() =>
+        console.error('Owned Windows guard failed after launcher spawn failure'),
+      );
+      throw error;
+    }
+    windowsJobs.set(child, {
+      guardian,
+      guardianClosed,
+      closed: closed(child),
+      stopped,
+      terminationRequested: false,
+      requestStop: stopGuard,
+    });
+    child.once('exit', stopGuard);
+    child.once('error', stopGuard);
+    // The original rejected promise remains observable by every cleanup caller.
+    void stopped.catch(() => {
+      stopGuard();
+      // A dead guard cannot release the launcher's last Job handle. End that host
+      // promptly; stopTree still propagates the original failed guard contract.
+      const job = windowsJobs.get(child)!;
+      if (!job.terminationRequested && child.exitCode === null && child.signalCode === null) {
+        job.terminationRequested = true;
+        child.kill('SIGKILL');
+      }
     });
   } else child = spawn(command, args, { ...options, detached: true });
   owned.add(child);
@@ -33,27 +126,54 @@ export function spawnOwned(
 }
 
 export async function stopTree(child: ChildProcess, graceMs = 3_000): Promise<void> {
-  if (!child.pid) return;
-  const pid = child.pid;
   if (!owned.has(child)) throw new Error('Cleanup requires a process started by spawnOwned');
   if (process.platform === 'win32') {
-    if (child.exitCode !== null || child.signalCode !== null) return;
-    const closed = new Promise<void>((resolve) => child.once('close', () => resolve()));
-    if (!child.kill('SIGKILL') && child.exitCode === null && child.signalCode === null)
-      throw new Error('Unable to terminate the owned Windows Job host');
-    let timer: ReturnType<typeof setTimeout> | undefined;
-    try {
-      await Promise.race([
-        closed,
-        new Promise<never>((_, reject) => {
-          timer = setTimeout(() => reject(new Error('Owned Windows Job cleanup timeout')), 10000);
-        }),
-      ]);
-    } finally {
-      if (timer) clearTimeout(timer);
-    }
+    const job = windowsJobs.get(child);
+    if (!job) throw new Error('Missing owned Windows Job termination barrier');
+    job.cleanup ??= Promise.resolve().then(async () => {
+      let signalFailure: { error: unknown } | undefined;
+      if (
+        !job.terminationRequested &&
+        child.pid &&
+        child.exitCode === null &&
+        child.signalCode === null
+      ) {
+        job.terminationRequested = true;
+        try {
+          // A native exit may precede Node's signal flags. The Job guard can
+          // terminate independently; only its barrier establishes completion.
+          if (!child.kill('SIGKILL')) job.requestStop();
+        } catch (error) {
+          signalFailure = { error };
+          job.requestStop();
+        }
+      }
+      let timer: ReturnType<typeof setTimeout> | undefined;
+      try {
+        await Promise.race([
+          Promise.allSettled([job.closed, job.guardianClosed, job.stopped]).then((results) => {
+            for (const result of results) if (result.status === 'rejected') throw result.reason;
+          }),
+          new Promise<never>((_, reject) => {
+            timer = setTimeout(() => {
+              // A failed deadline cannot leave the guardian holding the owned cwd/Job.
+              if (job.guardian.exitCode === null && job.guardian.signalCode === null)
+                job.guardian.kill('SIGKILL');
+              if (child.exitCode === null && child.signalCode === null) child.kill('SIGKILL');
+              reject(new Error('Owned Windows Job cleanup timeout'));
+            }, 10000);
+          }),
+        ]);
+        if (signalFailure) throw signalFailure.error;
+      } finally {
+        if (timer) clearTimeout(timer);
+      }
+    });
+    await job.cleanup;
     return;
   }
+  if (!child.pid) return;
+  const pid = child.pid;
   const signal = (value: NodeJS.Signals | 0): boolean => {
     try {
       process.kill(-pid, value);

@@ -1,11 +1,61 @@
 import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import os from 'node:os';
+import assert from 'node:assert/strict';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { setTimeout as pause } from 'node:timers/promises';
 import type { ChildProcess } from 'node:child_process';
 import { expect, it } from 'vitest';
 import { run, spawnOwned, stopTree } from './process.ts';
+
+it.each(['ignore', 'inherit'])(
+  'waits for directly interrupted descendants with %s streams before returning cleanup',
+  async (stdio) => {
+    const root = mkdtempSync(path.join(os.tmpdir(), 'owned-direct-exit-'));
+    const address = path.join(root, 'address');
+    const server = path.join(root, 'server.mjs');
+    const parent = path.join(root, 'parent.mjs');
+    writeFileSync(
+      server,
+      "import {createServer} from 'node:http';import{writeFileSync,renameSync}from'node:fs';process.on('SIGTERM',()=>{});const server=createServer((_,res)=>res.end('ready'));server.listen(0,'127.0.0.1',()=>{writeFileSync(process.argv[2]+'.tmp',JSON.stringify({origin:'http://127.0.0.1:'+server.address().port,pid:process.pid}));renameSync(process.argv[2]+'.tmp',process.argv[2])}); ",
+    );
+    writeFileSync(
+      parent,
+      "import {spawn}from'node:child_process';spawn(process.execPath,[process.argv[2],process.argv[3]],{stdio:process.argv[4]});setInterval(()=>{},1000);",
+    );
+    const child = spawnOwned(process.execPath, [parent, server, address, stdio], {
+      cwd: root,
+      stdio: ['ignore', 'pipe', 'pipe'],
+    });
+    child.stdout?.resume();
+    child.stderr?.resume();
+    try {
+      const deadline = performance.now() + 10000;
+      while (!existsSync(address) && performance.now() < deadline) await pause(30);
+      expect(existsSync(address)).toBe(true);
+      const { origin, pid } = JSON.parse(readFileSync(address, 'utf8')) as {
+        origin: string;
+        pid: number;
+      };
+      expect(await (await fetch(origin)).text()).toBe('ready');
+      const exited = new Promise<void>((resolve) => child.once('exit', () => resolve()));
+      expect(child.kill('SIGTERM')).toBe(true);
+      await exited;
+      await stopTree(child, 0);
+      await expect(fetch(origin, { signal: AbortSignal.timeout(1000) })).rejects.toThrow(
+        /fetch failed|aborted/iu,
+      );
+      // A terminated Windows process cannot retain handles in this owned fixture.
+      if (process.platform === 'win32') assert.throws(() => process.kill(pid, 0), /ESRCH/u);
+      rmSync(root, { recursive: true, force: true });
+      expect(existsSync(root)).toBe(false);
+    } finally {
+      await stopTree(child, 0);
+      rmSync(root, { recursive: true, force: true });
+    }
+  },
+  20000,
+);
 
 it('forwards Worker build interruption to its detached non-cooperating child', async () => {
   const root = mkdtempSync(path.join(os.tmpdir(), 'owned-build-'));

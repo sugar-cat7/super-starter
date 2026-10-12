@@ -52,4 +52,17 @@ describe('real workerd HTTP contract', () => {
       expect(JSON.parse(body)).toMatchObject(selected ? { value: 'stored locally' } : { error: { code: 'not_found' } });
     }
   });
+  it('keeps the next request usable after oversized and absent-feature JSON ingress', async () => {
+    const oversized = await fetchLocal('/api/notes', { method: 'POST', body: JSON.stringify({ text: 'x' }).padEnd(32769, ' ') });
+    expect(oversized.status).toBe(400);
+    expect(await oversized.json()).toMatchObject({ error: { code: 'invalid_input' } });
+    for (const [feature, selected] of [['kv', __HAS_KV__], ['r2', __HAS_R2__]] as const) {
+      const invalid = await fetchLocal(`/extensions/${feature}`, { method: 'POST', body: 'INVALID-JSON' });
+      expect(invalid.status).toBe(selected ? 400 : 404);
+      expect(await invalid.json()).toMatchObject({ error: { code: selected ? 'invalid_json' : 'not_found' } });
+      const health = await fetchLocal('/health');
+      expect(health.status).toBe(200);
+      expect(await health.json()).toMatchObject({ ok: true });
+    }
+  });
 });

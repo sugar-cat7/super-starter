@@ -40,7 +40,19 @@ public static class StarterJob {
     public IntPtr hProcess, hThread;
     public uint dwProcessId, dwThreadId;
   }
-  [DllImport("kernel32.dll", SetLastError=true)] static extern IntPtr CreateJobObjectW(IntPtr a, string name);
+  [StructLayout(LayoutKind.Sequential)] struct Accounting {
+    public long TotalUserTime, TotalKernelTime, PeriodUserTime, PeriodKernelTime;
+    public uint PageFaults, TotalProcesses, ActiveProcesses, TerminatedProcesses;
+  }
+  [DllImport("kernel32.dll", CharSet=CharSet.Unicode, ExactSpelling=true, SetLastError=true)] static extern IntPtr CreateJobObjectW(IntPtr a, string name);
+  [DllImport("kernel32.dll", ExactSpelling=true)] static extern void SetLastError(uint code);
+  [DllImport("kernel32.dll", CharSet=CharSet.Unicode, ExactSpelling=true, SetLastError=true)] static extern IntPtr OpenJobObjectW(uint access, bool inherit, string name);
+  [DllImport("kernel32.dll", SetLastError=true)] static extern bool TerminateJobObject(IntPtr job, uint code);
+  [DllImport("kernel32.dll", SetLastError=true)] static extern bool QueryInformationJobObject(IntPtr job, int info, out Accounting accounting, uint size, IntPtr returned);
+  [DllImport("kernel32.dll", CharSet=CharSet.Unicode, ExactSpelling=true, SetLastError=true)] static extern IntPtr CreateEventW(IntPtr a, bool manual, bool initial, string name);
+  [DllImport("kernel32.dll", CharSet=CharSet.Unicode, ExactSpelling=true, SetLastError=true)] static extern IntPtr OpenEventW(uint access, bool inherit, string name);
+  [DllImport("kernel32.dll", SetLastError=true)] static extern bool SetEvent(IntPtr handle);
+  [DllImport("kernel32.dll", SetLastError=true)] static extern IntPtr OpenProcess(uint access, bool inherit, uint pid);
   [DllImport("kernel32.dll", SetLastError=true)] static extern bool SetInformationJobObject(IntPtr job, int info, ref ExtendedLimit limits, uint size);
   [DllImport("kernel32.dll", SetLastError=true)] static extern bool InitializeProcThreadAttributeList(IntPtr list, int count, int flags, ref IntPtr size);
   [DllImport("kernel32.dll", SetLastError=true)] static extern bool UpdateProcThreadAttribute(IntPtr list, uint flags, IntPtr attribute, IntPtr value, IntPtr size, IntPtr previous, IntPtr returned);
@@ -53,16 +65,63 @@ public static class StarterJob {
   [DllImport("kernel32.dll")] static extern bool CloseHandle(IntPtr handle);
   [DllImport("kernel32.dll")] static extern IntPtr GetStdHandle(int handle);
   static void Check(bool success) { if (!success) throw new Win32Exception(Marshal.GetLastWin32Error()); }
-  public static int Run(string command) {
-    IntPtr job = CreateJobObjectW(IntPtr.Zero, null);
+  public static int Guard(string name, uint parentPid) {
+    SetLastError(0);
+    IntPtr job = CreateJobObjectW(IntPtr.Zero, name);
+    int createdJobError = Marshal.GetLastWin32Error();
     Check(job != IntPtr.Zero);
+    IntPtr ready = IntPtr.Zero, parent = IntPtr.Zero;
+    try {
+      if (createdJobError == 183) throw new InvalidOperationException("Owned Job name already exists");
+      ExtendedLimit limits = new ExtendedLimit();
+      limits.BasicLimitInformation.LimitFlags = 0x2000;
+      Check(SetInformationJobObject(job, 9, ref limits, (uint)Marshal.SizeOf(typeof(ExtendedLimit))));
+      parent = OpenProcess(0x100000, false, parentPid);
+      Check(parent != IntPtr.Zero);
+      SetLastError(0);
+      ready = CreateEventW(IntPtr.Zero, true, false, name + "-ready");
+      int createdEventError = Marshal.GetLastWin32Error();
+      Check(ready != IntPtr.Zero);
+      if (createdEventError == 183) throw new InvalidOperationException("Owned Job event name already exists");
+      Check(SetEvent(ready));
+      var stop = System.Threading.Tasks.Task.Run(() => Console.ReadLine());
+      while (!stop.IsCompleted && WaitForSingleObject(parent, 0) == 258)
+        System.Threading.Thread.Sleep(25);
+      if (stop.IsCompleted && stop.Result != "STOP" && stop.Result != null)
+        throw new InvalidOperationException("Invalid owned Job control message");
+      Check(TerminateJobObject(job, 1));
+      var deadline = System.Diagnostics.Stopwatch.StartNew();
+      while (true) {
+        Accounting accounting;
+        Check(QueryInformationJobObject(job, 1, out accounting, (uint)Marshal.SizeOf(typeof(Accounting)), IntPtr.Zero));
+        if (accounting.ActiveProcesses == 0) break;
+        if (deadline.ElapsedMilliseconds >= 10000)
+          throw new TimeoutException("Owned Windows Job processes did not terminate");
+        System.Threading.Thread.Sleep(25);
+      }
+      Console.WriteLine("STOPPED");
+      return 0;
+    } finally {
+      if (ready != IntPtr.Zero) CloseHandle(ready);
+      if (parent != IntPtr.Zero) CloseHandle(parent);
+      CloseHandle(job);
+    }
+  }
+  public static int Run(string command, string name) {
+    IntPtr job = IntPtr.Zero, ready = IntPtr.Zero;
     ProcessInfo process = new ProcessInfo();
     IntPtr attributes = IntPtr.Zero, jobList = IntPtr.Zero;
     bool initialized = false;
     try {
-      ExtendedLimit limits = new ExtendedLimit();
-      limits.BasicLimitInformation.LimitFlags = 0x2000; // JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE
-      Check(SetInformationJobObject(job, 9, ref limits, (uint)Marshal.SizeOf(typeof(ExtendedLimit))));
+      var deadline = System.Diagnostics.Stopwatch.StartNew();
+      while (ready == IntPtr.Zero && deadline.ElapsedMilliseconds < 10000) {
+        ready = OpenEventW(0x100000, false, name + "-ready");
+        if (ready == IntPtr.Zero) System.Threading.Thread.Sleep(25);
+      }
+      Check(ready != IntPtr.Zero);
+      Check(WaitForSingleObject(ready, 10000) == 0);
+      job = OpenJobObjectW(0x0001, false, name);
+      Check(job != IntPtr.Zero);
       IntPtr size = IntPtr.Zero;
       InitializeProcThreadAttributeList(IntPtr.Zero, 1, 0, ref size);
       Check(size != IntPtr.Zero);
@@ -89,7 +148,8 @@ public static class StarterJob {
     } finally {
       // All created children already belong to the Job, including before resume.
       if (process.hProcess != IntPtr.Zero) TerminateProcess(process.hProcess, 1);
-      CloseHandle(job);
+      if (job != IntPtr.Zero) CloseHandle(job);
+      if (ready != IntPtr.Zero) CloseHandle(ready);
       if (initialized) DeleteProcThreadAttributeList(attributes);
       if (attributes != IntPtr.Zero) Marshal.FreeHGlobal(attributes);
       if (jobList != IntPtr.Zero) Marshal.FreeHGlobal(jobList);
@@ -99,4 +159,7 @@ public static class StarterJob {
   }
 }
 '@
-exit ([StarterJob]::Run($spec.commandLine))
+if ($spec.role -eq 'guard') {
+  exit ([StarterJob]::Guard($spec.jobName, $spec.parentPid))
+}
+exit ([StarterJob]::Run($spec.commandLine, $spec.jobName))

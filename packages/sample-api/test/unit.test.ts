@@ -3,15 +3,138 @@ import { handleNotes } from '../src/notes';
 
 describe('API validation and safe publication defaults', () => {
   it('refuses writes in a deployment environment before touching storage', async () => {
-    const response = await handleNotes(
-      new Request('https://sample.invalid/api/notes', {
-        method: 'POST',
-        body: '{"text":"blocked"}',
-      }),
-      { WRITE_MODE: 'deny' },
-    );
+    const request = new Request('https://sample.invalid/api/notes', {
+      method: 'POST',
+      body: '{"text":"blocked"}',
+    });
+    const response = await handleNotes(request, { WRITE_MODE: 'deny' });
     expect(response.status).toBe(403);
     expect(await response.json()).toMatchObject({ error: { code: 'writes_disabled' } });
+    expect(request.bodyUsed).toBe(false);
+  });
+  it.each(['kv', 'r2'])(
+    'consumes authorized absent-%s ingress without parsing it',
+    async (feature) => {
+      const request = new Request(`https://sample.invalid/extensions/${feature}`, {
+        method: 'POST',
+        body: 'PRIVATE-INVALID-JSON',
+      });
+      const response = await handleNotes(request, { WRITE_MODE: 'allow' });
+      expect(response.status).toBe(404);
+      expect(request.bodyUsed).toBe(true);
+      expect(await response.json()).toMatchObject({ error: { code: 'not_found' } });
+    },
+  );
+  it('decodes split UTF-8 ingress and bounds bytes before parsing or storage', async () => {
+    const bytes = new TextEncoder().encode(JSON.stringify({ text: '😀 split' }));
+    const stream = new ReadableStream<Uint8Array>({
+      start(controller) {
+        for (const byte of bytes) controller.enqueue(Uint8Array.of(byte));
+        controller.close();
+      },
+    });
+    const request = new Request('https://sample.invalid/api/notes', {
+      method: 'POST',
+      body: stream,
+      duplex: 'half',
+    } as RequestInit & { duplex: 'half' });
+    const response = await handleNotes(request, { WRITE_MODE: 'allow' });
+    expect(response.status).toBe(201);
+    const note = (await response.json()) as { id: string; text: string };
+    expect(note.text).toBe('😀 split');
+    expect(
+      (
+        await handleNotes(
+          new Request(`https://sample.invalid/api/notes/${note.id}`, { method: 'DELETE' }),
+          { WRITE_MODE: 'allow' },
+        )
+      ).status,
+    ).toBe(204);
+    const maximum = await handleNotes(
+      new Request('https://sample.invalid/api/notes', {
+        method: 'POST',
+        body: JSON.stringify({ text: 'max-bytes' }).padEnd(32768, ' '),
+      }),
+      { WRITE_MODE: 'allow' },
+    );
+    expect(maximum.status).toBe(201);
+    const maximumNote = (await maximum.json()) as { id: string };
+    expect(
+      (
+        await handleNotes(
+          new Request(`https://sample.invalid/api/notes/${maximumNote.id}`, { method: 'DELETE' }),
+          { WRITE_MODE: 'allow' },
+        )
+      ).status,
+    ).toBe(204);
+    const prepare = vi.fn<() => never>(() => {
+      throw new Error('Oversized body reached storage');
+    });
+    const oversized = await handleNotes(
+      new Request('https://sample.invalid/api/notes', {
+        method: 'POST',
+        body: JSON.stringify({ text: 'PRIVATE-' }).padEnd(32769, ' '),
+      }),
+      { WRITE_MODE: 'allow', NOTES: { prepare } as unknown as D1Database },
+    );
+    expect(prepare).not.toHaveBeenCalled();
+    expect(oversized.status).toBe(400);
+    expect(await oversized.text()).not.toContain('PRIVATE-');
+  });
+  it('normalizes an invalid stream chunk and releases its ingress lock', async () => {
+    const request = new Request('https://sample.invalid/api/notes', {
+      method: 'POST',
+      body: new ReadableStream<Uint8Array>({
+        start(controller) {
+          controller.enqueue();
+          controller.close();
+        },
+      }),
+      duplex: 'half',
+    } as RequestInit & { duplex: 'half' });
+    const response = await handleNotes(request, { WRITE_MODE: 'allow' });
+    expect(response.status).toBe(400);
+    expect(await response.json()).toMatchObject({ error: { code: 'invalid_json' } });
+    expect(request.body?.locked).toBe(false);
+  });
+  it('bounds an empty-chunk producer before parsing or touching storage', async () => {
+    let cancelled = false;
+    const request = new Request('https://sample.invalid/api/notes', {
+      method: 'POST',
+      body: new ReadableStream<Uint8Array>({
+        pull(controller) {
+          controller.enqueue(new Uint8Array());
+        },
+        cancel() {
+          cancelled = true;
+        },
+      }),
+      duplex: 'half',
+    } as RequestInit & { duplex: 'half' });
+    const prepare = vi.fn<() => never>(() => {
+      throw new Error('Empty-chunk flood reached storage');
+    });
+    const response = await handleNotes(request, {
+      WRITE_MODE: 'allow',
+      NOTES: { prepare } as unknown as D1Database,
+    });
+    expect(response.status).toBe(400);
+    expect(prepare).not.toHaveBeenCalled();
+    expect(cancelled).toBe(true);
+    expect(request.body?.locked).toBe(false);
+  });
+  it('bounds a stalled ingress even when its cancellation never settles', async () => {
+    const request = new Request('https://sample.invalid/extensions/kv', {
+      method: 'POST',
+      body: new ReadableStream<Uint8Array>({ cancel: () => new Promise<void>(() => {}) }),
+      duplex: 'half',
+    } as RequestInit & { duplex: 'half' });
+    const started = performance.now();
+    const response = await handleNotes(request, { WRITE_MODE: 'allow' });
+    expect(response.status).toBe(400);
+    expect(await response.json()).toMatchObject({ error: { code: 'invalid_json' } });
+    expect(performance.now() - started).toBeLessThan(4000);
+    expect(request.body?.locked).toBe(false);
   });
   it('returns a predictable invalid JSON error without reflecting the request body', async () => {
     const response = await handleNotes(

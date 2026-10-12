@@ -52,9 +52,12 @@ overrides:
   # Vite+ documents a single Vite core and the bundled Vitest version.
   vite@*: npm:@voidzero-dev/vite-plus-core@1.1.0
   vitest@*: 5.0.3
-  # Mocha 10's serializer range predates the published RCE/DoS fixes.
-  # Keep the supported WDIO 9/Mocha 10 APIs; validate parallel serialization/native tests.
-  mocha@10.8.2>serialize-javascript: 7.1.2
+  # WDIO 9/Tauri's peer remains unchanged. The older transitive SDKs contain
+  # unfixed ZIP/glob/FTP advisories; verify these public API migrations on each OS.
+  '@wdio/utils@9.32.0>@puppeteer/browsers': 3.2.4
+  '@wdio/mocha-framework@9.32.0>mocha': 11.8.0
+  # Mocha 12 removed WDIO's run-helpers.js import; 11 retains it and needs this repair.
+  mocha@11.8.0>serialize-javascript: 7.1.2
 peerDependencyRules:
   allowedVersions:
     # The alias exposes Vite 8.3.3 with its own package version 1.1.0.
