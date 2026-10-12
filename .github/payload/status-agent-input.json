@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "execution": "agent-authored-input",
+  "task": "Use the generated API app generator to add GET /status with meaningful unit and real-workerd regression coverage while preserving existing applications and user files.",
+  "baselineSha": "c49b66375f491f23d6cf63c4d33b3b8b6cde951b",
+  "origin": {
+    "sha": "98312ce0a1441185e4cd25509d4dc694424b0317",
+    "dirty": false,
+    "contentId": "175118a36b314f5974159eafb6f6fcb20cd6f16cd82b0eca09c5d298ed7831ff"
+  },
+  "featureContentId": "3103cf57566d3998dfccf063bb2f7b8554c71df1750eac5ee6f7f3c304513108",
+  "changedPaths": [
+    ".template.json",
+    "package.json",
+    "packages/status/README.md",
+    "packages/status/cloudflare.config.ts",
+    "packages/status/package.json",
+    "packages/status/preview.ts",
+    "packages/status/src/index.ts",
+    "packages/status/src/notes.ts",
+    "packages/status/test/runtime.test.ts",
+    "packages/status/test/status.runtime.test.ts",
+    "packages/status/test/status.test.ts",
+    "packages/status/test/unit.test.ts",
+    "packages/status/tsconfig.json",
+    "packages/status/vite.config.ts",
+    "packages/status/vitest.config.ts",
+    "packages/status/vitest.runtime.config.ts",
+    "pnpm-lock.yaml"
+  ],
+  "bundleSha256": "562d802fbc9c77769e245afb3a7394939216e2005f777b9640291081dec9f483",
+  "patchSha256": "66c2bfb5a3ba840a628cbc3838054fe1946f032976236b85693274c4a1aa55d8"
+}
