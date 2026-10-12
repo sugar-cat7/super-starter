@@ -87,9 +87,11 @@ for(const [id,args] of [['native-setup',['env:setup']],['native-doctor',['env:do
   const inputIdentity=guard('before '+id);
   const c=pnpmCommand(args),start=performance.now();let output='';const out=process.stdout.write.bind(process.stdout),err=process.stderr.write.bind(process.stderr);
   process.stdout.write=(chunk,...rest)=>{output+=String(chunk);return true;};process.stderr.write=(chunk,...rest)=>{output+=String(chunk);return true;};
-  try{await run(c.command,c.args,{cwd:root,capture:true,timeout:45*60_000});const outputIdentity=guard('after '+id);phases.push({id,args,inputIdentity,outputIdentity,command:c.command,argv:c.args,milliseconds:Math.round(performance.now()-start),status:'passed'});}
+  try{await run(c.command,c.args,{cwd:root,capture:true,timeout:45*60_000});phases.push({id,args,inputIdentity,command:c.command,argv:c.args,milliseconds:Math.round(performance.now()-start),status:'passed'});}
   catch(error){phases.push({id,args,inputIdentity,command:c.command,argv:c.args,milliseconds:Math.round(performance.now()-start),status:'failed',error:String(error)});report.error=String(error);process.exitCode=1;}
-  finally{process.stdout.write=out;process.stderr.write=err;fs.writeFileSync('artifacts/actor/logs/'+id+'.log',output);fs.writeFileSync('artifacts/actor/actor-'+process.platform+'.json',JSON.stringify(report,null,2)+'\n');}
+  finally{process.stdout.write=out;process.stderr.write=err;
+    try{phases.at(-1).outputIdentity=guard('after '+id);}catch(error){phases.at(-1).status='failed';phases.at(-1).error=[phases.at(-1).error,String(error)].filter(Boolean).join('\n');report.error=phases.at(-1).error;process.exitCode=1;}
+    fs.writeFileSync('artifacts/actor/logs/'+id+'.log',output);fs.writeFileSync('artifacts/actor/actor-'+process.platform+'.json',JSON.stringify(report,null,2)+'\n');}
   if(process.exitCode)break;
 }
 if(!process.exitCode){
