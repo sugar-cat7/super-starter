@@ -67,11 +67,13 @@ describe('minimal CI execution with an actual committed diff', () => {
   ) => {
     const root = mkdtempSync(path.join(os.tmpdir(), 'starter-ci-scope-'));
     const git = (...args: string[]) =>
-      execFileSync('git', args, { cwd: root, encoding: 'utf8' }).trim();
+      execFileSync(
+        'git',
+        ['-c', 'user.name=CI scope test', '-c', 'user.email=test@example.invalid', ...args],
+        { cwd: root, encoding: 'utf8' },
+      ).trim();
     try {
       git('init', '-q');
-      git('config', 'user.name', 'CI scope test');
-      git('config', 'user.email', 'test@example.invalid');
       for (const [name, runtime, dependencies] of [
         ['contracts', 'library', {}],
         ['ui', 'library', { '@test/contracts': 'workspace:*' }],
