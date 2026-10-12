@@ -21,6 +21,8 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/codex/agent-add-983' && github.repository == 'sugar-cat7/super-starter'
     runs-on: ubuntu-24.04
     timeout-minutes: 35
+    outputs:
+      evidence_matrix: ${{ steps.evidence-manifest.outputs.matrix }}
     steps:
       - name: Exact own mechanical carrier
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
@@ -54,7 +56,8 @@ jobs:
         env:
           STATUS_AGENT_STAGE: feature-validation
         run: node .github/scripts/status-agent-run.mjs
-      - name: Digest-checked owned evidence through ordinary job logs
+      - name: Index digest-checked evidence for bounded same-workflow transport
+        id: evidence-manifest
         if: always()
         run: node .github/scripts/status-agent-evidence.mjs
       - name: Retain actual owned preparation and feature artifacts
@@ -68,3 +71,34 @@ jobs:
             .state/hosted-status-feature/packages/*/artifacts
           include-hidden-files: true
           if-no-files-found: error
+
+  evidence-groups:
+    if: always() && needs.generated-status-support.outputs.evidence_matrix != '' && github.ref == 'refs/heads/codex/agent-add-983' && github.event_name == 'push'
+    needs: generated-status-support
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.generated-status-support.outputs.evidence_matrix) }}
+    steps:
+      - name: Exact own evidence transport helper
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Existing pinned JavaScript tools
+        uses: jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca
+        with:
+          version: 2026.10.7
+          cache: false
+          persist_github_token: false
+      - name: Read only the actual artifact from this same workflow run
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
+        with:
+          name: hosted-fresh-status-agent-support
+          path: .state/evidence-download
+      - name: Emit one bounded complete digest-checked evidence group
+        env:
+          STATUS_AGENT_EVIDENCE_GROUP: ${{ matrix.group }}
+        run: node .github/scripts/status-agent-evidence.mjs
