@@ -40,7 +40,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           repository: sugar-cat7/super-starter
-          ref: 460ad19c970adaab7231795f3438943d9158b135
+          ref: 653abf13ae3a54b2434c422ab8dc6800822387c3
           path: .state/generation-source
           fetch-depth: 1
           persist-credentials: false
