@@ -166,9 +166,24 @@ async function prepare() {
   assert.ok(assertions.every((item) => item.status === 'passed' || item.status === 'failed'));
   assert.equal(assertions.length, negative.numTotalTests);
   assert.equal(negative.numPassedTests, negative.numTotalTests - reviewed.cases.length);
+  // Vitest JSON preserves the matcher/stack, but abbreviates the expected object.
+  // Join that original witness with the original per-case console diagnostic.
+  const retentionAssertion = 'expect(await listed.json()).toContainEqual(note);';
+  const renderedLines = readFileSync(path.join(source, units[0]), 'utf8').split('\n');
+  const retentionLines = renderedLines.flatMap((line, index) => line.trim() === retentionAssertion ? [index + 1] : []);
+  assert.equal(retentionLines.length, 1, 'The owning rendered suite must have one exact retention assertion');
+  const retentionLine = retentionLines[0];
+  const diagnosticLines = exported.get(commands.at(-1).log).toString('utf8').replace(/\u001b\[[0-9;]*m/gu, '').split('\n');
   for (const item of reviewed.cases) {
     const message = failed.find((test) => test.title === item.title).failureMessages.join('\n');
-    assert.ok(message.includes(item.failureIncludes) && /to (?:deeply|deep equally) contain/u.test(message), 'Actual failure must be retention toContainEqual(note), not an earlier API/SDK/matcher error');
+    assert.ok(/to (?:deeply|deep equally) contain/u.test(message) && message.includes(path.join(source, units[0]) + ':' + retentionLine + ':'), 'Actual JSON failure must point to the exact owning retention assertion');
+    const headings = diagnosticLines.flatMap((line, index) =>
+      /^\s*FAIL\s+test\/unit\.test\.ts\s+>/u.test(line) && line.endsWith(' > ' + item.title) ? [index] : []);
+    assert.equal(headings.length, 1, 'Each reviewed failure must have one original console diagnostic');
+    const start = headings[0];
+    const following = diagnosticLines.findIndex((line, index) => index > start && /^\s*FAIL\s+/u.test(line));
+    const diagnostic = diagnosticLines.slice(start, following < 0 ? diagnosticLines.length : following).join('\n');
+    assert.ok(diagnostic.includes(item.failureIncludes) && diagnostic.includes(retentionAssertion) && /AssertionError: expected \[\] to (?:deeply|deep equally) contain/u.test(diagnostic), 'Original diagnostic must prove retention toContainEqual(note), not an earlier API/SDK/matcher error');
   }
   report.beforeFix = { status: 'actual_expected_failure', command: commands.at(-1), total: negative.numTotalTests, failed: failed.map((item) => ({ title: item.title, fullName: item.fullName, failureMessages: item.failureMessages })) };
   writeFileSync(path.join(source, workerTemplate), reviewed.worker);
