@@ -16,7 +16,7 @@ async function phase(id,command,args,timeout=30*60_000,ready=false,cwd=root){
   console.log('ACTOR_PHASE_START '+JSON.stringify({id,command,args,cwd,startedAt,sha:git('rev-parse','HEAD')}));
   const child=spawnOwned(command,args,{cwd,stdio:['ignore','pipe','pipe'],env:process.env});
   let output='',code=null,signal=null,spawnError;
-  for(const [stream,owner] of [[child.stdout,process.stdout],[child.stderr,process.stderr]])stream.on('data',chunk=>{output+=chunk.toString();log.write(chunk);owner.write(chunk);});
+  for(const [stream,owner] of [[child.stdout,process.stdout],[child.stderr,process.stderr]])stream.on('data',chunk=>{output+=chunk.toString();log.write(chunk);});
   const closed=new Promise(resolve=>child.once('close',(c,s)=>{code=c;signal=s;resolve();}));
   child.once('error',error=>{spawnError=error;});
   let failure;

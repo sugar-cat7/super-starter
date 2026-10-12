@@ -8,6 +8,8 @@ jobs:
   actor:
     runs-on: ubuntu-24.04
     timeout-minutes: 60
+    outputs:
+      evidence_matrix: ${{ steps.transport.outputs.matrix }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -52,18 +54,19 @@ jobs:
           git config user.email "fresh-desktop-lantern@example.invalid"
           git add .
           git commit -m "chore: initialize generated Desktop project"
-          node "$RUNNER_TEMP/desktop-counter-lantern-tools/snapshot.mjs" pristine
+          node "$RUNNER_TEMP/desktop-counter-lantern-tools/snapshot.mjs" pristine quiet
       - name: Official Linux native prerequisites after source removal
         run: sudo apt-get update && sudo apt-get install -y libwebkit2gtk-4.1-dev build-essential libayatana-appindicator3-dev librsvg2-dev patchelf xvfb dbus-x11 at-spi2-core
       - name: Independently authored feature and standard project phases
         working-directory: desktop-counter-lantern
         run: dbus-run-session -- xvfb-run -a node "$RUNNER_TEMP/desktop-counter-lantern-tools/runner.mjs"
       - name: Complete final Git and raw phase evidence
+        id: transport
         if: always()
         working-directory: desktop-counter-lantern
         run: |
-          node "$RUNNER_TEMP/desktop-counter-lantern-tools/snapshot.mjs" final
-          node "$RUNNER_TEMP/desktop-counter-lantern-tools/evidence.mjs" actor-linux-evidence
+          node "$RUNNER_TEMP/desktop-counter-lantern-tools/snapshot.mjs" final quiet
+          node "$RUNNER_TEMP/desktop-counter-lantern-tools/evidence.mjs" prepare actor-linux-evidence ../lantern-actor-evidence-transport
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: success()
         with:
@@ -78,6 +81,30 @@ jobs:
           path: desktop-counter-lantern/artifacts
           include-hidden-files: true
           if-no-files-found: error
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: lantern-actor-evidence-transport
+          path: lantern-actor-evidence-transport
+          include-hidden-files: true
+          if-no-files-found: error
+  actor-evidence:
+    if: always() && needs.actor.outputs.evidence_matrix != ''
+    needs: actor
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.actor.outputs.evidence_matrix) }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
+        with:
+          name: lantern-actor-evidence-transport
+          path: lantern-actor-evidence-transport
+      - name: Digest-checked bounded raw evidence part
+        env:
+          PART_INDEX: ${{ matrix.index }}
+        run: node lantern-actor-evidence-transport/transport.mjs dump lantern-actor-evidence-transport "$PART_INDEX"
   native:
     needs: actor
     strategy:
@@ -113,7 +140,7 @@ jobs:
       - name: Complete native raw evidence in ordinary logs
         if: always()
         working-directory: desktop-counter-lantern
-        run: node ../lantern-feature-transport/evidence.mjs native-evidence
+        run: node ../lantern-feature-transport/evidence.mjs prepare native-evidence ../lantern-native-evidence-transport
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: always()
         with:
@@ -121,3 +148,41 @@ jobs:
           path: desktop-counter-lantern/artifacts
           include-hidden-files: true
           if-no-files-found: error
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: lantern-native-transport-${{ runner.os }}
+          path: lantern-native-evidence-transport
+          include-hidden-files: true
+          if-no-files-found: error
+  native-evidence-plan:
+    if: always() && needs.actor.result == 'success'
+    needs: [actor, native]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      evidence_matrix: ${{ steps.plan.outputs.matrix }}
+    steps:
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
+        with:
+          pattern: lantern-native-transport-*
+          path: native-evidence-input
+      - id: plan
+        run: node native-evidence-input/lantern-native-transport-Linux/transport.mjs plan native-evidence-input
+  native-evidence:
+    if: always() && needs.native-evidence-plan.outputs.evidence_matrix != ''
+    needs: native-evidence-plan
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.native-evidence-plan.outputs.evidence_matrix) }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
+        with:
+          name: lantern-native-transport-${{ matrix.os }}
+          path: native-evidence-part
+      - name: Digest-checked bounded raw native evidence part
+        env:
+          PART_INDEX: ${{ matrix.index }}
+        run: node native-evidence-part/transport.mjs dump native-evidence-part "$PART_INDEX"
