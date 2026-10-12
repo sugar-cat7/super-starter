@@ -74,6 +74,7 @@ assert.equal(run(['git', 'status', '--porcelain=v1', '--untracked-files=all'], s
 
 assert.equal(contentId(sourceCheckout), config.source.contentId);
 writeJson('generated-origin.json', { source: config.source, origin: state.origin, renderedContentId, generatedFiles, configuration: state.options, managed, managedCount: managed.length, commands, classification: 'Actual Source CLI generation preparation; no feature acceptance credit' });
+assert.equal(run(['git', 'rev-parse', 'HEAD'], sourceCheckout, 'source-head-before-remove').trim(), config.source.sha, 'Exact Source HEAD must remain pinned immediately before removal');
 rmSync(sourceCheckout, { recursive: true, force: false });
 assert.ok(!existsSync(sourceCheckout));
 writeJson('source-removed.json', { source: config.source, path: sourceCheckout, absent: true, removedAt: new Date().toISOString(), policy: 'No Source access in any subsequent generated-project phase' });
