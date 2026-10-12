@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "kind": "separate-mechanical-source-evidence",
+  "source": {
+    "sha": "460ad19c970adaab7231795f3438943d9158b135",
+    "contentId": "d674216f6fd7d5a03b3b0f2bbf3b54f0ee83f75779542f6b7d0a8eab62499337",
+    "base": "63dc03962359d3164da0d34fbcdc1ccb2cec455f",
+    "ciFull": false
+  },
+  "ownRef": "refs/heads/codex/source-evidence-460",
+  "originalRuns": {
+    "quality": 38261390477,
+    "security": 38261390491
+  },
+  "agentPayload": {
+    "schema": 1,
+    "status": "blocked",
+    "reason": "Genuine exact-source Agent receipts have not been supplied",
+    "files": []
+  },
+  "limits": {
+    "partBytes": 1048576,
+    "chunkBytes": 196608,
+    "maxParts": 64,
+    "maxFileBytes": 1073741824,
+    "maxJsonBytes": 67108864,
+    "maxFiles": 20000,
+    "maxArtifactBytes": 8589934592
+  },
+  "classification": "A new same-run read-only collection carrier; neither original Quality attempt nor final acceptance is relabeled. Missing Agent receipts keep the unchanged acceptance CLI at exit 1."
+}

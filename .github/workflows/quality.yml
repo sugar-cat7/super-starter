@@ -1,10 +1,12 @@
-name: Quality
+name: Exact Source mechanical evidence
 
 on:
-  pull_request:
   push:
-    branches: [main]
-  workflow_dispatch:
+    branches: [codex/source-evidence-460]
+    paths:
+      - .github/workflows/quality.yml
+      - .github/scripts/source-evidence-collector.mjs
+      - .github/payload/source-evidence-input.json
 
 permissions:
   contents: read
@@ -24,16 +26,16 @@ jobs:
       fixtures_matrix: ${{ steps.plan.outputs.fixtures_matrix }}
       native_base: ${{ steps.plan.outputs.native_base }}
     env:
-      CI_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
-      CI_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
-      CI_FULL: ${{ github.event_name == 'workflow_dispatch' }}
+      CI_BASE_SHA: 63dc03962359d3164da0d34fbcdc1ccb2cec455f
+      CI_HEAD_SHA: 460ad19c970adaab7231795f3438943d9158b135
+      CI_FULL: 'false'
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
-          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          ref: 460ad19c970adaab7231795f3438943d9158b135
           persist-credentials: false
       - uses: jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca # v5.1.1
         with:
@@ -171,12 +173,12 @@ jobs:
     timeout-minutes: 60
     env:
       CI_BASE_SHA: ${{ needs.source.outputs.native_base }}
-      CI_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+      CI_HEAD_SHA: 460ad19c970adaab7231795f3438943d9158b135
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
-          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          ref: 460ad19c970adaab7231795f3438943d9158b135
           persist-credentials: false
       - uses: jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca # v5.1.1
         with:
@@ -210,14 +212,14 @@ jobs:
     runs-on: windows-2025
     timeout-minutes: 30
     env:
-      CI_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
-      CI_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+      CI_BASE_SHA: 63dc03962359d3164da0d34fbcdc1ccb2cec455f
+      CI_HEAD_SHA: 460ad19c970adaab7231795f3438943d9158b135
       STARTER_RUNTIME_TRANSPORT_DIAGNOSTICS: 'true'
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
-          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          ref: 460ad19c970adaab7231795f3438943d9158b135
           persist-credentials: false
       - uses: jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca # v5.1.1
         with:
@@ -276,7 +278,7 @@ jobs:
         shell: bash
         env:
           NATIVE_REQUIRED: ${{ needs.source.outputs.native }}
-          CI_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          CI_HEAD_SHA: 460ad19c970adaab7231795f3438943d9158b135
         run: |
           if [ "$NATIVE_REQUIRED" = true ]; then
             pnpm o11y:verify -- --native-artifacts ../native-input --native-source-evidence ../source-input/artifacts/ci-plan.json
@@ -307,3 +309,120 @@ jobs:
           OBSERVABILITY: ${{ needs.source.outputs.observability }}
         run: >-
           node -e 'const jobs=JSON.parse(process.env.RESULTS); const plan={source:"true",generated:process.env.FIXTURES,native:process.env.NATIVE,"worker-windows":process.env.WORKERS,observability:process.env.OBSERVABILITY}; for(const [name,required] of Object.entries(plan)) { if(!["true","false"].includes(required)) throw new Error(`Missing plan for ${name}`); const result=jobs[name]?.result; if(required==="true" && result!=="success") throw new Error(`${name} ${result}; planned checks must succeed`); if(required==="false" && result!=="skipped") throw new Error(`${name} unexpected result ${result}`); }'
+
+  security-scan:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: 460ad19c970adaab7231795f3438943d9158b135
+          persist-credentials: false
+      - uses: jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca # v5.1.1
+        with:
+          version: 2026.10.7
+          cache: false
+          persist_github_token: false
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm security:setup
+      - run: pnpm security:check
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: security-identifiers
+          path: artifacts/security
+          if-no-files-found: error
+          retention-days: 14
+  collector-prepare:
+    if: always()
+    needs: [source, generated, native, worker-windows, observability, required, security-scan]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    outputs:
+      parts: ${{ steps.export.outputs.parts }}
+    steps:
+      - name: Exact mechanical carrier, not Source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Exact unchanged Source CLI validator
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: 460ad19c970adaab7231795f3438943d9158b135
+          path: .state/validation-source
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca
+        with:
+          version: 2026.10.7
+          working_directory: .state/validation-source
+          cache: false
+          persist_github_token: false
+      - name: Exact Source HEAD and clean guard before setup
+        run: node .github/scripts/source-evidence-collector.mjs guard
+      - name: Normal unchanged Source JavaScript setup
+        working-directory: .state/validation-source
+        run: pnpm env:setup -- --javascript
+      - name: Immutable evidence artifacts from this workflow only
+        if: always()
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
+        with:
+          pattern: '*evidence*'
+          path: .state/source-artifacts
+      - name: This workflow's sanitized Security identifiers only
+        if: always()
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
+        with:
+          name: security-identifiers
+          path: .state/source-artifacts/security-identifiers
+      - name: Validate raw LHR, run unchanged acceptance CLI, prepare bounded disjoint parts
+        if: always()
+        id: export
+        env:
+          COLLECTOR_NEEDS: ${{ toJSON(needs) }}
+        run: node .github/scripts/source-evidence-collector.mjs prepare
+      - name: Retain exact collector report, including actual blocked acceptance
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: source-collector-report
+          path: |
+            artifacts/source-collector
+            .state/validation-source/artifacts/acceptance.json
+            .state/validation-source/artifacts/acceptance.md
+          if-no-files-found: error
+      - name: Retain disjoint plain exporter parts
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: source-collector-parts
+          path: .state/source-export-parts
+          if-no-files-found: error
+  collector-export:
+    if: always() && needs.collector-prepare.outputs.parts != ''
+    needs: collector-prepare
+    strategy:
+      fail-fast: false
+      matrix:
+        part: ${{ fromJSON(needs.collector-prepare.outputs.parts) }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca
+        with:
+          version: 2026.10.7
+          cache: false
+          persist_github_token: false
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
+        with:
+          name: source-collector-parts
+          path: .state/source-export-parts
+      - name: Emit only this disjoint bounded digest-checked part
+        env:
+          EVIDENCE_PART: ${{ matrix.part }}
+        run: node .github/scripts/source-evidence-collector.mjs emit "$EVIDENCE_PART"
