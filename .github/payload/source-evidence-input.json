@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "kind": "separate-mechanical-source-evidence",
+  "source": {
+    "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+    "contentId": "8a91208bf0be87ea59f830dd11d700618bfc46c75493dd9799b0c5c3815fff25",
+    "base": "63dc03962359d3164da0d34fbcdc1ccb2cec455f",
+    "ciFull": false
+  },
+  "ownRef": "refs/heads/codex/source-evidence-653",
+  "originalRuns": {
+    "quality": 38298326712,
+    "security": 38298326538,
+    "historyOnly": {
+      "source460Quality": 38261390477,
+      "source460Security": 38261390491,
+      "source460Collector": 38284023733
+    }
+  },
+  "agentPayload": {
+    "schema": 1,
+    "status": "blocked",
+    "reason": "Genuine exact-source Agent receipts have not been supplied",
+    "files": []
+  },
+  "limits": {
+    "partBytes": 1048576,
+    "chunkBytes": 196608,
+    "maxParts": 64,
+    "maxFileBytes": 1073741824,
+    "maxJsonBytes": 67108864,
+    "maxFiles": 20000,
+    "maxArtifactBytes": 8589934592
+  },
+  "classification": "A new same-run read-only collection carrier; neither original Quality attempt nor final acceptance is relabeled. Missing Agent receipts keep the unchanged acceptance CLI at exit 1.",
+  "sanitization": {
+    "profileSha256": "38f2cbe9f89f18109fe04fd7705a2385ca304937bb7d25ed7a7868ac553a5f04",
+    "rules": 6,
+    "allowExceptions": 0,
+    "controlsArtifact": "source-sanitization-controls",
+    "classification": "Original Source CLI on actual owning built outputs, external approved rules and six genuine controlled CLI failures; controls excluded from accepted Source."
+  }
+}
