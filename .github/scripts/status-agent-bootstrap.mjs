@@ -88,7 +88,7 @@ for (const [file, bytes] of baselineFiles) {
 }
 const afterGenerator = inventory();
 for (const file of afterGenerator.keys()) {
-  assert.ok(baselineFiles.has(file) || file.startsWith('packages/status/'), 'Unexpected generated first-party path: ' + file);
+  assert.ok(baselineFiles.has(file) || bookkeeping.has(file) || file.startsWith('packages/status/'), 'Unexpected generated first-party path: ' + file);
 }
 const generatedStatusFiles = [...afterGenerator].filter(([file]) => file.startsWith('packages/status/')).map(([file, bytes]) => {
   assert.equal(coldState.managed[file], digest(bytes));
