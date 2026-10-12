@@ -23,7 +23,8 @@ const sideConfigs = [
 ];
 export function formatterKey(root: string): string | undefined {
   const manifest = path.join(root, 'node_modules/vite-plus/package.json');
-  if (!existsSync(manifest)) return undefined;
+  const binary = path.join(root, 'node_modules/vite-plus/bin/vp');
+  if (!existsSync(manifest) || !existsSync(binary)) return undefined;
   const version = (JSON.parse(readFileSync(manifest, 'utf8')) as { version: string }).version;
   return digest(`${version}\0${readFileSync(path.join(root, 'vite.config.ts'), 'utf8')}`);
 }

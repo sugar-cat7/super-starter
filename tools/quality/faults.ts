@@ -186,6 +186,7 @@ async function injectFaults(root: string): Promise<void> {
           console.log(`FAULT ${id}: detected for the required reason and repaired`);
         }
       } finally {
+        report.milliseconds = Math.round(performance.now() - started);
         writeFileSync(
           path.join(root, 'artifacts/faults.json'),
           `${JSON.stringify({ schema: 1, status: reports.every((entry) => entry.status === 'passed' && entry.repaired) ? 'running' : 'failed', origin, contentId: before, os: process.platform, reports }, null, 2)}\n`,
@@ -194,7 +195,9 @@ async function injectFaults(root: string): Promise<void> {
     }
   };
   const probe = 'tools/fault-probe.ts';
-  const testProbe = 'tools/fault-probe.test.ts';
+  // Restore a real owned suite so each repair proves the same checker succeeds.
+  // The complete tooling suite still runs once after all unit faults are repaired.
+  const testProbe = 'tools/quality/test-results.test.ts';
   const skill = '.agents/skills/application/SKILL.md';
   await fault(
     'skill-metadata',
@@ -262,7 +265,7 @@ async function injectFaults(root: string): Promise<void> {
     },
     ['test:tools', '--', testProbe],
     /only.*(?:not allowed|not permitted)|allowOnly|Unexpected.*only/iu,
-    ['test:tools'],
+    ['test:tools', '--', testProbe],
   );
   await fault(
     'unit',
@@ -272,21 +275,21 @@ async function injectFaults(root: string): Promise<void> {
     },
     ['test:tools', '--', testProbe],
     /expected 1 to be 2/u,
-    ['test:tools'],
+    ['test:tools', '--', testProbe],
   );
   await fault(
     'unit-zero',
     { [testProbe]: 'export const cases = 0;\n' },
     ['test:tools', '--', testProbe],
     /No test|No tests|No test suite/u,
-    ['test:tools'],
+    ['test:tools', '--', testProbe],
   );
   await fault(
     'unit-skipped',
     { [testProbe]: "import { it } from 'vitest';\nit.skip('skipped fault', () => {});\n" },
     ['test:tools', '--', testProbe],
     /must execute cases without failed, skipped or todo/u,
-    ['test:tools'],
+    ['test:tools', '--', testProbe],
   );
   await fault(
     'unit-timeout',
@@ -296,8 +299,9 @@ async function injectFaults(root: string): Promise<void> {
     },
     ['test:tools', '--', testProbe],
     /timed out|Timeout/u,
-    ['test:tools'],
+    ['test:tools', '--', testProbe],
   );
+  await pnpm(['test:tools'], { cwd: root, env: environment, timeout: 30 * 60000 });
   const packages = workspacePackages(root);
   const library = packages.find((pkg) => pkg.runtime === 'library');
   if (!library) throw new Error('Boundary rehearsal requires a shared library');

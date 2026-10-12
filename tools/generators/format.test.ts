@@ -1,9 +1,21 @@
 import { spawnSync } from 'node:child_process';
-import { existsSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
+import {
+  existsSync,
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  rmSync,
+  symlinkSync,
+  writeFileSync,
+} from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { expect, it } from 'vitest';
-import { formatFiles } from './format.ts';
+import { finalizeManaged, formatFiles } from './format.ts';
+import { main, readState } from './cli.ts';
+import { applyFiles } from './files.ts';
+import { projectOptions } from './options.ts';
+import { projectFiles } from './render.ts';
 import { spawnOwned, stopTree } from '../process.ts';
 
 const source = path.resolve(import.meta.dirname, '../..');
@@ -35,6 +47,52 @@ function cli(root: string, filename: string, contents: Buffer): Buffer {
   });
   return result.stdout;
 }
+
+it.each(['absent', 'partial'])(
+  'finalizes a cold add with %s SDK and preserves user edits',
+  async (sdk) => {
+    const root = mkdtempSync(path.join(os.tmpdir(), 'starter-cold-add-'));
+    try {
+      const options = projectOptions({
+        name: 'formatter-cold-add',
+        scope: '@formatter-add',
+        preset: 'api',
+      });
+      applyFiles(root, projectFiles(source, options));
+      expect(readState(root)?.formatKey).toBeDefined();
+      expect(existsSync(path.join(root, 'node_modules'))).toBe(false);
+      if (sdk === 'partial') {
+        const directory = path.join(root, 'node_modules/vite-plus');
+        mkdirSync(directory, { recursive: true });
+        writeFileSync(
+          path.join(directory, 'package.json'),
+          readFileSync(path.join(source, 'node_modules/vite-plus/package.json')),
+        );
+      }
+      await main(['add', '--kind', 'api', '--name', 'status', '--target', root, '--no-install']);
+      expect(readState(root)?.formatKey).toBeUndefined();
+
+      const filename = 'packages/status/cloudflare.config.ts';
+      const unformatted = readFileSync(path.join(root, filename));
+      const userFile = path.join(root, 'packages/status/src/notes.ts');
+      const userBytes = Buffer.concat([readFileSync(userFile), Buffer.from('\n// user change\n')]);
+      writeFileSync(userFile, userBytes);
+      rmSync(path.join(root, 'node_modules'), { recursive: true, force: true });
+      symlinkSync(path.join(source, 'node_modules'), path.join(root, 'node_modules'), 'junction');
+      const expected = cli(root, filename, unformatted);
+      expect(unformatted).not.toEqual(expected);
+      finalizeManaged(root);
+      expect(readFileSync(path.join(root, filename))).toEqual(expected);
+      expect(readFileSync(userFile)).toEqual(userBytes);
+      const finalized = readFileSync(path.join(root, '.template.json'));
+      finalizeManaged(root);
+      expect(readFileSync(path.join(root, '.template.json'))).toEqual(finalized);
+    } finally {
+      rmSync(root, { recursive: true, force: true, maxRetries: 3, retryDelay: 100 });
+      expect(existsSync(root)).toBe(false);
+    }
+  },
+);
 
 it('matches the owning SDK CLI for mixed scripts, ignored build output and JSON', () => {
   fixture(simple, (root) => {

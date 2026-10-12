@@ -245,6 +245,9 @@ export async function main(args: string[]): Promise<void> {
         ),
       },
     };
+    // A cold add cannot format its new files. The inherited key only covers the
+    // previous managed inputs; setup must finalize unchanged new scaffold files.
+    if (!formatterKey(root)) delete state.formatKey;
     files.set('.template.json', Buffer.from(`${JSON.stringify(state, null, 2)}\n`));
     for (const filename of files.keys())
       if (
