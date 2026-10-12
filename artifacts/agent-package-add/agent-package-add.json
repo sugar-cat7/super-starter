@@ -632,7 +632,7 @@
         "durationMs": 3,
         "exit": 0,
         "signal": null,
-        "log": "preparation/command-carrier-head-source-generation.log",
+        "log": "hosted/preparation/command-carrier-head-source-generation.log",
         "execution": "hosted-tools",
         "kind": "generation-preparation"
       },
@@ -648,7 +648,7 @@
         "durationMs": 2,
         "exit": 0,
         "signal": null,
-        "log": "preparation/command-source-head-before.log",
+        "log": "hosted/preparation/command-source-head-before.log",
         "execution": "hosted-tools",
         "kind": "generation-preparation"
       },
@@ -665,7 +665,7 @@
         "durationMs": 22,
         "exit": 0,
         "signal": null,
-        "log": "preparation/command-source-clean-before.log",
+        "log": "hosted/preparation/command-source-clean-before.log",
         "execution": "hosted-tools",
         "kind": "generation-preparation"
       },
@@ -682,7 +682,7 @@
         "durationMs": 22343,
         "exit": 0,
         "signal": null,
-        "log": "preparation/command-source-javascript-setup.log",
+        "log": "hosted/preparation/command-source-javascript-setup.log",
         "execution": "hosted-tools",
         "kind": "generation-preparation"
       },
@@ -698,7 +698,7 @@
         "durationMs": 3,
         "exit": 0,
         "signal": null,
-        "log": "preparation/command-source-head-after-setup.log",
+        "log": "hosted/preparation/command-source-head-after-setup.log",
         "execution": "hosted-tools",
         "kind": "generation-preparation"
       },
@@ -715,7 +715,7 @@
         "durationMs": 6,
         "exit": 0,
         "signal": null,
-        "log": "preparation/command-source-clean-after-setup.log",
+        "log": "hosted/preparation/command-source-clean-after-setup.log",
         "execution": "hosted-tools",
         "kind": "generation-preparation"
       },
@@ -740,7 +740,7 @@
         "durationMs": 3522,
         "exit": 0,
         "signal": null,
-        "log": "preparation/command-actual-source-cli-init.log",
+        "log": "hosted/preparation/command-actual-source-cli-init.log",
         "execution": "hosted-tools",
         "kind": "generation-preparation"
       },
@@ -757,7 +757,7 @@
         "durationMs": 5,
         "exit": 0,
         "signal": null,
-        "log": "preparation/command-source-clean-after-init.log",
+        "log": "hosted/preparation/command-source-clean-after-init.log",
         "execution": "hosted-tools",
         "kind": "generation-preparation"
       },
@@ -773,7 +773,7 @@
         "durationMs": 3,
         "exit": 0,
         "signal": null,
-        "log": "preparation/command-source-head-before-remove.log",
+        "log": "hosted/preparation/command-source-head-before-remove.log",
         "execution": "hosted-tools",
         "kind": "generation-preparation"
       }
@@ -1096,7 +1096,8 @@
     "featureBundle": "hosted/verified-feature.bundle",
     "sourceGeneration": "hosted/preparation/generated-origin.json",
     "groupManifest": "group-manifest.json",
-    "allOriginalFileDigests": "original-file-index.json"
+    "allOriginalFileDigests": "original-file-index.json",
+    "compatibility": "compatibility.json"
   },
   "historical": {
     "source983And0f": "Original reports/negatives remain sealed; no current acceptance credit",
