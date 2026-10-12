@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
+import { createRequire } from 'node:module';
 import { existsSync, lstatSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, realpathSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -49,22 +50,52 @@ function filesBelow(directory, relative = '') {
   }
   return result;
 }
-function builtOutputs() {
+async function builtOutputs() {
   const gate = JSON.parse(readFileSync(path.join(root, 'artifacts/gate-ci-javascript-linux.json'), 'utf8'));
   assert.equal(gate.sha, sourceSha); assert.equal(gate.contentId, sourceCid); assert.equal(gate.status, 'passed');
   const packages = workspacePackages(root);
   const builds = gate.checks.filter((check) => check.id.endsWith('/build'));
   assert.ok(builds.length > 0 && builds.every((check) => check.status === 'passed'), 'Actual successful owning builds are required before sanitization');
-  return builds.map((check) => {
+  return await Promise.all(builds.map(async (check) => {
     const pkg = packages.find((item) => item.name === check.package); assert.ok(pkg);
-    const dist = path.join(root, pkg.directory, 'dist'); assert.ok(existsSync(dist) && lstatSync(dist).isDirectory());
-    const files = filesBelow(dist).map((file) => { const bytes = readFileSync(path.join(dist, file)); return { path: pkg.directory + '/dist/' + file, size: bytes.length, sha256: hash(bytes) }; });
-    assert.ok(files.length > 0 && files.some((file) => file.size > 0), 'Built output must be present and nonempty');
-    return { package: pkg.name, check: check.id, files };
-  });
+    const packageRoot = realpathSync(path.join(root, pkg.directory));
+    let declared;
+    if (pkg.runtime === 'worker') {
+      // Resolve the same public owning SDK export used by this package's preview.
+      const resolve = createRequire(path.join(packageRoot, 'package.json'));
+      const { readBuildOutput } = await import(pathToFileURL(resolve.resolve('@cloudflare/build-output-utils')));
+      const build = await readBuildOutput(packageRoot);
+      assert.equal(build.rootConfig.buildContext.mode, 'offline');
+      const worker = build.workers.default;
+      assert.ok(worker?.bundleDir && worker.config.manifest, 'Actual official Worker bundle/manifest is required');
+      const { moduleRules } = await import(pathToFileURL(path.join(root, 'tools/cloudflare/preview.ts')));
+      moduleRules(worker.bundleDir, worker.config.manifest);
+      declared = [{ kind: 'worker-bundle', directory: worker.bundleDir }];
+      if (worker.assetsDir !== undefined) {
+        assert.ok(typeof worker.assetsDir === 'string' && worker.assetsDir, 'Declared Worker assets must be available');
+        declared.push({ kind: 'worker-assets', directory: worker.assetsDir });
+      }
+    } else {
+      // These adopted library/renderer builds emit dist through their existing config.
+      declared = [{ kind: pkg.runtime + '-dist', directory: path.join(packageRoot, 'dist') }];
+    }
+    const outputs = declared.map(({ kind, directory }) => {
+      const full = path.resolve(packageRoot, directory);
+      assert.ok(existsSync(full) && lstatSync(full).isDirectory() && !lstatSync(full).isSymbolicLink(), 'Owning build output directory is required: ' + pkg.name + '/' + kind);
+      const actual = realpathSync(full);
+      assert.ok(actual.startsWith(packageRoot + path.sep), 'Build output must remain inside its owning package');
+      const files = filesBelow(actual).map((file) => {
+        const target = path.join(actual, file); assert.ok(realpathSync(target).startsWith(packageRoot + path.sep));
+        const bytes = readFileSync(target); return { path: path.relative(root, target).split(path.sep).join('/'), size: bytes.length, sha256: hash(bytes) };
+      });
+      assert.ok(files.length > 0 && files.some((file) => file.size > 0), 'Built output must be present and nonempty');
+      return { kind, directory: path.relative(root, actual).split(path.sep).join('/'), files };
+    });
+    return { package: pkg.name, runtime: pkg.runtime, check: check.id, outputs };
+  }));
 }
 sourceGuard();
-const beforeBuild = builtOutputs();
+const beforeBuild = await builtOutputs();
 const witnesses = [
   { name: 'brand', text: '"name": "cutt"', expected: ['source-product-brand'] },
   { name: 'scope', text: '"@cutt/', expected: ['source-product-brand', 'source-workspace-scope'] },
@@ -123,14 +154,14 @@ for (const witness of witnesses) {
   writeFileSync(path.join(controls, 'summary.json'), jsonBytes(summary));
   sourceGuard();
 }
-sourceGuard(); assert.deepEqual(builtOutputs(), beforeBuild);
+sourceGuard(); assert.deepEqual(await builtOutputs(), beforeBuild);
 const final = command([process.execPath, cli, '--rules', profile], root);
 writeFileSync(path.join(controls, 'final-source.stdout.log'), final.stdout); writeFileSync(path.join(controls, 'final-source.stderr.log'), final.stderr);
 process.stdout.write(final.stdout); process.stderr.write(final.stderr);
 const accepted = readFileSync(path.join(root, 'artifacts/sanitization.json'));
 const value = JSON.parse(accepted);
 assert.equal(final.exit, 0, 'Final actual Source build scan must pass'); assert.equal(value.status, 'passed'); assert.equal(value.sha, sourceSha); assert.equal(value.contentId, sourceCid); assert.deepEqual(value.rules, rules); assert.deepEqual(value.failures, []);
-sourceGuard(); assert.deepEqual(builtOutputs(), beforeBuild);
+sourceGuard(); assert.deepEqual(await builtOutputs(), beforeBuild);
 summary.status = 'passed'; summary.final = { argv: final.argv, cwd: root, started: final.started, ended: final.ended, exit: final.exit, reportSha256: hash(accepted), controlsPassed: summary.controls.length };
 assert.equal(summary.controls.length, 6); assert.ok(summary.controls.every((control) => control.repair?.exit === 0));
 writeFileSync(path.join(controls, 'summary.json'), jsonBytes(summary));

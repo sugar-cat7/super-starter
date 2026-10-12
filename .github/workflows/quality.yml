@@ -81,7 +81,7 @@ jobs:
           assert.ok(external !== root && !external.startsWith(root + path.sep));
           mkdirSync(external, { recursive: true });
           const resources = [
-            ['.github/scripts/source-external-sanitization.mjs', 'helper.mjs', '30906c535a9228954ed4b6813f3b79a97817be6b3610680dcdf950401a83130c'],
+            ['.github/scripts/source-external-sanitization.mjs', 'helper.mjs', 'c45e7c0b69e3d4a84f8c9bfc4cb47149e1014e3e9b083b28b119a84e176d828e'],
             ['.github/payload/source-sanitization-rules.json', 'rules.json', '38f2cbe9f89f18109fe04fd7705a2385ca304937bb7d25ed7a7868ac553a5f04'],
           ];
           for (const [resource, name, expected] of resources) {
