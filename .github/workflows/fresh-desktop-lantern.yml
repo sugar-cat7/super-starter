@@ -5,9 +5,9 @@ on:
 permissions:
   contents: read
 jobs:
-  inspect:
+  actor:
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -16,8 +16,7 @@ jobs:
       - name: Isolate mechanical tools
         run: |
           mkdir -p "$RUNNER_TEMP/desktop-counter-lantern-tools"
-          cp _mechanical/.rehearsal/fresh-desktop-lantern/verify.mjs "$RUNNER_TEMP/desktop-counter-lantern-tools/verify.mjs"
-          cp _mechanical/.rehearsal/fresh-desktop-lantern/snapshot.mjs "$RUNNER_TEMP/desktop-counter-lantern-tools/snapshot.mjs"
+          cp _mechanical/.rehearsal/fresh-desktop-lantern/* "$RUNNER_TEMP/desktop-counter-lantern-tools/"
           rm -rf _mechanical
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -53,11 +52,72 @@ jobs:
           git config user.email "fresh-desktop-lantern@example.invalid"
           git add .
           git commit -m "chore: initialize generated Desktop project"
-          node "$RUNNER_TEMP/desktop-counter-lantern-tools/snapshot.mjs" pristine inspect
+          node "$RUNNER_TEMP/desktop-counter-lantern-tools/snapshot.mjs" pristine
+      - name: Official Linux native prerequisites after source removal
+        run: sudo apt-get update && sudo apt-get install -y libwebkit2gtk-4.1-dev build-essential libayatana-appindicator3-dev librsvg2-dev patchelf xvfb dbus-x11 at-spi2-core
+      - name: Independently authored feature and standard project phases
+        working-directory: desktop-counter-lantern
+        run: dbus-run-session -- xvfb-run -a node "$RUNNER_TEMP/desktop-counter-lantern-tools/runner.mjs"
+      - name: Complete final Git and raw phase evidence
+        if: always()
+        working-directory: desktop-counter-lantern
+        run: |
+          node "$RUNNER_TEMP/desktop-counter-lantern-tools/snapshot.mjs" final
+          node "$RUNNER_TEMP/desktop-counter-lantern-tools/evidence.mjs" actor-linux-evidence
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: success()
+        with:
+          name: lantern-actual-feature-bundle
+          path: lantern-feature-transport
+          include-hidden-files: true
+          if-no-files-found: error
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: always()
         with:
-          name: lantern-pristine-inspection
-          path: desktop-counter-lantern/artifacts/actor
+          name: lantern-actor-linux-evidence
+          path: desktop-counter-lantern/artifacts
+          include-hidden-files: true
+          if-no-files-found: error
+  native:
+    needs: actor
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, macos-15, windows-2025]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    steps:
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
+        with:
+          name: lantern-actual-feature-bundle
+          path: lantern-feature-transport
+      - name: Clone only the actual feature bundle
+        run: git -c core.longpaths=true clone lantern-feature-transport/feature.bundle desktop-counter-lantern
+      - uses: jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca
+        with:
+          version: 2026.10.7
+          working_directory: desktop-counter-lantern
+          cache: false
+          persist_github_token: false
+      - name: Official Linux native prerequisites
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y libwebkit2gtk-4.1-dev build-essential libayatana-appindicator3-dev librsvg2-dev patchelf xvfb dbus-x11 at-spi2-core
+      - name: Actual feature native CI on Linux
+        if: runner.os == 'Linux'
+        working-directory: desktop-counter-lantern
+        run: dbus-run-session -- xvfb-run -a node ../lantern-feature-transport/native-runner.mjs
+      - name: Actual feature native CI on macOS or Windows
+        if: runner.os != 'Linux'
+        working-directory: desktop-counter-lantern
+        run: node ../lantern-feature-transport/native-runner.mjs
+      - name: Complete native raw evidence in ordinary logs
+        if: always()
+        working-directory: desktop-counter-lantern
+        run: node ../lantern-feature-transport/evidence.mjs native-evidence
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: lantern-native-evidence-${{ runner.os }}
+          path: desktop-counter-lantern/artifacts
           include-hidden-files: true
           if-no-files-found: error

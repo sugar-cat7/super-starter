@@ -1,0 +1,11 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+const root=process.cwd();
+const walk=dir=>fs.existsSync(dir)?fs.readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(path.join(dir,e.name)):[path.join(dir,e.name)]):[];
+const files=walk('artifacts').filter(file=>!file.endsWith('-raw-git.json')&&!file.endsWith('evidence-transport.json')&&!file.endsWith('.bundle')).map(file=>({path:file,bytes:fs.readFileSync(file).toString('base64')}));
+const report={schema:1,kind:process.argv[2],os:process.platform,files};
+const bytes=Buffer.from(JSON.stringify(report)),sha256=crypto.createHash('sha256').update(bytes).digest('hex'),b64=bytes.toString('base64');
+fs.mkdirSync('artifacts/actor',{recursive:true});fs.writeFileSync('artifacts/actor/evidence-transport.json',bytes);
+for(let i=0;i<b64.length;i+=30000)console.log('ACTOR_CHUNK '+JSON.stringify({kind:report.kind,sha256,bytes:bytes.length,index:i/30000,total:Math.ceil(b64.length/30000),data:b64.slice(i,i+30000)}));
+console.log('ACTOR_EVIDENCE_SUMMARY '+JSON.stringify({kind:report.kind,os:report.os,sha256,bytes:bytes.length,files:files.map(f=>f.path)}));
