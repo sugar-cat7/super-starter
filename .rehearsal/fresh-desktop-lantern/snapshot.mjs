@@ -10,7 +10,7 @@ const objects=[...new Set(refs)].map(sha=>({sha,type:git('cat-file','-t',sha).to
 for(const object of objects) if(object.type==='tree') object.bytes=git('cat-file','tree',object.sha).toString('base64');
 const tracked=git('ls-tree','-r','-z','HEAD').toString().split('\0').filter(Boolean).map(row=>{const [header,file]=row.split('\t');const [mode,type,sha]=header.split(' ');return {path:file,mode,type,sha,bytes:git('cat-file','blob',sha).toString('base64')};});
 const input=crypto.createHash('sha256');for(const file of tracked){input.update(file.path);input.update('\0');input.update(Buffer.from(file.bytes,'base64'));}
-const report={version:1,kind:process.argv[2]??'pristine',sourceOrigin:state.origin,template:state,head:git('rev-parse','HEAD').toString().trim(),contentId:input.digest('hex'),objects,tracked};
+const report={version:1,kind:process.argv[2]??'pristine',sourceOrigin:state.origin,template:state,head:git('rev-parse','HEAD').toString().trim(),trackedContentId:input.digest('hex'),objects,tracked};
 const bytes=Buffer.from(JSON.stringify(report));const digest=crypto.createHash('sha256').update(bytes).digest('hex');
 fs.mkdirSync('artifacts/actor',{recursive:true});fs.writeFileSync('artifacts/actor/'+report.kind+'-raw-git.json',bytes);
 const b64=bytes.toString('base64');for(let i=0;i<b64.length;i+=30000)console.log('ACTOR_CHUNK '+JSON.stringify({kind:report.kind,sha256:digest,bytes:bytes.length,index:i/30000,total:Math.ceil(b64.length/30000),data:b64.slice(i,i+30000)}));
