@@ -25,6 +25,75 @@ describe('API validation and safe publication defaults', () => {
       expect(await response.json()).toMatchObject({ error: { code: 'not_found' } });
     },
   );
+  it.each([
+    ['rejection', 500],
+    ['declared_failure', 500],
+    ['not_found', 404],
+    ['success', 204],
+  ] as const)('keeps volatile notes isolated from a D1 DELETE %s outcome', async (mode, status) => {
+    const created = await handleNotes(
+      new Request('https://sample.invalid/api/notes', {
+        method: 'POST',
+        body: JSON.stringify({ text: 'independent volatile note' }),
+      }),
+      { WRITE_MODE: 'allow' },
+    );
+    expect(created.status).toBe(201);
+    const note = (await created.json()) as { id: string; text: string; createdAt: number };
+    type DeleteResult = {
+      success: boolean;
+      error: string | undefined;
+      meta: { changes: number };
+    };
+    type DeleteStatement = { run: () => Promise<DeleteResult> };
+    type BindDelete = (id: string) => DeleteStatement;
+    const run = vi.fn<DeleteStatement['run']>(() =>
+      mode === 'rejection'
+        ? Promise.reject(new Error('PRIVATE-SQL-DO-NOT-EXPORT'))
+        : Promise.resolve({
+            success: mode !== 'declared_failure',
+            error: mode === 'declared_failure' ? 'PRIVATE-SQL-DO-NOT-EXPORT' : undefined,
+            meta: { changes: mode === 'success' ? 1 : 0 },
+          }),
+    );
+    const bind = vi.fn<BindDelete>(() => ({ run }));
+    const prepare = vi.fn<(sql: string) => { bind: BindDelete }>(() => ({ bind }));
+    const database = { prepare } as unknown as D1Database;
+    try {
+      const response = await handleNotes(
+        new Request(`https://sample.invalid/api/notes/${note.id}`, { method: 'DELETE' }),
+        { WRITE_MODE: 'allow', NOTES: database },
+      );
+      expect(prepare).toHaveBeenCalledExactlyOnceWith('DELETE FROM notes WHERE id = ?');
+      expect(bind).toHaveBeenCalledExactlyOnceWith(note.id);
+      expect(run).toHaveBeenCalledExactlyOnceWith();
+      expect(response.status).toBe(status);
+      const raw = await response.text();
+      const body = raw
+        ? (JSON.parse(raw) as { error: { code: string; diagnosticId: string } })
+        : undefined;
+      expect(raw.length === 0).toBe(status === 204);
+      expect(body?.error.code).toBe(
+        status === 500 ? 'internal_error' : status === 404 ? 'not_found' : undefined,
+      );
+      expect(body?.error.diagnosticId ?? '').toMatch(status === 204 ? /^$/u : /^[a-f0-9]{32}$/u);
+      expect(response.headers.get('x-diagnostic-id')).toBe(body?.error.diagnosticId ?? null);
+      expect(response.headers.get('x-error-code')).toBe(body?.error.code ?? null);
+      expect(raw).not.toContain('PRIVATE-SQL');
+      const listed = await handleNotes(new Request('https://sample.invalid/api/notes'), {
+        WRITE_MODE: 'allow',
+      });
+      expect(listed.status).toBe(200);
+      expect(await listed.json()).toContainEqual(note);
+    } finally {
+      // Clean up this case's own note even when the preservation assertion fails.
+      await handleNotes(
+        new Request(`https://sample.invalid/api/notes/${note.id}`, { method: 'DELETE' }),
+        { WRITE_MODE: 'allow' },
+      );
+    }
+  });
+
   it('decodes split UTF-8 ingress and bounds bytes before parsing or storage', async () => {
     const bytes = new TextEncoder().encode(JSON.stringify({ text: '😀 split' }));
     const stream = new ReadableStream<Uint8Array>({

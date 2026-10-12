@@ -133,7 +133,7 @@ export async function handleNotes(request: Request, env: SampleBindings): Promis
       const id = url.pathname.slice('/api/notes/'.length);
       if (!z.uuid().safeParse(id).success) return Err(failure('input_invalid'));
       else {
-        let removed = volatileNotes.delete(id);
+        let removed: boolean;
         if (env.NOTES) {
           const stored = await binding(
             'binding.d1.write',
@@ -142,7 +142,7 @@ export async function handleNotes(request: Request, env: SampleBindings): Promis
           );
           if (!stored.ok) return stored;
           removed = stored.value.meta.changes > 0;
-        }
+        } else removed = volatileNotes.delete(id);
         if (!removed) return Err(failure('resource_missing'));
         response = new Response(null, { status: 204, headers: { 'x-request-id': requestId } });
       }
