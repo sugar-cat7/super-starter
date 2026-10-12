@@ -10,6 +10,13 @@ on:
         description: Mechanical support for the independently authored status feature
         type: boolean
         default: false
+      agent_add_mode:
+        description: Explicit preparation or immutable validation
+        type: choice
+        options:
+          - support
+          - prepare
+        default: support
       feature_content_id:
         description: Exact immutable authored source content ID
         type: string
@@ -338,6 +345,7 @@ jobs:
       - name: Actual authored source setup, hooks and complete standard validation
         env:
           STATUS_AGENT_INPUT_CID: ${{ inputs.feature_content_id }}
+          STATUS_AGENT_MODE: ${{ inputs.agent_add_mode }}
         run: node .github/scripts/status-agent-run.mjs
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: always()

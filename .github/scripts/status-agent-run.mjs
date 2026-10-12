@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { appendFileSync, existsSync, mkdirSync, readFileSync, realpathSync, writeFileSync } from 'node:fs';
+import { appendFileSync, existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
+import { gzipSync } from 'node:zlib';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
@@ -9,6 +10,9 @@ import { pathToFileURL } from 'node:url';
 const transport = process.cwd();
 const payload = path.join(transport, '.github/payload');
 const input = JSON.parse(readFileSync(path.join(payload, 'status-agent-input.json'), 'utf8'));
+const mode = process.env.STATUS_AGENT_MODE ?? 'support';
+assert.ok(['support', 'prepare'].includes(mode), 'Only explicit mechanical support/preparation modes are allowed');
+const formatPaths = ['cloudflare.config.ts', 'package.json', 'src/notes.ts', 'test/runtime.test.ts', 'test/unit.test.ts', 'tsconfig.json', 'vite.config.ts', 'vitest.config.ts', 'vitest.runtime.config.ts'].map((file) => `packages/status/${file}`);
 const output = path.join(transport, 'artifacts/hosted-agent-add');
 const source = path.join(transport, '.state/hosted-status-feature');
 mkdirSync(path.join(output, 'logs'), { recursive: true });
@@ -16,7 +20,7 @@ mkdirSync(path.join(transport, '.state/tmp'), { recursive: true });
 const environment = { ...process.env, TMPDIR: path.join(transport, '.state/tmp'), TMP: path.join(transport, '.state/tmp'), TEMP: path.join(transport, '.state/tmp'), CLOUDFLARE_SEND_METRICS: 'false', WRANGLER_SEND_METRICS: 'false' };
 const commands = [];
 const auxiliaryCommands = [];
-const report = { schema: 1, execution: 'hosted-tools', kind: 'hosted-feature-support', status: 'running', task: input.task, origin: input.origin, inputContentId: input.featureContentId, baselineSha: input.baselineSha, transportSha: process.env.GITHUB_SHA, featureSha: null, contentId: input.featureContentId, commands, auxiliaryCommands, os: `${process.platform}/${process.arch}`, node: process.version };
+const report = { schema: 1, execution: 'hosted-tools', kind: mode === 'prepare' ? 'hosted-feature-preparation' : 'hosted-feature-support', status: 'running', task: input.task, origin: input.origin, inputContentId: input.featureContentId, baselineSha: input.baselineSha, transportSha: process.env.GITHUB_SHA, featureSha: null, contentId: input.featureContentId, commands, auxiliaryCommands, os: `${process.platform}/${process.arch}`, node: process.version };
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const shellFree = (argv, cwd = transport) => {
   const started = new Date();
@@ -33,6 +37,7 @@ const save = () => writeFileSync(path.join(output, 'hosted-feature-support.json'
 let processTools;
 let contentId;
 let expectedHead;
+let expectedContentId = input.featureContentId;
 let committed = false;
 const identity = () => {
   const state = JSON.parse(readFileSync(path.join(source, '.template.json'), 'utf8'));
@@ -41,7 +46,7 @@ const identity = () => {
 const guard = () => {
   const current = identity();
   assert.equal(current.head, expectedHead, 'Exact owned HEAD changed');
-  assert.equal(current.contentId, input.featureContentId, 'Authored feature content changed');
+  assert.equal(current.contentId, expectedContentId, 'Authored feature content changed');
   assert.deepEqual(current.origin, input.origin, 'Generated origin changed');
   if (committed) assert.equal(current.status, '', 'Committed feature must remain clean');
   else {
@@ -53,6 +58,7 @@ const guard = () => {
 };
 async function phase(id, argv, options = {}) {
   const before = guard();
+  const formatBefore = options.formatPreparation ? new Map(shellFree(['git', 'ls-files'], source).split('\n').filter(Boolean).map((file) => [file, readFileSync(path.join(source, file))])) : null;
   const started = new Date();
   const relative = `logs/${String(commands.length + 1).padStart(2, '0')}-${id}.log`;
   const filename = path.join(output, relative);
@@ -116,6 +122,19 @@ async function phase(id, argv, options = {}) {
     committed = true;
     report.featureSha = next;
   }
+  if (options.formatPreparation && result.exit === 0 && !failure) {
+    try {
+      assert.equal(mode, 'prepare', 'Formatting is never part of immutable validation');
+      const changed = [];
+      for (const [file, bytes] of formatBefore) {
+        if (!readFileSync(path.join(source, file)).equals(bytes)) changed.push(file);
+      }
+      assert.deepEqual(changed.sort(), [...formatPaths].sort(), 'Only the nine known untouched status scaffold files may be formatted');
+      expectedContentId = contentId(source);
+      report.contentId = expectedContentId;
+      report.formattedFiles = changed.map((file) => ({ path: file, originalSha256: digest(formatBefore.get(file)), sha256: digest(readFileSync(path.join(source, file))), bytes: readFileSync(path.join(source, file)).toString('base64') }));
+    } catch (error) { failure = String(error); }
+  }
   let after;
   try { after = guard(); } catch (error) { failure = String(error); }
   const ended = new Date();
@@ -162,6 +181,13 @@ try {
   save();
   await phase('setup', ['pnpm', 'env:setup']);
   await phase('doctor', ['pnpm', 'env:doctor']);
+  if (mode === 'prepare') {
+    await phase('format-preparation', ['pnpm', 'exec', 'vp', 'fmt', ...formatPaths], { formatPreparation: true });
+    report.final = guard();
+    assert.equal(report.featureSha, null);
+    report.status = 'prepared';
+    report.limitations = ['This is mechanical formatting preparation only; no Agent acceptance, genuine feature commit/push or validation success is claimed.', 'The original generated formatting failure remains preserved and is not resolved in the canonical foundation by this generated-instance correction.'];
+  } else {
   await phase('targeted-test', ['pnpm', '--filter', '@independent-service/status', 'test']);
   await phase('targeted-runtime', ['pnpm', '--filter', '@independent-service/status', 'test:runtime']);
   await phase('dev', ['pnpm', 'dev', '--', 'status']);
@@ -213,6 +239,7 @@ try {
   assert.equal(report.localPreflight.deployed, false);
   report.status = 'passed';
   report.limitations = ['Mechanical hosted execution supports an independently authored Agent feature; this script is not an Agent.', 'No Cloudflare remote deployment or dev connectivity is claimed.', 'The bootstrap and transport commits do not count as genuine feature commit/push evidence.'];
+  }
 } catch (error) {
   report.status = 'failed';
   report.error = String(error);
@@ -220,4 +247,24 @@ try {
 } finally {
   save();
   console.log(JSON.stringify({ status: report.status, execution: report.execution, kind: report.kind, featureSha: report.featureSha, contentId: report.contentId, error: report.error }, null, 2));
+  // Preserve exact raw evidence on the ordinary GitHub job-log route as well as
+  // the artifact route. No environment, credentials or unrelated files are read.
+  const files = [];
+  const collect = (directory, prefix = '') => {
+    for (const entry of readdirSync(directory, { withFileTypes: true })) {
+      const relative = path.posix.join(prefix, entry.name);
+      if (entry.isDirectory()) collect(path.join(directory, entry.name), relative);
+      else if (entry.isFile()) {
+        const bytes = readFileSync(path.join(directory, entry.name));
+        files.push({ path: relative, size: bytes.length, sha256: digest(bytes), bytes: bytes.toString('base64') });
+      }
+    }
+  };
+  collect(output);
+  const archive = gzipSync(Buffer.from(JSON.stringify({ schema: 1, execution: 'hosted-tools', transportSha: process.env.GITHUB_SHA, files })));
+  const encoded = archive.toString('base64');
+  const chunks = encoded.match(/.{1,6000}/gu) ?? [];
+  console.log(`STATUS_AGENT_ARCHIVE_BEGIN ${JSON.stringify({ encoding: 'gzip+base64', size: archive.length, sha256: digest(archive), chunks: chunks.length, transportSha: process.env.GITHUB_SHA })}`);
+  chunks.forEach((chunk, index) => console.log(`STATUS_AGENT_ARCHIVE_CHUNK ${index} ${chunk}`));
+  console.log('STATUS_AGENT_ARCHIVE_END');
 }
