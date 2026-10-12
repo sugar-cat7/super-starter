@@ -117,6 +117,9 @@ it('forwards Worker build interruption to its detached non-cooperating child', a
     expect({ code: child.exitCode, signal: child.signalCode }).toEqual(
       process.platform === 'win32' ? { code: null, signal: 'SIGTERM' } : { code: 1, signal: null },
     );
+    // Windows launcher exit precedes the owned Job acknowledgement. POSIX
+    // still verifies the build wrapper's own awaited interruption cleanup.
+    if (process.platform === 'win32') await stopTree(child, 0);
     await expect(fetch(origin, { signal: AbortSignal.timeout(1_000) })).rejects.toThrow(
       /fetch failed|aborted/iu,
     );

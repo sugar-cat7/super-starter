@@ -1,9 +1,10 @@
 import { spawnSync } from 'node:child_process';
-import { mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { expect, it } from 'vitest';
 import { formatFiles } from './format.ts';
+import { spawnOwned, stopTree } from '../process.ts';
 
 const source = path.resolve(import.meta.dirname, '../..');
 function fixture(config: string, run: (root: string) => void): void {
@@ -14,7 +15,10 @@ function fixture(config: string, run: (root: string) => void): void {
     writeFileSync(path.join(root, 'vite.config.ts'), config);
     run(root);
   } finally {
-    rmSync(root, { recursive: true, force: true });
+    // Use Node's bounded filesystem retries for Windows removal refusals.
+    // Persistent failures still throw; this does not infer a child-process leak.
+    rmSync(root, { recursive: true, force: true, maxRetries: 3, retryDelay: 100 });
+    expect(existsSync(root)).toBe(false);
   }
 }
 const simple =
@@ -117,4 +121,87 @@ it('matches CLI stdin behavior for a gitignored source file and CLI runtime meta
       expect(output?.toString()).toContain("'value'");
     },
   );
+});
+
+it('reports malformed formatting before naturally draining a tracked SDK child', async () => {
+  const root = mkdtempSync(path.join(os.tmpdir(), 'starter-format-drain-'));
+  const snapshot = path.join(root, 'exit-snapshot.json');
+  const server = path.join(root, 'sdk-child.mjs');
+  symlinkSync(path.join(source, 'node_modules'), path.join(root, 'node_modules'), 'junction');
+  writeFileSync(path.join(root, 'package.json'), '{"type":"module"}');
+  writeFileSync(
+    server,
+    "import {createServer} from 'node:http';const server=createServer((request,response)=>{if(request.url!=='/release'){response.statusCode=404;response.end();return;}response.end('released');server.close();});server.listen(0,'127.0.0.1',()=>console.log('FORMAT_CHILD '+JSON.stringify({origin:'http://127.0.0.1:'+server.address().port,pid:process.pid})));",
+  );
+  writeFileSync(
+    path.join(root, 'vite.config.ts'),
+    `import {spawn} from 'node:child_process';import {writeFileSync} from 'node:fs';const child=spawn(process.execPath,[process.env.FORMAT_DRAIN_CHILD],{stdio:['ignore','inherit','inherit']});process.on('exit',()=>writeFileSync(process.env.FORMAT_DRAIN_SNAPSHOT,JSON.stringify({code:child.exitCode,signal:child.signalCode})));${simple}`,
+  );
+  const child = spawnOwned(
+    process.execPath,
+    [
+      '--input-type=module',
+      '--eval',
+      readFileSync(new URL('./format-batch.mjs', import.meta.url), 'utf8'),
+    ],
+    {
+      cwd: root,
+      stdio: ['pipe', 'pipe', 'pipe'],
+      env: { ...process.env, FORMAT_DRAIN_CHILD: server, FORMAT_DRAIN_SNAPSHOT: snapshot },
+    },
+  );
+  const closed = new Promise<void>((resolve) => child.once('close', () => resolve()));
+  let output = '';
+  let error = '';
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  try {
+    const ready = new Promise<string>((resolve, reject) => {
+      const check = () => {
+        if (!error.includes('Generated format failed for atomic-invalid.ts')) return;
+        // A fatal unhandled exception emits host exit before its error diagnostic.
+        // Managed teardown cannot change the snapshot of the child at that moment.
+        if (existsSync(snapshot)) {
+          reject(
+            new Error(
+              `Formatter exited before draining its SDK child: ${readFileSync(snapshot, 'utf8')}`,
+            ),
+          );
+          return;
+        }
+        const origin = /FORMAT_CHILD (\{[^\n]+\})/u.exec(output)?.[1];
+        if (origin) resolve((JSON.parse(origin) as { origin: string }).origin);
+      };
+      child.stdout?.on('data', (chunk: Buffer) => {
+        output += chunk.toString();
+        check();
+      });
+      child.stderr?.on('data', (chunk: Buffer) => {
+        error += chunk.toString();
+        check();
+      });
+      child.once('error', reject);
+      child.once('exit', () => reject(new Error(`Formatter exited before SDK release: ${error}`)));
+      timer = setTimeout(() => reject(new Error('Formatter SDK child readiness timeout')), 15_000);
+    });
+    child.stdin?.end(
+      JSON.stringify({ entries: [['atomic-invalid.ts', 'export const = ;']], sideConfigs: [] }),
+    );
+    const origin = await ready;
+    if (timer) clearTimeout(timer);
+    expect(existsSync(snapshot)).toBe(false);
+    expect(
+      await (await fetch(`${origin}/release`, { signal: AbortSignal.timeout(1000) })).text(),
+    ).toBe('released');
+    await closed;
+    await stopTree(child, 0);
+    expect(child.exitCode).toBe(1);
+    expect(error).toContain('Generated format failed for atomic-invalid.ts');
+    expect(output).not.toContain('STARTER_FORMAT_BATCH');
+    expect(JSON.parse(readFileSync(snapshot, 'utf8'))).toEqual({ code: 0, signal: null });
+  } finally {
+    if (timer) clearTimeout(timer);
+    await stopTree(child, 0);
+    rmSync(root, { recursive: true, force: true, maxRetries: 3, retryDelay: 100 });
+    expect(existsSync(root)).toBe(false);
+  }
 });

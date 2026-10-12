@@ -1,9 +1,9 @@
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { describe, expect, it } from 'vitest';
+import { afterAll, describe, expect, it } from 'vitest';
 import { ciPlan } from './ci-plan.ts';
 
 it('plans runtime checks on the changed real application, skips unrelated native work, and restores all checks for infrastructure changes', () => {
@@ -56,22 +56,15 @@ it('plans runtime checks on the changed real application, skips unrelated native
 });
 
 describe('minimal CI execution with an actual committed diff', () => {
-  const planFor = (
-    files: string[],
-    full = false,
-    unknown = false,
-    configuration: {
-      desktop?: boolean;
-      metadata?: 'options' | 'lock' | 'version' | 'invalid-hash' | 'orphan-hash' | 'removed-state';
-    } = {},
-  ) => {
-    const root = mkdtempSync(path.join(os.tmpdir(), 'starter-ci-scope-'));
-    const git = (...args: string[]) =>
-      execFileSync(
-        'git',
-        ['-c', 'user.name=CI scope test', '-c', 'user.email=test@example.invalid', ...args],
-        { cwd: root, encoding: 'utf8' },
-      ).trim();
+  const fixtureGit = (root: string, ...args: string[]) =>
+    execFileSync(
+      'git',
+      ['-c', 'user.name=CI scope test', '-c', 'user.email=test@example.invalid', ...args],
+      { cwd: root, encoding: 'utf8' },
+    ).trim();
+  const createBaseline = (desktop: boolean) => {
+    const root = mkdtempSync(path.join(os.tmpdir(), 'starter-ci-baseline-'));
+    const git = (...args: string[]) => fixtureGit(root, ...args);
     try {
       git('init', '-q');
       for (const [name, runtime, dependencies] of [
@@ -94,7 +87,7 @@ describe('minimal CI execution with an actual committed diff', () => {
         ],
         ['desktop', 'desktop', { '@test/ui': 'workspace:*', '@test/observability': 'workspace:*' }],
       ] as const) {
-        if (name === 'desktop' && configuration.desktop === false) continue;
+        if (name === 'desktop' && !desktop) continue;
         mkdirSync(path.join(root, 'packages', name), { recursive: true });
         writeFileSync(
           path.join(root, 'packages', name, 'package.json'),
@@ -116,7 +109,7 @@ describe('minimal CI execution with an actual committed diff', () => {
           'observability',
           'api',
           'web',
-          ...(configuration.desktop === false ? [] : ['desktop']),
+          ...(!desktop ? [] : ['desktop']),
         ],
         managed: {} as Record<string, string>,
         lock: 'baseline-lock',
@@ -125,6 +118,41 @@ describe('minimal CI execution with an actual committed diff', () => {
       git('add', '.');
       git('commit', '-qm', 'baseline');
       const base = git('rev-parse', 'HEAD');
+      return { root, base, state };
+    } catch (error) {
+      rmSync(root, { recursive: true, force: true });
+      throw error;
+    }
+  };
+  const baselines = new Map<boolean, ReturnType<typeof createBaseline>>();
+  afterAll(() => {
+    for (const { root } of baselines.values()) rmSync(root, { recursive: true, force: true });
+  });
+  const planFor = (
+    files: string[],
+    full = false,
+    unknown = false,
+    configuration: {
+      desktop?: boolean;
+      metadata?: 'options' | 'lock' | 'version' | 'invalid-hash' | 'orphan-hash' | 'removed-state';
+    } = {},
+  ) => {
+    const root = mkdtempSync(path.join(os.tmpdir(), 'starter-ci-scope-'));
+    const git = (...args: string[]) => fixtureGit(root, ...args);
+    try {
+      const desktop = configuration.desktop !== false;
+      let baseline = baselines.get(desktop);
+      if (!baseline) {
+        baseline = createBaseline(desktop);
+        baselines.set(desktop, baseline);
+      }
+      // Each case owns a byte copy of the real repository, including refs/index.
+      // It still commits its own input and exercises actual Git diff/show logic.
+      cpSync(baseline.root, root, { recursive: true });
+      const { base } = baseline;
+      const state = JSON.parse(
+        readFileSync(path.join(root, '.template.json'), 'utf8'),
+      ) as ReturnType<typeof createBaseline>['state'];
       for (const file of files) {
         mkdirSync(path.dirname(path.join(root, file)), { recursive: true });
         const value =
