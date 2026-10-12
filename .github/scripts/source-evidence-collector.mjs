@@ -137,6 +137,7 @@ async function prepare() {
   assert.equal(controlSummary.sourceCid, config.source.contentId);
   assert.equal(controlSummary.profileSha256, '38f2cbe9f89f18109fe04fd7705a2385ca304937bb7d25ed7a7868ac553a5f04');
   assert.equal(controlSummary.controls.length, 6);
+  assert.deepEqual(controlSummary.controls.map((control) => control.name).sort(), ['brand', 'scope', 'layout', 'media', 'runner', 'updater'].sort());
   assert.ok(controlSummary.controls.every((control) => control.exit === 1 && control.classification === 'actual-controlled-negative-only'));
   const acceptedSanitization = JSON.parse(utf8(readFileSync(safeJoin(incoming, 'source-evidence/artifacts/sanitization.json'))));
   assert.equal(acceptedSanitization.sha, config.source.sha); assert.equal(acceptedSanitization.contentId, config.source.contentId);
@@ -150,7 +151,16 @@ async function prepare() {
     assert.equal(value.sha, control.head); assert.equal(value.contentId, control.contentId);
     assert.deepEqual(value.rules, acceptedSanitization.rules);
     assert.deepEqual(value.failures.map((failure) => failure.rule).sort(), [...control.expectedRules].sort());
-    assert.ok(value.failures.every((failure) => failure.file === 'witness.txt'));
+    assert.ok(value.failures.every((failure) => failure.file === 'docs/witness.txt'));
+    assert.equal(control.repair.exit, 0); assert.equal(control.repair.classification, 'actual-same-input-repair-only');
+    assert.equal(control.repair.cwd, control.cwd); assert.deepEqual(control.repair.argv, control.argv);
+    assert.equal(control.repair.head, control.head); assert.notEqual(control.repair.contentId, control.contentId);
+    assert.equal(control.repair.onlyChangedPath, 'docs/witness.txt'); assert.equal(control.repair.indexUnchanged, true);
+    const repairedBytes = readFileSync(safeJoin(controlRoot, control.name + '/repair-sanitization.json'));
+    assert.equal(sha256(repairedBytes), control.repair.reportSha256);
+    const repaired = JSON.parse(utf8(repairedBytes)); assert.equal(repaired.status, 'passed');
+    assert.equal(repaired.sha, control.head); assert.equal(repaired.contentId, control.repair.contentId);
+    assert.deepEqual(repaired.rules, acceptedSanitization.rules); assert.deepEqual(repaired.failures, []);
   }
   for (const file of filesBelow(controlRoot)) {
     const full = safeJoin(controlRoot, file), bytes = readFileSync(full), text = utf8(bytes);

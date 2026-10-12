@@ -73,7 +73,7 @@ const witnesses = [
   { name: 'runner', text: 'runs-on: [self-hosted', expected: ['private-runner-coupling'] },
   { name: 'updater', text: 'tauri-plugin-updater', expected: ['native-updater-coupling'] },
 ];
-const summary = { schema: 1, kind: 'external-source-sanitization-support', execution: 'hosted-tools', sourceSha, sourceCid, profileSha256: profileSha, carrierSha: process.env.GITHUB_SHA, runId: process.env.GITHUB_RUN_ID, controls: [], builtOutputs: beforeBuild, status: 'running', classification: 'External controlled negatives are preserved separately and excluded from accepted Source evidence. The original Source CLI owns the final actual build scan.' };
+const summary = { schema: 1, kind: 'external-source-sanitization-support', execution: 'hosted-tools', sourceSha, sourceCid, profileSha256: profileSha, carrierSha: process.env.GITHUB_SHA, runId: process.env.GITHUB_RUN_ID, controls: [], builtOutputs: beforeBuild, status: 'running', classification: 'External controlled fail/repair/pass bytes are preserved separately and excluded from accepted Source evidence. The original Source CLI owns the final actual build scan.' };
 writeFileSync(path.join(controls, 'summary.json'), jsonBytes(summary));
 for (const witness of witnesses) {
   const directory = mkdtempSync(path.join(external, 'control-' + witness.name + '-'));
@@ -81,16 +81,18 @@ for (const witness of witnesses) {
   writeFileSync(path.join(directory, '.template.json'), jsonBytes({ schema: 1, kind: 'verification-control' }));
   writeFileSync(path.join(directory, 'package.json'), jsonBytes({ name: 'source-sanitization-control', private: true }));
   writeFileSync(path.join(directory, '.gitignore'), 'artifacts/\n');
-  writeFileSync(path.join(directory, 'witness.txt'), witness.text + '\n');
+  mkdirSync(path.join(directory, 'docs'), { recursive: true });
+  writeFileSync(path.join(directory, 'docs/witness.txt'), witness.text + '\n');
   git(['init'], directory);
   const controlEnvironment = foreignGitEnvironment(directory);
   for (const field of ['GIT_AUTHOR_NAME', 'GIT_AUTHOR_EMAIL', 'GIT_AUTHOR_DATE', 'GIT_COMMITTER_NAME', 'GIT_COMMITTER_EMAIL', 'GIT_COMMITTER_DATE']) delete controlEnvironment[field];
   git(['config', '--local', 'user.name', 'Source sanitization control'], directory, controlEnvironment);
   git(['config', '--local', 'user.email', 'source-sanitization-control@example.invalid'], directory, controlEnvironment);
-  git(['add', '--', '.template.json', 'package.json', '.gitignore', 'witness.txt'], directory, controlEnvironment);
+  git(['add', '--', '.template.json', 'package.json', '.gitignore', 'docs/witness.txt'], directory, controlEnvironment);
   git(['commit', '-m', 'Own external sanitization control baseline'], directory, controlEnvironment);
   assert.equal(git(['rev-parse', '--show-toplevel'], directory, controlEnvironment), directory);
   const head = git(['rev-parse', 'HEAD'], directory, controlEnvironment), cid = contentId(directory);
+  const controlIndex = git(['ls-files', '--stage', '-z'], directory, controlEnvironment);
   const result = command([process.execPath, cli, '--rules', profile], directory, 1, controlEnvironment);
   const destination = path.join(controls, witness.name); mkdirSync(destination, { recursive: true });
   writeFileSync(path.join(destination, 'stdout.log'), result.stdout); writeFileSync(path.join(destination, 'stderr.log'), result.stderr);
@@ -99,9 +101,26 @@ for (const witness of witnesses) {
   assert.equal(result.exit, 1, 'Each actual controlled scan must fail');
   assert.equal(value.status, 'failed'); assert.equal(value.sha, head); assert.equal(value.contentId, cid); assert.deepEqual(value.rules, rules);
   assert.deepEqual(value.failures.map((failure) => failure.rule).sort(), [...witness.expected].sort());
-  assert.ok(value.failures.every((failure) => failure.file === 'witness.txt'));
+  assert.ok(value.failures.every((failure) => failure.file === 'docs/witness.txt'));
   const entry = { name: witness.name, expectedRules: witness.expected, head, contentId: cid, reportSha256: hash(bytes), argv: result.argv, cwd: directory, started: result.started, ended: result.ended, exit: result.exit, classification: 'actual-controlled-negative-only' };
   summary.controls.push(entry); writeFileSync(path.join(controls, 'summary.json'), jsonBytes(summary));
+  // Repair only this same owned witness, preserving its real failing baseline.
+  writeFileSync(path.join(directory, 'docs/witness.txt'), 'Source sanitization control repaired.\n');
+  const repairedCid = contentId(directory); assert.notEqual(repairedCid, cid, 'Repair must change the canonical control content ID');
+  assert.equal(git(['rev-parse', 'HEAD'], directory, controlEnvironment), head);
+  assert.equal(git(['ls-files', '--stage', '-z'], directory, controlEnvironment), controlIndex);
+  assert.equal(git(['diff', '--name-only'], directory, controlEnvironment), 'docs/witness.txt');
+  const repaired = command([process.execPath, cli, '--rules', profile], directory, 0, controlEnvironment);
+  writeFileSync(path.join(destination, 'repair.stdout.log'), repaired.stdout); writeFileSync(path.join(destination, 'repair.stderr.log'), repaired.stderr);
+  const repairedBytes = readFileSync(path.join(directory, 'artifacts/sanitization.json')); writeFileSync(path.join(destination, 'repair-sanitization.json'), repairedBytes);
+  const repairedValue = JSON.parse(repairedBytes);
+  assert.equal(repaired.exit, 0, 'Actual same-input repaired scan must pass'); assert.equal(repairedValue.status, 'passed');
+  assert.equal(repairedValue.sha, head); assert.equal(repairedValue.contentId, repairedCid); assert.deepEqual(repairedValue.rules, rules); assert.deepEqual(repairedValue.failures, []);
+  assert.equal(git(['rev-parse', 'HEAD'], directory, controlEnvironment), head);
+  assert.equal(git(['ls-files', '--stage', '-z'], directory, controlEnvironment), controlIndex);
+  assert.equal(git(['diff', '--name-only'], directory, controlEnvironment), 'docs/witness.txt');
+  entry.repair = { argv: repaired.argv, cwd: directory, started: repaired.started, ended: repaired.ended, exit: repaired.exit, head, contentId: repairedCid, reportSha256: hash(repairedBytes), onlyChangedPath: 'docs/witness.txt', indexUnchanged: true, classification: 'actual-same-input-repair-only' };
+  writeFileSync(path.join(controls, 'summary.json'), jsonBytes(summary));
   sourceGuard();
 }
 sourceGuard(); assert.deepEqual(builtOutputs(), beforeBuild);
@@ -113,7 +132,7 @@ const value = JSON.parse(accepted);
 assert.equal(final.exit, 0, 'Final actual Source build scan must pass'); assert.equal(value.status, 'passed'); assert.equal(value.sha, sourceSha); assert.equal(value.contentId, sourceCid); assert.deepEqual(value.rules, rules); assert.deepEqual(value.failures, []);
 sourceGuard(); assert.deepEqual(builtOutputs(), beforeBuild);
 summary.status = 'passed'; summary.final = { argv: final.argv, cwd: root, started: final.started, ended: final.ended, exit: final.exit, reportSha256: hash(accepted), controlsPassed: summary.controls.length };
-assert.equal(summary.controls.length, 6);
+assert.equal(summary.controls.length, 6); assert.ok(summary.controls.every((control) => control.repair?.exit === 0));
 writeFileSync(path.join(controls, 'summary.json'), jsonBytes(summary));
 writeFileSync(path.join(root, 'artifacts/sanitization-support.json'), jsonBytes(summary));
 console.log(JSON.stringify({ kind: summary.kind, status: summary.status, sourceSha, sourceCid, controls: 6, builtPackages: beforeBuild.length, profileSha256: profileSha }));
