@@ -1,0 +1,29 @@
+argv: ["pnpm","--filter","@independent-service/status","test:runtime"]
+cwd: /home/runner/work/super-starter/super-starter/.state/hosted-status-feature
+started: 2026-10-12T19:39:44.187Z
+before: {"head":"97afe2686e60edb6927661dc6411083486c28369","contentId":"58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205","origin":{"sha":"653abf13ae3a54b2434c422ab8dc6800822387c3","dirty":false,"contentId":"2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"},"status":"MM .template.json\nM  package.json\nA  packages/status/README.md\nAM packages/status/cloudflare.config.ts\nAM packages/status/package.json\nA  packages/status/preview.ts\nA  packages/status/src/index.ts\nAM packages/status/src/notes.ts\nAM packages/status/test/runtime.test.ts\nA  packages/status/test/status.runtime.test.ts\nA  packages/status/test/status.test.ts\nAM packages/status/test/unit.test.ts\nAM packages/status/tsconfig.json\nAM packages/status/vite.config.ts\nAM packages/status/vitest.config.ts\nAM packages/status/vitest.runtime.config.ts\nAM pnpm-lock.yaml\n M tools/quality/git-hooks/pre-commit\n M tools/quality/git-hooks/pre-push"}
+$ node ../../tools/cloudflare/runtime.ts
+[@independent-service/status] $ cf dev --mode offline
+[@independent-service/status] No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+[@independent-service/status]   [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m33815[22m/[39m
+READY @independent-service/status http://127.0.0.1:33815 2472ms; registry /home/runner/work/super-starter/super-starter/.state/hosted-status-feature/.state/tmp/starter-runtime-G8wqtw/registry/session-g3S67w
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/home/runner/work/super-starter/super-starter/.state/hosted-status-feature/packages/status[39m
+
+ [32m✓[39m test/status.runtime.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 166[2mms[22m[39m
+ [32m✓[39m test/runtime.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 375[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[32m5 passed[39m[22m[90m (5)[39m
+[2m   Start at [22m 19:39:47
+[2m   Duration [22m 669ms[2m (tests 72%, import 14%, transform 13%, worker 1%)[22m
+
+JSON report written to /home/runner/work/super-starter/super-starter/.state/hosted-status-feature/packages/status/artifacts/tests-vitest.runtime.config.ts.json
+Executed 5 required test cases
+[@independent-service/status] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+[@independent-service/status]   × "pnpm recursive run" failed in /home/runner/work/super-starter/super-
+  │ starter/.state/hosted-status-feature/packages/status
+
+
+result: {"phase":"targeted-runtime","argv":["pnpm","--filter","@independent-service/status","test:runtime"],"exit":0,"signal":null,"started":"2026-10-12T19:39:44.187Z","ended":"2026-10-12T19:39:48.136Z","durationMs":3949,"log":"logs/04-targeted-runtime.log","before":{"head":"97afe2686e60edb6927661dc6411083486c28369","contentId":"58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205","origin":{"sha":"653abf13ae3a54b2434c422ab8dc6800822387c3","dirty":false,"contentId":"2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"},"status":"MM .template.json\nM  package.json\nA  packages/status/README.md\nAM packages/status/cloudflare.config.ts\nAM packages/status/package.json\nA  packages/status/preview.ts\nA  packages/status/src/index.ts\nAM packages/status/src/notes.ts\nAM packages/status/test/runtime.test.ts\nA  packages/status/test/status.runtime.test.ts\nA  packages/status/test/status.test.ts\nAM packages/status/test/unit.test.ts\nAM packages/status/tsconfig.json\nAM packages/status/vite.config.ts\nAM packages/status/vitest.config.ts\nAM packages/status/vitest.runtime.config.ts\nAM pnpm-lock.yaml\n M tools/quality/git-hooks/pre-commit\n M tools/quality/git-hooks/pre-push"},"after":{"head":"97afe2686e60edb6927661dc6411083486c28369","contentId":"58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205","origin":{"sha":"653abf13ae3a54b2434c422ab8dc6800822387c3","dirty":false,"contentId":"2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"},"status":"MM .template.json\nM  package.json\nA  packages/status/README.md\nAM packages/status/cloudflare.config.ts\nAM packages/status/package.json\nA  packages/status/preview.ts\nA  packages/status/src/index.ts\nAM packages/status/src/notes.ts\nAM packages/status/test/runtime.test.ts\nA  packages/status/test/status.runtime.test.ts\nA  packages/status/test/status.test.ts\nAM packages/status/test/unit.test.ts\nAM packages/status/tsconfig.json\nAM packages/status/vite.config.ts\nAM packages/status/vitest.config.ts\nAM packages/status/vitest.runtime.config.ts\nAM pnpm-lock.yaml\n M tools/quality/git-hooks/pre-commit\n M tools/quality/git-hooks/pre-push"},"execution":"hosted-tools"}

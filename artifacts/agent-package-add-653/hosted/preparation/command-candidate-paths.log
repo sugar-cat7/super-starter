@@ -1,0 +1,21 @@
+argv: ["git","diff","--cached","--name-only","--no-renames","97afe2686e60edb6927661dc6411083486c28369"]
+cwd: /home/runner/work/super-starter/super-starter/.state/generated-status-project
+.template.json
+package.json
+packages/status/README.md
+packages/status/cloudflare.config.ts
+packages/status/package.json
+packages/status/preview.ts
+packages/status/src/index.ts
+packages/status/src/notes.ts
+packages/status/test/runtime.test.ts
+packages/status/test/status.runtime.test.ts
+packages/status/test/status.test.ts
+packages/status/test/unit.test.ts
+packages/status/tsconfig.json
+packages/status/vite.config.ts
+packages/status/vitest.config.ts
+packages/status/vitest.runtime.config.ts
+pnpm-lock.yaml
+
+result: {"argv":["git","diff","--cached","--name-only","--no-renames","97afe2686e60edb6927661dc6411083486c28369"],"cwd":"/home/runner/work/super-starter/super-starter/.state/generated-status-project","started":"2026-10-12T19:39:19.414Z","ended":"2026-10-12T19:39:19.417Z","durationMs":3,"exit":0,"signal":null,"log":"preparation/command-candidate-paths.log","execution":"hosted-tools","kind":"generation-preparation"}

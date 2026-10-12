@@ -1,0 +1,5 @@
+argv: ["git","rev-parse","b9dd5b5cbfcc2640c1ec4db72bbc46f8af78dae7^"]
+cwd: /home/runner/work/super-starter/super-starter/.state/hosted-status-feature
+97afe2686e60edb6927661dc6411083486c28369
+
+result: {"argv":["git","rev-parse","b9dd5b5cbfcc2640c1ec4db72bbc46f8af78dae7^"],"cwd":"/home/runner/work/super-starter/super-starter/.state/hosted-status-feature","exit":0,"signal":null,"started":"2026-10-12T19:41:01.034Z","ended":"2026-10-12T19:41:01.036Z","durationMs":2,"log":"logs/aux-066.log"}

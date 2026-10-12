@@ -1,0 +1,11 @@
+{
+  "source": {
+    "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+    "contentId": "8a91208bf0be87ea59f830dd11d700618bfc46c75493dd9799b0c5c3815fff25",
+    "dirty": false
+  },
+  "path": "/home/runner/work/super-starter/super-starter/.state/generation-source",
+  "absent": true,
+  "removedAt": "2026-10-12T19:39:18.140Z",
+  "policy": "No Source access in any subsequent generated-project phase"
+}

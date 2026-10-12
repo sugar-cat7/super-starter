@@ -1,0 +1,48 @@
+argv: ["pnpm","env:doctor"]
+cwd: /home/runner/work/super-starter/super-starter/.state/hosted-status-feature
+started: 2026-10-12T19:39:39.923Z
+before: {"head":"97afe2686e60edb6927661dc6411083486c28369","contentId":"58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205","origin":{"sha":"653abf13ae3a54b2434c422ab8dc6800822387c3","dirty":false,"contentId":"2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"},"status":"MM .template.json\nM  package.json\nA  packages/status/README.md\nAM packages/status/cloudflare.config.ts\nAM packages/status/package.json\nA  packages/status/preview.ts\nA  packages/status/src/index.ts\nAM packages/status/src/notes.ts\nAM packages/status/test/runtime.test.ts\nA  packages/status/test/status.runtime.test.ts\nA  packages/status/test/status.test.ts\nAM packages/status/test/unit.test.ts\nAM packages/status/tsconfig.json\nAM packages/status/vite.config.ts\nAM packages/status/vitest.config.ts\nAM packages/status/vitest.runtime.config.ts\nAM pnpm-lock.yaml\n M tools/quality/git-hooks/pre-commit\n M tools/quality/git-hooks/pre-push"}
+$ node tools/dev-environment/doctor.ts
+{
+  "os": "linux",
+  "scope": "all",
+  "checks": [
+    {
+      "id": "node",
+      "ok": true,
+      "detail": "Node 24.21.0; required 24.21.0 (mise install)"
+    },
+    {
+      "id": "pnpm",
+      "ok": true,
+      "detail": "pnpm 12.11.2 required (mise install aqua:pnpm/pnpm@12.11.2); mise pin 12.11.2"
+    },
+    {
+      "id": "vite-plus",
+      "ok": true,
+      "detail": "Project-local Vite+ required (pnpm install --frozen-lockfile)"
+    },
+    {
+      "id": "initialized",
+      "ok": true,
+      "detail": "Template state required (README cold start)"
+    },
+    {
+      "id": "@independent-service/api/types",
+      "ok": true,
+      "detail": "Local Worker types required (pnpm env:setup); no cloud credentials needed"
+    },
+    {
+      "id": "@independent-service/status/types",
+      "ok": true,
+      "detail": "Local Worker types required (pnpm env:setup); no cloud credentials needed"
+    },
+    {
+      "id": "hooks",
+      "ok": true,
+      "detail": "Repository hooks required (pnpm env:setup); existing hook conflicts require explicit migration"
+    }
+  ]
+}
+
+result: {"phase":"doctor","argv":["pnpm","env:doctor"],"exit":0,"signal":null,"started":"2026-10-12T19:39:39.923Z","ended":"2026-10-12T19:39:40.088Z","durationMs":165,"log":"logs/02-doctor.log","before":{"head":"97afe2686e60edb6927661dc6411083486c28369","contentId":"58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205","origin":{"sha":"653abf13ae3a54b2434c422ab8dc6800822387c3","dirty":false,"contentId":"2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"},"status":"MM .template.json\nM  package.json\nA  packages/status/README.md\nAM packages/status/cloudflare.config.ts\nAM packages/status/package.json\nA  packages/status/preview.ts\nA  packages/status/src/index.ts\nAM packages/status/src/notes.ts\nAM packages/status/test/runtime.test.ts\nA  packages/status/test/status.runtime.test.ts\nA  packages/status/test/status.test.ts\nAM packages/status/test/unit.test.ts\nAM packages/status/tsconfig.json\nAM packages/status/vite.config.ts\nAM packages/status/vitest.config.ts\nAM packages/status/vitest.runtime.config.ts\nAM pnpm-lock.yaml\n M tools/quality/git-hooks/pre-commit\n M tools/quality/git-hooks/pre-push"},"after":{"head":"97afe2686e60edb6927661dc6411083486c28369","contentId":"58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205","origin":{"sha":"653abf13ae3a54b2434c422ab8dc6800822387c3","dirty":false,"contentId":"2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"},"status":"MM .template.json\nM  package.json\nA  packages/status/README.md\nAM packages/status/cloudflare.config.ts\nAM packages/status/package.json\nA  packages/status/preview.ts\nA  packages/status/src/index.ts\nAM packages/status/src/notes.ts\nAM packages/status/test/runtime.test.ts\nA  packages/status/test/status.runtime.test.ts\nA  packages/status/test/status.test.ts\nAM packages/status/test/unit.test.ts\nAM packages/status/tsconfig.json\nAM packages/status/vite.config.ts\nAM packages/status/vitest.config.ts\nAM packages/status/vitest.runtime.config.ts\nAM pnpm-lock.yaml\n M tools/quality/git-hooks/pre-commit\n M tools/quality/git-hooks/pre-push"},"execution":"hosted-tools"}

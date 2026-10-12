@@ -1,0 +1,5 @@
+argv: ["git","rev-parse","HEAD"]
+cwd: /home/runner/work/super-starter/super-starter/.state/hosted-status-feature
+b9dd5b5cbfcc2640c1ec4db72bbc46f8af78dae7
+
+result: {"argv":["git","rev-parse","HEAD"],"cwd":"/home/runner/work/super-starter/super-starter/.state/hosted-status-feature","exit":0,"signal":null,"started":"2026-10-12T19:44:55.900Z","ended":"2026-10-12T19:44:55.902Z","durationMs":2,"log":"logs/aux-117.log"}

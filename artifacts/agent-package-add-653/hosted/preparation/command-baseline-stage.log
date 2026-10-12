@@ -1,0 +1,4 @@
+argv: ["git","add","--all"]
+cwd: /home/runner/work/super-starter/super-starter/.state/generated-status-project
+
+result: {"argv":["git","add","--all"],"cwd":"/home/runner/work/super-starter/super-starter/.state/generated-status-project","started":"2026-10-12T19:39:18.300Z","ended":"2026-10-12T19:39:18.365Z","durationMs":65,"exit":0,"signal":null,"log":"preparation/command-baseline-stage.log","execution":"hosted-tools","kind":"generation-preparation"}

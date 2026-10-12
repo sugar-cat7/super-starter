@@ -1,0 +1,4 @@
+argv: ["git","config","--local","user.email","independent-agent@example.invalid"]
+cwd: /home/runner/work/super-starter/super-starter/.state/hosted-status-feature
+
+result: {"argv":["git","config","--local","user.email","independent-agent@example.invalid"],"cwd":"/home/runner/work/super-starter/super-starter/.state/hosted-status-feature","exit":0,"signal":null,"started":"2026-10-12T19:39:19.570Z","ended":"2026-10-12T19:39:19.572Z","durationMs":2,"log":"logs/aux-006.log"}

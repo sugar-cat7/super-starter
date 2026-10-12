@@ -1,0 +1,5 @@
+argv: ["git","clone","--template=","--branch","main","/home/runner/work/super-starter/super-starter/.state/status-feature-input/status-source.bundle","/home/runner/work/super-starter/super-starter/.state/hosted-status-feature"]
+cwd: /home/runner/work/super-starter/super-starter
+Cloning into '/home/runner/work/super-starter/super-starter/.state/hosted-status-feature'...
+
+result: {"argv":["git","clone","--template=","--branch","main","/home/runner/work/super-starter/super-starter/.state/status-feature-input/status-source.bundle","/home/runner/work/super-starter/super-starter/.state/hosted-status-feature"],"cwd":"/home/runner/work/super-starter/super-starter","exit":0,"signal":null,"started":"2026-10-12T19:39:19.521Z","ended":"2026-10-12T19:39:19.561Z","durationMs":40,"log":"logs/aux-002.log"}

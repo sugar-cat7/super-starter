@@ -1,0 +1,7 @@
+argv: ["git","apply","--index","/home/runner/work/super-starter/super-starter/.state/status-feature-input/status-feature.patch"]
+cwd: /home/runner/work/super-starter/super-starter/.state/hosted-status-feature
+/home/runner/work/super-starter/super-starter/.state/status-feature-input/status-feature.patch:115: trailing whitespace.
+        
+warning: 1 line adds whitespace errors.
+
+result: {"argv":["git","apply","--index","/home/runner/work/super-starter/super-starter/.state/status-feature-input/status-feature.patch"],"cwd":"/home/runner/work/super-starter/super-starter/.state/hosted-status-feature","exit":0,"signal":null,"started":"2026-10-12T19:39:19.572Z","ended":"2026-10-12T19:39:19.591Z","durationMs":19,"log":"logs/aux-007.log"}

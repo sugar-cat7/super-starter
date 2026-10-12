@@ -1,0 +1,5 @@
+argv: ["git","init","--template=","--initial-branch=main"]
+cwd: /home/runner/work/super-starter/super-starter/.state/generated-status-project
+Initialized empty Git repository in /home/runner/work/super-starter/super-starter/.state/generated-status-project/.git/
+
+result: {"argv":["git","init","--template=","--initial-branch=main"],"cwd":"/home/runner/work/super-starter/super-starter/.state/generated-status-project","started":"2026-10-12T19:39:18.288Z","ended":"2026-10-12T19:39:18.293Z","durationMs":5,"exit":0,"signal":null,"log":"preparation/command-baseline-init.log","execution":"hosted-tools","kind":"generation-preparation"}

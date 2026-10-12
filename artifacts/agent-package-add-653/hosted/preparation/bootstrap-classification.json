@@ -1,0 +1,313 @@
+{
+  "baselineSha": "97afe2686e60edb6927661dc6411083486c28369",
+  "baselineContentId": "607f4148228bd15029f8cb28ca78cbe64abab8d70715a8afe602d2ea3b0ef667",
+  "featureContentId": "5af6e85d2aeb48692e1c22d1c967e003ce3a155fca0950c3daf452a886b1bc9b",
+  "source": {
+    "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+    "contentId": "8a91208bf0be87ea59f830dd11d700618bfc46c75493dd9799b0c5c3815fff25",
+    "dirty": false
+  },
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter",
+      "started": "2026-10-12T19:39:18.202Z",
+      "ended": "2026-10-12T19:39:18.206Z",
+      "durationMs": 4,
+      "exit": 0,
+      "signal": null,
+      "log": "preparation/command-carrier-head-feature-bootstrap.log",
+      "execution": "hosted-tools",
+      "kind": "generation-preparation"
+    },
+    {
+      "argv": [
+        "git",
+        "init",
+        "--template=",
+        "--initial-branch=main"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/generated-status-project",
+      "started": "2026-10-12T19:39:18.288Z",
+      "ended": "2026-10-12T19:39:18.293Z",
+      "durationMs": 5,
+      "exit": 0,
+      "signal": null,
+      "log": "preparation/command-baseline-init.log",
+      "execution": "hosted-tools",
+      "kind": "generation-preparation"
+    },
+    {
+      "argv": [
+        "git",
+        "config",
+        "--local",
+        "user.name",
+        "Independent Agent"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/generated-status-project",
+      "started": "2026-10-12T19:39:18.294Z",
+      "ended": "2026-10-12T19:39:18.296Z",
+      "durationMs": 2,
+      "exit": 0,
+      "signal": null,
+      "log": "preparation/command-baseline-git-name.log",
+      "execution": "hosted-tools",
+      "kind": "generation-preparation"
+    },
+    {
+      "argv": [
+        "git",
+        "config",
+        "--local",
+        "user.email",
+        "independent-agent@example.invalid"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/generated-status-project",
+      "started": "2026-10-12T19:39:18.297Z",
+      "ended": "2026-10-12T19:39:18.299Z",
+      "durationMs": 2,
+      "exit": 0,
+      "signal": null,
+      "log": "preparation/command-baseline-git-email.log",
+      "execution": "hosted-tools",
+      "kind": "generation-preparation"
+    },
+    {
+      "argv": [
+        "git",
+        "add",
+        "--all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/generated-status-project",
+      "started": "2026-10-12T19:39:18.300Z",
+      "ended": "2026-10-12T19:39:18.365Z",
+      "durationMs": 65,
+      "exit": 0,
+      "signal": null,
+      "log": "preparation/command-baseline-stage.log",
+      "execution": "hosted-tools",
+      "kind": "generation-preparation"
+    },
+    {
+      "argv": [
+        "git",
+        "commit",
+        "-m",
+        "Generated pristine API bootstrap before feature hooks"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/generated-status-project",
+      "started": "2026-10-12T19:39:18.366Z",
+      "ended": "2026-10-12T19:39:18.405Z",
+      "durationMs": 39,
+      "exit": 0,
+      "signal": null,
+      "log": "preparation/command-baseline-bootstrap-commit.log",
+      "execution": "hosted-tools",
+      "kind": "generation-preparation"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/generated-status-project",
+      "started": "2026-10-12T19:39:18.407Z",
+      "ended": "2026-10-12T19:39:18.414Z",
+      "durationMs": 7,
+      "exit": 0,
+      "signal": null,
+      "log": "preparation/command-baseline-sha.log",
+      "execution": "hosted-tools",
+      "kind": "generation-preparation"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/generated-status-project",
+      "started": "2026-10-12T19:39:18.415Z",
+      "ended": "2026-10-12T19:39:18.421Z",
+      "durationMs": 6,
+      "exit": 0,
+      "signal": null,
+      "log": "preparation/command-baseline-clean.log",
+      "execution": "hosted-tools",
+      "kind": "generation-preparation"
+    },
+    {
+      "argv": [
+        "git",
+        "ls-tree",
+        "-r",
+        "--full-tree",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/generated-status-project",
+      "started": "2026-10-12T19:39:18.422Z",
+      "ended": "2026-10-12T19:39:18.427Z",
+      "durationMs": 5,
+      "exit": 0,
+      "signal": null,
+      "log": "preparation/command-baseline-tracked-tree.log",
+      "execution": "hosted-tools",
+      "kind": "generation-preparation"
+    },
+    {
+      "argv": [
+        "git",
+        "cat-file",
+        "commit",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/generated-status-project",
+      "started": "2026-10-12T19:39:18.438Z",
+      "ended": "2026-10-12T19:39:18.441Z",
+      "durationMs": 3,
+      "exit": 0,
+      "signal": null,
+      "log": "preparation/command-baseline-commit-object.log",
+      "execution": "hosted-tools",
+      "kind": "generation-preparation"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD^{tree}"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/generated-status-project",
+      "started": "2026-10-12T19:39:18.441Z",
+      "ended": "2026-10-12T19:39:18.444Z",
+      "durationMs": 3,
+      "exit": 0,
+      "signal": null,
+      "log": "preparation/command-baseline-tree-sha.log",
+      "execution": "hosted-tools",
+      "kind": "generation-preparation"
+    },
+    {
+      "argv": [
+        "git",
+        "switch",
+        "-c",
+        "feat/status"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/generated-status-project",
+      "started": "2026-10-12T19:39:18.450Z",
+      "ended": "2026-10-12T19:39:18.454Z",
+      "durationMs": 4,
+      "exit": 0,
+      "signal": null,
+      "log": "preparation/command-feature-branch.log",
+      "execution": "hosted-tools",
+      "kind": "generation-preparation"
+    },
+    {
+      "argv": [
+        "pnpm",
+        "app:new",
+        "--",
+        "--kind",
+        "api",
+        "--name",
+        "status",
+        "--no-install"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/generated-status-project",
+      "started": "2026-10-12T19:39:18.455Z",
+      "ended": "2026-10-12T19:39:19.382Z",
+      "durationMs": 927,
+      "exit": 0,
+      "signal": null,
+      "log": "preparation/command-own-cold-status-generator.log",
+      "execution": "hosted-tools",
+      "kind": "generation-preparation"
+    },
+    {
+      "argv": [
+        "git",
+        "add",
+        ".template.json",
+        "package.json",
+        "pnpm-lock.yaml",
+        "packages/status"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/generated-status-project",
+      "started": "2026-10-12T19:39:19.407Z",
+      "ended": "2026-10-12T19:39:19.414Z",
+      "durationMs": 7,
+      "exit": 0,
+      "signal": null,
+      "log": "preparation/command-candidate-stage.log",
+      "execution": "hosted-tools",
+      "kind": "generation-preparation"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--cached",
+        "--name-only",
+        "--no-renames",
+        "97afe2686e60edb6927661dc6411083486c28369"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/generated-status-project",
+      "started": "2026-10-12T19:39:19.414Z",
+      "ended": "2026-10-12T19:39:19.417Z",
+      "durationMs": 3,
+      "exit": 0,
+      "signal": null,
+      "log": "preparation/command-candidate-paths.log",
+      "execution": "hosted-tools",
+      "kind": "generation-preparation"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--cached",
+        "--binary",
+        "--full-index",
+        "--no-renames",
+        "97afe2686e60edb6927661dc6411083486c28369"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/generated-status-project",
+      "started": "2026-10-12T19:39:19.418Z",
+      "ended": "2026-10-12T19:39:19.422Z",
+      "durationMs": 4,
+      "exit": 0,
+      "signal": null,
+      "log": "preparation/command-candidate-patch.log",
+      "execution": "hosted-tools",
+      "kind": "generation-preparation"
+    },
+    {
+      "argv": [
+        "git",
+        "bundle",
+        "create",
+        "/home/runner/work/super-starter/super-starter/.state/status-feature-input/status-source.bundle",
+        "main"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/generated-status-project",
+      "started": "2026-10-12T19:39:19.423Z",
+      "ended": "2026-10-12T19:39:19.430Z",
+      "durationMs": 7,
+      "exit": 0,
+      "signal": null,
+      "log": "preparation/command-pristine-baseline-bundle.log",
+      "execution": "hosted-tools",
+      "kind": "generation-preparation"
+    }
+  ],
+  "classification": "Generated baseline bootstrap and cold app preparation only; genuine feature Git acceptance must follow installed standard hooks"
+}

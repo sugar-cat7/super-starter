@@ -1,0 +1,119 @@
+{
+  "schema": 1,
+  "main": {
+    "runId": 38299003890,
+    "jobId": 114977032730,
+    "rawBytes": 424640,
+    "rawSha256": "d569e1b492909b228d5c99235b25b3be7aa64f4dbb030144273da61a1863d526",
+    "manifestSha256": "2461f87ac9330cb36c36d7ff15cae3a41a9d86c333139ad9036acb7b8003c516",
+    "files": 174,
+    "parts": 189,
+    "groupCount": 10,
+    "rawCharacters": 422945
+  },
+  "groups": [
+    {
+      "group": 0,
+      "jobId": 114979319522,
+      "rawBytes": 1037848,
+      "sha256": "6c4070173a67452223850b1d6e58bf446dc0c30e65492fe1faab26e05383b075",
+      "envelopeSha256": "cf42a99716c6f13994bec1c1bfe247e20f70a311a324a821b101f472b068e8c3",
+      "envelopeBytes": 751912,
+      "parts": 165,
+      "rawCharacters": 1037807
+    },
+    {
+      "group": 9,
+      "jobId": 114979319529,
+      "rawBytes": 897701,
+      "sha256": "d120790e5b9e7531bd1293173c4a50b6ff0955e4617a4f86dc421de9c0781fe5",
+      "envelopeSha256": "8f9e70cac58f082035613a4ca180baf0c2eb221fd540ce6558de9e4a0839addc",
+      "envelopeBytes": 647865,
+      "parts": 2,
+      "rawCharacters": 897660
+    },
+    {
+      "group": 3,
+      "jobId": 114979319589,
+      "rawBytes": 967775,
+      "sha256": "00b9f200785338c2940cc6635b5105216c88ed45560adcd6cfae07d1a68ae4d5",
+      "envelopeSha256": "c456b787c820c4b569d9ea3176397cec3501175aacc3b7efc4000b8bcd0b87a2",
+      "envelopeBytes": 699886,
+      "parts": 2,
+      "rawCharacters": 967734
+    },
+    {
+      "group": 8,
+      "jobId": 114979319593,
+      "rawBytes": 967727,
+      "sha256": "499261035c78d31a66ea697c36d3c6ec31e2d26994761eecc0c26f61a2b9906d",
+      "envelopeSha256": "370087cdf324e0ca75670e95dc07394bf73183e7cf418fccac1b60384dc1e366",
+      "envelopeBytes": 699849,
+      "parts": 2,
+      "rawCharacters": 967686
+    },
+    {
+      "group": 6,
+      "jobId": 114979319604,
+      "rawBytes": 967713,
+      "sha256": "005eb90c609d9565602c441592fcbce32e175fd5e50f58902e145148e1a9ad1d",
+      "envelopeSha256": "05e74a11e063b1e122816ab471ce7bb779f3c16c8aa76d71349dbc118239d69f",
+      "envelopeBytes": 699842,
+      "parts": 2,
+      "rawCharacters": 967672
+    },
+    {
+      "group": 7,
+      "jobId": 114979319610,
+      "rawBytes": 967720,
+      "sha256": "8e1b3ccd710628483d5f93c3aff2480291abcb12f04fc7359612d0bf47c843fc",
+      "envelopeSha256": "9c89075a09e624c4a84f5c125144624791981445c632dbfd958ccc6552450336",
+      "envelopeBytes": 699847,
+      "parts": 2,
+      "rawCharacters": 967679
+    },
+    {
+      "group": 5,
+      "jobId": 114979319639,
+      "rawBytes": 1005905,
+      "sha256": "fe985dad7136ed40b390675d4cc14f6a80be358f44cdfa5da82daab7a3fa61f6",
+      "envelopeSha256": "5be85a6321012fe923233147fb51af6d64daa6b7bb66aea40c59bbddb47ef29d",
+      "envelopeBytes": 728219,
+      "parts": 5,
+      "rawCharacters": 1005864
+    },
+    {
+      "group": 2,
+      "jobId": 114979319654,
+      "rawBytes": 967768,
+      "sha256": "8fcab0d0e46ea1779586b3f3fe7c604274ec1fcb0e90c37ebee20cc43d7e2551",
+      "envelopeSha256": "a358d54e3b52bdb4c949a69fe8d90c24226c2fcd9a7ee10349dfa48eee4760ef",
+      "envelopeBytes": 699885,
+      "parts": 2,
+      "rawCharacters": 967727
+    },
+    {
+      "group": 1,
+      "jobId": 114979319690,
+      "rawBytes": 685703,
+      "sha256": "ce7630801b4af71fbf656f320665075ef0aca323547e94eb70ae17007154fe36",
+      "envelopeSha256": "344d1c55d888f1a35d9851f096189f1d6c49bb9c25e899e3677ee34f107d5e55",
+      "envelopeBytes": 490408,
+      "parts": 3,
+      "rawCharacters": 685662
+    },
+    {
+      "group": 4,
+      "jobId": 114979319721,
+      "rawBytes": 1084101,
+      "sha256": "6a9a8f359d79391814e021fd598174d02cc9e8c76e9f257029ef9abf688804b5",
+      "envelopeSha256": "e16bb3f7cda6d66e641b5160819f7d54b1bb416caad4affe6aa2bc58777a8072",
+      "envelopeBytes": 786294,
+      "parts": 4,
+      "rawCharacters": 1084060
+    }
+  ],
+  "allFilesVerified": 174,
+  "allPartsVerified": 189,
+  "classification": "Transport retrieval evidence only"
+}

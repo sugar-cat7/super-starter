@@ -1,0 +1,391 @@
+{
+  "schema": 1,
+  "sha": "b9dd5b5cbfcc2640c1ec4db72bbc46f8af78dae7",
+  "base": "97afe2686e60edb6927661dc6411083486c28369",
+  "contentId": "58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205",
+  "os": "linux/x64",
+  "node": "v24.21.0",
+  "tools": {
+    "node": "v24.21.0",
+    "pnpm": "12.11.2",
+    "@types/node": "24.19.1",
+    "knip": "6.41.0",
+    "oxc-parser": "0.153.0",
+    "typescript": "7.0.2",
+    "vite-plus": "1.1.0",
+    "vitest": "5.0.3",
+    "yaml": "2.9.1",
+    "@independent-service/contracts": "0.1.0",
+    "@independent-service/observability": "0.1.0",
+    "zod": "4.6.5",
+    "@cloudflare/build-output-utils": "0.9.0",
+    "@cloudflare/config": "0.24.1",
+    "@cloudflare/vite-plugin": "2.0.0-beta.sha-91c870c02",
+    "cf": "1.0.0-beta.14",
+    "wrangler": "4.149.0",
+    "@opentelemetry/api": "1.9.1",
+    "@opentelemetry/resources": "2.12.0",
+    "@opentelemetry/sdk-trace-base": "2.12.0"
+  },
+  "origin": {
+    "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+    "dirty": false,
+    "contentId": "2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"
+  },
+  "variant": "all",
+  "configuration": {
+    "name": "independent-status-api",
+    "scope": "@independent-service",
+    "identifier": "com.example.independentstatusapi",
+    "preset": "api",
+    "features": []
+  },
+  "workspace": [
+    {
+      "name": "@independent-service/api",
+      "directory": "packages/api",
+      "runtime": "worker",
+      "dependencies": [
+        "@independent-service/contracts",
+        "@independent-service/observability",
+        "zod",
+        "@cloudflare/build-output-utils",
+        "@cloudflare/config",
+        "@cloudflare/vite-plugin",
+        "cf",
+        "typescript",
+        "vite-plus",
+        "vitest",
+        "wrangler"
+      ],
+      "scripts": {
+        "cf": "cf",
+        "dev": "cf dev --mode offline",
+        "preview": "node preview.ts",
+        "check": "vp check .",
+        "test": "node ../../tools/quality/vitest.ts --config vitest.config.ts",
+        "test:runtime": "node ../../tools/cloudflare/runtime.ts",
+        "build": "node ../../tools/cloudflare/build.ts",
+        "typegen": "cf workers types -m local"
+      }
+    },
+    {
+      "name": "@independent-service/contracts",
+      "directory": "packages/contracts",
+      "runtime": "library",
+      "dependencies": [
+        "zod",
+        "typescript",
+        "vite-plus",
+        "vitest"
+      ],
+      "scripts": {
+        "check": "vp check .",
+        "test": "node ../../tools/quality/vitest.ts",
+        "build": "vp pack"
+      }
+    },
+    {
+      "name": "@independent-service/observability",
+      "directory": "packages/observability",
+      "runtime": "library",
+      "dependencies": [
+        "@independent-service/contracts",
+        "@opentelemetry/api",
+        "@opentelemetry/resources",
+        "@opentelemetry/sdk-trace-base",
+        "typescript",
+        "vite-plus",
+        "vitest"
+      ],
+      "scripts": {
+        "check": "vp check .",
+        "test": "node ../../tools/quality/vitest.ts",
+        "build": "vp pack"
+      }
+    },
+    {
+      "name": "@independent-service/status",
+      "directory": "packages/status",
+      "runtime": "worker",
+      "dependencies": [
+        "@independent-service/contracts",
+        "@independent-service/observability",
+        "zod",
+        "@cloudflare/build-output-utils",
+        "@cloudflare/config",
+        "@cloudflare/vite-plugin",
+        "cf",
+        "typescript",
+        "vite-plus",
+        "vitest",
+        "wrangler"
+      ],
+      "scripts": {
+        "cf": "cf",
+        "dev": "cf dev --mode offline",
+        "preview": "node preview.ts",
+        "check": "vp check .",
+        "test": "node ../../tools/quality/vitest.ts --config vitest.config.ts",
+        "test:runtime": "node ../../tools/cloudflare/runtime.ts",
+        "build": "node ../../tools/cloudflare/build.ts",
+        "typegen": "cf workers types -m local"
+      }
+    }
+  ],
+  "cpus": 4,
+  "memoryBytes": 16770748416,
+  "selected": [
+    "@independent-service/api",
+    "@independent-service/contracts",
+    "@independent-service/observability",
+    "@independent-service/status"
+  ],
+  "selectionReason": "Changes and reverse dependencies from 97afe2686e60edb6927661dc6411083486c28369, including current index/worktree for pre-pr",
+  "notRequired": [],
+  "checks": [
+    {
+      "id": "static",
+      "requirements": [
+        "layout",
+        "quality",
+        "boundaries",
+        "docs",
+        "secrets"
+      ],
+      "command": [
+        "check"
+      ],
+      "timeout": 180000,
+      "reason": "Repository-wide static checks are lightweight and run once",
+      "milliseconds": 4248,
+      "status": "passed"
+    },
+    {
+      "id": "tools-unit",
+      "requirements": [
+        "generator-safety",
+        "affected",
+        "failure-propagation"
+      ],
+      "command": [
+        "test:tools"
+      ],
+      "timeout": 180000,
+      "reason": "Shared tooling contracts",
+      "milliseconds": 42960,
+      "status": "passed"
+    },
+    {
+      "id": "@independent-service/api/unit",
+      "requirements": [
+        "contracts",
+        "ui-states"
+      ],
+      "package": "@independent-service/api",
+      "command": [
+        "--filter",
+        "@independent-service/api",
+        "test"
+      ],
+      "timeout": 180000,
+      "reason": "Selected worker @independent-service/api; full phase",
+      "milliseconds": 3977,
+      "status": "passed"
+    },
+    {
+      "id": "@independent-service/api/build",
+      "requirements": [
+        "build"
+      ],
+      "package": "@independent-service/api",
+      "command": [
+        "--filter",
+        "@independent-service/api",
+        "build"
+      ],
+      "timeout": 180000,
+      "reason": "Selected worker @independent-service/api; full phase",
+      "milliseconds": 1520,
+      "status": "passed"
+    },
+    {
+      "id": "@independent-service/api/runtime",
+      "requirements": [
+        "worker",
+        "bindings",
+        "environments"
+      ],
+      "package": "@independent-service/api",
+      "command": [
+        "--filter",
+        "@independent-service/api",
+        "test:runtime"
+      ],
+      "timeout": 180000,
+      "reason": "Selected worker @independent-service/api; full phase",
+      "milliseconds": 3666,
+      "status": "passed"
+    },
+    {
+      "id": "@independent-service/contracts/unit",
+      "requirements": [
+        "contracts",
+        "ui-states"
+      ],
+      "package": "@independent-service/contracts",
+      "command": [
+        "--filter",
+        "@independent-service/contracts",
+        "test"
+      ],
+      "timeout": 180000,
+      "reason": "Selected library @independent-service/contracts; full phase",
+      "milliseconds": 756,
+      "status": "passed"
+    },
+    {
+      "id": "@independent-service/contracts/build",
+      "requirements": [
+        "build"
+      ],
+      "package": "@independent-service/contracts",
+      "command": [
+        "--filter",
+        "@independent-service/contracts",
+        "build"
+      ],
+      "timeout": 180000,
+      "reason": "Selected library @independent-service/contracts; full phase",
+      "milliseconds": 536,
+      "status": "passed"
+    },
+    {
+      "id": "@independent-service/observability/unit",
+      "requirements": [
+        "contracts",
+        "ui-states"
+      ],
+      "package": "@independent-service/observability",
+      "command": [
+        "--filter",
+        "@independent-service/observability",
+        "test"
+      ],
+      "timeout": 180000,
+      "reason": "Selected library @independent-service/observability; full phase",
+      "milliseconds": 869,
+      "status": "passed"
+    },
+    {
+      "id": "@independent-service/observability/build",
+      "requirements": [
+        "build"
+      ],
+      "package": "@independent-service/observability",
+      "command": [
+        "--filter",
+        "@independent-service/observability",
+        "build"
+      ],
+      "timeout": 180000,
+      "reason": "Selected library @independent-service/observability; full phase",
+      "milliseconds": 555,
+      "status": "passed"
+    },
+    {
+      "id": "@independent-service/status/unit",
+      "requirements": [
+        "contracts",
+        "ui-states"
+      ],
+      "package": "@independent-service/status",
+      "command": [
+        "--filter",
+        "@independent-service/status",
+        "test"
+      ],
+      "timeout": 180000,
+      "reason": "Selected worker @independent-service/status; full phase",
+      "milliseconds": 4013,
+      "status": "passed"
+    },
+    {
+      "id": "@independent-service/status/build",
+      "requirements": [
+        "build"
+      ],
+      "package": "@independent-service/status",
+      "command": [
+        "--filter",
+        "@independent-service/status",
+        "build"
+      ],
+      "timeout": 180000,
+      "reason": "Selected worker @independent-service/status; full phase",
+      "milliseconds": 1510,
+      "status": "passed"
+    },
+    {
+      "id": "@independent-service/status/runtime",
+      "requirements": [
+        "worker",
+        "bindings",
+        "environments"
+      ],
+      "package": "@independent-service/status",
+      "command": [
+        "--filter",
+        "@independent-service/status",
+        "test:runtime"
+      ],
+      "timeout": 180000,
+      "reason": "Selected worker @independent-service/status; full phase",
+      "milliseconds": 3710,
+      "status": "passed"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "packages/api/.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json",
+      "bytes": 157,
+      "gzipBytes": 114
+    },
+    {
+      "path": "packages/api/.cloudflare/output/v0/workers/default/bundle/index.js",
+      "bytes": 291243,
+      "gzipBytes": 67839
+    },
+    {
+      "path": "packages/contracts/dist/index.d.mts",
+      "bytes": 5835,
+      "gzipBytes": 1448
+    },
+    {
+      "path": "packages/contracts/dist/index.mjs",
+      "bytes": 5153,
+      "gzipBytes": 1707
+    },
+    {
+      "path": "packages/observability/dist/index.d.mts",
+      "bytes": 1826,
+      "gzipBytes": 731
+    },
+    {
+      "path": "packages/observability/dist/index.mjs",
+      "bytes": 12751,
+      "gzipBytes": 4220
+    },
+    {
+      "path": "packages/status/.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json",
+      "bytes": 157,
+      "gzipBytes": 114
+    },
+    {
+      "path": "packages/status/.cloudflare/output/v0/workers/default/bundle/index.js",
+      "bytes": 291427,
+      "gzipBytes": 67896
+    }
+  ],
+  "status": "passed"
+}

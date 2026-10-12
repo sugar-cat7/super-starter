@@ -1,0 +1,22 @@
+argv: ["pnpm","--filter","@independent-service/status","test"]
+cwd: /home/runner/work/super-starter/super-starter/.state/hosted-status-feature
+started: 2026-10-12T19:39:40.110Z
+before: {"head":"97afe2686e60edb6927661dc6411083486c28369","contentId":"58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205","origin":{"sha":"653abf13ae3a54b2434c422ab8dc6800822387c3","dirty":false,"contentId":"2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"},"status":"MM .template.json\nM  package.json\nA  packages/status/README.md\nAM packages/status/cloudflare.config.ts\nAM packages/status/package.json\nA  packages/status/preview.ts\nA  packages/status/src/index.ts\nAM packages/status/src/notes.ts\nAM packages/status/test/runtime.test.ts\nA  packages/status/test/status.runtime.test.ts\nA  packages/status/test/status.test.ts\nAM packages/status/test/unit.test.ts\nAM packages/status/tsconfig.json\nAM packages/status/vite.config.ts\nAM packages/status/vitest.config.ts\nAM packages/status/vitest.runtime.config.ts\nAM pnpm-lock.yaml\n M tools/quality/git-hooks/pre-commit\n M tools/quality/git-hooks/pre-push"}
+$ node ../../tools/quality/vitest.ts --config vitest.config.ts
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/home/runner/work/super-starter/super-starter/.state/hosted-status-feature/packages/status[39m
+
+ [32m✓[39m test/status.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 42[2mms[22m[39m
+ [32m✓[39m test/unit.test.ts [2m([22m[2m14 tests[22m[2m)[22m[33m 3134[2mms[22m[39m
+   [32m✓[39m API validation and safe publication defaults [2m(14)[22m
+     [33m[2m✓[22m[39m bounds a stalled ingress even when its cancellation never settles[33m 3004[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[32m17 passed[39m[22m[90m (17)[39m
+[2m   Start at [22m 19:39:40
+[2m   Duration [22m 3.51s[2m (tests 86%, import 9%, transform 5%)[22m
+
+JSON report written to /home/runner/work/super-starter/super-starter/.state/hosted-status-feature/packages/status/artifacts/tests-vitest.config.ts.json
+Executed 17 required test cases
+
+result: {"phase":"targeted-test","argv":["pnpm","--filter","@independent-service/status","test"],"exit":0,"signal":null,"started":"2026-10-12T19:39:40.110Z","ended":"2026-10-12T19:39:44.165Z","durationMs":4055,"log":"logs/03-targeted-test.log","before":{"head":"97afe2686e60edb6927661dc6411083486c28369","contentId":"58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205","origin":{"sha":"653abf13ae3a54b2434c422ab8dc6800822387c3","dirty":false,"contentId":"2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"},"status":"MM .template.json\nM  package.json\nA  packages/status/README.md\nAM packages/status/cloudflare.config.ts\nAM packages/status/package.json\nA  packages/status/preview.ts\nA  packages/status/src/index.ts\nAM packages/status/src/notes.ts\nAM packages/status/test/runtime.test.ts\nA  packages/status/test/status.runtime.test.ts\nA  packages/status/test/status.test.ts\nAM packages/status/test/unit.test.ts\nAM packages/status/tsconfig.json\nAM packages/status/vite.config.ts\nAM packages/status/vitest.config.ts\nAM packages/status/vitest.runtime.config.ts\nAM pnpm-lock.yaml\n M tools/quality/git-hooks/pre-commit\n M tools/quality/git-hooks/pre-push"},"after":{"head":"97afe2686e60edb6927661dc6411083486c28369","contentId":"58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205","origin":{"sha":"653abf13ae3a54b2434c422ab8dc6800822387c3","dirty":false,"contentId":"2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"},"status":"MM .template.json\nM  package.json\nA  packages/status/README.md\nAM packages/status/cloudflare.config.ts\nAM packages/status/package.json\nA  packages/status/preview.ts\nA  packages/status/src/index.ts\nAM packages/status/src/notes.ts\nAM packages/status/test/runtime.test.ts\nA  packages/status/test/status.runtime.test.ts\nA  packages/status/test/status.test.ts\nAM packages/status/test/unit.test.ts\nAM packages/status/tsconfig.json\nAM packages/status/vite.config.ts\nAM packages/status/vitest.config.ts\nAM packages/status/vitest.runtime.config.ts\nAM pnpm-lock.yaml\n M tools/quality/git-hooks/pre-commit\n M tools/quality/git-hooks/pre-push"},"execution":"hosted-tools"}

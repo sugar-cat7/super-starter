@@ -1,0 +1,65 @@
+argv: ["pnpm","env:setup"]
+cwd: /home/runner/work/super-starter/super-starter/.state/hosted-status-feature
+started: 2026-10-12T19:39:19.757Z
+before: {"head":"97afe2686e60edb6927661dc6411083486c28369","contentId":"5af6e85d2aeb48692e1c22d1c967e003ce3a155fca0950c3daf452a886b1bc9b","origin":{"sha":"653abf13ae3a54b2434c422ab8dc6800822387c3","dirty":false,"contentId":"2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"},"status":"M  .template.json\nM  package.json\nA  packages/status/README.md\nA  packages/status/cloudflare.config.ts\nA  packages/status/package.json\nA  packages/status/preview.ts\nA  packages/status/src/index.ts\nA  packages/status/src/notes.ts\nA  packages/status/test/runtime.test.ts\nA  packages/status/test/status.runtime.test.ts\nA  packages/status/test/status.test.ts\nA  packages/status/test/unit.test.ts\nA  packages/status/tsconfig.json\nA  packages/status/vite.config.ts\nA  packages/status/vitest.config.ts\nA  packages/status/vitest.runtime.config.ts\nA  pnpm-lock.yaml"}
+$ node tools/dev-environment/setup.ts
+Scope: all 5 workspace projects
+Packages are hard linked from the content-addressable store to the virtual store.
+  Content-addressable store is at: /home/runner/.local/share/pnpm/store/v11
+  Virtual store is at:             node_modules/.pnpm
+[WARN] 24 deprecated subdependencies found: @yuku-codegen/binding-android-arm64@0.9.5, @yuku-codegen/binding-darwin-arm64@0.9.5, @yuku-codegen/binding-darwin-x64@0.9.5, @yuku-codegen/binding-freebsd-x64@0.9.5, @yuku-codegen/binding-linux-arm-gnu@0.9.5, @yuku-codegen/binding-linux-arm-musl@0.9.5, @yuku-codegen/binding-linux-arm64-gnu@0.9.5, @yuku-codegen/binding-linux-arm64-musl@0.9.5, @yuku-codegen/binding-linux-x64-gnu@0.9.5, @yuku-codegen/binding-linux-x64-musl@0.9.5, @yuku-codegen/binding-win32-arm64@0.9.5, @yuku-codegen/binding-win32-x64@0.9.5, @yuku-parser/binding-android-arm64@0.9.5, @yuku-parser/binding-darwin-arm64@0.9.5, @yuku-parser/binding-darwin-x64@0.9.5, @yuku-parser/binding-freebsd-x64@0.9.5, @yuku-parser/binding-linux-arm-gnu@0.9.5, @yuku-parser/binding-linux-arm-musl@0.9.5, @yuku-parser/binding-linux-arm64-gnu@0.9.5, @yuku-parser/binding-linux-arm64-musl@0.9.5, @yuku-parser/binding-linux-x64-gnu@0.9.5, @yuku-parser/binding-linux-x64-musl@0.9.5, @yuku-parser/binding-win32-arm64@0.9.5, @yuku-parser/binding-win32-x64@0.9.5
+Packages: +147
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 147, reused 146, downloaded 9, added 147, done
+
+devDependencies:
++ @types/node 24.19.1
++ knip 6.41.0
++ oxc-parser 0.153.0
++ typescript 7.0.2
++ vite-plus 1.1.0
++ vitest 5.0.3
++ yaml 2.9.1
+
+Done in 1.3s using pnpm v12.11.2
+Scope: all 5 workspace projects
+✓ Lockfile passes supply-chain policies (verified 76ms ago)
+Lockfile is up to date, resolution step is skipped
+Done in 25ms using pnpm v12.11.2
+$ cf workers types -m local
+{
+  "path": ".cloudflare/types/index.d.ts"
+}
+$ node ../../tools/cloudflare/build.ts
+No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+├  Build
+│  Delegating to Vite
+transforming...
+✓ 254 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json    0.15 kB │ gzip:  0.11 kB
+.cloudflare/output/v0/workers/default/bundle/index.js             291.24 kB │ gzip: 68.21 kB
+
+[32m✓ built in 78ms[39m
+◆  Build complete
+$ cf workers types -m local
+{
+  "path": ".cloudflare/types/index.d.ts"
+}
+$ node ../../tools/cloudflare/build.ts
+No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+├  Build
+│  Delegating to Vite
+transforming...
+✓ 254 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json    0.15 kB │ gzip:  0.11 kB
+.cloudflare/output/v0/workers/default/bundle/index.js             291.42 kB │ gzip: 68.27 kB
+
+[32m✓ built in 78ms[39m
+◆  Build complete
+Repository-local Git hooks installed
+
+result: {"phase":"setup","argv":["pnpm","env:setup"],"exit":0,"signal":null,"started":"2026-10-12T19:39:19.757Z","ended":"2026-10-12T19:39:39.880Z","durationMs":20123,"log":"logs/01-setup.log","before":{"head":"97afe2686e60edb6927661dc6411083486c28369","contentId":"5af6e85d2aeb48692e1c22d1c967e003ce3a155fca0950c3daf452a886b1bc9b","origin":{"sha":"653abf13ae3a54b2434c422ab8dc6800822387c3","dirty":false,"contentId":"2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"},"status":"M  .template.json\nM  package.json\nA  packages/status/README.md\nA  packages/status/cloudflare.config.ts\nA  packages/status/package.json\nA  packages/status/preview.ts\nA  packages/status/src/index.ts\nA  packages/status/src/notes.ts\nA  packages/status/test/runtime.test.ts\nA  packages/status/test/status.runtime.test.ts\nA  packages/status/test/status.test.ts\nA  packages/status/test/unit.test.ts\nA  packages/status/tsconfig.json\nA  packages/status/vite.config.ts\nA  packages/status/vitest.config.ts\nA  packages/status/vitest.runtime.config.ts\nA  pnpm-lock.yaml"},"after":{"head":"97afe2686e60edb6927661dc6411083486c28369","contentId":"58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205","origin":{"sha":"653abf13ae3a54b2434c422ab8dc6800822387c3","dirty":false,"contentId":"2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"},"status":"MM .template.json\nM  package.json\nA  packages/status/README.md\nAM packages/status/cloudflare.config.ts\nAM packages/status/package.json\nA  packages/status/preview.ts\nA  packages/status/src/index.ts\nAM packages/status/src/notes.ts\nAM packages/status/test/runtime.test.ts\nA  packages/status/test/status.runtime.test.ts\nA  packages/status/test/status.test.ts\nAM packages/status/test/unit.test.ts\nAM packages/status/tsconfig.json\nAM packages/status/vite.config.ts\nAM packages/status/vitest.config.ts\nAM packages/status/vitest.runtime.config.ts\nAM pnpm-lock.yaml\n M tools/quality/git-hooks/pre-commit\n M tools/quality/git-hooks/pre-push"},"execution":"hosted-tools"}

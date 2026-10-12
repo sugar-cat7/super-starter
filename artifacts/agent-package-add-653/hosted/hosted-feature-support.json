@@ -1,0 +1,2388 @@
+{
+  "schema": 1,
+  "execution": "hosted-tools",
+  "kind": "hosted-feature-support",
+  "status": "passed",
+  "task": "Use the generated API app generator to add GET /status with meaningful unit and real-workerd regression coverage while preserving existing applications and user files.",
+  "origin": {
+    "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+    "dirty": false,
+    "contentId": "2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"
+  },
+  "inputContentId": "5af6e85d2aeb48692e1c22d1c967e003ce3a155fca0950c3daf452a886b1bc9b",
+  "baselineSha": "97afe2686e60edb6927661dc6411083486c28369",
+  "transportSha": "985253fb0895c081cb9c2f9969f938cf9d7f2642",
+  "featureSha": "b9dd5b5cbfcc2640c1ec4db72bbc46f8af78dae7",
+  "contentId": "58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205",
+  "commands": [
+    {
+      "phase": "setup",
+      "argv": [
+        "pnpm",
+        "env:setup"
+      ],
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:19.757Z",
+      "ended": "2026-10-12T19:39:39.880Z",
+      "durationMs": 20123,
+      "log": "logs/01-setup.log",
+      "before": {
+        "head": "97afe2686e60edb6927661dc6411083486c28369",
+        "contentId": "5af6e85d2aeb48692e1c22d1c967e003ce3a155fca0950c3daf452a886b1bc9b",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"
+        },
+        "status": "M  .template.json\nM  package.json\nA  packages/status/README.md\nA  packages/status/cloudflare.config.ts\nA  packages/status/package.json\nA  packages/status/preview.ts\nA  packages/status/src/index.ts\nA  packages/status/src/notes.ts\nA  packages/status/test/runtime.test.ts\nA  packages/status/test/status.runtime.test.ts\nA  packages/status/test/status.test.ts\nA  packages/status/test/unit.test.ts\nA  packages/status/tsconfig.json\nA  packages/status/vite.config.ts\nA  packages/status/vitest.config.ts\nA  packages/status/vitest.runtime.config.ts\nA  pnpm-lock.yaml"
+      },
+      "after": {
+        "head": "97afe2686e60edb6927661dc6411083486c28369",
+        "contentId": "58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"
+        },
+        "status": "MM .template.json\nM  package.json\nA  packages/status/README.md\nAM packages/status/cloudflare.config.ts\nAM packages/status/package.json\nA  packages/status/preview.ts\nA  packages/status/src/index.ts\nAM packages/status/src/notes.ts\nAM packages/status/test/runtime.test.ts\nA  packages/status/test/status.runtime.test.ts\nA  packages/status/test/status.test.ts\nAM packages/status/test/unit.test.ts\nAM packages/status/tsconfig.json\nAM packages/status/vite.config.ts\nAM packages/status/vitest.config.ts\nAM packages/status/vitest.runtime.config.ts\nAM pnpm-lock.yaml\n M tools/quality/git-hooks/pre-commit\n M tools/quality/git-hooks/pre-push"
+      },
+      "execution": "hosted-tools"
+    },
+    {
+      "phase": "doctor",
+      "argv": [
+        "pnpm",
+        "env:doctor"
+      ],
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:39.923Z",
+      "ended": "2026-10-12T19:39:40.088Z",
+      "durationMs": 165,
+      "log": "logs/02-doctor.log",
+      "before": {
+        "head": "97afe2686e60edb6927661dc6411083486c28369",
+        "contentId": "58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"
+        },
+        "status": "MM .template.json\nM  package.json\nA  packages/status/README.md\nAM packages/status/cloudflare.config.ts\nAM packages/status/package.json\nA  packages/status/preview.ts\nA  packages/status/src/index.ts\nAM packages/status/src/notes.ts\nAM packages/status/test/runtime.test.ts\nA  packages/status/test/status.runtime.test.ts\nA  packages/status/test/status.test.ts\nAM packages/status/test/unit.test.ts\nAM packages/status/tsconfig.json\nAM packages/status/vite.config.ts\nAM packages/status/vitest.config.ts\nAM packages/status/vitest.runtime.config.ts\nAM pnpm-lock.yaml\n M tools/quality/git-hooks/pre-commit\n M tools/quality/git-hooks/pre-push"
+      },
+      "after": {
+        "head": "97afe2686e60edb6927661dc6411083486c28369",
+        "contentId": "58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"
+        },
+        "status": "MM .template.json\nM  package.json\nA  packages/status/README.md\nAM packages/status/cloudflare.config.ts\nAM packages/status/package.json\nA  packages/status/preview.ts\nA  packages/status/src/index.ts\nAM packages/status/src/notes.ts\nAM packages/status/test/runtime.test.ts\nA  packages/status/test/status.runtime.test.ts\nA  packages/status/test/status.test.ts\nAM packages/status/test/unit.test.ts\nAM packages/status/tsconfig.json\nAM packages/status/vite.config.ts\nAM packages/status/vitest.config.ts\nAM packages/status/vitest.runtime.config.ts\nAM pnpm-lock.yaml\n M tools/quality/git-hooks/pre-commit\n M tools/quality/git-hooks/pre-push"
+      },
+      "execution": "hosted-tools"
+    },
+    {
+      "phase": "targeted-test",
+      "argv": [
+        "pnpm",
+        "--filter",
+        "@independent-service/status",
+        "test"
+      ],
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:40.110Z",
+      "ended": "2026-10-12T19:39:44.165Z",
+      "durationMs": 4055,
+      "log": "logs/03-targeted-test.log",
+      "before": {
+        "head": "97afe2686e60edb6927661dc6411083486c28369",
+        "contentId": "58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"
+        },
+        "status": "MM .template.json\nM  package.json\nA  packages/status/README.md\nAM packages/status/cloudflare.config.ts\nAM packages/status/package.json\nA  packages/status/preview.ts\nA  packages/status/src/index.ts\nAM packages/status/src/notes.ts\nAM packages/status/test/runtime.test.ts\nA  packages/status/test/status.runtime.test.ts\nA  packages/status/test/status.test.ts\nAM packages/status/test/unit.test.ts\nAM packages/status/tsconfig.json\nAM packages/status/vite.config.ts\nAM packages/status/vitest.config.ts\nAM packages/status/vitest.runtime.config.ts\nAM pnpm-lock.yaml\n M tools/quality/git-hooks/pre-commit\n M tools/quality/git-hooks/pre-push"
+      },
+      "after": {
+        "head": "97afe2686e60edb6927661dc6411083486c28369",
+        "contentId": "58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"
+        },
+        "status": "MM .template.json\nM  package.json\nA  packages/status/README.md\nAM packages/status/cloudflare.config.ts\nAM packages/status/package.json\nA  packages/status/preview.ts\nA  packages/status/src/index.ts\nAM packages/status/src/notes.ts\nAM packages/status/test/runtime.test.ts\nA  packages/status/test/status.runtime.test.ts\nA  packages/status/test/status.test.ts\nAM packages/status/test/unit.test.ts\nAM packages/status/tsconfig.json\nAM packages/status/vite.config.ts\nAM packages/status/vitest.config.ts\nAM packages/status/vitest.runtime.config.ts\nAM pnpm-lock.yaml\n M tools/quality/git-hooks/pre-commit\n M tools/quality/git-hooks/pre-push"
+      },
+      "execution": "hosted-tools"
+    },
+    {
+      "phase": "targeted-runtime",
+      "argv": [
+        "pnpm",
+        "--filter",
+        "@independent-service/status",
+        "test:runtime"
+      ],
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:44.187Z",
+      "ended": "2026-10-12T19:39:48.136Z",
+      "durationMs": 3949,
+      "log": "logs/04-targeted-runtime.log",
+      "before": {
+        "head": "97afe2686e60edb6927661dc6411083486c28369",
+        "contentId": "58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"
+        },
+        "status": "MM .template.json\nM  package.json\nA  packages/status/README.md\nAM packages/status/cloudflare.config.ts\nAM packages/status/package.json\nA  packages/status/preview.ts\nA  packages/status/src/index.ts\nAM packages/status/src/notes.ts\nAM packages/status/test/runtime.test.ts\nA  packages/status/test/status.runtime.test.ts\nA  packages/status/test/status.test.ts\nAM packages/status/test/unit.test.ts\nAM packages/status/tsconfig.json\nAM packages/status/vite.config.ts\nAM packages/status/vitest.config.ts\nAM packages/status/vitest.runtime.config.ts\nAM pnpm-lock.yaml\n M tools/quality/git-hooks/pre-commit\n M tools/quality/git-hooks/pre-push"
+      },
+      "after": {
+        "head": "97afe2686e60edb6927661dc6411083486c28369",
+        "contentId": "58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"
+        },
+        "status": "MM .template.json\nM  package.json\nA  packages/status/README.md\nAM packages/status/cloudflare.config.ts\nAM packages/status/package.json\nA  packages/status/preview.ts\nA  packages/status/src/index.ts\nAM packages/status/src/notes.ts\nAM packages/status/test/runtime.test.ts\nA  packages/status/test/status.runtime.test.ts\nA  packages/status/test/status.test.ts\nAM packages/status/test/unit.test.ts\nAM packages/status/tsconfig.json\nAM packages/status/vite.config.ts\nAM packages/status/vitest.config.ts\nAM packages/status/vitest.runtime.config.ts\nAM pnpm-lock.yaml\n M tools/quality/git-hooks/pre-commit\n M tools/quality/git-hooks/pre-push"
+      },
+      "execution": "hosted-tools"
+    },
+    {
+      "phase": "dev",
+      "argv": [
+        "pnpm",
+        "dev",
+        "--",
+        "status"
+      ],
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:48.160Z",
+      "ended": "2026-10-12T19:39:50.894Z",
+      "durationMs": 2734,
+      "log": "logs/05-dev.log",
+      "before": {
+        "head": "97afe2686e60edb6927661dc6411083486c28369",
+        "contentId": "58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"
+        },
+        "status": "MM .template.json\nM  package.json\nA  packages/status/README.md\nAM packages/status/cloudflare.config.ts\nAM packages/status/package.json\nA  packages/status/preview.ts\nA  packages/status/src/index.ts\nAM packages/status/src/notes.ts\nAM packages/status/test/runtime.test.ts\nA  packages/status/test/status.runtime.test.ts\nA  packages/status/test/status.test.ts\nAM packages/status/test/unit.test.ts\nAM packages/status/tsconfig.json\nAM packages/status/vite.config.ts\nAM packages/status/vitest.config.ts\nAM packages/status/vitest.runtime.config.ts\nAM pnpm-lock.yaml\n M tools/quality/git-hooks/pre-commit\n M tools/quality/git-hooks/pre-push"
+      },
+      "after": {
+        "head": "97afe2686e60edb6927661dc6411083486c28369",
+        "contentId": "58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"
+        },
+        "status": "MM .template.json\nM  package.json\nA  packages/status/README.md\nAM packages/status/cloudflare.config.ts\nAM packages/status/package.json\nA  packages/status/preview.ts\nA  packages/status/src/index.ts\nAM packages/status/src/notes.ts\nAM packages/status/test/runtime.test.ts\nA  packages/status/test/status.runtime.test.ts\nA  packages/status/test/status.test.ts\nAM packages/status/test/unit.test.ts\nAM packages/status/tsconfig.json\nAM packages/status/vite.config.ts\nAM packages/status/vitest.config.ts\nAM packages/status/vitest.runtime.config.ts\nAM pnpm-lock.yaml\n M tools/quality/git-hooks/pre-commit\n M tools/quality/git-hooks/pre-push"
+      },
+      "execution": "hosted-tools",
+      "smokePassed": true
+    },
+    {
+      "phase": "pre-pr",
+      "argv": [
+        "pnpm",
+        "gate:pre-pr",
+        "--",
+        "--base",
+        "97afe2686e60edb6927661dc6411083486c28369"
+      ],
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:50.916Z",
+      "ended": "2026-10-12T19:40:59.824Z",
+      "durationMs": 68908,
+      "log": "logs/06-pre-pr.log",
+      "before": {
+        "head": "97afe2686e60edb6927661dc6411083486c28369",
+        "contentId": "58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"
+        },
+        "status": "MM .template.json\nM  package.json\nA  packages/status/README.md\nAM packages/status/cloudflare.config.ts\nAM packages/status/package.json\nA  packages/status/preview.ts\nA  packages/status/src/index.ts\nAM packages/status/src/notes.ts\nAM packages/status/test/runtime.test.ts\nA  packages/status/test/status.runtime.test.ts\nA  packages/status/test/status.test.ts\nAM packages/status/test/unit.test.ts\nAM packages/status/tsconfig.json\nAM packages/status/vite.config.ts\nAM packages/status/vitest.config.ts\nAM packages/status/vitest.runtime.config.ts\nAM pnpm-lock.yaml\n M tools/quality/git-hooks/pre-commit\n M tools/quality/git-hooks/pre-push"
+      },
+      "after": {
+        "head": "97afe2686e60edb6927661dc6411083486c28369",
+        "contentId": "58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"
+        },
+        "status": "MM .template.json\nM  package.json\nA  packages/status/README.md\nAM packages/status/cloudflare.config.ts\nAM packages/status/package.json\nA  packages/status/preview.ts\nA  packages/status/src/index.ts\nAM packages/status/src/notes.ts\nAM packages/status/test/runtime.test.ts\nA  packages/status/test/status.runtime.test.ts\nA  packages/status/test/status.test.ts\nAM packages/status/test/unit.test.ts\nAM packages/status/tsconfig.json\nAM packages/status/vite.config.ts\nAM packages/status/vitest.config.ts\nAM packages/status/vitest.runtime.config.ts\nAM pnpm-lock.yaml\n M tools/quality/git-hooks/pre-commit\n M tools/quality/git-hooks/pre-push"
+      },
+      "execution": "hosted-tools"
+    },
+    {
+      "phase": "commit",
+      "argv": [
+        "git",
+        "commit",
+        "-m",
+        "Add generated status service with GET /status"
+      ],
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:40:59.857Z",
+      "ended": "2026-10-12T19:41:01.066Z",
+      "durationMs": 1209,
+      "log": "logs/07-commit.log",
+      "before": {
+        "head": "97afe2686e60edb6927661dc6411083486c28369",
+        "contentId": "58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"
+        },
+        "status": "M  .template.json\nM  package.json\nA  packages/status/README.md\nA  packages/status/cloudflare.config.ts\nA  packages/status/package.json\nA  packages/status/preview.ts\nA  packages/status/src/index.ts\nA  packages/status/src/notes.ts\nA  packages/status/test/runtime.test.ts\nA  packages/status/test/status.runtime.test.ts\nA  packages/status/test/status.test.ts\nA  packages/status/test/unit.test.ts\nA  packages/status/tsconfig.json\nA  packages/status/vite.config.ts\nA  packages/status/vitest.config.ts\nA  packages/status/vitest.runtime.config.ts\nA  pnpm-lock.yaml\nM  tools/quality/git-hooks/pre-commit\nM  tools/quality/git-hooks/pre-push"
+      },
+      "after": {
+        "head": "b9dd5b5cbfcc2640c1ec4db72bbc46f8af78dae7",
+        "contentId": "58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"
+        },
+        "status": ""
+      },
+      "execution": "hosted-tools"
+    },
+    {
+      "phase": "push",
+      "argv": [
+        "git",
+        "push",
+        "--set-upstream",
+        "rehearsal",
+        "feat/status"
+      ],
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:41:01.093Z",
+      "ended": "2026-10-12T19:42:07.445Z",
+      "durationMs": 66352,
+      "log": "logs/08-push.log",
+      "before": {
+        "head": "b9dd5b5cbfcc2640c1ec4db72bbc46f8af78dae7",
+        "contentId": "58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"
+        },
+        "status": ""
+      },
+      "after": {
+        "head": "b9dd5b5cbfcc2640c1ec4db72bbc46f8af78dae7",
+        "contentId": "58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"
+        },
+        "status": ""
+      },
+      "execution": "hosted-tools"
+    },
+    {
+      "phase": "full",
+      "argv": [
+        "pnpm",
+        "gate:full"
+      ],
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:42:07.468Z",
+      "ended": "2026-10-12T19:43:15.683Z",
+      "durationMs": 68215,
+      "log": "logs/09-full.log",
+      "before": {
+        "head": "b9dd5b5cbfcc2640c1ec4db72bbc46f8af78dae7",
+        "contentId": "58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"
+        },
+        "status": ""
+      },
+      "after": {
+        "head": "b9dd5b5cbfcc2640c1ec4db72bbc46f8af78dae7",
+        "contentId": "58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"
+        },
+        "status": ""
+      },
+      "execution": "hosted-tools"
+    },
+    {
+      "phase": "ci",
+      "argv": [
+        "pnpm",
+        "gate:ci",
+        "--",
+        "--base",
+        "97afe2686e60edb6927661dc6411083486c28369"
+      ],
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:43:15.702Z",
+      "ended": "2026-10-12T19:44:24.247Z",
+      "durationMs": 68545,
+      "log": "logs/10-ci.log",
+      "before": {
+        "head": "b9dd5b5cbfcc2640c1ec4db72bbc46f8af78dae7",
+        "contentId": "58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"
+        },
+        "status": ""
+      },
+      "after": {
+        "head": "b9dd5b5cbfcc2640c1ec4db72bbc46f8af78dae7",
+        "contentId": "58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"
+        },
+        "status": ""
+      },
+      "execution": "hosted-tools"
+    },
+    {
+      "phase": "build",
+      "argv": [
+        "pnpm",
+        "build"
+      ],
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:44:24.266Z",
+      "ended": "2026-10-12T19:44:28.651Z",
+      "durationMs": 4385,
+      "log": "logs/11-build.log",
+      "before": {
+        "head": "b9dd5b5cbfcc2640c1ec4db72bbc46f8af78dae7",
+        "contentId": "58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"
+        },
+        "status": ""
+      },
+      "after": {
+        "head": "b9dd5b5cbfcc2640c1ec4db72bbc46f8af78dae7",
+        "contentId": "58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"
+        },
+        "status": ""
+      },
+      "execution": "hosted-tools"
+    },
+    {
+      "phase": "dev-preflight",
+      "argv": [
+        "pnpm",
+        "deploy:preflight",
+        "--",
+        "--target",
+        "status",
+        "--environment",
+        "dev"
+      ],
+      "exit": 1,
+      "signal": null,
+      "started": "2026-10-12T19:44:28.669Z",
+      "ended": "2026-10-12T19:44:42.186Z",
+      "durationMs": 13517,
+      "log": "logs/12-dev-preflight.log",
+      "before": {
+        "head": "b9dd5b5cbfcc2640c1ec4db72bbc46f8af78dae7",
+        "contentId": "58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"
+        },
+        "status": ""
+      },
+      "after": {
+        "head": "b9dd5b5cbfcc2640c1ec4db72bbc46f8af78dae7",
+        "contentId": "58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"
+        },
+        "status": ""
+      },
+      "execution": "hosted-tools",
+      "expectedExternalBlocker": "Approved dev account/credentials are absent; no remote deployment occurred"
+    },
+    {
+      "phase": "preflight",
+      "argv": [
+        "pnpm",
+        "deploy:preflight",
+        "--",
+        "--target",
+        "status",
+        "--environment",
+        "local"
+      ],
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:44:42.204Z",
+      "ended": "2026-10-12T19:44:55.847Z",
+      "durationMs": 13643,
+      "log": "logs/13-preflight.log",
+      "before": {
+        "head": "b9dd5b5cbfcc2640c1ec4db72bbc46f8af78dae7",
+        "contentId": "58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"
+        },
+        "status": ""
+      },
+      "after": {
+        "head": "b9dd5b5cbfcc2640c1ec4db72bbc46f8af78dae7",
+        "contentId": "58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"
+        },
+        "status": ""
+      },
+      "execution": "hosted-tools"
+    }
+  ],
+  "auxiliaryCommands": [
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:19.514Z",
+      "ended": "2026-10-12T19:39:19.517Z",
+      "durationMs": 3,
+      "log": "logs/aux-001.log"
+    },
+    {
+      "argv": [
+        "git",
+        "clone",
+        "--template=",
+        "--branch",
+        "main",
+        "/home/runner/work/super-starter/super-starter/.state/status-feature-input/status-source.bundle",
+        "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:19.521Z",
+      "ended": "2026-10-12T19:39:19.561Z",
+      "durationMs": 40,
+      "log": "logs/aux-002.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:19.561Z",
+      "ended": "2026-10-12T19:39:19.564Z",
+      "durationMs": 3,
+      "log": "logs/aux-003.log"
+    },
+    {
+      "argv": [
+        "git",
+        "switch",
+        "-c",
+        "feat/status"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:19.564Z",
+      "ended": "2026-10-12T19:39:19.567Z",
+      "durationMs": 3,
+      "log": "logs/aux-004.log"
+    },
+    {
+      "argv": [
+        "git",
+        "config",
+        "--local",
+        "user.name",
+        "Independent Agent"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:19.567Z",
+      "ended": "2026-10-12T19:39:19.570Z",
+      "durationMs": 3,
+      "log": "logs/aux-005.log"
+    },
+    {
+      "argv": [
+        "git",
+        "config",
+        "--local",
+        "user.email",
+        "independent-agent@example.invalid"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:19.570Z",
+      "ended": "2026-10-12T19:39:19.572Z",
+      "durationMs": 2,
+      "log": "logs/aux-006.log"
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--index",
+        "/home/runner/work/super-starter/super-starter/.state/status-feature-input/status-feature.patch"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:19.572Z",
+      "ended": "2026-10-12T19:39:19.591Z",
+      "durationMs": 19,
+      "log": "logs/aux-007.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:19.652Z",
+      "ended": "2026-10-12T19:39:19.655Z",
+      "durationMs": 3,
+      "log": "logs/aux-008.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:19.665Z",
+      "ended": "2026-10-12T19:39:19.682Z",
+      "durationMs": 17,
+      "log": "logs/aux-009.log"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--name-only",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:19.691Z",
+      "ended": "2026-10-12T19:39:19.706Z",
+      "durationMs": 15,
+      "log": "logs/aux-010.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:19.707Z",
+      "ended": "2026-10-12T19:39:19.709Z",
+      "durationMs": 2,
+      "log": "logs/aux-011.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:19.716Z",
+      "ended": "2026-10-12T19:39:19.732Z",
+      "durationMs": 16,
+      "log": "logs/aux-012.log"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--name-only",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:19.737Z",
+      "ended": "2026-10-12T19:39:19.752Z",
+      "durationMs": 15,
+      "log": "logs/aux-013.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:39.830Z",
+      "ended": "2026-10-12T19:39:39.833Z",
+      "durationMs": 3,
+      "log": "logs/aux-014.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:39.840Z",
+      "ended": "2026-10-12T19:39:39.856Z",
+      "durationMs": 16,
+      "log": "logs/aux-015.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:39.856Z",
+      "ended": "2026-10-12T19:39:39.859Z",
+      "durationMs": 3,
+      "log": "logs/aux-016.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:39.866Z",
+      "ended": "2026-10-12T19:39:39.871Z",
+      "durationMs": 5,
+      "log": "logs/aux-017.log"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--name-only",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:39.876Z",
+      "ended": "2026-10-12T19:39:39.880Z",
+      "durationMs": 4,
+      "log": "logs/aux-018.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:39.898Z",
+      "ended": "2026-10-12T19:39:39.902Z",
+      "durationMs": 4,
+      "log": "logs/aux-019.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:39.908Z",
+      "ended": "2026-10-12T19:39:39.914Z",
+      "durationMs": 6,
+      "log": "logs/aux-020.log"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--name-only",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:39.919Z",
+      "ended": "2026-10-12T19:39:39.923Z",
+      "durationMs": 4,
+      "log": "logs/aux-021.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:40.052Z",
+      "ended": "2026-10-12T19:39:40.055Z",
+      "durationMs": 3,
+      "log": "logs/aux-022.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:40.061Z",
+      "ended": "2026-10-12T19:39:40.066Z",
+      "durationMs": 5,
+      "log": "logs/aux-023.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:40.066Z",
+      "ended": "2026-10-12T19:39:40.069Z",
+      "durationMs": 3,
+      "log": "logs/aux-024.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:40.075Z",
+      "ended": "2026-10-12T19:39:40.079Z",
+      "durationMs": 4,
+      "log": "logs/aux-025.log"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--name-only",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:40.084Z",
+      "ended": "2026-10-12T19:39:40.088Z",
+      "durationMs": 4,
+      "log": "logs/aux-026.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:40.089Z",
+      "ended": "2026-10-12T19:39:40.091Z",
+      "durationMs": 2,
+      "log": "logs/aux-027.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:40.097Z",
+      "ended": "2026-10-12T19:39:40.102Z",
+      "durationMs": 5,
+      "log": "logs/aux-028.log"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--name-only",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:40.106Z",
+      "ended": "2026-10-12T19:39:40.110Z",
+      "durationMs": 4,
+      "log": "logs/aux-029.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:44.129Z",
+      "ended": "2026-10-12T19:39:44.131Z",
+      "durationMs": 2,
+      "log": "logs/aux-030.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:44.138Z",
+      "ended": "2026-10-12T19:39:44.142Z",
+      "durationMs": 4,
+      "log": "logs/aux-031.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:44.142Z",
+      "ended": "2026-10-12T19:39:44.145Z",
+      "durationMs": 3,
+      "log": "logs/aux-032.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:44.151Z",
+      "ended": "2026-10-12T19:39:44.157Z",
+      "durationMs": 6,
+      "log": "logs/aux-033.log"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--name-only",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:44.161Z",
+      "ended": "2026-10-12T19:39:44.165Z",
+      "durationMs": 4,
+      "log": "logs/aux-034.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:44.166Z",
+      "ended": "2026-10-12T19:39:44.168Z",
+      "durationMs": 2,
+      "log": "logs/aux-035.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:44.174Z",
+      "ended": "2026-10-12T19:39:44.178Z",
+      "durationMs": 4,
+      "log": "logs/aux-036.log"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--name-only",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:44.183Z",
+      "ended": "2026-10-12T19:39:44.187Z",
+      "durationMs": 4,
+      "log": "logs/aux-037.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:48.096Z",
+      "ended": "2026-10-12T19:39:48.100Z",
+      "durationMs": 4,
+      "log": "logs/aux-038.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:48.106Z",
+      "ended": "2026-10-12T19:39:48.111Z",
+      "durationMs": 5,
+      "log": "logs/aux-039.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:48.111Z",
+      "ended": "2026-10-12T19:39:48.114Z",
+      "durationMs": 3,
+      "log": "logs/aux-040.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:48.121Z",
+      "ended": "2026-10-12T19:39:48.126Z",
+      "durationMs": 5,
+      "log": "logs/aux-041.log"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--name-only",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:48.131Z",
+      "ended": "2026-10-12T19:39:48.136Z",
+      "durationMs": 5,
+      "log": "logs/aux-042.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:48.137Z",
+      "ended": "2026-10-12T19:39:48.140Z",
+      "durationMs": 3,
+      "log": "logs/aux-043.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:48.146Z",
+      "ended": "2026-10-12T19:39:48.151Z",
+      "durationMs": 5,
+      "log": "logs/aux-044.log"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--name-only",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:48.156Z",
+      "ended": "2026-10-12T19:39:48.160Z",
+      "durationMs": 4,
+      "log": "logs/aux-045.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:50.857Z",
+      "ended": "2026-10-12T19:39:50.860Z",
+      "durationMs": 3,
+      "log": "logs/aux-046.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:50.866Z",
+      "ended": "2026-10-12T19:39:50.871Z",
+      "durationMs": 5,
+      "log": "logs/aux-047.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:50.871Z",
+      "ended": "2026-10-12T19:39:50.874Z",
+      "durationMs": 3,
+      "log": "logs/aux-048.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:50.880Z",
+      "ended": "2026-10-12T19:39:50.885Z",
+      "durationMs": 5,
+      "log": "logs/aux-049.log"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--name-only",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:50.890Z",
+      "ended": "2026-10-12T19:39:50.894Z",
+      "durationMs": 4,
+      "log": "logs/aux-050.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:50.895Z",
+      "ended": "2026-10-12T19:39:50.897Z",
+      "durationMs": 2,
+      "log": "logs/aux-051.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:50.903Z",
+      "ended": "2026-10-12T19:39:50.907Z",
+      "durationMs": 4,
+      "log": "logs/aux-052.log"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--name-only",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:39:50.912Z",
+      "ended": "2026-10-12T19:39:50.916Z",
+      "durationMs": 4,
+      "log": "logs/aux-053.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:40:59.791Z",
+      "ended": "2026-10-12T19:40:59.794Z",
+      "durationMs": 3,
+      "log": "logs/aux-054.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:40:59.799Z",
+      "ended": "2026-10-12T19:40:59.804Z",
+      "durationMs": 5,
+      "log": "logs/aux-055.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:40:59.804Z",
+      "ended": "2026-10-12T19:40:59.807Z",
+      "durationMs": 3,
+      "log": "logs/aux-056.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:40:59.812Z",
+      "ended": "2026-10-12T19:40:59.817Z",
+      "durationMs": 5,
+      "log": "logs/aux-057.log"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--name-only",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:40:59.820Z",
+      "ended": "2026-10-12T19:40:59.824Z",
+      "durationMs": 4,
+      "log": "logs/aux-058.log"
+    },
+    {
+      "argv": [
+        "git",
+        "add",
+        ".template.json",
+        "package.json",
+        "pnpm-lock.yaml",
+        "packages/status",
+        "tools/quality/git-hooks"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:40:59.825Z",
+      "ended": "2026-10-12T19:40:59.832Z",
+      "durationMs": 7,
+      "log": "logs/aux-059.log"
+    },
+    {
+      "argv": [
+        "git",
+        "config",
+        "--get",
+        "core.hooksPath"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:40:59.833Z",
+      "ended": "2026-10-12T19:40:59.835Z",
+      "durationMs": 2,
+      "log": "logs/aux-060.log"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--cached",
+        "--name-only"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:40:59.835Z",
+      "ended": "2026-10-12T19:40:59.838Z",
+      "durationMs": 3,
+      "log": "logs/aux-061.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:40:59.838Z",
+      "ended": "2026-10-12T19:40:59.840Z",
+      "durationMs": 2,
+      "log": "logs/aux-062.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:40:59.845Z",
+      "ended": "2026-10-12T19:40:59.850Z",
+      "durationMs": 5,
+      "log": "logs/aux-063.log"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--name-only",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:40:59.854Z",
+      "ended": "2026-10-12T19:40:59.857Z",
+      "durationMs": 3,
+      "log": "logs/aux-064.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:41:01.030Z",
+      "ended": "2026-10-12T19:41:01.033Z",
+      "durationMs": 3,
+      "log": "logs/aux-065.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "b9dd5b5cbfcc2640c1ec4db72bbc46f8af78dae7^"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:41:01.034Z",
+      "ended": "2026-10-12T19:41:01.036Z",
+      "durationMs": 2,
+      "log": "logs/aux-066.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:41:01.037Z",
+      "ended": "2026-10-12T19:41:01.039Z",
+      "durationMs": 2,
+      "log": "logs/aux-067.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:41:01.044Z",
+      "ended": "2026-10-12T19:41:01.049Z",
+      "durationMs": 5,
+      "log": "logs/aux-068.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:41:01.049Z",
+      "ended": "2026-10-12T19:41:01.052Z",
+      "durationMs": 3,
+      "log": "logs/aux-069.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:41:01.057Z",
+      "ended": "2026-10-12T19:41:01.062Z",
+      "durationMs": 5,
+      "log": "logs/aux-070.log"
+    },
+    {
+      "argv": [
+        "git",
+        "init",
+        "--bare",
+        "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature/.state/status-remote.git"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:41:01.066Z",
+      "ended": "2026-10-12T19:41:01.071Z",
+      "durationMs": 5,
+      "log": "logs/aux-071.log"
+    },
+    {
+      "argv": [
+        "git",
+        "remote",
+        "add",
+        "rehearsal",
+        "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature/.state/status-remote.git"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:41:01.071Z",
+      "ended": "2026-10-12T19:41:01.074Z",
+      "durationMs": 3,
+      "log": "logs/aux-072.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:41:01.074Z",
+      "ended": "2026-10-12T19:41:01.077Z",
+      "durationMs": 3,
+      "log": "logs/aux-073.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:41:01.083Z",
+      "ended": "2026-10-12T19:41:01.088Z",
+      "durationMs": 5,
+      "log": "logs/aux-074.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:42:07.412Z",
+      "ended": "2026-10-12T19:42:07.415Z",
+      "durationMs": 3,
+      "log": "logs/aux-075.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:42:07.422Z",
+      "ended": "2026-10-12T19:42:07.427Z",
+      "durationMs": 5,
+      "log": "logs/aux-076.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:42:07.427Z",
+      "ended": "2026-10-12T19:42:07.430Z",
+      "durationMs": 3,
+      "log": "logs/aux-077.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:42:07.435Z",
+      "ended": "2026-10-12T19:42:07.440Z",
+      "durationMs": 5,
+      "log": "logs/aux-078.log"
+    },
+    {
+      "argv": [
+        "git",
+        "ls-remote",
+        "rehearsal",
+        "refs/heads/feat/status"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:42:07.445Z",
+      "ended": "2026-10-12T19:42:07.451Z",
+      "durationMs": 6,
+      "log": "logs/aux-079.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:42:07.451Z",
+      "ended": "2026-10-12T19:42:07.453Z",
+      "durationMs": 2,
+      "log": "logs/aux-080.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:42:07.459Z",
+      "ended": "2026-10-12T19:42:07.463Z",
+      "durationMs": 4,
+      "log": "logs/aux-081.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:43:15.650Z",
+      "ended": "2026-10-12T19:43:15.653Z",
+      "durationMs": 3,
+      "log": "logs/aux-082.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:43:15.660Z",
+      "ended": "2026-10-12T19:43:15.665Z",
+      "durationMs": 5,
+      "log": "logs/aux-083.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:43:15.665Z",
+      "ended": "2026-10-12T19:43:15.668Z",
+      "durationMs": 3,
+      "log": "logs/aux-084.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:43:15.674Z",
+      "ended": "2026-10-12T19:43:15.678Z",
+      "durationMs": 4,
+      "log": "logs/aux-085.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:43:15.684Z",
+      "ended": "2026-10-12T19:43:15.687Z",
+      "durationMs": 3,
+      "log": "logs/aux-086.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:43:15.692Z",
+      "ended": "2026-10-12T19:43:15.697Z",
+      "durationMs": 5,
+      "log": "logs/aux-087.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:44:24.214Z",
+      "ended": "2026-10-12T19:44:24.217Z",
+      "durationMs": 3,
+      "log": "logs/aux-088.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:44:24.223Z",
+      "ended": "2026-10-12T19:44:24.228Z",
+      "durationMs": 5,
+      "log": "logs/aux-089.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:44:24.229Z",
+      "ended": "2026-10-12T19:44:24.231Z",
+      "durationMs": 2,
+      "log": "logs/aux-090.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:44:24.237Z",
+      "ended": "2026-10-12T19:44:24.242Z",
+      "durationMs": 5,
+      "log": "logs/aux-091.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:44:24.248Z",
+      "ended": "2026-10-12T19:44:24.251Z",
+      "durationMs": 3,
+      "log": "logs/aux-092.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:44:24.257Z",
+      "ended": "2026-10-12T19:44:24.262Z",
+      "durationMs": 5,
+      "log": "logs/aux-093.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:44:28.621Z",
+      "ended": "2026-10-12T19:44:28.624Z",
+      "durationMs": 3,
+      "log": "logs/aux-094.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:44:28.630Z",
+      "ended": "2026-10-12T19:44:28.634Z",
+      "durationMs": 4,
+      "log": "logs/aux-095.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:44:28.634Z",
+      "ended": "2026-10-12T19:44:28.637Z",
+      "durationMs": 3,
+      "log": "logs/aux-096.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:44:28.643Z",
+      "ended": "2026-10-12T19:44:28.647Z",
+      "durationMs": 4,
+      "log": "logs/aux-097.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:44:28.652Z",
+      "ended": "2026-10-12T19:44:28.655Z",
+      "durationMs": 3,
+      "log": "logs/aux-098.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:44:28.660Z",
+      "ended": "2026-10-12T19:44:28.665Z",
+      "durationMs": 5,
+      "log": "logs/aux-099.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:44:42.157Z",
+      "ended": "2026-10-12T19:44:42.160Z",
+      "durationMs": 3,
+      "log": "logs/aux-100.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:44:42.165Z",
+      "ended": "2026-10-12T19:44:42.170Z",
+      "durationMs": 5,
+      "log": "logs/aux-101.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:44:42.170Z",
+      "ended": "2026-10-12T19:44:42.172Z",
+      "durationMs": 2,
+      "log": "logs/aux-102.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:44:42.178Z",
+      "ended": "2026-10-12T19:44:42.182Z",
+      "durationMs": 4,
+      "log": "logs/aux-103.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:44:42.188Z",
+      "ended": "2026-10-12T19:44:42.190Z",
+      "durationMs": 2,
+      "log": "logs/aux-104.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:44:42.195Z",
+      "ended": "2026-10-12T19:44:42.199Z",
+      "durationMs": 4,
+      "log": "logs/aux-105.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:44:55.817Z",
+      "ended": "2026-10-12T19:44:55.820Z",
+      "durationMs": 3,
+      "log": "logs/aux-106.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:44:55.826Z",
+      "ended": "2026-10-12T19:44:55.830Z",
+      "durationMs": 4,
+      "log": "logs/aux-107.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:44:55.831Z",
+      "ended": "2026-10-12T19:44:55.833Z",
+      "durationMs": 2,
+      "log": "logs/aux-108.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:44:55.839Z",
+      "ended": "2026-10-12T19:44:55.843Z",
+      "durationMs": 4,
+      "log": "logs/aux-109.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:44:55.850Z",
+      "ended": "2026-10-12T19:44:55.852Z",
+      "durationMs": 2,
+      "log": "logs/aux-110.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:44:55.858Z",
+      "ended": "2026-10-12T19:44:55.862Z",
+      "durationMs": 4,
+      "log": "logs/aux-111.log"
+    },
+    {
+      "argv": [
+        "git",
+        "ls-tree",
+        "-r",
+        "--full-tree",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:44:55.867Z",
+      "ended": "2026-10-12T19:44:55.870Z",
+      "durationMs": 3,
+      "log": "logs/aux-112.log"
+    },
+    {
+      "argv": [
+        "git",
+        "cat-file",
+        "commit",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:44:55.879Z",
+      "ended": "2026-10-12T19:44:55.882Z",
+      "durationMs": 3,
+      "log": "logs/aux-113.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD^"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:44:55.882Z",
+      "ended": "2026-10-12T19:44:55.885Z",
+      "durationMs": 3,
+      "log": "logs/aux-114.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD^{tree}"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:44:55.885Z",
+      "ended": "2026-10-12T19:44:55.887Z",
+      "durationMs": 2,
+      "log": "logs/aux-115.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:44:55.887Z",
+      "ended": "2026-10-12T19:44:55.891Z",
+      "durationMs": 4,
+      "log": "logs/aux-116.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:44:55.900Z",
+      "ended": "2026-10-12T19:44:55.902Z",
+      "durationMs": 2,
+      "log": "logs/aux-117.log"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:44:55.908Z",
+      "ended": "2026-10-12T19:44:55.912Z",
+      "durationMs": 4,
+      "log": "logs/aux-118.log"
+    },
+    {
+      "argv": [
+        "git",
+        "bundle",
+        "create",
+        "/home/runner/work/super-starter/super-starter/artifacts/hosted-agent-add/verified-feature.bundle",
+        "feat/status"
+      ],
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T19:44:55.917Z",
+      "ended": "2026-10-12T19:44:55.934Z",
+      "durationMs": 17,
+      "log": "logs/aux-119.log"
+    }
+  ],
+  "os": "linux/x64",
+  "node": "v24.21.0",
+  "candidate": {
+    "head": "97afe2686e60edb6927661dc6411083486c28369",
+    "contentId": "5af6e85d2aeb48692e1c22d1c967e003ce3a155fca0950c3daf452a886b1bc9b",
+    "origin": {
+      "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+      "dirty": false,
+      "contentId": "2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"
+    },
+    "status": "M  .template.json\nM  package.json\nA  packages/status/README.md\nA  packages/status/cloudflare.config.ts\nA  packages/status/package.json\nA  packages/status/preview.ts\nA  packages/status/src/index.ts\nA  packages/status/src/notes.ts\nA  packages/status/test/runtime.test.ts\nA  packages/status/test/status.runtime.test.ts\nA  packages/status/test/status.test.ts\nA  packages/status/test/unit.test.ts\nA  packages/status/tsconfig.json\nA  packages/status/vite.config.ts\nA  packages/status/vitest.config.ts\nA  packages/status/vitest.runtime.config.ts\nA  pnpm-lock.yaml"
+  },
+  "setupTransition": {
+    "beforeContentId": "5af6e85d2aeb48692e1c22d1c967e003ce3a155fca0950c3daf452a886b1bc9b",
+    "afterContentId": "58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205",
+    "changes": [
+      {
+        "path": "packages/status/cloudflare.config.ts",
+        "beforeSha256": "55ceded347e6623681e51c4b1b39a6b29a3dc365aa84416c99ce570c11c86c69",
+        "afterSha256": "bb643ea7c1298be6b140975c901124eb557344d3a86318c3b818c6c6adf0102e"
+      },
+      {
+        "path": "packages/status/package.json",
+        "beforeSha256": "ac3e9805b542e6565679097e1a37d33edc7405c77065b3c205e17a66912bade6",
+        "afterSha256": "97065570d25ce38b246094c117e9f9540a5dcc035b8a75368fde18f6eb7240a7"
+      },
+      {
+        "path": "packages/status/src/notes.ts",
+        "beforeSha256": "81ea876d130c7665cfc84a9802bd1066fead21387aef878a7a292635f9b4d278",
+        "afterSha256": "0d97114de68da61386a2b144f41c97b77e56de4e8fe5faeef84ffaa07327717a"
+      },
+      {
+        "path": "packages/status/test/runtime.test.ts",
+        "beforeSha256": "fecdee2d96935a0f895bcbd1a7e035c922a21c77a180ce3c51fb5ad9dfcdab0d",
+        "afterSha256": "814c2dde520714b9d13f234febe9e5f68be50473fb0269f3ffe0352409f9c712"
+      },
+      {
+        "path": "packages/status/test/unit.test.ts",
+        "beforeSha256": "e4c29f7a063db3fd7a0b6970612e905f632d7ff708d2ca6628faffd14d6d25e6",
+        "afterSha256": "375ea697d03ff29d8a12d172a3d39fee8928ef525efd22e97b28fbe8521afa04"
+      },
+      {
+        "path": "packages/status/tsconfig.json",
+        "beforeSha256": "63c1e1b61c9e396831e0613b0d34d780112351504e94ac52ea6d7a7842b5bd9f",
+        "afterSha256": "da8f906bbdeb8e5edcf05ecccb8d0ef428cf459d0e6a455d23334e3136608c69"
+      },
+      {
+        "path": "packages/status/vite.config.ts",
+        "beforeSha256": "7a3c1f27ac4ef018cc416d6e02ba748bbfb8e56eca07b6c4a2d4eff8a237bac6",
+        "afterSha256": "518c2b6f90c4ea32aa16182b671e1f1e53abb998dc5180178fd4c3901a0f0384"
+      },
+      {
+        "path": "packages/status/vitest.config.ts",
+        "beforeSha256": "e70f5aa492989e5b23f42efaababcc82b2505ccbdddef4d697e6078130408931",
+        "afterSha256": "e3e9913f6a5b4b59f8e42c915d3d60650a0606fd241e8d1b69788f3b69f2771f"
+      },
+      {
+        "path": "packages/status/vitest.runtime.config.ts",
+        "beforeSha256": "7662884c023183aaba008d2467b50cefaea49ac40ed436a5c8b40828c68872ba",
+        "afterSha256": "45b1cd6f72913b47e3baa5c08e1c5cf55e7c221963f07386964e843a9fe2217b"
+      },
+      {
+        "path": "pnpm-lock.yaml",
+        "beforeSha256": "e4edcab873e47b1007c6a9b1d8b18473b6a970f0891a4ceaef2ec41219fddbbc",
+        "afterSha256": "44cf13e15d288911d0a0f0073042d306267fac48a646df38198ed9528b01e212"
+      },
+      {
+        "path": ".template.json",
+        "beforeSha256": "9aaa67fa6c0bb4f91f1203d461976284b939d89ed73290529eeacd1f97547ab6",
+        "afterSha256": "bdf83544cb6c0f440c2fafad12f7be5c8a8f5d31d490f605954719de48a32588"
+      }
+    ],
+    "authoredFiles": [
+      {
+        "path": "packages/status/src/index.ts",
+        "sha256": "516af75003f07a635075e1926b2282ca9a05f69ac30d32281c400ba84f69dc5b"
+      },
+      {
+        "path": "packages/status/README.md",
+        "sha256": "d4775e067dd6d1e9ec7a104bddb546e516ad0c0261b85151f7a06cf794e11a56"
+      },
+      {
+        "path": "packages/status/test/status.test.ts",
+        "sha256": "62d221f6e997d123d2047bfe2abc717e10946b839691780d2c87ed55ac584cfe"
+      },
+      {
+        "path": "packages/status/test/status.runtime.test.ts",
+        "sha256": "8a49957fec2b987bdcd06fcdbc62ae0a1491167ce1631e44de658fc468414b7c"
+      }
+    ],
+    "protectedSourceFiles": 264,
+    "owner": "Unchanged standard pnpm env:setup; no separate formatter or source configuration change"
+  },
+  "versions": {
+    "node": "v24.21.0",
+    "pnpm": "12.11.2",
+    "@types/node": "24.19.1",
+    "knip": "6.41.0",
+    "oxc-parser": "0.153.0",
+    "typescript": "7.0.2",
+    "vite-plus": "1.1.0",
+    "vitest": "5.0.3",
+    "yaml": "2.9.1",
+    "@independent-service/contracts": "0.1.0",
+    "@independent-service/observability": "0.1.0",
+    "zod": "4.6.5",
+    "@cloudflare/build-output-utils": "0.9.0",
+    "@cloudflare/config": "0.24.1",
+    "@cloudflare/vite-plugin": "2.0.0-beta.sha-91c870c02",
+    "cf": "1.0.0-beta.14",
+    "wrangler": "4.149.0",
+    "@opentelemetry/api": "1.9.1",
+    "@opentelemetry/resources": "2.12.0",
+    "@opentelemetry/sdk-trace-base": "2.12.0"
+  },
+  "devPreflight": {
+    "status": "blocked",
+    "log": "logs/12-dev-preflight.log",
+    "exit": 1,
+    "reason": "Approved dev account/credentials are absent; no remote deployment occurred"
+  },
+  "final": {
+    "head": "b9dd5b5cbfcc2640c1ec4db72bbc46f8af78dae7",
+    "contentId": "58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205",
+    "origin": {
+      "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+      "dirty": false,
+      "contentId": "2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"
+    },
+    "status": ""
+  },
+  "bundleSha256": "bf6946333dd5ba11c99ee1ca4326dd3e0ca9ff29ec49e2ccf6231f56bb2b2ac1",
+  "localPreflight": {
+    "contentId": "58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205",
+    "target": "@independent-service/status",
+    "environment": "local",
+    "configSource": "packages/status/cloudflare.config.ts",
+    "artifact": "packages/status/.cloudflare/output/v0",
+    "deployed": false,
+    "smoked": false,
+    "account": null,
+    "artifactId": "c60fdd657d72717f72daf3744c68788acd66f6228aeb6324c60bc6849718beb0"
+  },
+  "limitations": [
+    "Mechanical hosted execution supports an independently authored Agent feature; this script is not an Agent.",
+    "No Cloudflare remote deployment or dev connectivity is claimed.",
+    "The bootstrap and transport commits do not count as genuine feature commit/push evidence."
+  ]
+}

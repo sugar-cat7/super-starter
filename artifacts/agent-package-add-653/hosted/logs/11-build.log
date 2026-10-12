@@ -1,0 +1,60 @@
+argv: ["pnpm","build"]
+cwd: /home/runner/work/super-starter/super-starter/.state/hosted-status-feature
+started: 2026-10-12T19:44:24.266Z
+before: {"head":"b9dd5b5cbfcc2640c1ec4db72bbc46f8af78dae7","contentId":"58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205","origin":{"sha":"653abf13ae3a54b2434c422ab8dc6800822387c3","dirty":false,"contentId":"2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"},"status":""}
+$ node tools/quality/gate.ts build
+CHECK @independent-service/api/build: Selected worker @independent-service/api; build phase
+$ node ../../tools/cloudflare/build.ts
+No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+├  Build
+│  Delegating to Vite
+transforming...
+✓ 254 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json    0.15 kB │ gzip:  0.11 kB
+.cloudflare/output/v0/workers/default/bundle/index.js             291.24 kB │ gzip: 68.21 kB
+
+[32m✓ built in 77ms[39m
+◆  Build complete
+CHECK @independent-service/contracts/build: Selected library @independent-service/contracts; build phase
+$ vp pack
+ℹ entry: src/index.ts
+ℹ tsconfig: tsconfig.json
+ℹ Build start
+ℹ Cleaning 2 files
+warn: TypeScript 7.0 does not yet have a stable API and is experimental. Some options will be unavailable.
+ℹ Emit types with typescript@7.0.2
+ℹ dist/index.mjs    5.15 kB │ gzip: 1.71 kB
+ℹ dist/index.d.mts  5.83 kB │ gzip: 1.45 kB
+ℹ 2 files, total: 10.99 kB
+✔ Build complete in 227ms
+CHECK @independent-service/observability/build: Selected library @independent-service/observability; build phase
+$ vp pack
+ℹ entry: src/index.ts
+ℹ tsconfig: tsconfig.json
+ℹ Build start
+ℹ Cleaning 2 files
+warn: TypeScript 7.0 does not yet have a stable API and is experimental. Some options will be unavailable.
+ℹ Emit types with typescript@7.0.2
+ℹ dist/index.mjs    12.75 kB │ gzip: 4.22 kB
+ℹ dist/index.d.mts   1.83 kB │ gzip: 0.73 kB
+ℹ 2 files, total: 14.58 kB
+✔ Build complete in 202ms
+CHECK @independent-service/status/build: Selected worker @independent-service/status; build phase
+$ node ../../tools/cloudflare/build.ts
+No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+├  Build
+│  Delegating to Vite
+transforming...
+✓ 254 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json    0.15 kB │ gzip:  0.11 kB
+.cloudflare/output/v0/workers/default/bundle/index.js             291.42 kB │ gzip: 68.27 kB
+
+[32m✓ built in 75ms[39m
+◆  Build complete
+4/4 checks passed; content 58e2682295b3
+
+result: {"phase":"build","argv":["pnpm","build"],"exit":0,"signal":null,"started":"2026-10-12T19:44:24.266Z","ended":"2026-10-12T19:44:28.651Z","durationMs":4385,"log":"logs/11-build.log","before":{"head":"b9dd5b5cbfcc2640c1ec4db72bbc46f8af78dae7","contentId":"58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205","origin":{"sha":"653abf13ae3a54b2434c422ab8dc6800822387c3","dirty":false,"contentId":"2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"},"status":""},"after":{"head":"b9dd5b5cbfcc2640c1ec4db72bbc46f8af78dae7","contentId":"58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205","origin":{"sha":"653abf13ae3a54b2434c422ab8dc6800822387c3","dirty":false,"contentId":"2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a"},"status":""},"execution":"hosted-tools"}
