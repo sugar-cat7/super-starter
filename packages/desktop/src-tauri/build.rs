@@ -1,6 +1,7 @@
 fn main() {
     let manifest = tauri_build::AppManifest::new().commands(&[
         "list_notes",
+        "count_notes",
         "add_note",
         "delete_note",
         "export_notes",

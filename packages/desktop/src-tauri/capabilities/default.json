@@ -6,6 +6,7 @@
   "permissions": [
     "core:default",
     "allow-list-notes",
+    "allow-count-notes",
     "allow-add-note",
     "allow-delete-note",
     "allow-export-notes"
