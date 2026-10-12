@@ -34,10 +34,12 @@ assert.equal(state.origin.dirty, false);
 assert.match(state.origin.contentId, /^[a-f0-9]{64}$/u);
 
 assert.equal(JSON.parse(readFileSync(path.join(generated, 'package.json'), 'utf8')).name, config.identity.name);
+assert.equal(state.options.name, config.identity.name);
+assert.equal(state.options.scope, config.identity.scope);
 assert.equal(state.options.preset, 'api');
 assert.deepEqual(state.options.features, []);
 const { workspacePackages } = await import(pathToFileURL(path.join(generated, 'tools/quality/graph.ts')).href);
-assert.deepEqual(workspacePackages(generated).map((pkg) => pkg.name).sort(), ['@independent-service/api', '@independent-service/core', '@independent-service/data']);
+assert.deepEqual(workspacePackages(generated).map((pkg) => pkg.name).sort(), ['@independent-service/api', '@independent-service/contracts', '@independent-service/observability']);
 const managed = Object.entries(state.managed).map(([file, hash]) => {
   assert.ok(!path.isAbsolute(file) && !file.split('/').includes('..'));
   const actual = digest(readFileSync(path.join(generated, file)));
