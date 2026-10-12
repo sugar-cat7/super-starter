@@ -2,6 +2,7 @@ import { spawn, spawnSync, type SpawnOptions } from 'node:child_process';
 import type { ChildProcess } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { randomUUID } from 'node:crypto';
+import { tmpdir } from 'node:os';
 import { setTimeout as pause } from 'node:timers/promises';
 
 const owned = new WeakSet<ChildProcess>();
@@ -50,7 +51,9 @@ export function spawnOwned(
       'powershell.exe',
       ['-NoProfile', '-NonInteractive', '-Command', script],
       {
-        cwd: options.cwd,
+        // A failed synchronous launcher spawn returns no cleanup handle. The
+        // guard must not retain the caller's disposable application directory.
+        cwd: tmpdir(),
         stdio: ['pipe', 'pipe', 'pipe'],
         env: {
           ...environment,
@@ -93,6 +96,14 @@ export function spawnOwned(
       );
     } catch (error) {
       stopGuard();
+      const deadline = setTimeout(() => {
+        if (guardian.exitCode === null && guardian.signalCode === null) guardian.kill('SIGKILL');
+      }, 10000);
+      deadline.unref();
+      void guardianClosed.then(
+        () => clearTimeout(deadline),
+        () => clearTimeout(deadline),
+      );
       // No application was created; retain a handler while the guard closes its empty Job.
       void stopped.catch(() =>
         console.error('Owned Windows guard failed after launcher spawn failure'),
