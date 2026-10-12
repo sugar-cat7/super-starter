@@ -130,10 +130,10 @@ const passed =
   });
 const report = {
   schema: 1,
+  ...input,
   kind: 'hosted-native-support',
   execution: 'hosted-tools',
   status: passed ? 'passed' : 'blocked',
-  ...input,
   os: process.platform,
   scope:
     'Supporting actual target-OS execution; does not claim independent Agent or commit/push completion',
