@@ -3,8 +3,8 @@ import { mkdtempSync, readFileSync, rmSync, writeFileSync, mkdirSync, readdirSyn
 import os from 'node:os';
 import path from 'node:path';
 import assert from 'node:assert/strict';
-import { copyProjectFixture } from './fixture.ts';
-import { installHooks, removeOwnedWorktree } from './hooks.ts';
+import { copyProjectFixture, initializeVerificationGit } from './fixture.ts';
+import { foreignGitEnvironment, installHooks, removeOwnedWorktree } from './hooks.ts';
 import { pnpm } from '../process.ts';
 import { contentId } from './gate.ts';
 import { hookPhases } from './definitions.ts';
@@ -12,6 +12,7 @@ import { baselineDifferences } from '../generators/baseline.ts';
 import { writeEvidenceAfterCleanup } from './evidence.ts';
 
 export async function hookRehearsal(project: string): Promise<void> {
+  const environment = foreignGitEnvironment(project);
   const started = performance.now();
   let status: 'passed' | 'failed' = 'failed';
   const owned = mkdtempSync(path.join(os.tmpdir(), 'starter-hooks-'));
@@ -24,7 +25,7 @@ export async function hookRehearsal(project: string): Promise<void> {
       input,
       encoding: 'utf8',
       timeout: 10 * 60_000,
-      env: { ...process.env, TMPDIR: temporary, TMP: temporary, TEMP: temporary },
+      env: { ...environment, TMPDIR: temporary, TMP: temporary, TEMP: temporary },
     });
     const output = `${result.stdout ?? ''}${result.stderr ?? ''}`;
     if (expected) assert.equal(result.status, 0, output);
@@ -39,8 +40,8 @@ export async function hookRehearsal(project: string): Promise<void> {
   try {
     copyProjectFixture(project, root);
     mkdirSync(temporary, { recursive: true });
-    await pnpm(['env:setup'], { cwd: root, timeout: 10 * 60_000 });
-    git(['init', '-q']);
+    initializeVerificationGit(root, environment);
+    await pnpm(['env:setup'], { cwd: root, env: environment, timeout: 10 * 60_000 });
     git(['config', 'user.name', 'Template rehearsal']);
     git(['config', 'user.email', 'template-rehearsal@example.invalid']);
     installHooks(root);
@@ -132,7 +133,7 @@ export async function hookRehearsal(project: string): Promise<void> {
     const linked = path.join(owned, 'linked');
     git(['worktree', 'add', '--detach', linked, 'HEAD']);
     try {
-      await pnpm(['env:setup'], { cwd: linked, timeout: 10 * 60_000 });
+      await pnpm(['env:setup'], { cwd: linked, env: environment, timeout: 10 * 60_000 });
       writeFileSync(path.join(linked, 'tools/linked-probe.ts'), good);
       git(['add', '.'], true, linked);
       git(['commit', '-m', 'Linked worktree hook'], true, path.join(linked, 'packages'));

@@ -11,7 +11,8 @@ import os from 'node:os';
 import path from 'node:path';
 import assert from 'node:assert/strict';
 import { spawnOwned, pnpmCommand, pnpm, run, stopTree } from '../process.ts';
-import { copyProjectFixture } from './fixture.ts';
+import { copyProjectFixture, initializeVerificationGit } from './fixture.ts';
+import { foreignGitEnvironment } from './hooks.ts';
 import { walk } from '../generators/files.ts';
 import { workspacePackages } from './graph.ts';
 import { contentId } from './gate.ts';
@@ -28,7 +29,7 @@ async function capture(
   return await new Promise((resolve, reject) => {
     const child = spawnOwned(invocation.command, invocation.args, {
       cwd: root,
-      env: { ...process.env, ...env, STARTER_CHECK_PHASE: 'quality' },
+      env: { ...foreignGitEnvironment(root), ...env, STARTER_CHECK_PHASE: 'quality' },
       detached: process.platform !== 'win32',
     });
     let output = '';
@@ -56,6 +57,7 @@ async function capture(
 }
 
 export async function faultRehearsal(project: string): Promise<void> {
+  const environment = foreignGitEnvironment(project);
   const owned = mkdtempSync(path.join(os.tmpdir(), 'starter-faults-'));
   const root = path.join(owned, 'project');
   const failures: unknown[] = [];
@@ -68,7 +70,8 @@ export async function faultRehearsal(project: string): Promise<void> {
   };
   try {
     copyProjectFixture(project, root);
-    await pnpm(['env:setup'], { cwd: root, timeout: 10 * 60000 });
+    initializeVerificationGit(root, environment);
+    await pnpm(['env:setup'], { cwd: root, env: environment, timeout: 10 * 60000 });
     await injectFaults(root);
     completed = true;
   } catch (error) {
@@ -116,7 +119,8 @@ export async function faultRehearsal(project: string): Promise<void> {
 }
 
 async function injectFaults(root: string): Promise<void> {
-  await pnpm(['check'], { cwd: root });
+  const environment = foreignGitEnvironment(root);
+  await pnpm(['check'], { cwd: root, env: environment });
   const directory = path.join(root, 'artifacts/faults');
   mkdirSync(directory, { recursive: true });
   const before = contentId(root);
@@ -155,7 +159,7 @@ async function injectFaults(root: string): Promise<void> {
           .filter((entry) => entry.filename.endsWith('.rs'))
           .map((entry) => path.dirname(path.dirname(entry.filename))),
       );
-      for (const cwd of nativeRoots) await run('cargo', ['fmt'], { cwd });
+      for (const cwd of nativeRoots) await run('cargo', ['fmt'], { cwd, env: environment });
       const result = await capture(root, command, env);
       writeFileSync(path.join(directory, `${id}.log`), result.output);
       assert.notEqual(result.code, 0, `${id} must fail`);
@@ -177,7 +181,7 @@ async function injectFaults(root: string): Promise<void> {
       reports.push(report);
       try {
         if (detected) {
-          await pnpm(repair, { cwd: root, timeout: 30 * 60000 });
+          await pnpm(repair, { cwd: root, env: environment, timeout: 30 * 60000 });
           report.repaired = true;
           console.log(`FAULT ${id}: detected for the required reason and repaired`);
         }
@@ -615,7 +619,7 @@ async function injectFaults(root: string): Promise<void> {
     'Every required isolated fault must execute',
   );
   assert.equal(contentId(root), before, 'Fault rehearsal must restore its source input');
-  await pnpm(['check'], { cwd: root });
+  await pnpm(['check'], { cwd: root, env: environment });
   writeFileSync(
     path.join(root, 'artifacts/faults.json'),
     `${JSON.stringify({ schema: 1, baselineDifferences: inputBaseline, status: 'passed', configuration: (JSON.parse(readFileSync(path.join(root, '.template.json'), 'utf8')) as { options: unknown }).options, workspace: workspacePackages(root), origin, contentId: before, os: process.platform, reports }, null, 2)}\n`,
