@@ -16,6 +16,7 @@ jobs:
       - name: Isolate mechanical tools
         run: |
           mkdir -p "$RUNNER_TEMP/desktop-counter-lantern-tools"
+          cp _mechanical/.rehearsal/fresh-desktop-lantern/verify.mjs "$RUNNER_TEMP/desktop-counter-lantern-tools/verify.mjs"
           cp _mechanical/.rehearsal/fresh-desktop-lantern/snapshot.mjs "$RUNNER_TEMP/desktop-counter-lantern-tools/snapshot.mjs"
           rm -rf _mechanical
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
@@ -29,12 +30,18 @@ jobs:
           working_directory: _source
           cache: false
           persist_github_token: false
+      - name: Normal Source JavaScript SDK preparation
+        working-directory: _source
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm env:setup -- --javascript
       - name: Generate through owning CLI then remove source
         run: |
-          test "$(git -C _source rev-parse HEAD)" = 460ad19c970adaab7231795f3438943d9158b135
-          test -z "$(git -C _source status --porcelain)"
+          node "$RUNNER_TEMP/desktop-counter-lantern-tools/verify.mjs" source _source before-generation
           test ! -e desktop-counter-lantern
           node _source/tools/generators/cli.ts init --target desktop-counter-lantern --name desktop-counter-lantern --scope @lantern-lab --preset desktop --identifier dev.lantern.counter --no-install
+          node "$RUNNER_TEMP/desktop-counter-lantern-tools/verify.mjs" generated desktop-counter-lantern
+          node "$RUNNER_TEMP/desktop-counter-lantern-tools/verify.mjs" source _source before-removal
           rm -rf _source
           test ! -e _source
           test ! -e _mechanical
