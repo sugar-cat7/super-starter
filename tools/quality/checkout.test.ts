@@ -1,13 +1,19 @@
-import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { expect, it } from 'vitest';
 import { runSync } from '../process.ts';
 import { assertCheckout, headSha } from './checkout.ts';
+import { initializeVerificationGit } from './fixture.ts';
 
 it('records no SHA for an unborn repository and the real SHA only after a commit', () => {
-  const root = mkdtempSync(path.join(os.tmpdir(), 'checkout-unborn-'));
+  const owned = mkdtempSync(path.join(os.tmpdir(), 'checkout-unborn-'));
+  const root = path.join(owned, 'project');
   try {
+    // TMPDIR can belong to a committed parent checkout. An independent unborn
+    // boundary retains the no-HEAD assertion without inheriting that history.
+    initializeVerificationGit(owned);
+    mkdirSync(root);
     expect(headSha(root)).toBeNull();
     runSync('git', ['init', '--quiet', '--template='], root);
     expect(headSha(root)).toBeNull();
@@ -20,7 +26,7 @@ it('records no SHA for an unborn repository and the real SHA only after a commit
     );
     expect(headSha(root)).toBe(runSync('git', ['rev-parse', '--verify', 'HEAD'], root));
   } finally {
-    rmSync(root, { recursive: true, force: true });
+    rmSync(owned, { recursive: true, force: true });
   }
 });
 

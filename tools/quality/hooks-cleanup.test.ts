@@ -12,12 +12,16 @@ import path from 'node:path';
 import { describe, it, expect } from 'vitest';
 import { runSync } from '../process.ts';
 import { removeOwnedWorktree } from './hooks.ts';
+import { initializeVerificationGit } from './fixture.ts';
 
 function fixture() {
   const owned = mkdtempSync(path.join(os.tmpdir(), 'starter-cleanup-'));
   const root = path.join(owned, 'repository');
   const snapshot = path.join(owned, 'snapshot');
   try {
+    // The foreign-root probe needs an actual unborn repository even when
+    // the caller's TMPDIR is inside another committed checkout.
+    initializeVerificationGit(owned);
     mkdirSync(root);
     const git = (args: string[]) => runSync('git', args, root);
     git(['init', '-q']);
