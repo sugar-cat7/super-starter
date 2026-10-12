@@ -4,18 +4,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
-export const expected = Object.freeze({
-  featureSha: 'acec75eef778b83a4f9f414ababc63e698506591',
-  contentId: '065a5d50eb7a67acc0320fc99f9a1a9ec3a267d5d2c40aa16532cc84ab2f1457',
-  originSha: '98312ce0a1441185e4cd25509d4dc694424b0317',
-  originContentId: '35e0620b01e969b0ea7676eea12550b81751946fca61af35862b8aafb96a3f13',
-  baseSha: '39b76985292b4a43e68706c30e0bbb7d1cbeec45',
-});
-
-// The before-setup guard must work without installed workspace dependencies.
-// This is the generated contentId algorithm; after setup the canonical owner
-// is also loaded and must agree, rather than trusting this bootstrap copy.
-function bootstrapContentId(root) {
+export function bootstrapContentId(root) {
   const hash = createHash('sha256');
   const generated = new Set();
   for (const entry of readdirSync(path.join(root, 'packages'), { withFileTypes: true })) {
@@ -80,57 +69,57 @@ function bootstrapContentId(root) {
   return hash.digest('hex');
 }
 
-export async function assertInput(canonical = true) {
-  const root = process.cwd();
+const directory = path.resolve('artifacts/agent-web-api');
+export const transport = JSON.parse(readFileSync(path.join(directory, 'transport-input.json'), 'utf8'));
+export function fixedInput() {
+  return JSON.parse(readFileSync(path.join(directory, 'input-fixed.json'), 'utf8'));
+}
+export function assertSource(stage = 'feature') {
+  if (!['pristine', 'feature'].includes(stage)) throw new Error('Invalid source stage');
   const state = JSON.parse(readFileSync('.template.json', 'utf8'));
-  const git = (args) => execFileSync('git', args, { cwd: root, encoding: 'utf8' }).trim();
+  if (JSON.stringify(state.origin) !== JSON.stringify(transport.origin) ||
+      JSON.stringify(state.options) !== JSON.stringify(transport.configuration) || state.kind !== 'project')
+    throw new Error('Fresh generated origin/configuration changed');
+  for (const [file, entry] of Object.entries(transport.files)) {
+    if (file === '.template.json') continue;
+    const expected = stage === 'feature' ? transport.featureSeven[file] ?? entry : entry;
+    if (createHash('sha256').update(readFileSync(file)).digest('hex') !== expected.sha256)
+      throw new Error(`Transported source changed: ${file}`);
+  }
+  return state;
+}
+export async function identify(canonical = true, stage = 'feature') {
+  const state = assertSource(stage);
+  const root = process.cwd();
+  const git = (argv) => execFileSync('git', argv, { cwd: root, encoding: 'utf8' }).trim();
   const bootstrap = bootstrapContentId(root);
-  let actualContentId = bootstrap;
   if (canonical) {
     const owner = await import(pathToFileURL(path.join(root, 'tools/quality/gate.ts')).href);
-    actualContentId = owner.contentId(root);
-    if (bootstrap !== actualContentId)
-      throw new Error('Bootstrap and canonical content IDs disagree');
-    const checkout = await import(pathToFileURL(path.join(root, 'tools/quality/checkout.ts')).href);
-    checkout.assertCheckout(root, expected.featureSha);
+    if (bootstrap !== owner.contentId(root)) throw new Error('Bootstrap/canonical content IDs disagree');
   }
-  const input = {
-    featureSha: git(['rev-parse', 'HEAD']),
-    contentId: actualContentId,
-    origin: state.origin,
-    configuration: state.options,
-    kind: state.kind,
-    clean: git(['status', '--porcelain']) === '',
-    supportSha: process.env.GITHUB_SHA ?? null,
-    canonical,
-  };
-  if (
-    input.featureSha !== expected.featureSha ||
-    input.contentId !== expected.contentId ||
-    input.origin.sha !== expected.originSha ||
-    input.origin.contentId !== expected.originContentId ||
-    input.origin.dirty !== false ||
-    !input.clean ||
-    input.kind !== 'project' ||
-    input.configuration.name !== 'independent-note-web' ||
-    input.configuration.scope !== '@independent-web' ||
-    input.configuration.preset !== 'fullstack' ||
-    JSON.stringify(input.configuration.features.toSorted()) !==
-      JSON.stringify(['d1', 'kv', 'r2', 'services'])
-  )
-    throw new Error('Immutable Web/API feature or clean generated origin identity does not match');
+  let sha = null;
+  try { sha = git(['rev-parse', 'HEAD']); } catch { /* An owned unborn repository is expected before real commits. */ }
+  return { featureSha: sha, contentId: bootstrap, origin: state.origin, configuration: state.options,
+    kind: state.kind, clean: git(['status', '--porcelain']) === '', supportSha: process.env.GITHUB_SHA ?? null, canonical };
+}
+export async function assertInput(canonical = true) {
+  const input = await identify(canonical);
+  const fixed = fixedInput();
+  if (input.featureSha !== fixed.featureSha || input.contentId !== fixed.contentId ||
+      input.supportSha !== fixed.supportSha || !input.clean)
+    throw new Error('Immutable final feature identity changed');
+  if (canonical) {
+    const checkout = await import(pathToFileURL(path.resolve('tools/quality/checkout.ts')).href);
+    checkout.assertCheckout(process.cwd(), fixed.featureSha);
+  }
   return input;
 }
-
 if (process.argv[1]?.endsWith('web-agent-input.mjs')) {
   const phase = process.argv[2];
-  if (!['before-setup', 'after-setup', 'after-execution'].includes(phase))
-    throw new Error('Invalid identity phase');
-  const input = await assertInput(phase !== 'before-setup');
-  mkdirSync('artifacts/agent-web-api', { recursive: true });
-  writeFileSync(
-    `artifacts/agent-web-api/input-${phase}.json`,
-    `${JSON.stringify(input, null, 2)}\n`,
-  );
+  if (!['before-setup', 'after-setup', 'after-execution'].includes(phase)) throw new Error('Invalid phase');
+  const input = await assertInput();
+  mkdirSync(directory, { recursive: true });
+  writeFileSync(path.join(directory, `input-${phase}.json`), JSON.stringify(input, null, 2) + '\n');
   console.log(JSON.stringify({ phase, ...input }));
 }
+

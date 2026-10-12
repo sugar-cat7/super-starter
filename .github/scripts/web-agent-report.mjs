@@ -1,166 +1,69 @@
 import { existsSync, readFileSync, realpathSync, statSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { assertInput, expected } from './web-agent-input.mjs';
+import { assertInput, fixedInput, transport } from './web-agent-input.mjs';
 
-const input = await assertInput();
 const directory = path.resolve('artifacts/agent-web-api');
-const file = path.join(directory, 'commands.json');
-const commands = existsSync(file) ? JSON.parse(readFileSync(file, 'utf8')) : [];
-const phases = [
-  'setup',
-  'doctor',
-  'dev',
-  'targeted-test',
-  'pre-pr',
-  'full',
-  'ci',
-  'build',
-  'preflight',
+const input = await assertInput();
+const fixed = fixedInput();
+const commands = JSON.parse(readFileSync(path.join(directory, 'commands.json'), 'utf8'));
+const { agentCommandValid } = await import(pathToFileURL(path.resolve('tools/quality/acceptance.ts')).href);
+const { globalChecks, packageChecks } = await import(pathToFileURL(path.resolve('tools/quality/definitions.ts')).href);
+const { workspacePackages } = await import(pathToFileURL(path.resolve('tools/quality/graph.ts')).href);
+const fullRegistry = [...globalChecks, ...workspacePackages(process.cwd()).flatMap(pkg => packageChecks(pkg, 'full'))];
+const exact = identity => identity && identity.featureSha === fixed.featureSha && identity.contentId === fixed.contentId &&
+  JSON.stringify(identity.origin) === JSON.stringify(transport.origin) && identity.clean && identity.supportSha === fixed.supportSha;
+const logValid = relative => relative.startsWith('logs/') && relative.endsWith('.log') &&
+  existsSync(path.join(directory, relative)) && statSync(path.join(directory, relative)).size > 0 &&
+  realpathSync(path.join(directory, relative)).startsWith(realpathSync(path.join(directory, 'logs')) + path.sep);
+const successful = entry => entry.exit === 0 && !entry.signal && !entry.spawnError && !entry.inputGuardError &&
+  logValid(entry.log) && exact(entry.inputBefore) && exact(entry.inputAfter);
+const required = [
+  ['setup', ['pnpm', 'env:setup']],
+  ['doctor', ['pnpm', 'env:doctor']],
+  ['dev', ['pnpm', 'dev', '--', 'web']],
+  ['targeted-test', ['pnpm', '--filter', '@independent-web/api', 'test']],
+  ['targeted-test', ['pnpm', '--filter', '@independent-web/web', 'test']],
+  ['pre-pr', ['pnpm', 'gate:pre-pr', '--', '--base', fixed.baseSha]],
+  ['full', ['pnpm', 'gate:full']],
+  ['ci', ['pnpm', 'gate:ci', '--', '--base', fixed.baseSha, '--checks', 'javascript']],
+  ['build', ['pnpm', 'build']],
+  ['preflight', ['pnpm', 'deploy:preflight', '--', '--target', 'api', '--environment', 'local']],
+  ['preflight', ['pnpm', 'deploy:preflight', '--', '--target', 'web', '--environment', 'local']],
+  ['push', ['git', 'push', '--set-upstream', 'origin', 'feat/notes-count']],
 ];
-const inputValid = (identity) =>
-  identity &&
-  identity.featureSha === input.featureSha &&
-  identity.contentId === input.contentId &&
-  identity.origin.sha === expected.originSha &&
-  identity.origin.contentId === expected.originContentId &&
-  identity.origin.dirty === false &&
-  identity.clean;
-const logValid = (relative) => {
-  if (!relative.startsWith('logs/') || !relative.endsWith('.log')) return false;
-  const log = path.resolve(directory, relative);
-  return (
-    existsSync(log) &&
-    realpathSync(log).startsWith(`${realpathSync(path.join(directory, 'logs'))}${path.sep}`) &&
-    statSync(log).size > 0
-  );
-};
-const { agentCommandValid } = await import(
-  pathToFileURL(path.resolve('tools/quality/acceptance.ts')).href
-);
-const commandValid = (entry) =>
-  entry.exit === 0 &&
-  !entry.inputGuardError &&
-  inputValid(entry.inputBefore) &&
-  inputValid(entry.inputAfter) &&
-  logValid(entry.log) &&
-  (entry.phase === 'ci'
-    ? JSON.stringify(entry.argv) ===
-      JSON.stringify([
-        'pnpm',
-        'gate:ci',
-        '--',
-        '--base',
-        expected.baseSha,
-        '--checks',
-        'javascript',
-      ])
-    : agentCommandValid(entry.phase, entry.argv));
-const { globalChecks, packageChecks } = await import(
-  pathToFileURL(path.resolve('tools/quality/definitions.ts')).href
-);
-const { workspacePackages } = await import(
-  pathToFileURL(path.resolve('tools/quality/graph.ts')).href
-);
-const expectedFull = [
-  ...globalChecks,
-  ...workspacePackages(process.cwd()).flatMap((pkg) => packageChecks(pkg, 'full')),
-];
-const gateValid = (mode) => {
+const commandsComplete = required.every(([phase, argv]) => commands.some(entry => entry.phase === phase &&
+  JSON.stringify(entry.argv) === JSON.stringify(argv) && successful(entry) && (phase === 'ci' || agentCommandValid(phase, entry.argv))));
+const commit = commands.find(entry => entry.phase === 'commit');
+const commitValid = commit && commit.exit === 0 && !commit.signal && !commit.spawnError && !commit.inputGuardError &&
+  logValid(commit.log) && agentCommandValid('commit', commit.argv) && commit.inputBefore.contentId === fixed.contentId &&
+  JSON.stringify(commit.inputBefore.origin) === JSON.stringify(transport.origin) && commit.inputBefore.featureSha === fixed.baseSha &&
+  exact(commit.inputAfter) && commit.inputBefore.featureSha !== commit.inputAfter.featureSha;
+const gates = Object.fromEntries(['pre-pr', 'full', 'ci'].map(mode => {
   const variant = mode === 'ci' ? 'javascript' : 'all';
-  const file = `artifacts/gate-${mode}-${variant}-linux.json`;
-  if (!existsSync(file)) return false;
-  const report = JSON.parse(readFileSync(file, 'utf8'));
-  return (
-    report.sha === expected.featureSha &&
-    report.contentId === expected.contentId &&
-    report.origin.sha === expected.originSha &&
-    report.origin.contentId === expected.originContentId &&
-    report.origin.dirty === false &&
-    report.status === 'passed' &&
-    report.variant === variant &&
-    report.checks.length > 0 &&
-    report.checks.every((check) => check.status === 'passed') &&
-    (mode === 'full'
-      ? report.checks.length === expectedFull.length &&
-        expectedFull.every((check) =>
-          report.checks.some(
-            (actual) =>
-              actual.id === check.id &&
-              JSON.stringify(actual.command) === JSON.stringify(check.command),
-          ),
-        )
-      : report.base === expected.baseSha)
-  );
-};
-const identitiesValid = ['before-setup', 'after-setup', 'after-execution'].every((phase) => {
+  const filename = `artifacts/gate-${mode}-${variant}-linux.json`;
+  if (!existsSync(filename)) return [mode, false];
+  const gate = JSON.parse(readFileSync(filename, 'utf8'));
+  const shape = gate.sha === fixed.featureSha && gate.contentId === fixed.contentId &&
+    JSON.stringify(gate.origin) === JSON.stringify(transport.origin) && gate.status === 'passed' && gate.variant === variant &&
+    gate.checks.length > 0 && gate.checks.every(check => check.status === 'passed') &&
+    (mode === 'full' ? gate.checks.length === fullRegistry.length && fullRegistry.every(check => gate.checks.some(actual =>
+      actual.id === check.id && JSON.stringify(actual.command) === JSON.stringify(check.command))) : gate.base === fixed.baseSha);
+  return [mode, shape];
+}));
+const identitiesValid = ['before-setup', 'after-setup', 'after-execution'].every(phase => {
   const file = path.join(directory, `input-${phase}.json`);
-  return existsSync(file) && inputValid(JSON.parse(readFileSync(file, 'utf8')));
+  return existsSync(file) && exact(JSON.parse(readFileSync(file, 'utf8')));
 });
-const gates = Object.fromEntries(['pre-pr', 'full', 'ci'].map((mode) => [mode, gateValid(mode)]));
-const requiredCommands = [
-  ['pnpm', 'env:setup'],
-  ['pnpm', 'env:doctor'],
-  ['pnpm', 'dev', '--', 'web'],
-  ['pnpm', '--filter', '@independent-web/api', 'test'],
-  ['pnpm', '--filter', '@independent-web/web', 'test'],
-  ['pnpm', 'gate:pre-pr', '--', '--base', expected.baseSha],
-  ['pnpm', 'gate:full'],
-  ['pnpm', 'gate:ci', '--', '--base', expected.baseSha, '--checks', 'javascript'],
-  ['pnpm', 'build'],
-  ['pnpm', 'deploy:preflight', '--', '--target', 'api', '--environment', 'local'],
-  ['pnpm', 'deploy:preflight', '--', '--target', 'web', '--environment', 'local'],
-];
-const commandsComplete =
-  requiredCommands.every((argv) =>
-    commands.some(
-      (entry) => JSON.stringify(entry.argv) === JSON.stringify(argv) && commandValid(entry),
-    ),
-  ) &&
-  commands.every(
-    (entry) =>
-      entry.exit === 0 &&
-      !entry.inputGuardError &&
-      inputValid(entry.inputBefore) &&
-      inputValid(entry.inputAfter) &&
-      logValid(entry.log),
-  );
-const passed =
-  phases.every((phase) => commands.some((entry) => entry.phase === phase && commandValid(entry))) &&
-  commandsComplete &&
-  Object.values(gates).every(Boolean) &&
-  identitiesValid;
-const { toolVersions, artifactSizes } = await import(
-  pathToFileURL(path.resolve('tools/quality/evidence.ts')).href
-);
-const report = {
-  schema: 1,
-  execution: 'hosted-tools',
-  status: passed ? 'passed' : 'blocked',
-  ...input,
-  kind: 'hosted-web-api-support',
-  scope:
-    'Mechanical hosted validation of the immutable independently authored feature; this script does not produce Agent acceptance or claim Git commit/push evidence.',
-  requiredSupportPhases: phases,
-  requiredCommands,
-  commandsComplete,
-  commands,
-  gates,
-  identitiesValid,
-  versions: toolVersions(process.cwd()),
-  artifacts: artifactSizes(process.cwd()),
-};
-writeFileSync(
-  path.join(directory, 'hosted-web-api-support.json'),
-  `${JSON.stringify(report, null, 2)}\n`,
-);
-console.log(
-  JSON.stringify({
-    status: report.status,
-    featureSha: input.featureSha,
-    contentId: input.contentId,
-    supportSha: input.supportSha,
-    gates,
-  }),
-);
+const bare = JSON.parse(readFileSync(path.join(directory, 'bare-push-proof.json'), 'utf8'));
+const allObservedPassed = commands.every(entry => entry.exit === 0 && !entry.signal && !entry.spawnError && !entry.inputGuardError && logValid(entry.log));
+const passed = commandsComplete && commitValid && identitiesValid && allObservedPassed && Object.values(gates).every(Boolean) &&
+  bare.featureSha === fixed.featureSha && bare.normalHooks === true;
+const { toolVersions, artifactSizes } = await import(pathToFileURL(path.resolve('tools/quality/evidence.ts')).href);
+const report = { schema: 1, execution: 'hosted-tools', kind: 'hosted-web-api-support', status: passed ? 'passed' : 'blocked',
+  scope: 'Mechanical execution only. Contains actual new-source normal Git events; the Agent authors the feature and separately reviews/assembles acceptance.',
+  ...input, baseSha: fixed.baseSha, transport, commandsComplete, commitValid, allObservedPassed, identitiesValid, gates,
+  commands, versions: toolVersions(process.cwd()), artifacts: artifactSizes(process.cwd()) };
+writeFileSync(path.join(directory, 'hosted-web-api-support.json'), JSON.stringify(report, null, 2) + '\n');
+console.log(JSON.stringify({ status: report.status, featureSha: input.featureSha, contentId: input.contentId, gates, commitValid }));
 if (!passed) process.exitCode = 1;
