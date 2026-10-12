@@ -215,7 +215,7 @@ export async function lifecycleRehearsal(source: string): Promise<void> {
       await pnpm(['env:setup'], { cwd: root, env: environment });
       await pnpm(['env:doctor'], { cwd: root, env: environment });
       await pnpm(['gate:full'], { cwd: root, env: environment });
-      const servers = new Servers(root);
+      const servers = new Servers(root, undefined, environment);
       try {
         const origin = await servers.workers('jobs');
         assert.equal((await fetch(`${origin}/health`)).status, 200);
@@ -257,7 +257,7 @@ export async function lifecycleRehearsal(source: string): Promise<void> {
       await pnpm(['gate:full'], { cwd: root, env: environment });
       const pkg = workspacePackages(root).find((value) => value.name === '@different/jobs')!;
       assert.ok(pkg);
-      const servers = new Servers(root);
+      const servers = new Servers(root, undefined, environment);
       try {
         const origin = await servers.workers(pkg.name);
         assert.deepEqual(await (await fetch(`${origin}/custom`)).json(), {

@@ -16,25 +16,29 @@ import { mkdtempSync } from 'node:fs';
 import { pnpm, runSync, run } from '../process.ts';
 import { workspacePackages } from './graph.ts';
 import { initializeVerificationGit } from './fixture.ts';
+import { foreignGitEnvironment } from './checkout.ts';
+export { foreignGitEnvironment } from './checkout.ts';
 
 const hookPath = 'tools/quality/git-hooks';
-export function foreignGitEnvironment(root: string): NodeJS.ProcessEnv {
-  const environment = { ...process.env };
-  // Git exports repository routing even for linked worktree hooks. Foreign
-  // checkouts and their test fixtures must discover their own Git metadata.
-  for (const name of runSync('git', ['rev-parse', '--local-env-vars'], root).split('\n'))
-    delete environment[name];
-  return environment;
-}
 export function removeOwnedWorktree(root: string, snapshot: string): void {
-  runSync('git', ['-c', 'core.longpaths=true', 'worktree', 'remove', '--force', snapshot], root);
+  runSync(
+    'git',
+    ['-c', 'core.longpaths=true', 'worktree', 'remove', '--force', snapshot],
+    root,
+    foreignGitEnvironment(root),
+  );
   // Git deliberately retains Windows junctions and their ancestors while
   // unregistering the worktree. Finish only the successfully removed owned
   // snapshot; Node removes junctions without following their targets.
   rmSync(snapshot, { recursive: true, force: true });
 }
 export function installHooks(root: string): void {
-  const git = spawnSync('git', ['rev-parse', '--show-toplevel'], { cwd: root, encoding: 'utf8' });
+  const environment = foreignGitEnvironment(root);
+  const git = spawnSync('git', ['rev-parse', '--show-toplevel'], {
+    cwd: root,
+    env: environment,
+    encoding: 'utf8',
+  });
   if (git.status !== 0) {
     console.log('Hooks not_required: no Git repository (run env:setup after git init)');
     return;
@@ -45,6 +49,7 @@ export function installHooks(root: string): void {
     );
   const configured = spawnSync('git', ['config', '--get', 'core.hooksPath'], {
     cwd: root,
+    env: environment,
     encoding: 'utf8',
   }).stdout.trim();
   if (configured && configured !== hookPath)
@@ -52,7 +57,7 @@ export function installHooks(root: string): void {
       `Existing core.hooksPath ${configured}; preserve it and explicitly migrate before installing repository hooks`,
     );
   if (!configured) {
-    const defaults = runSync('git', ['rev-parse', '--git-path', 'hooks'], root);
+    const defaults = runSync('git', ['rev-parse', '--git-path', 'hooks'], root, environment);
     const directory = path.resolve(root, defaults);
     if (
       existsSync(directory) &&
@@ -65,7 +70,7 @@ export function installHooks(root: string): void {
         'Existing user hooks found in Git hooks directory; explicit migration required',
       );
   }
-  runSync('git', ['config', '--local', 'core.hooksPath', hookPath], root);
+  runSync('git', ['config', '--local', 'core.hooksPath', hookPath], root, environment);
   for (const event of ['pre-commit', 'pre-push'])
     chmodSync(path.join(root, hookPath, event), 0o755);
   console.log('Repository-local Git hooks installed');

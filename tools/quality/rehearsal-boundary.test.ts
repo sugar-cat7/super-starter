@@ -4,16 +4,17 @@ import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { expect, it, vi } from 'vitest';
-import { applyFiles } from '../generators/files.ts';
+import { applyFiles, digest } from '../generators/files.ts';
 import { projectOptions } from '../generators/options.ts';
 import { projectFiles } from '../generators/render.ts';
 import { lifecycleRehearsal } from '../generators/lifecycle.ts';
 import { faultRehearsal } from './faults.ts';
 import { hookRehearsal } from './hooks-rehearsal.ts';
 import { pnpm } from '../process.ts';
+import type * as ProcessModule from '../process.ts';
 
 vi.mock('../process.ts', async (original) => ({
-  ...(await original<typeof import('../process.ts')>()),
+  ...(await original<typeof ProcessModule>()),
   pnpm: vi.fn<typeof pnpm>(),
 }));
 
@@ -51,6 +52,14 @@ it.each([
           projectOptions({ name: 'boundary', scope: '@boundary', preset: 'web' }),
         ),
       );
+      const expectedSource = 'a'.repeat(40);
+      const lock = Buffer.from('lockfileVersion: 9\n');
+      writeFileSync(path.join(project, 'pnpm-lock.yaml'), lock);
+      const template = JSON.parse(readFileSync(path.join(project, '.template.json'), 'utf8'));
+      template.lockId = digest(lock);
+      template.origin.sha = expectedSource;
+      template.origin.dirty = false;
+      writeFileSync(path.join(project, '.template.json'), JSON.stringify(template));
       mkdirSync(temporary, { recursive: true });
       vi.spyOn(os, 'tmpdir').mockReturnValue(temporary);
       vi.stubEnv('GIT_DIR', path.join(parent, '.git'));
@@ -60,6 +69,9 @@ it.each([
         const root = String(options?.cwd);
         expect(path.relative(temporary, root).startsWith(prefix)).toBe(true);
         expect(options?.env?.GIT_DIR).toBeUndefined();
+        const generated = JSON.parse(readFileSync(path.join(root, '.template.json'), 'utf8'));
+        expect(generated.origin.sha).toBe(expectedSource);
+        expect(generated.origin.dirty).toBe(false);
         expect(realpathSync.native(git(root, ['rev-parse', '--show-toplevel'], options?.env))).toBe(
           realpathSync.native(root),
         );

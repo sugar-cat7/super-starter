@@ -274,18 +274,21 @@ describe('minimal CI execution with an actual committed diff', () => {
     expect(plan.fixturesMatrix.include.some((row) => row.faults)).toBe(true);
     expect(plan.fixturesMatrix.include.every((row) => !row.hooks && !row.lifecycle)).toBe(true);
   });
-  it('runs real Linux and Windows hooks for their isolated Git-boundary helper', () => {
-    const plan = planFor(['tools/quality/fixture.ts']);
-    expect(plan.selected).toHaveLength(6);
-    expect([plan.native, plan.workers, plan.observability]).toEqual([true, true, false]);
-    expect(plan.fixturesMatrix.include.filter((row) => row.hooks)).toEqual([
-      expect.objectContaining({ preset: 'web', os: 'ubuntu-24.04' }),
-      expect.objectContaining({ preset: 'desktop', os: 'windows-2025' }),
-    ]);
-    expect(plan.fixturesMatrix.include.filter((row) => row.lifecycle)).toEqual([
-      expect.objectContaining({ preset: 'web', os: 'ubuntu-24.04' }),
-    ]);
-  });
+  it.each(['tools/quality/fixture.ts', 'tools/quality/checkout.ts'])(
+    'runs owning rehearsals for %s',
+    (file) => {
+      const plan = planFor([file]);
+      expect(plan.selected).toHaveLength(6);
+      expect([plan.native, plan.workers, plan.observability]).toEqual([true, true, false]);
+      expect(plan.fixturesMatrix.include.filter((row) => row.hooks)).toEqual([
+        expect.objectContaining({ preset: 'web', os: 'ubuntu-24.04' }),
+        expect.objectContaining({ preset: 'desktop', os: 'windows-2025' }),
+      ]);
+      expect(plan.fixturesMatrix.include.filter((row) => row.lifecycle)).toEqual([
+        expect.objectContaining({ preset: 'web', os: 'ubuntu-24.04' }),
+      ]);
+    },
+  );
   it('retains full preset and native coverage for generator/setup inputs and unknown roots', () => {
     for (const file of [
       'tools/generators/render.ts',
