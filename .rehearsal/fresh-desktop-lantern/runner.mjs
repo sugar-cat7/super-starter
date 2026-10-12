@@ -17,7 +17,7 @@ async function phase(id,command,args,timeout=30*60_000,ready=false,cwd=root){
   const startedAt=new Date().toISOString(),started=performance.now(),log=fs.createWriteStream('artifacts/actor/logs/'+id+'.log');
   console.log('ACTOR_PHASE_START '+JSON.stringify({id,command,args,cwd,startedAt,sha:git('rev-parse','HEAD')}));
   const child=spawnOwned(command,args,{cwd,stdio:['ignore','pipe','pipe'],env:process.env});
-  let output='',code=null,signal=null,spawnError;
+  let output='',code=null,signal=null,spawnError,lifecycle=null;
   for(const [stream,owner] of [[child.stdout,process.stdout],[child.stderr,process.stderr]])stream.on('data',chunk=>{output+=chunk.toString();log.write(chunk);});
   const closed=new Promise(resolve=>child.once('close',(c,s)=>{code=c;signal=s;resolve();}));
   child.once('error',error=>{spawnError=error;});
@@ -28,8 +28,38 @@ async function phase(id,command,args,timeout=30*60_000,ready=false,cwd=root){
         if(child.exitCode!==null||child.signalCode!==null||spawnError)throw new Error('Development exited before native readiness');
         await pause(100);
       }
+      assert(output.includes('NATIVE_READY'),'actual native application readiness');
       assert(output.includes('READY @lantern-lab/desktop/native'),'actual native dev readiness');
-      await stopTree(child);await closed;assert.equal(code,0,'development exits successfully after normal shutdown');
+      if(child.exitCode!==null||child.signalCode!==null||spawnError)throw new Error('Development exited before requested stop');
+      const readyLine=/READY @lantern-lab\/desktop (http:\/\/127\.0\.0\.1:\d+) \d+ms; registry ([^\r\n]+)/u.exec(output);
+      assert(readyLine,'owned renderer endpoint and registry readiness');
+      const origin=readyLine[1],registry=path.resolve(readyLine[2]);
+      assert(registry.startsWith(path.join(root,'.state','registry','session-')),'owned session registry');
+      assert(fs.existsSync(registry),'owned ready registry exists');
+      const response=await fetch(origin,{signal:AbortSignal.timeout(1_000)});await response.arrayBuffer();assert(response.ok,'owned renderer responds before stop');
+      lifecycle={ready:true,origin,registry,pid:child.pid,requestedStop:'SDK.stopTree SIGTERM',cleanupCompleted:false,endpointStopped:false,registryRemoved:false,ownedGroupStopped:false};
+      log.write('ACTOR_DEV_STOP_REQUEST '+JSON.stringify(lifecycle)+'\n');
+      await stopTree(child);
+      let closeTimer;await Promise.race([closed,new Promise((_,reject)=>{closeTimer=setTimeout(()=>reject(new Error('Owned development close deadline exceeded')),10_000);})]).finally(()=>clearTimeout(closeTimer));
+      if(spawnError)throw spawnError;
+      assert(code===0||(code===null&&signal==='SIGTERM'),'only normal exit or the requested SIGTERM is a successful controlled stop');
+      lifecycle.cleanupCompleted=true;
+      const cleanupStarted=performance.now();
+      while(performance.now()-cleanupStarted<10_000){
+        let refused=false;
+        try{const remaining=await fetch(origin,{signal:AbortSignal.timeout(1_000)});await remaining.arrayBuffer();}
+        catch(error){refused=error?.cause?.code==='ECONNREFUSED';}
+        lifecycle.endpointStopped=refused;
+        lifecycle.registryRemoved=!fs.existsSync(registry);
+        try{process.kill(-child.pid,0);lifecycle.ownedGroupStopped=false;}
+        catch(error){if(error.code!=='ESRCH')throw error;lifecycle.ownedGroupStopped=true;}
+        if(lifecycle.endpointStopped&&lifecycle.registryRemoved&&lifecycle.ownedGroupStopped)break;
+        await pause(100);
+      }
+      assert(lifecycle.endpointStopped,'owned renderer endpoint refuses connections after stop');
+      assert(lifecycle.registryRemoved,'owning Servers.stop removes its session registry');
+      assert(lifecycle.ownedGroupStopped,'owned development process group has stopped');
+      log.write('ACTOR_DEV_STOP_RESULT '+JSON.stringify({lifecycle,exitCode:code,signal})+'\n');
     }else{
       let timer;await Promise.race([closed,new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error('Phase deadline exceeded')),timeout);})]).finally(()=>clearTimeout(timer));
       if(spawnError)throw spawnError;assert.equal(code,0,id+' failed');
@@ -40,7 +70,7 @@ async function phase(id,command,args,timeout=30*60_000,ready=false,cwd=root){
     let outputIdentity=null;
     try{if(phaseGuard)outputIdentity=phaseGuard('after '+id);}catch(error){failure=[failure,String(error)].filter(Boolean).join('\n');}
     await new Promise(resolve=>log.end(resolve));
-    phases.push({id,command,args,cwd,inputIdentity,outputIdentity,startedAt,milliseconds:Math.round(performance.now()-started),sha:git('rev-parse','HEAD'),exitCode:code,signal,status:failure?'failed':'passed',error:failure??null});
+    phases.push({id,command,args,cwd,inputIdentity,outputIdentity,startedAt,milliseconds:Math.round(performance.now()-started),sha:git('rev-parse','HEAD'),exitCode:code,signal,phaseExitCode:failure?1:0,lifecycle,status:failure?'failed':'passed',error:failure??null});
     fs.writeFileSync('artifacts/actor/phases-'+process.platform+'.json',JSON.stringify(phases,null,2)+'\n');
     console.log('ACTOR_PHASE_END '+JSON.stringify(phases.at(-1)));
   }
