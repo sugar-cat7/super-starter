@@ -2,8 +2,14 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended", "helpers:pinGitHubActionDigests"],
   "automerge": false,
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "automerge": false,
+    "labels": ["security"],
+    "vulnerabilityFixStrategy": "lowest"
+  },
   "minimumReleaseAge": "1 day",
-  "enabledManagers": ["npm", "cargo", "github-actions", "mise", "custom.regex"],
+  "enabledManagers": ["npm", "cargo", "github-actions", "mise", "custom.regex", "docker-compose"],
   "customManagers": [
     {
       "customType": "regex",

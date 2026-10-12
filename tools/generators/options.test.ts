@@ -13,12 +13,12 @@ describe('generation inputs and containment', () => {
   it('has only selected apps and required shared packages', () => {
     expect(
       selectedPackages(projectOptions({ name: 'new-project', scope: '@another', preset: 'api' })),
-    ).toEqual(['contracts', 'api']);
+    ).toEqual(['contracts', 'observability', 'api']);
     expect(
       selectedPackages(
         projectOptions({ name: 'new-project', scope: '@another', preset: 'desktop' }),
       ),
-    ).toEqual(['contracts', 'ui', 'desktop']);
+    ).toEqual(['contracts', 'observability', 'ui', 'desktop']);
   });
   it('makes the fullstack transport explicit and rejects impossible bindings', () => {
     expect(

@@ -2,12 +2,14 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync
 import { once } from 'node:events';
 import os from 'node:os';
 import path from 'node:path';
-import { expect, it } from 'vitest';
+import { expect, it, vi } from 'vitest';
 import { Servers } from './servers.ts';
 
 it('cancels a pending start before spawn and permits an explicit real-server restart', async () => {
   const root = mkdtempSync(path.join(os.tmpdir(), 'starter-cancel-'));
-  const servers = new Servers(root);
+  vi.stubEnv('GIT_DIR', 'foreign-parent');
+  const environment = { ...process.env, GIT_DIR: undefined, STARTER_ENVIRONMENT_PROBE: 'owned' };
+  const servers = new Servers(root, undefined, environment);
   const pkg = {
     name: 'startup-fixture',
     directory: '.',
@@ -21,7 +23,7 @@ it('cancels a pending start before spawn and permits an explicit real-server res
   );
   writeFileSync(
     path.join(root, 'server.cjs'),
-    "const fs=require('node:fs');const registry=process.env.MINIFLARE_REGISTRY_PATH;if(registry!==process.env.WRANGLER_REGISTRY_PATH)throw new Error('SDK registry mismatch');fs.writeFileSync(registry+'/registration','owned');fs.writeFileSync('registry-path',registry);require('node:http').createServer((req,res)=>res.end('ready')).listen(Number(process.env.STARTER_PORT),'127.0.0.1',()=>console.log('http://127.0.0.1:'+process.env.STARTER_PORT));\n",
+    "const fs=require('node:fs');if(process.env.GIT_DIR||process.env.STARTER_ENVIRONMENT_PROBE!=='owned')throw new Error('Foreign environment leaked');const registry=process.env.MINIFLARE_REGISTRY_PATH;if(registry!==process.env.WRANGLER_REGISTRY_PATH)throw new Error('SDK registry mismatch');fs.writeFileSync(registry+'/registration','owned');fs.writeFileSync('registry-path',registry);require('node:http').createServer((req,res)=>res.end('ready')).listen(Number(process.env.STARTER_PORT),'127.0.0.1',()=>console.log('http://127.0.0.1:'+process.env.STARTER_PORT));\n",
   );
   const data = path.join(root, '.state', 'api', 'durable-data');
   const sibling = path.join(root, '.state', 'registry', 'user-owned');
@@ -54,6 +56,7 @@ it('cancels a pending start before spawn and permits an explicit real-server res
     expect(readFileSync(path.join(sibling, 'registration'), 'utf8')).toBe('protected');
   } finally {
     await servers.stop();
+    vi.unstubAllEnvs();
     rmSync(root, { recursive: true, force: true });
   }
 }, 30000);

@@ -15,18 +15,30 @@ import path from 'node:path';
 import { mkdtempSync } from 'node:fs';
 import { pnpm, runSync, run } from '../process.ts';
 import { workspacePackages } from './graph.ts';
-import { assertCheckout } from './checkout.ts';
+import { initializeVerificationGit } from './fixture.ts';
+import { foreignGitEnvironment } from './checkout.ts';
+export { foreignGitEnvironment } from './checkout.ts';
 
 const hookPath = 'tools/quality/git-hooks';
 export function removeOwnedWorktree(root: string, snapshot: string): void {
-  runSync('git', ['-c', 'core.longpaths=true', 'worktree', 'remove', '--force', snapshot], root);
+  runSync(
+    'git',
+    ['-c', 'core.longpaths=true', 'worktree', 'remove', '--force', snapshot],
+    root,
+    foreignGitEnvironment(root),
+  );
   // Git deliberately retains Windows junctions and their ancestors while
   // unregistering the worktree. Finish only the successfully removed owned
   // snapshot; Node removes junctions without following their targets.
   rmSync(snapshot, { recursive: true, force: true });
 }
 export function installHooks(root: string): void {
-  const git = spawnSync('git', ['rev-parse', '--show-toplevel'], { cwd: root, encoding: 'utf8' });
+  const environment = foreignGitEnvironment(root);
+  const git = spawnSync('git', ['rev-parse', '--show-toplevel'], {
+    cwd: root,
+    env: environment,
+    encoding: 'utf8',
+  });
   if (git.status !== 0) {
     console.log('Hooks not_required: no Git repository (run env:setup after git init)');
     return;
@@ -37,6 +49,7 @@ export function installHooks(root: string): void {
     );
   const configured = spawnSync('git', ['config', '--get', 'core.hooksPath'], {
     cwd: root,
+    env: environment,
     encoding: 'utf8',
   }).stdout.trim();
   if (configured && configured !== hookPath)
@@ -44,7 +57,7 @@ export function installHooks(root: string): void {
       `Existing core.hooksPath ${configured}; preserve it and explicitly migrate before installing repository hooks`,
     );
   if (!configured) {
-    const defaults = runSync('git', ['rev-parse', '--git-path', 'hooks'], root);
+    const defaults = runSync('git', ['rev-parse', '--git-path', 'hooks'], root, environment);
     const directory = path.resolve(root, defaults);
     if (
       existsSync(directory) &&
@@ -57,7 +70,7 @@ export function installHooks(root: string): void {
         'Existing user hooks found in Git hooks directory; explicit migration required',
       );
   }
-  runSync('git', ['config', '--local', 'core.hooksPath', hookPath], root);
+  runSync('git', ['config', '--local', 'core.hooksPath', hookPath], root, environment);
   for (const event of ['pre-commit', 'pre-push'])
     chmodSync(path.join(root, hookPath, event), 0o755);
   console.log('Repository-local Git hooks installed');
@@ -98,6 +111,7 @@ function linkDependencies(
 }
 
 export async function indexCheck(root: string): Promise<void> {
+  const environment = foreignGitEnvironment(root);
   const snapshot = mkdtempSync(path.join(os.tmpdir(), 'starter-index-'));
   try {
     runSync(
@@ -105,6 +119,10 @@ export async function indexCheck(root: string): Promise<void> {
       ['checkout-index', '--all', `--prefix=${snapshot.split(path.sep).join('/')}/`],
       root,
     );
+    // TMPDIR may be inside this repository's ignored .state directory. Give
+    // the exact index its own Git boundary so tools cannot inherit the parent
+    // ignore rules or Git's exported routing to the user's original index.
+    initializeVerificationGit(snapshot, environment);
     linkDependencies(
       path.join(root, 'node_modules'),
       path.join(snapshot, 'node_modules'),
@@ -121,15 +139,20 @@ export async function indexCheck(root: string): Promise<void> {
     // pnpm 12 can prepare dependencies implicitly in a copied index tree. The
     // index must stay immutable, so invoke the already-installed local CLI.
     const vp = path.join(snapshot, 'node_modules/vite-plus/bin/vp');
-    await run(process.execPath, [vp, 'fmt', '--check'], { cwd: snapshot, timeout: 120_000 });
+    await run(process.execPath, [vp, 'fmt', '--check'], {
+      cwd: snapshot,
+      env: environment,
+      timeout: 120_000,
+    });
     // Staged checks intentionally use lint rather than worktree typegen/runtime.
     await run(process.execPath, [vp, 'lint'], {
       cwd: snapshot,
-      env: { ...process.env, STARTER_CHECK_PHASE: 'index' },
+      env: { ...environment, STARTER_CHECK_PHASE: 'index' },
       timeout: 120_000,
     });
     await run(process.execPath, ['tools/quality/structure.ts'], {
       cwd: snapshot,
+      env: environment,
       timeout: 120_000,
     });
   } finally {
@@ -146,6 +169,7 @@ if (process.argv[1]?.endsWith(`${path.sep}hooks.ts`)) {
   if (event === 'install') installHooks(root);
   else if (event === 'pre-commit') await indexCheck(root);
   else if (event === 'pre-push') {
+    const environment = foreignGitEnvironment(root);
     let input = '';
     for await (const chunk of process.stdin) input += String(chunk);
     const commits = new Map<string, Set<string>>();
@@ -163,10 +187,13 @@ if (process.argv[1]?.endsWith(`${path.sep}hooks.ts`)) {
       rmSync(snapshot, { recursive: true });
       try {
         runSync('git', ['worktree', 'add', '--detach', snapshot, local], root);
-        await pnpm(['install', '--frozen-lockfile'], { cwd: snapshot });
-        await pnpm(['env:setup', '--', '--javascript'], { cwd: snapshot });
-        assertCheckout(snapshot, local);
-        await pnpm(['gate:push', '--', '--base', base], { cwd: snapshot });
+        await pnpm(['install', '--frozen-lockfile'], { cwd: snapshot, env: environment });
+        await pnpm(['env:setup', '--', '--javascript'], { cwd: snapshot, env: environment });
+        await run(process.execPath, ['tools/quality/checkout.ts', local], {
+          cwd: snapshot,
+          env: { ...environment, CI_HEAD_SHA: local },
+        });
+        await pnpm(['gate:push', '--', '--base', base], { cwd: snapshot, env: environment });
       } finally {
         removeOwnedWorktree(root, snapshot);
       }

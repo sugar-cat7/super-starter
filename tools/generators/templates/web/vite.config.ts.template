@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 
 export default defineConfig({
   plugins: [
-    cloudflare({ viteEnvironment: { name: 'ssr' }, inspectorPort: false, persistState: { path: `${process.env.STARTER_STATE_ROOT ?? fileURLToPath(new URL('../../.state', import.meta.url).href)}/__APP__` }, experimental: { newConfig: { cfBuildOutput: true } } }),
+    cloudflare({ viteEnvironment: { name: 'ssr' }, inspectorPort: false, persistState: { path: `${process.env.STARTER_STATE_ROOT ?? fileURLToPath(new URL('../../.state', import.meta.url).href)}/__APP__` } }),
     tanstackStart({ server: { build: { inlineCss: true } }, router: { quoteStyle: 'single', semicolons: true } }),
     react(),
     tailwind(),
@@ -18,5 +18,5 @@ export default defineConfig({
     { name: 'react', test: /[\\/]node_modules[\\/]react[\\/]/ },
     { name: 'react-dom', test: /[\\/]node_modules[\\/](?:react-dom|scheduler)[\\/]/ },
   ] } } } } } },
-  server: { port: Number(process.env.STARTER_PORT ?? 5173), strictPort: true },
+  server: { host: '127.0.0.1', port: Number(process.env.STARTER_PORT ?? 5173), strictPort: true },
 });

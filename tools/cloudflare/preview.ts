@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, realpathSync, statSync, writeFileSync } from 'node:fs';
+import { existsSync, realpathSync, statSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { pnpm } from '../process.ts';
 
@@ -19,11 +19,14 @@ export function moduleRules(bundle: string, manifest: BuildManifest) {
       !existsSync(path.join(bundle, file)) ||
       !statSync(path.join(bundle, file)).isFile() ||
       !realpathSync(path.join(bundle, file)).startsWith(`${realBundle}${path.sep}`) ||
-      !['esm', 'data'].includes(module.type) ||
-      (module.type === 'esm' && !file.endsWith('.js'))
+      !['esm', 'data', 'sourcemap'].includes(module.type) ||
+      (module.type === 'esm' && !/\.m?js$/u.test(file)) ||
+      (module.type === 'sourcemap' && !file.endsWith('.map'))
     )
       throw new Error(`Invalid, missing or unsupported SDK-built module: ${file}`);
-    (module.type === 'esm' ? esm : data).push(file);
+    if (module.type === 'esm') esm.push(file);
+    else if (module.type === 'data') data.push(file);
+    // Source maps remain SDK metadata, never an executable/raw-data module.
   }
   if (!esm.includes(manifest.mainModule))
     throw new Error('SDK build manifest is missing its ESM main module');
@@ -35,21 +38,26 @@ export function moduleRules(bundle: string, manifest: BuildManifest) {
 
 // cloudflare.config.ts -> SDK build output -> SDK Wrangler conversion.
 // No authored second binding/environment configuration is maintained.
-export async function preview(convert: (input: unknown) => unknown): Promise<void> {
+export async function preview(
+  convert: (input: unknown) => unknown,
+  build: {
+    rootConfig: { buildContext: { mode?: string | undefined } };
+    workers: {
+      default: {
+        config: { manifest?: BuildManifest | undefined; [key: string]: unknown };
+        bundleDir: string | undefined;
+        assetsDir: string | undefined;
+      };
+    };
+  },
+): Promise<void> {
   const cwd = process.cwd();
-  const output = path.join(cwd, '.cloudflare/output/v0');
-  const context = JSON.parse(readFileSync(path.join(output, 'config.json'), 'utf8')) as {
-    buildContext?: { mode?: string };
-  };
-  if (context.buildContext?.mode !== 'offline')
+  if (build.rootConfig.buildContext.mode !== 'offline')
     throw new Error('Local production preview needs an offline build; run pnpm build first');
-  const { manifest, ...worker } = JSON.parse(
-    readFileSync(path.join(output, 'workers/default/worker.config.json'), 'utf8'),
-  ) as {
-    manifest: BuildManifest;
-    [key: string]: unknown;
-  };
-  const bundle = path.join(output, 'workers/default/bundle');
+  // The official SDK resolves v2 partial manifests and rejects symlinked output.
+  const { manifest, ...worker } = build.workers.default.config;
+  const bundle = build.workers.default.bundleDir;
+  if (!bundle || !manifest) throw new Error('Local preview requires the SDK build manifest');
   const rules = moduleRules(bundle, manifest);
   const config = convert({ worker, containers: [] }) as {
     assets?: Record<string, unknown>;
@@ -59,8 +67,8 @@ export async function preview(convert: (input: unknown) => unknown): Promise<voi
   config.base_dir = bundle;
   config.find_additional_modules = true;
   config.rules = rules;
-  const assets = path.join(output, 'workers/default/assets');
-  if (existsSync(assets)) config.assets = { ...config.assets, directory: assets };
+  const assets = build.workers.default.assetsDir;
+  if (assets) config.assets = { ...config.assets, directory: assets };
   const filename = path.join(cwd, '.cloudflare/preview.wrangler.json');
   writeFileSync(filename, `${JSON.stringify(config, null, 2)}\n`);
   const cancellation = new AbortController();

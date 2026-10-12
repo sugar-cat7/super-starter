@@ -24,11 +24,20 @@ import { headSha } from '../quality/checkout.ts';
 
 const source = path.resolve(fileURLToPath(new URL('../..', import.meta.url)));
 const input = flags(process.argv.slice(2));
-const allowed = ['preset', 'output', 'generate-only', 'faults', 'hooks', 'lifecycle'];
+const allowed = ['preset', 'cases', 'output', 'generate-only', 'faults', 'hooks', 'lifecycle'];
 for (const key of Object.keys(input))
   if (!allowed.includes(key)) throw new Error(`Unknown verification flag --${key}`);
-const selected =
-  typeof input.preset === 'string'
+if (input.preset && input.cases) throw new Error('Use either --preset or --cases');
+const requestedCases = typeof input.cases === 'string' ? input.cases.split(',') : undefined;
+if (
+  requestedCases &&
+  (new Set(requestedCases).size !== requestedCases.length ||
+    requestedCases.some((key) => !verificationCases.some((entry) => entry.key === key)))
+)
+  throw new Error('--cases requires distinct known verification cases');
+const selected = requestedCases
+  ? verificationCases.filter((entry) => requestedCases.includes(entry.key))
+  : typeof input.preset === 'string'
     ? verificationCases.filter((entry) => entry.key === input.preset)
     : verificationCases;
 if (!selected.length) throw new Error('Unknown preset verification case');

@@ -15,9 +15,12 @@ export async function availablePort(): Promise<number> {
     server.once('error', reject);
     server.listen(0, '127.0.0.1', () => {
       const address = server.address();
-      server.close();
-      if (!address || typeof address === 'string') reject(new Error('Unable to allocate port'));
-      else resolve(address.port);
+      server.close((error) => {
+        if (error) reject(error);
+        else if (!address || typeof address === 'string')
+          reject(new Error('Unable to allocate port'));
+        else resolve(address.port);
+      });
     });
   });
 }
@@ -28,12 +31,14 @@ export class Servers {
   failures: Error[] = [];
   readonly root: string;
   readonly stateRoot: string;
+  readonly environment: NodeJS.ProcessEnv;
   stopping = false;
   private cancellation = new AbortController();
   private registry: string | undefined;
-  constructor(root: string, stateRoot = path.join(root, '.state')) {
+  constructor(root: string, stateRoot = path.join(root, '.state'), environment = process.env) {
     this.root = root;
     this.stateRoot = stateRoot;
+    this.environment = environment;
   }
   async start(pkg: WorkspacePackage, script = 'dev'): Promise<string> {
     // A request made after stop is an intentional restart. Pending starts keep
@@ -44,10 +49,17 @@ export class Servers {
     }
     const signal = this.cancellation.signal;
     signal.throwIfAborted();
-    const port = await availablePort();
-    signal.throwIfAborted();
     if (pkg.runtime === 'worker')
-      await prepareDatabase(path.join(this.root, pkg.directory), this.stateRoot, signal);
+      await prepareDatabase(
+        path.join(this.root, pkg.directory),
+        this.stateRoot,
+        signal,
+        this.environment,
+      );
+    signal.throwIfAborted();
+    // Build/migration commands use sockets too. Select the listening port only
+    // after preparation; strictPort still reports any subsequent collision.
+    const port = await availablePort();
     signal.throwIfAborted();
     const invocation = pnpmCommand(['--filter', pkg.name, script]);
     // Forced native cleanup may leave fresh SDK registrations behind. Give each
@@ -62,9 +74,10 @@ export class Servers {
       detached: process.platform !== 'win32',
       stdio: ['ignore', 'pipe', 'pipe'],
       env: {
-        ...process.env,
+        ...this.environment,
         STARTER_PORT: String(port),
         STARTER_STATE_ROOT: this.stateRoot,
+        CLOUDFLARE_REGISTRY_PATH: registry,
         WRANGLER_REGISTRY_PATH: registry,
         MINIFLARE_REGISTRY_PATH: registry,
         CLOUDFLARE_SEND_METRICS: 'false',
@@ -152,6 +165,7 @@ export class Servers {
     const invocation = pnpmCommand(['--filter', pkg.name, 'exec', 'tauri', ...args]);
     const child = spawnOwned(invocation.command, invocation.args, {
       cwd: this.root,
+      env: this.environment,
       stdio: ['ignore', 'pipe', 'pipe'],
       detached: process.platform !== 'win32',
     });

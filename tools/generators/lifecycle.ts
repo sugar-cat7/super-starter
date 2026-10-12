@@ -21,8 +21,11 @@ import { applyFiles } from './files.ts';
 import { projectOptions } from './options.ts';
 import { projectFiles } from './render.ts';
 import { writeEvidenceAfterCleanup } from '../quality/evidence.ts';
+import { initializeVerificationGit } from '../quality/fixture.ts';
+import { foreignGitEnvironment } from '../quality/hooks.ts';
 
 export async function lifecycleRehearsal(source: string): Promise<void> {
+  const environment = foreignGitEnvironment(source);
   let completed = false;
   const owned = mkdtempSync(path.join(os.tmpdir(), 'starter-lifecycle-'));
   const root = path.join(owned, 'project');
@@ -59,6 +62,7 @@ export async function lifecycleRehearsal(source: string): Promise<void> {
   const cli = (args: string[], failure?: RegExp) => {
     const result = spawnSync(process.execPath, ['tools/generators/cli.ts', ...args], {
       cwd: root,
+      env: environment,
       encoding: 'utf8',
       timeout: 60000,
     });
@@ -75,12 +79,13 @@ export async function lifecycleRehearsal(source: string): Promise<void> {
       preset: 'web',
     });
     applyFiles(root, projectFiles(source, options));
+    initializeVerificationGit(root, environment);
     await phase('cold-setup', async () => {
-      await pnpm(['env:setup'], { cwd: root });
-      await pnpm(['env:doctor'], { cwd: root });
+      await pnpm(['env:setup'], { cwd: root, env: environment });
+      await pnpm(['env:doctor'], { cwd: root, env: environment });
     });
     await phase('cold-gate', async () => {
-      await pnpm(['gate:full'], { cwd: root });
+      await pnpm(['gate:full'], { cwd: root, env: environment });
     });
     await phase('hmr', async () => {
       const filename = path.join(root, 'packages/web/test/browser/hmr.spec.ts');
@@ -91,16 +96,17 @@ export async function lifecycleRehearsal(source: string): Promise<void> {
       try {
         await pnpm(['--filter', '@separate/web', 'test:e2e', '--', '--grep', 'isolated HMR'], {
           cwd: root,
+          env: environment,
         });
       } finally {
         rmSync(filename);
       }
     });
     await phase('warm-setup', async () => {
-      await pnpm(['env:setup'], { cwd: root });
+      await pnpm(['env:setup'], { cwd: root, env: environment });
     });
     await phase('warm-gate', async () => {
-      await pnpm(['gate:full'], { cwd: root });
+      await pnpm(['gate:full'], { cwd: root, env: environment });
     });
     for (const relative of [
       '.state',
@@ -110,7 +116,7 @@ export async function lifecycleRehearsal(source: string): Promise<void> {
     ])
       rmSync(path.join(root, relative), { recursive: true, force: true });
     await phase('cache-cleared-gate', async () => {
-      await pnpm(['gate:full'], { cwd: root });
+      await pnpm(['gate:full'], { cwd: root, env: environment });
     });
     const signatures = ['cold-gate', 'warm-gate', 'cache-cleared-gate'].map((id) => {
       const report = JSON.parse(
@@ -188,28 +194,28 @@ export async function lifecycleRehearsal(source: string): Promise<void> {
         'api',
         '--no-install',
       ]);
-      await pnpm(['env:setup'], { cwd: root });
-      await pnpm(['env:doctor'], { cwd: root });
+      await pnpm(['env:setup'], { cwd: root, env: environment });
+      await pnpm(['env:doctor'], { cwd: root, env: environment });
       for (const name of ['web', 'ui', 'desktop'])
         assert.equal(existsSync(path.join(root, `packages/${name}/package.json`)), false);
       assert.deepEqual(
         workspacePackages(root)
           .map((pkg) => pkg.name)
           .sort(),
-        ['@different/api', '@different/contracts'],
+        ['@different/api', '@different/contracts', '@different/observability'],
       );
       assert.equal(readFileSync(path.join(root, 'USER.md'), 'utf8'), 'Unrelated user content\n');
-      await pnpm(['gate:full'], { cwd: root });
+      await pnpm(['gate:full'], { cwd: root, env: environment });
     });
     await phase('add-and-start', async () => {
       const before = contentId(root);
       cli(['add', '--kind', 'api', '--name', 'api', '--no-install'], /App already exists/u);
       assert.equal(contentId(root), before);
       cli(['add', '--kind', 'api', '--name', 'jobs', '--features', 'kv', '--no-install']);
-      await pnpm(['env:setup'], { cwd: root });
-      await pnpm(['env:doctor'], { cwd: root });
-      await pnpm(['gate:full'], { cwd: root });
-      const servers = new Servers(root);
+      await pnpm(['env:setup'], { cwd: root, env: environment });
+      await pnpm(['env:doctor'], { cwd: root, env: environment });
+      await pnpm(['gate:full'], { cwd: root, env: environment });
+      const servers = new Servers(root, undefined, environment);
       try {
         const origin = await servers.workers('jobs');
         assert.equal((await fetch(`${origin}/health`)).status, 200);
@@ -237,18 +243,21 @@ export async function lifecycleRehearsal(source: string): Promise<void> {
         const manifestPath = path.join(root, pkg.directory, 'package.json');
         const manifest = JSON.parse(readFileSync(manifestPath, 'utf8')) as {
           dependencies: Record<string, string>;
+          starter?: { resultBoundaries?: Record<string, string> };
         };
         manifest.dependencies = {};
+        if (manifest.starter) delete manifest.starter.resultBoundaries;
         writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
       }
-      rmSync(path.join(root, 'packages/contracts'), { recursive: true });
-      await pnpm(['install', '--no-frozen-lockfile'], { cwd: root });
-      await pnpm(['exec', 'vp', 'fmt'], { cwd: root });
-      await pnpm(['env:setup'], { cwd: root });
-      await pnpm(['gate:full'], { cwd: root });
+      for (const library of ['contracts', 'observability'])
+        rmSync(path.join(root, 'packages', library), { recursive: true });
+      await pnpm(['install', '--no-frozen-lockfile'], { cwd: root, env: environment });
+      await pnpm(['exec', 'vp', 'fmt'], { cwd: root, env: environment });
+      await pnpm(['env:setup'], { cwd: root, env: environment });
+      await pnpm(['gate:full'], { cwd: root, env: environment });
       const pkg = workspacePackages(root).find((value) => value.name === '@different/jobs')!;
       assert.ok(pkg);
-      const servers = new Servers(root);
+      const servers = new Servers(root, undefined, environment);
       try {
         const origin = await servers.workers(pkg.name);
         assert.deepEqual(await (await fetch(`${origin}/custom`)).json(), {
@@ -291,10 +300,10 @@ export async function lifecycleRehearsal(source: string): Promise<void> {
           'api',
           '--no-install',
         ],
-        { cwd: root },
+        { cwd: root, env: environment },
       );
       assert.equal(readFileSync(path.join(root, 'USER.md'), 'utf8'), previous.toString());
-      await pnpm(['gate:full'], { cwd: root });
+      await pnpm(['gate:full'], { cwd: root, env: environment });
     });
     await phase('re-add-excluded-web', async () => {
       const userFile = path.join(root, 'packages/ui/USER.md');
@@ -311,9 +320,9 @@ export async function lifecycleRehearsal(source: string): Promise<void> {
       rmSync(appUserFile);
       cli(['add', '--kind', 'web', '--name', 'web', '--no-install']);
       cli(['add', '--kind', 'web', '--name', 'portal', '--no-install']);
-      await pnpm(['env:setup'], { cwd: root });
-      await pnpm(['env:doctor'], { cwd: root });
-      await pnpm(['gate:full'], { cwd: root });
+      await pnpm(['env:setup'], { cwd: root, env: environment });
+      await pnpm(['env:doctor'], { cwd: root, env: environment });
+      await pnpm(['gate:full'], { cwd: root, env: environment });
     });
     assert.deepEqual(reports.map((entry) => entry.id).toSorted(), lifecyclePhases.toSorted());
     completed = true;

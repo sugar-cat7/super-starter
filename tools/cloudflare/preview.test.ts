@@ -9,15 +9,22 @@ it('keeps SDK CSS data modules and ESM names in local production previews', () =
   try {
     mkdirSync(path.join(bundle, 'assets'));
     writeFileSync(path.join(bundle, 'index.js'), 'export default {}');
+    writeFileSync(path.join(bundle, 'helper.mjs'), 'export default {}');
+    writeFileSync(path.join(bundle, 'index.js.map'), '{}');
     writeFileSync(path.join(bundle, 'assets/styles.css'), 'body { color: black }');
     mkdirSync(path.join(bundle, 'directory.js'));
     expect(
       moduleRules(bundle, {
         mainModule: 'index.js',
-        modules: { 'index.js': { type: 'esm' }, 'assets/styles.css': { type: 'data' } },
+        modules: {
+          'index.js': { type: 'esm' },
+          'helper.mjs': { type: 'esm' },
+          'index.js.map': { type: 'sourcemap' },
+          'assets/styles.css': { type: 'data' },
+        },
       }),
     ).toEqual([
-      { type: 'ESModule', globs: ['index.js'], fallthrough: true },
+      { type: 'ESModule', globs: ['index.js', 'helper.mjs'], fallthrough: true },
       { type: 'Data', globs: ['assets/styles.css'], fallthrough: true },
     ]);
     for (const modules of [
@@ -29,6 +36,7 @@ it('keeps SDK CSS data modules and ESM names in local production previews', () =
       { [path.join(bundle, 'index.js')]: { type: 'esm' } },
       { 'index.js': { type: 'cjs' } },
       { 'index.js': { type: 'data' } },
+      { 'index.js': { type: 'esm' }, 'assets/styles.css': { type: 'sourcemap' } },
       { 'index.js': { type: 'esm' }, 'assets/styles.css': { type: 'esm' } },
     ])
       expect(() => moduleRules(bundle, { mainModule: 'index.js', modules })).toThrow(

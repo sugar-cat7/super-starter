@@ -6,18 +6,21 @@
   "type": "module",
   "exports": {},
   "scripts": {
-    "dev": "vp dev --mode offline --host 127.0.0.1 --strictPort",
+    "cf": "cf",
+    "dev": "vp dev --mode offline",
     "preview": "node preview.ts",
     "check": "vp check .",
     "test": "node ../../tools/quality/vitest.ts --config vitest.config.ts",
     "test:runtime": "node ../../tools/cloudflare/runtime.ts",
     "test:e2e": "node ../../tools/quality/browser.ts",
+    "test:e2e:production": "node ../../tools/quality/browser.ts --preview",
     "test:lighthouse": "node ../../tools/quality/lighthouse.ts",
     "build": "node ../../tools/cloudflare/build.ts",
     "typegen": "cf workers types -m local"
   },
   "dependencies": {
     "@starter/contracts": "workspace:*",
+    "@starter/observability": "workspace:*",
     "@starter/ui": "workspace:*",
     "@tanstack/react-router": "catalog:",
     "@tanstack/react-start": "catalog:",
@@ -26,6 +29,7 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "catalog:",
+    "@cloudflare/build-output-utils": "catalog:",
     "@cloudflare/config": "catalog:",
     "@cloudflare/vite-plugin": "catalog:",
     "@playwright/test": "catalog:",
@@ -43,6 +47,10 @@
     "wrangler": "catalog:"
   },
   "starter": {
-    "runtime": "worker"
+    "runtime": "worker",
+    "resultBoundaries": {
+      "src/server.ts:fetch": "HTTP runtime ingress must return the platform Response.",
+      "src/assets.ts:compressAsset": "HTTP asset adapter must return the compressed platform Response."
+    }
   }
 }

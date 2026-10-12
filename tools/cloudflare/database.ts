@@ -24,6 +24,7 @@ async function localDatabase(
   action: 'migrate' | 'seed',
   stateRoot?: string,
   signal?: AbortSignal,
+  environment = process.env,
 ): Promise<void> {
   const configPath = path.join(cwd, '.cloudflare/output/v0/workers/default/worker.config.json');
   if (!existsSync(configPath)) throw new Error('Build local configuration first: pnpm build');
@@ -62,7 +63,7 @@ async function localDatabase(
       : ['exec', 'wrangler', 'd1', 'execute', 'DATABASE', '--file', path.join(cwd, 'seed.sql')];
   await pnpm([...args, '--config', derived, '--local', '--persist-to', persist], {
     cwd,
-    env: { ...process.env, CLOUDFLARE_SEND_METRICS: 'false' },
+    env: { ...environment, CLOUDFLARE_SEND_METRICS: 'false' },
     timeout: 120_000,
     ...(signal ? { signal } : {}),
   });
@@ -72,18 +73,19 @@ export async function prepareDatabase(
   cwd: string,
   stateRoot?: string,
   signal?: AbortSignal,
+  environment = process.env,
 ): Promise<void> {
   signal?.throwIfAborted();
   if (!existsSync(path.join(cwd, 'migrations'))) return;
   // A remote preflight can leave a dev build behind. Always obtain the SDK's
   // offline configuration before deriving a local-only migration command.
   await pnpm(['build'], {
-    env: { ...process.env, STARTER_BUILD_MODE: 'offline' },
+    env: { ...environment, STARTER_BUILD_MODE: 'offline' },
     cwd,
     timeout: 120_000,
     ...(signal ? { signal } : {}),
   });
-  await localDatabase(cwd, 'migrate', stateRoot, signal);
+  await localDatabase(cwd, 'migrate', stateRoot, signal, environment);
   signal?.throwIfAborted();
   const marker = path.join(
     stateRoot ?? path.resolve(cwd, '../../.state'),
@@ -91,7 +93,7 @@ export async function prepareDatabase(
     '.seeded',
   );
   if (!existsSync(marker)) {
-    await localDatabase(cwd, 'seed', stateRoot, signal);
+    await localDatabase(cwd, 'seed', stateRoot, signal, environment);
     signal?.throwIfAborted();
     writeFileSync(marker, '1\n');
   }

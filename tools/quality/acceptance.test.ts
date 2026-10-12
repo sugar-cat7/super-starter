@@ -59,7 +59,11 @@ it('requires exact-source actual Windows Worker commands and rejects other OS or
   const root = mkdtempSync(path.join(os.tmpdir(), 'acceptance-windows-'));
   const sha = 'a'.repeat(40);
   try {
-    const configuration = projectOptions({ name: 'fixture', scope: '@fixture', preset: 'api' });
+    const configuration = projectOptions({
+      name: 'fixture',
+      scope: '@fixture',
+      preset: 'fullstack',
+    });
     applyFiles(root, projectFiles(fileURLToPath(new URL('../..', import.meta.url)), configuration));
     const workspace = workspacePackages(root);
     const expected = { sha, contentId: contentId(root), configuration, workspace };
@@ -77,16 +81,36 @@ it('requires exact-source actual Windows Worker commands and rejects other OS or
         ...globalChecks,
         ...workspace
           .filter((pkg) => pkg.runtime === 'worker')
-          .flatMap((pkg) => packageChecks(pkg, 'full')),
+          .flatMap((pkg) => packageChecks(pkg, 'full'))
+          .filter((check) => !check.requirements.includes('browser')),
       ].map((check) => ({ ...check, status: 'passed', milliseconds: 1 })),
     };
     expect(workerEvidenceValid(report, expected)).toBe(true);
+    const productionBrowser = workspace
+      .flatMap((pkg) => packageChecks(pkg, 'full'))
+      .find((check) => check.id.endsWith('/browser-production'));
+    expect(productionBrowser).toBeDefined();
+    const web = workspace.find((pkg) => pkg.dependencies.includes('@tanstack/react-start'))!;
+    const missingProductionScript = { ...web, scripts: { ...web.scripts } };
+    delete missingProductionScript.scripts['test:e2e:production'];
+    expect(
+      packageChecks(missingProductionScript, 'full').map((check) => check.command),
+    ).toContainEqual(['--filter', web.name, 'test:e2e:production']);
+    expect(
+      workerEvidenceValid(
+        {
+          ...report,
+          checks: [...report.checks, { ...productionBrowser!, status: 'passed', milliseconds: 1 }],
+        },
+        expected,
+      ),
+    ).toBe(false);
     expect(workerEvidenceValid(report, undefined)).toBe(false);
     expect(workerEvidenceValid({ ...report, contentId: 'd'.repeat(64) }, expected)).toBe(false);
     expect(
       workerEvidenceValid(report, {
         ...expected,
-        configuration: projectOptions({ name: 'fixture', scope: '@fixture', preset: 'fullstack' }),
+        configuration: projectOptions({ name: 'fixture', scope: '@fixture', preset: 'api' }),
       }),
     ).toBe(false);
     expect(
@@ -200,7 +224,7 @@ it('requires actual executables and subcommands rather than mention-only or help
   expect(agentCommandValid('commit', ['git', '-c', 'core.hooksPath=/tmp', 'commit'])).toBe(false);
   expect(agentCommandValid('preflight', ['pnpm', 'deploy:preflight', '--dry-run'])).toBe(false);
   expect(
-    agentCommandValid('full', ['mise', 'exec', 'pnpm@12.10.1', '--', 'pnpm', 'gate:full']),
+    agentCommandValid('full', ['mise', 'exec', 'pnpm@12.11.2', '--', 'pnpm', 'gate:full']),
   ).toBe(true);
   expect(
     agentCommandValid('targeted-test', ['pnpm', '--filter', '@fixture/api', 'test:unit']),
@@ -208,4 +232,72 @@ it('requires actual executables and subcommands rather than mention-only or help
   expect(agentCommandValid('commit', ['git', '-C', '/project', 'commit', '-m', 'Feature'])).toBe(
     true,
   );
+});
+
+it('requires exact current collection, query, MCP and native producer evidence', async () => {
+  const { observabilityEvidenceValid } = await import('./acceptance.ts');
+  const { observabilityCheck } = await import('./definitions.ts');
+  const sha = 'a'.repeat(40);
+  const current = 'b'.repeat(64);
+  const expected = {
+    sha,
+    contentId: current,
+    configuration: projectOptions({ name: 'fixture', scope: '@fixture', preset: 'desktop' }),
+    workspace: [
+      {
+        name: '@fixture/desktop',
+        directory: 'packages/desktop',
+        runtime: 'desktop' as const,
+        scripts: {},
+        dependencies: [],
+      },
+    ],
+  };
+  const report = {
+    schema: 1,
+    result: 'passed',
+    sha,
+    contentId: 'c'.repeat(64),
+    sourceCheckout: false,
+    baselineDifferences: [],
+    origin: { sha, dirty: false },
+    check: observabilityCheck.id,
+    requirements: observabilityCheck.requirements,
+    health: { collectable: true, queryReady: true },
+    counts: { failureLogs: 3, traceSpans: 3, histograms: 4 },
+    mcp: {
+      official: 'mcp-clickhouse 0.7.0',
+      boundedTools: 3,
+      arbitraryQueryRejected: true,
+      readOnlyWriteRejected: true,
+    },
+    nativeSource: { sha, contentId: current },
+    native: {
+      actualOperatingSystems: ['linux', 'darwin', 'win32'],
+      collected: ['linux', 'darwin', 'win32'].flatMap((os) =>
+        ['save', 'cancel', 'error'].map((scenario) => `${os}/${scenario}`),
+      ),
+    },
+  };
+  expect(observabilityEvidenceValid(report, expected)).toBe(true);
+  for (const incomplete of [
+    { ...report, result: 'not_run' },
+    { ...report, baselineDifferences: ['packages/web/src/server.ts'] },
+    { ...report, sha: 'd'.repeat(40) },
+    { ...report, sourceCheckout: true },
+    { ...report, origin: { sha, dirty: true } },
+    { ...report, health: { collectable: false, queryReady: true } },
+    { ...report, counts: { failureLogs: 0, traceSpans: 3, histograms: 4 } },
+    { ...report, mcp: { ...report.mcp, arbitraryQueryRejected: false } },
+    { ...report, native: { ...report.native, collected: report.native.collected.slice(1) } },
+    { ...report, nativeSource: { sha, contentId: 'd'.repeat(64) } },
+  ])
+    expect(observabilityEvidenceValid(incomplete, expected)).toBe(false);
+  expect(observabilityEvidenceValid(report, undefined)).toBe(false);
+  expect(
+    observabilityEvidenceValid(
+      { ...report, native: { actualOperatingSystems: [], collected: [] } },
+      { ...expected, workspace: [] },
+    ),
+  ).toBe(true);
 });

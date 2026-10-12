@@ -11,7 +11,8 @@ import os from 'node:os';
 import path from 'node:path';
 import assert from 'node:assert/strict';
 import { spawnOwned, pnpmCommand, pnpm, run, stopTree } from '../process.ts';
-import { copyProjectFixture } from './fixture.ts';
+import { copyProjectFixture, initializeVerificationGit } from './fixture.ts';
+import { foreignGitEnvironment } from './hooks.ts';
 import { walk } from '../generators/files.ts';
 import { workspacePackages } from './graph.ts';
 import { contentId } from './gate.ts';
@@ -28,7 +29,7 @@ async function capture(
   return await new Promise((resolve, reject) => {
     const child = spawnOwned(invocation.command, invocation.args, {
       cwd: root,
-      env: { ...process.env, ...env, STARTER_CHECK_PHASE: 'quality' },
+      env: { ...foreignGitEnvironment(root), ...env, STARTER_CHECK_PHASE: 'quality' },
       detached: process.platform !== 'win32',
     });
     let output = '';
@@ -56,6 +57,7 @@ async function capture(
 }
 
 export async function faultRehearsal(project: string): Promise<void> {
+  const environment = foreignGitEnvironment(project);
   const owned = mkdtempSync(path.join(os.tmpdir(), 'starter-faults-'));
   const root = path.join(owned, 'project');
   const failures: unknown[] = [];
@@ -68,7 +70,8 @@ export async function faultRehearsal(project: string): Promise<void> {
   };
   try {
     copyProjectFixture(project, root);
-    await pnpm(['env:setup'], { cwd: root, timeout: 10 * 60000 });
+    initializeVerificationGit(root, environment);
+    await pnpm(['env:setup'], { cwd: root, env: environment, timeout: 10 * 60000 });
     await injectFaults(root);
     completed = true;
   } catch (error) {
@@ -116,7 +119,8 @@ export async function faultRehearsal(project: string): Promise<void> {
 }
 
 async function injectFaults(root: string): Promise<void> {
-  await pnpm(['check'], { cwd: root });
+  const environment = foreignGitEnvironment(root);
+  await pnpm(['check'], { cwd: root, env: environment });
   const directory = path.join(root, 'artifacts/faults');
   mkdirSync(directory, { recursive: true });
   const before = contentId(root);
@@ -150,10 +154,12 @@ async function injectFaults(root: string): Promise<void> {
     try {
       for (const [relative, contents] of Object.entries(changes))
         writeFileSync(path.join(root, relative), contents);
-      for (const { filename } of originals.filter((entry) => entry.filename.endsWith('.rs')))
-        await run('rustfmt', ['--edition', '2021', filename], {
-          cwd: path.dirname(path.dirname(filename)),
-        });
+      const nativeRoots = new Set(
+        originals
+          .filter((entry) => entry.filename.endsWith('.rs'))
+          .map((entry) => path.dirname(path.dirname(entry.filename))),
+      );
+      for (const cwd of nativeRoots) await run('cargo', ['fmt'], { cwd, env: environment });
       const result = await capture(root, command, env);
       writeFileSync(path.join(directory, `${id}.log`), result.output);
       assert.notEqual(result.code, 0, `${id} must fail`);
@@ -175,11 +181,12 @@ async function injectFaults(root: string): Promise<void> {
       reports.push(report);
       try {
         if (detected) {
-          await pnpm(repair, { cwd: root, timeout: 30 * 60000 });
+          await pnpm(repair, { cwd: root, env: environment, timeout: 30 * 60000 });
           report.repaired = true;
           console.log(`FAULT ${id}: detected for the required reason and repaired`);
         }
       } finally {
+        report.milliseconds = Math.round(performance.now() - started);
         writeFileSync(
           path.join(root, 'artifacts/faults.json'),
           `${JSON.stringify({ schema: 1, status: reports.every((entry) => entry.status === 'passed' && entry.repaired) ? 'running' : 'failed', origin, contentId: before, os: process.platform, reports }, null, 2)}\n`,
@@ -188,7 +195,9 @@ async function injectFaults(root: string): Promise<void> {
     }
   };
   const probe = 'tools/fault-probe.ts';
-  const testProbe = 'tools/fault-probe.test.ts';
+  // Restore a real owned suite so each repair proves the same checker succeeds.
+  // The complete tooling suite still runs once after all unit faults are repaired.
+  const testProbe = 'tools/quality/test-results.test.ts';
   const skill = '.agents/skills/application/SKILL.md';
   await fault(
     'skill-metadata',
@@ -219,6 +228,26 @@ async function injectFaults(root: string): Promise<void> {
     /TS2322/u,
     ['check'],
   );
+  for (const [id, source, rule] of [
+    [
+      'lint-floating-void',
+      'export const task = (): Promise<void> => Promise.resolve();\nvoid task();\n',
+      /no-floating-promises/u,
+    ],
+    [
+      'lint-misused-promise',
+      'export const callback: () => void = async () => {};\n',
+      /no-misused-promises/u,
+    ],
+    [
+      'lint-exhaustiveness',
+      "export function choose(mode: 'first' | 'second'): void {\n  switch (mode) {\n    case 'first': break;\n  }\n}\n",
+      /switch-exhaustiveness-check/u,
+    ],
+  ] as const)
+    await fault(id, { [probe]: source }, ['exec', 'vp', 'lint', '--type-aware', probe], rule, [
+      'check',
+    ]);
   for (const file of ['tools/fault-secret.ts', 'packages/contracts/fault-secret.config.ts']) {
     if (!existsSync(path.dirname(path.join(root, file)))) continue;
     await fault(
@@ -236,7 +265,7 @@ async function injectFaults(root: string): Promise<void> {
     },
     ['test:tools', '--', testProbe],
     /only.*(?:not allowed|not permitted)|allowOnly|Unexpected.*only/iu,
-    ['test:tools'],
+    ['test:tools', '--', testProbe],
   );
   await fault(
     'unit',
@@ -246,21 +275,21 @@ async function injectFaults(root: string): Promise<void> {
     },
     ['test:tools', '--', testProbe],
     /expected 1 to be 2/u,
-    ['test:tools'],
+    ['test:tools', '--', testProbe],
   );
   await fault(
     'unit-zero',
     { [testProbe]: 'export const cases = 0;\n' },
     ['test:tools', '--', testProbe],
     /No test|No tests|No test suite/u,
-    ['test:tools'],
+    ['test:tools', '--', testProbe],
   );
   await fault(
     'unit-skipped',
     { [testProbe]: "import { it } from 'vitest';\nit.skip('skipped fault', () => {});\n" },
     ['test:tools', '--', testProbe],
     /must execute cases without failed, skipped or todo/u,
-    ['test:tools'],
+    ['test:tools', '--', testProbe],
   );
   await fault(
     'unit-timeout',
@@ -270,8 +299,9 @@ async function injectFaults(root: string): Promise<void> {
     },
     ['test:tools', '--', testProbe],
     /timed out|Timeout/u,
-    ['test:tools'],
+    ['test:tools', '--', testProbe],
   );
+  await pnpm(['test:tools'], { cwd: root, env: environment, timeout: 30 * 60000 });
   const packages = workspacePackages(root);
   const library = packages.find((pkg) => pkg.runtime === 'library');
   if (!library) throw new Error('Boundary rehearsal requires a shared library');
@@ -286,6 +316,37 @@ async function injectFaults(root: string): Promise<void> {
     ['check'],
   );
   const contracts = packages.find((pkg) => path.basename(pkg.directory) === 'contracts');
+  if (contracts) {
+    const contractProbe = `${contracts.directory}/src/failure-probe.ts`;
+    await fault(
+      'result-discard',
+      {
+        [contractProbe]:
+          "import { captureSync } from './result.ts';\nvoid captureSync(() => 1, 'unexpected_failure');\n",
+      },
+      ['exec', 'node', 'tools/quality/structure.ts'],
+      /Result is discarded/u,
+      ['check'],
+    );
+    await fault(
+      'telemetry-owner',
+      {
+        [contractProbe]:
+          "import { BasicTracerProvider } from '@opentelemetry/sdk-trace-base';\nexport const sdk = BasicTracerProvider;\n",
+      },
+      ['exec', 'node', 'tools/quality/structure.ts'],
+      /OTel SDK and logger/u,
+      ['check'],
+    );
+    const generated = `${contracts.directory}/src/errors.generated.ts`;
+    await fault(
+      'error-catalog-drift',
+      { [generated]: readFileSync(path.join(root, generated), 'utf8') + '// injected drift\n' },
+      ['check'],
+      /error catalog drift/u,
+      ['check'],
+    );
+  }
   if (contracts)
     await fault(
       'contract',
@@ -465,6 +526,8 @@ async function injectFaults(root: string): Promise<void> {
   if (desktop) {
     const rust = `${desktop.directory}/src-tauri/src/main.rs`;
     const source = readFileSync(path.join(root, rust), 'utf8');
+    const telemetry = `${desktop.directory}/src-tauri/src/telemetry.rs`;
+    const telemetrySource = readFileSync(path.join(root, telemetry), 'utf8');
     const command = ['--filter', desktop.name, 'test:rust'];
     await fault(
       'rust-behavior',
@@ -480,7 +543,10 @@ async function injectFaults(root: string): Promise<void> {
     );
     await fault(
       'rust-zero',
-      { [rust]: source.slice(0, source.indexOf('#[cfg(test)]')) },
+      {
+        [rust]: source.slice(0, source.indexOf('#[cfg(test)]')),
+        [telemetry]: telemetrySource.slice(0, telemetrySource.indexOf('#[cfg(test)]')),
+      },
       command,
       /Required Rust tests must execute cases/u,
       command,
@@ -557,7 +623,7 @@ async function injectFaults(root: string): Promise<void> {
     'Every required isolated fault must execute',
   );
   assert.equal(contentId(root), before, 'Fault rehearsal must restore its source input');
-  await pnpm(['check'], { cwd: root });
+  await pnpm(['check'], { cwd: root, env: environment });
   writeFileSync(
     path.join(root, 'artifacts/faults.json'),
     `${JSON.stringify({ schema: 1, baselineDifferences: inputBaseline, status: 'passed', configuration: (JSON.parse(readFileSync(path.join(root, '.template.json'), 'utf8')) as { options: unknown }).options, workspace: workspacePackages(root), origin, contentId: before, os: process.platform, reports }, null, 2)}\n`,

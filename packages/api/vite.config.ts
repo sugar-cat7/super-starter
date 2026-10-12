@@ -9,8 +9,7 @@ export default defineConfig({
         path: `${process.env.STARTER_STATE_ROOT ?? fileURLToPath(new URL('../../.state', import.meta.url).href)}/api`,
       },
       inspectorPort: false,
-      experimental: { newConfig: { cfBuildOutput: true } },
     }),
   ],
-  server: { port: Number(process.env.STARTER_PORT ?? 8787), strictPort: true },
+  server: { host: '127.0.0.1', port: Number(process.env.STARTER_PORT ?? 8787), strictPort: true },
 });

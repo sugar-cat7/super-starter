@@ -25,11 +25,50 @@ export const globalChecks: Check[] = [
   },
 ];
 
+// Security has its own optional tool profile and mandatory CI job, so native
+// setup never installs Python/scanners. Keep check metadata in this registry.
+export const securityChecks: Check[] = [
+  {
+    id: 'trivy',
+    requirements: ['vulnerabilities', 'misconfiguration', 'secrets', 'dev-dependencies'],
+    command: ['security:check', '--', '--scanner', 'trivy'],
+    timeout: 12 * 60_000,
+    reason: 'All selected lockfiles and first-party configuration/source; include unfixed findings',
+  },
+  {
+    id: 'semgrep',
+    requirements: ['sast', 'error-findings', 'complete-parsing'],
+    command: ['security:check', '--', '--scanner', 'semgrep'],
+    timeout: 12 * 60_000,
+    reason: 'OSS security rules plus local deterministic TLS remediation',
+  },
+];
+
+// Real collection needs an explicitly selected local Docker/MCP profile; CI runs
+// it once in the source-free generated workspace, outside ordinary app setup.
+export const observabilityCheck: Check = {
+  id: 'real-signals-mcp',
+  requirements: [
+    'result-policy',
+    'telemetry-privacy',
+    'signal-correlation',
+    'bounded-ai-investigation',
+    'native-signal-provenance',
+  ],
+  command: ['o11y:verify'],
+  timeout: 15 * 60_000,
+  reason:
+    'Actual ClickHouse rows and official read-only MCP; native producers must match each required OS and source',
+};
+
 export function faultCheckIds(packages: WorkspacePackage[]): string[] {
   return [
     'format',
     'lint',
     'type',
+    'lint-floating-void',
+    'lint-misused-promise',
+    'lint-exhaustiveness',
     'secret-tools',
     'unit-focused',
     'unit',
@@ -39,7 +78,7 @@ export function faultCheckIds(packages: WorkspacePackage[]): string[] {
     'boundary',
     'skill-metadata',
     ...(packages.some((pkg) => pkg.directory === 'packages/contracts')
-      ? ['secret-contracts', 'contract']
+      ? ['secret-contracts', 'contract', 'result-discard', 'telemetry-owner', 'error-catalog-drift']
       : []),
     ...(packages.some((pkg) => pkg.runtime === 'worker')
       ? [
@@ -96,6 +135,7 @@ export const lifecyclePhases = [
 export const hookPhases = [
   'install-repeat',
   'valid-commit',
+  'ignored-temporary-index',
   'partial-stage-valid',
   'partial-stage-invalid',
   'empty-diff-repair',
@@ -118,9 +158,15 @@ export function packageChecks(pkg: WorkspacePackage, phase: 'test' | 'build' | '
     if (pkg.scripts['test:restart'])
       entries.push(['restart', 'test:restart', ['migration', 'seed', 'persistence']]);
     if (pkg.scripts['test:e2e'])
-      entries.push(['browser', 'test:e2e', ['web', 'accessibility', 'vrt']]);
+      entries.push(['browser', 'test:e2e', ['web', 'browser', 'accessibility', 'vrt']]);
+    if (pkg.dependencies.includes('@tanstack/react-start') || pkg.scripts['test:e2e:production'])
+      entries.push([
+        'browser-production',
+        'test:e2e:production',
+        ['web', 'browser', 'production-ui'],
+      ]);
     if (pkg.dependencies.includes('@tanstack/react-start') || pkg.scripts['test:lighthouse'])
-      entries.push(['lighthouse', 'test:lighthouse', ['web', 'lighthouse-all-100']]);
+      entries.push(['lighthouse', 'test:lighthouse', ['web', 'browser', 'lighthouse-all-100']]);
     if (pkg.runtime === 'desktop')
       entries.push(
         ['rust', 'test:rust', ['rust', 'ipc', 'export']],

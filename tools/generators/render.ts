@@ -5,6 +5,8 @@ import path from 'node:path';
 import { digest, walk, type Files } from './files.ts';
 import { selectedPackages, type ProjectOptions } from './options.ts';
 import { formatFiles, formatterKey } from './format.ts';
+import { generatedErrors } from '../errors/generate.ts';
+import { ownHeadSha, foreignGitEnvironment } from '../quality/checkout.ts';
 
 const infrastructure = [
   '.agents',
@@ -13,6 +15,7 @@ const infrastructure = [
   'tools',
   '.gitignore',
   '.gitattributes',
+  '.semgrepignore',
   'knip.ts',
   'LICENSE',
   'README.md',
@@ -20,6 +23,8 @@ const infrastructure = [
   'CLAUDE.md',
   'renovate.json',
   'mise.toml',
+  'mise.security.toml',
+  'mise.o11y.toml',
   'pnpm-workspace.yaml',
   'tsconfig.json',
   'vite.config.ts',
@@ -29,6 +34,7 @@ export type TemplateState = {
   kind: 'reference' | 'project';
   options: ProjectOptions;
   packages: string[];
+  referenceApps?: Record<string, ProjectOptions>;
   managed: Record<string, string>;
   lockPending?: boolean;
   lockId?: string;
@@ -94,6 +100,15 @@ export function appFiles(
   format = true,
 ): Files {
   const files: Files = new Map();
+  if (kind === 'contracts' || kind === 'desktop') {
+    for (const [file, contents] of generatedErrors(
+      source,
+      [{ runtime: kind === 'desktop' ? 'desktop' : 'library', directory: `packages/${name}` }],
+      true,
+      format,
+    ))
+      if (file.startsWith(`packages/${name}/`)) files.set(file, contents);
+  }
   const templates = path.join(source, 'tools/generators/templates', kind);
   if (!existsSync(templates)) throw new Error(`Template not found: ${kind}`);
   for (const filename of walk(templates)) {
@@ -154,6 +169,10 @@ export function appFiles(
   if (kind === 'web' && options.features.includes('services')) {
     manifest.devDependencies[`${options.scope}/api`] = 'workspace:*';
     delete manifest.dependencies.zod;
+    const starter = (
+      manifest as typeof manifest & { starter: { resultBoundaries?: Record<string, string> } }
+    ).starter;
+    if (starter.resultBoundaries) delete starter.resultBoundaries['src/notes.ts:handleNotes'];
   }
   if (
     options.features.includes('d1') &&
@@ -210,29 +229,29 @@ export function generationOrigin(source: string): { sha: string | null; dirty: b
     ? (JSON.parse(readFileSync(filename, 'utf8')) as TemplateState)
     : undefined;
   const changed = previous?.kind === 'project' && baselineDifferences(source).length > 0;
+  const head = ownHeadSha(source);
   if (
+    !head &&
     previous?.kind === 'project' &&
     !changed &&
     previous.origin?.dirty === false &&
     /^[a-f0-9]{40}$/u.test(previous.origin.sha ?? '')
   )
     return { sha: previous.origin.sha, dirty: false };
-  const git = spawnSync('git', ['rev-parse', 'HEAD'], {
-    cwd: source,
-    encoding: 'utf8',
-    timeout: 10000,
-  });
-  const status = spawnSync('git', ['status', '--porcelain'], {
-    cwd: source,
-    encoding: 'utf8',
-    timeout: 10000,
-  });
+  const status = head
+    ? spawnSync('git', ['status', '--porcelain'], {
+        cwd: source,
+        env: foreignGitEnvironment(source),
+        encoding: 'utf8',
+        timeout: 10000,
+      })
+    : undefined;
   return {
-    sha: git.status === 0 ? git.stdout.trim() : null,
+    sha: head,
     dirty:
       changed ||
-      (status.status === 0 && status.stdout.length > 0) ||
-      previous?.origin?.dirty === true,
+      (status?.status === 0 && status.stdout.length > 0) ||
+      (!head && previous?.origin?.dirty === true),
   };
 }
 

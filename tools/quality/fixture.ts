@@ -5,10 +5,13 @@ import { applyFiles, digest, walk } from '../generators/files.ts';
 import { workspacePackages } from './graph.ts';
 import { runSync } from '../process.ts';
 
-export function initializeVerificationGit(root: string): void {
+export function initializeVerificationGit(
+  root: string,
+  environment: NodeJS.ProcessEnv = process.env,
+): void {
   if (readdirSync(root).some((entry) => entry.toLowerCase() === '.git'))
     throw new Error('Verification Git boundary must be new; existing Git metadata is protected');
-  runSync('git', ['init', '--quiet', '--template='], root);
+  runSync('git', ['init', '--quiet', '--template='], root, environment);
 }
 
 // Omit only owned outputs and local credentials, never a matching basename in

@@ -27,6 +27,10 @@
     "vitest": "catalog:"
   },
   "starter": {
-    "runtime": "library"
+    "runtime": "library",
+    "resultBoundaries": {
+      "src/index.tsx:reload": "React event owner consumes adapter Result and presents its state.",
+      "src/index.tsx:mutation": "React event owner consumes mutation Result and retains existing data."
+    }
   }
 }

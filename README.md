@@ -1,5 +1,7 @@
 # super-starter
 
+[Security checks and automatic remediation](docs/security.md) cover Trivy, Semgrep and Renovate security PRs. Run `pnpm security:setup` then `pnpm security:check`; unresolved HIGH/CRITICAL or ERROR findings block security CI.
+
 ## Development
 
 Create a branch for your changes and open a pull request against `main`.
@@ -45,8 +47,12 @@ pnpm template:verify
 
 Root startup reads selected manifests, starts dependencies first, waits for health/ready and uses worktree-local ports/state. Use `pnpm dev -- web` or a selected `dev:<directory>` script for one app. Package scripts remain directly available through `pnpm --filter <scope>/<directory> <script>`. Ctrl-C shuts down owned processes. `env:doctor` is read-only and returns nonzero for missing selected prerequisites; setup is repeatable and installs local hooks without replacing existing user hooks.
 
+Expected failures use [Result and generated error contracts](docs/errors.md). [Local observability and AI investigation](docs/observability.md) describes the optional OTel/ClickHouse stack, bounded MCP and investigation skill; ordinary setup does not install/start it.
+
 The sample provides validated note CRUD, loading/empty/error UI, keyboard-accessible forms and JSON export. Without D1 it explicitly uses volatile sample data. D1 selection adds repeatable migrations, initial seed and restart persistence; KV/R2 add local read/write examples. Web uses same-origin API calls and SSR/hydration/routes; fullstack uses a Service Binding to an internal API. Desktop stays offline, calls typed Rust IPC and saves through a user-selected native destination. Samples can be replaced without changing the shared development tools.
 
 Commands run without prompts and return nonzero on failure, missing tests or timeout. Builds are local artifacts, not deployments. [Quality/evidence](docs/quality.md) explains affected checks, index-safe Git hooks, CI, fault rehearsals and reports. [Troubleshooting](docs/troubleshooting.md) maps failures to the next action. [Adoption decisions](docs/adoption.md) record versions and official sources.
 
 For Cloudflare, run `pnpm deploy:preflight -- --target api --environment local` (use a selected Worker directory). Remote dev preflight requires named account/resource configuration; see [Cloudflare guidance](docs/cloudflare.md). No production deploy, token provisioning, paid service, public package publication or signed Desktop release runs implicitly. [Native guidance](docs/native.md) covers unsigned OS builds and required native tests. [Template updates](docs/template.md) describe versioned reviewed migrations and the single Renovate configuration; connecting the external app is separate.
+
+Cloudflare's standard CLI is project-local: `pnpm --filter <scope>/<worker> cf <command>`, or `pnpm run cf <command>` inside the selected package. API `dev` and `build` delegate to `cf dev` and `cf build`; Vite+ owns the installed Vite core. Use `cf cli search` to discover resource operations and the [Cloudflare command table](docs/cloudflare.md) for types, local data, checked delivery and the tested TanStack/D1/built-preview compatibility exceptions.

@@ -22,7 +22,10 @@ function exactPin(contents: string, table: string, key: string): string | undefi
   return value;
 }
 
-export function doctor(root: string): { id: string; ok: boolean; detail: string }[] {
+export function doctor(
+  root: string,
+  javascript = false,
+): { id: string; ok: boolean; detail: string }[] {
   const tools = readFileSync(path.join(root, 'mise.toml'), 'utf8');
   const nodeVersion = exactPin(tools, 'tools', 'node');
   const aquaVersion = exactPin(tools, 'tools', 'aqua:pnpm/pnpm');
@@ -69,7 +72,7 @@ export function doctor(root: string): { id: string; ok: boolean; detail: string 
         ok: existsSync(path.join(cwd, '.cloudflare/types/index.d.ts')),
         detail: 'Local Worker types required (pnpm env:setup); no cloud credentials needed',
       });
-    if (pkg.runtime === 'desktop') {
+    if (pkg.runtime === 'desktop' && !javascript) {
       const rustVersion = exactPin(
         readFileSync(path.join(cwd, 'src-tauri/rust-toolchain.toml'), 'utf8'),
         'toolchain',
@@ -131,7 +134,17 @@ export function doctor(root: string): { id: string; ok: boolean; detail: string 
 }
 
 if (process.argv[1]?.endsWith(`${path.sep}doctor.ts`)) {
-  const checks = doctor(process.cwd());
-  console.log(JSON.stringify({ os: process.platform, checks }, null, 2));
+  const args = process.argv.slice(2).filter((argument) => argument !== '--');
+  if (args.some((argument) => argument !== '--javascript'))
+    throw new Error('Expected only --javascript (CI renderer/runtime diagnosis)');
+  const javascript = args.includes('--javascript');
+  const checks = doctor(process.cwd(), javascript);
+  console.log(
+    JSON.stringify(
+      { os: process.platform, scope: javascript ? 'javascript' : 'all', checks },
+      null,
+      2,
+    ),
+  );
   if (checks.some((check) => !check.ok)) process.exitCode = 1;
 }

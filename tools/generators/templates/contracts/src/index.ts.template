@@ -1,4 +1,7 @@
 import { z } from 'zod/mini';
+import { publicErrorSchema } from './result.ts';
+export * from './result.ts';
+export { PUBLIC_ERRORS, INTERNAL_ERRORS, type PublicErrorCode, type InternalErrorCode } from './errors.generated.ts';
 
 // HTML maxlength and the native adapter use UTF-16 units; Zod maxLength counts code points.
 const noteLength = z.superRefine<string>((text, context) => {
@@ -12,6 +15,6 @@ export const noteSchema = z.strictObject({
   createdAt: z.int().check(z.gte(0)),
 });
 export const notesSchema = z.array(noteSchema);
-export const apiErrorSchema = z.object({ error: z.object({ code: z.string(), message: z.string() }), requestId: z.string() });
+export const apiErrorSchema = z.strictObject({ error: publicErrorSchema, requestId: z.string().check(z.uuid()) });
 export type Note = z.infer<typeof noteSchema>;
 export type NoteInput = z.infer<typeof noteInput>;

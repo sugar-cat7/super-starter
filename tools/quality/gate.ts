@@ -5,7 +5,7 @@ import os from 'node:os';
 import { createHash } from 'node:crypto';
 import { pnpm } from '../process.ts';
 import { walk } from '../generators/files.ts';
-import { affectedPackages, workspacePackages } from './graph.ts';
+import { affectedPackages, executionChanges, workspacePackages } from './graph.ts';
 import { globalChecks, packageChecks, type Check } from './definitions.ts';
 import { artifactSizes, toolVersions } from './evidence.ts';
 import { baselineDifferences } from '../generators/baseline.ts';
@@ -52,6 +52,8 @@ export function contentId(root: string): string {
     'pnpm-lock.yaml',
     'pnpm-workspace.yaml',
     'mise.toml',
+    'mise.security.toml',
+    'mise.o11y.toml',
     'tsconfig.json',
     'vite.config.ts',
     '.template.json',
@@ -61,6 +63,7 @@ export function contentId(root: string): string {
     'knip.ts',
     '.gitignore',
     '.gitattributes',
+    '.semgrepignore',
     'renovate.json',
     'LICENSE',
   ])
@@ -100,6 +103,7 @@ export async function gate(
     }
   }
   const packages = workspacePackages(root);
+  if (changed) changed = executionChanges(root, changed, base);
   const selected = affectedPackages(packages, changed);
   let checks: Check[] = [
     ...(mode === 'build' ? [] : globalChecks),
@@ -117,7 +121,7 @@ export async function gate(
       (check) =>
         !check.package ||
         (selected.find((pkg) => pkg.name === check.package)?.runtime === 'worker' &&
-          !/\/(?:browser|lighthouse)$/u.test(check.id)),
+          !check.requirements.includes('browser')),
     );
   if (variant === 'javascript')
     checks = checks
