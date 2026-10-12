@@ -1,0 +1,90 @@
+name: Exact reviewed Worker Source normal Git verification
+
+on:
+  push:
+    branches: [codex/source-worker-fix-verify-460]
+    paths:
+      - .github/workflows/source-worker-git-verify.yml
+      - .github/scripts/source-worker-git-verify.mjs
+      - .github/payload/source-worker-git-input.json
+
+permissions:
+  contents: read
+
+concurrency:
+  group: source-worker-normal-git-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    if: github.repository == 'sugar-cat7/super-starter' && github.event_name == 'push' && github.ref == 'refs/heads/codex/source-worker-fix-verify-460'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    outputs:
+      parts: ${{ steps.verify.outputs.parts }}
+    steps:
+      - name: Exact reviewed mechanical carrier
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          path: support
+          persist-credentials: false
+      - name: Actual clean Source parent
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: 460ad19c970adaab7231795f3438943d9158b135
+          path: source
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca
+        with:
+          version: 2026.10.7
+          working_directory: source
+          cache: false
+          persist_github_token: false
+      - name: Normal installed-hook commit and seeded owned bare push reproducing the raw candidate
+        id: verify
+        run: node support/.github/scripts/source-worker-git-verify.mjs verify
+      - name: Preserve actual normal Git result, original channels, complete HEAD files and bundle
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: source-worker-normal-git
+          path: artifacts/source-worker-git
+          if-no-files-found: error
+      - name: Preserve bounded original transport
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: source-worker-normal-git-parts
+          path: .state/source-worker-git-parts
+          if-no-files-found: error
+  export:
+    if: always() && needs.verify.outputs.parts != ''
+    needs: verify
+    strategy:
+      fail-fast: false
+      matrix:
+        part: ${{ fromJSON(needs.verify.outputs.parts) }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          path: support
+          persist-credentials: false
+      - uses: jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca
+        with:
+          version: 2026.10.7
+          working_directory: support
+          cache: false
+          persist_github_token: false
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
+        with:
+          name: source-worker-normal-git-parts
+          path: .state/source-worker-git-parts
+      - name: Emit one verified original part only
+        env:
+          SOURCE_GIT_PART: ${{ matrix.part }}
+        run: node support/.github/scripts/source-worker-git-verify.mjs emit "$SOURCE_GIT_PART"
