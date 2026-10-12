@@ -1,0 +1,1035 @@
+diff --git a/.github/scripts/desktop-agent-dev.ts b/.github/scripts/desktop-agent-dev.ts
+new file mode 100644
+index 0000000..e0c2bff
+--- /dev/null
++++ b/.github/scripts/desktop-agent-dev.ts
+@@ -0,0 +1,80 @@
++import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
++import { setTimeout as pause } from 'node:timers/promises';
++import path from 'node:path';
++import { assertExpectedInput } from './desktop-agent-input.ts';
++import { spawnOwned, pnpmCommand, stopTree } from '../../tools/process.ts';
++
++const directory = path.resolve('artifacts/agent-desktop');
++mkdirSync(path.join(directory, 'logs'), { recursive: true, mode: 0o700 });
++const reports = JSON.parse(
++  readFileSync(path.join(directory, 'commands.json'), 'utf8'),
++) as unknown[];
++const log = `logs/${String(reports.length + 1).padStart(2, '0')}-dev.log`;
++const argv = ['pnpm', 'dev', '--', 'desktop'];
++const command = pnpmCommand(argv.slice(1));
++const inputBefore = assertExpectedInput();
++const start = performance.now();
++const startedAt = new Date().toISOString();
++const child = spawnOwned(command.command, command.args, {
++  cwd: process.cwd(),
++  detached: process.platform !== 'win32',
++  stdio: ['ignore', 'pipe', 'pipe'],
++  env: { ...process.env, CARGO_TARGET_DIR: path.resolve('.state/desktop/target-release') },
++});
++let output = '';
++let error = '';
++let exit = 1;
++child.stdout?.on('data', (chunk: Buffer) => {
++  output += chunk.toString();
++});
++child.stderr?.on('data', (chunk: Buffer) => {
++  output += chunk.toString();
++});
++child.once('error', (failure) => {
++  error = String(failure);
++});
++try {
++  while (!output.includes('NATIVE_READY') && performance.now() - start < 30 * 60000) {
++    if (child.exitCode !== null || child.signalCode !== null || error)
++      throw new Error(`Dev failed before native readiness: ${error}`);
++    await pause(100);
++  }
++  if (!output.includes('NATIVE_READY')) throw new Error('Native dev readiness timeout');
++  await pause(1000);
++  if (child.exitCode !== null || child.signalCode !== null)
++    throw new Error('Dev exited after native readiness');
++  child.kill('SIGINT');
++  await stopTree(child);
++  exit = 0;
++} catch (failure) {
++  error = String(failure);
++  await stopTree(child);
++} finally {
++  writeFileSync(path.join(directory, log), `${output}\n${error}\n`, { mode: 0o600 });
++  const entry = {
++    phase: 'dev',
++    inputBefore,
++    inputAfter: assertExpectedInput(),
++    completion: 'Actual native readiness followed by deliberate shutdown and owned process cleanup',
++    processExitCode: child.exitCode,
++    processSignal: child.signalCode,
++    environment: {
++      TMPDIR: process.env.TMPDIR,
++      TMP: process.env.TMP,
++      TEMP: process.env.TEMP,
++      GIT_CEILING_DIRECTORIES: process.env.GIT_CEILING_DIRECTORIES,
++    },
++    argv,
++    exit,
++    startedAt,
++    milliseconds: Math.round(performance.now() - start),
++    os: process.platform,
++    log,
++    nativeReady: output.includes('NATIVE_READY'),
++    cleanup: exit === 0 ? 'passed' : 'failed',
++  };
++  reports.push(entry);
++  writeFileSync(path.join(directory, 'commands.json'), `${JSON.stringify(reports, null, 2)}\n`);
++  console.log(JSON.stringify(entry));
++  process.exitCode = exit;
++}
+diff --git a/.github/scripts/desktop-agent-input.ts b/.github/scripts/desktop-agent-input.ts
+new file mode 100644
+index 0000000..f815c38
+--- /dev/null
++++ b/.github/scripts/desktop-agent-input.ts
+@@ -0,0 +1,62 @@
++import { execFileSync } from 'node:child_process';
++import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
++import { contentId } from '../../tools/quality/gate.ts';
++import { assertCheckout, ownHeadSha } from '../../tools/quality/checkout.ts';
++
++export function inputIdentity() {
++  const state = JSON.parse(readFileSync('.template.json', 'utf8')) as {
++    kind: string;
++    options: { preset: string };
++    origin: { sha: string; dirty: boolean; contentId: string };
++  };
++  return {
++    featureSha: ownHeadSha(process.cwd()),
++    contentId: contentId(process.cwd()),
++    origin: state.origin,
++    preset: state.options.preset,
++    kind: state.kind,
++    clean: execFileSync('git', ['status', '--porcelain'], { encoding: 'utf8' }).trim() === '',
++  };
++}
++
++export function assertExpectedInput() {
++  const actual = inputIdentity();
++  const expected = {
++    featureSha: process.env.GITHUB_SHA,
++    contentId: process.env.AGENT_EXPECTED_CONTENT_ID,
++    originSha: process.env.AGENT_EXPECTED_ORIGIN_SHA,
++    originContentId: process.env.AGENT_EXPECTED_ORIGIN_CONTENT_ID,
++  };
++  if (
++    !/^[a-f0-9]{40}$/u.test(expected.featureSha ?? '') ||
++    !/^[a-f0-9]{64}$/u.test(expected.contentId ?? '') ||
++    !/^[a-f0-9]{40}$/u.test(expected.originSha ?? '') ||
++    !/^[a-f0-9]{64}$/u.test(expected.originContentId ?? '') ||
++    actual.featureSha !== expected.featureSha ||
++    actual.contentId !== expected.contentId ||
++    actual.origin.sha !== expected.originSha ||
++    actual.origin.contentId !== expected.originContentId ||
++    actual.origin.dirty !== false ||
++    !actual.clean ||
++    actual.kind !== 'project' ||
++    actual.preset !== 'desktop'
++  )
++    throw new Error(
++      'Generated Desktop input does not match the dispatched clean feature/source identity',
++    );
++  assertCheckout(process.cwd(), expected.featureSha!);
++  return actual;
++}
++
++if (process.argv[1]?.endsWith('desktop-agent-input.ts')) {
++  const phase = process.argv[2];
++  if (!['before-setup', 'after-setup', 'after-execution'].includes(phase ?? ''))
++    throw new Error('Expected before-setup, after-setup or after-execution');
++  const actual = assertExpectedInput();
++  mkdirSync('artifacts/agent-desktop', { recursive: true });
++  writeFileSync(
++    `artifacts/agent-desktop/input-${phase}.json`,
++    `${JSON.stringify(actual, null, 2)}\n`,
++  );
++  console.log(JSON.stringify({ phase, ...actual }));
++}
+diff --git a/.github/scripts/desktop-agent-report.ts b/.github/scripts/desktop-agent-report.ts
+new file mode 100644
+index 0000000..70e39c4
+--- /dev/null
++++ b/.github/scripts/desktop-agent-report.ts
+@@ -0,0 +1,159 @@
++import { existsSync, readFileSync, realpathSync, statSync, writeFileSync } from 'node:fs';
++import path from 'node:path';
++import { artifactSizes, toolVersions } from '../../tools/quality/evidence.ts';
++import { globalChecks, packageChecks } from '../../tools/quality/definitions.ts';
++import { workspacePackages } from '../../tools/quality/graph.ts';
++import { assertExpectedInput } from './desktop-agent-input.ts';
++
++const input = assertExpectedInput();
++const directory = path.resolve('artifacts/agent-desktop');
++const commands = JSON.parse(readFileSync(path.join(directory, 'commands.json'), 'utf8')) as {
++  phase: string;
++  argv: string[];
++  exit: number;
++  log: string;
++  inputBefore?: typeof input;
++  inputAfter?: typeof input;
++}[];
++const phases = [
++  'setup',
++  'doctor',
++  'dev',
++  'targeted-test',
++  'pre-pr',
++  'full',
++  'ci',
++  'build',
++  'preflight',
++];
++const logValid = (relative: string) => {
++  if (!relative.startsWith('logs/') || !relative.endsWith('.log')) return false;
++  const file = path.resolve(directory, relative);
++  return (
++    existsSync(file) &&
++    realpathSync(file).startsWith(`${realpathSync(path.join(directory, 'logs'))}${path.sep}`) &&
++    statSync(file).size > 0
++  );
++};
++const inputValid = (identity: typeof input | undefined) =>
++  !!identity &&
++  identity.featureSha === input.featureSha &&
++  identity.contentId === input.contentId &&
++  identity.origin.sha === input.origin.sha &&
++  identity.origin.contentId === input.origin.contentId &&
++  identity.origin.dirty === false &&
++  identity.clean;
++const commandValid = (command: (typeof commands)[number]) =>
++  command.exit === 0 &&
++  logValid(command.log) &&
++  inputValid(command.inputBefore) &&
++  inputValid(command.inputAfter) &&
++  command.argv[0] === 'pnpm' &&
++  !command.argv.some(
++    (arg) => ['--no-verify', '--checks', '--dry-run'].includes(arg) || arg.startsWith('--checks='),
++  ) &&
++  command.argv.includes(
++    (
++      {
++        setup: 'env:setup',
++        doctor: 'env:doctor',
++        dev: 'dev',
++        'targeted-test': 'test',
++        'pre-pr': 'gate:pre-pr',
++        full: 'gate:full',
++        ci: 'gate:ci',
++        build: 'build',
++        preflight: 'deploy:preflight',
++      } as Record<string, string>
++    )[command.phase] ?? '',
++  );
++const expectedChecks = [
++  ...globalChecks,
++  ...workspacePackages(process.cwd()).flatMap((pkg) => packageChecks(pkg, 'full')),
++];
++const gateValid = (mode: string) => {
++  const file = `artifacts/gate-${mode}-all-${process.platform}.json`;
++  if (!existsSync(file)) return false;
++  const report = JSON.parse(readFileSync(file, 'utf8')) as {
++    sha: string;
++    contentId: string;
++    variant: string;
++    status: string;
++    origin: typeof input.origin;
++    checks: { id: string; status: string; command: string[] }[];
++  };
++  return (
++    report.sha === input.featureSha &&
++    report.contentId === input.contentId &&
++    report.origin.sha === input.origin.sha &&
++    report.origin.dirty === false &&
++    report.status === 'passed' &&
++    report.variant === 'all' &&
++    report.checks.length > 0 &&
++    report.checks.every((check) => check.status === 'passed') &&
++    (mode !== 'full' ||
++      (report.checks.length === expectedChecks.length &&
++        expectedChecks.every((check) =>
++          report.checks.some(
++            (executed) =>
++              executed.id === check.id &&
++              JSON.stringify(executed.command) === JSON.stringify(check.command),
++          ),
++        )))
++  );
++};
++const nativeValid = ['save', 'cancel', 'error'].every((scenario) => {
++  const file = `artifacts/native-${process.platform}/${scenario}/verified.json`;
++  if (!existsSync(file)) return false;
++  const report = JSON.parse(readFileSync(file, 'utf8')) as {
++    sha: string;
++    contentId: string;
++    os: string;
++    cases: number;
++  };
++  return (
++    report.sha === input.featureSha &&
++    report.contentId === input.contentId &&
++    report.os === process.platform &&
++    report.cases > 0
++  );
++});
++const passed =
++  phases.every((phase) =>
++    commands.some((command) => command.phase === phase && commandValid(command)),
++  ) &&
++  ['full', 'pre-pr', 'ci'].every(gateValid) &&
++  nativeValid &&
++  ['before-setup', 'after-setup', 'after-execution'].every((phase) => {
++    const file = path.join(directory, `input-${phase}.json`);
++    return existsSync(file) && inputValid(JSON.parse(readFileSync(file, 'utf8')) as typeof input);
++  });
++const report = {
++  schema: 1,
++  ...input,
++  kind: 'hosted-native-support',
++  execution: 'hosted-tools',
++  status: passed ? 'passed' : 'blocked',
++  os: process.platform,
++  scope:
++    'Supporting actual target-OS execution; does not claim independent Agent or commit/push completion',
++  requiredSupportPhases: phases,
++  commands,
++  nativeValid,
++  gates: Object.fromEntries(['full', 'pre-pr', 'ci'].map((mode) => [mode, gateValid(mode)])),
++  versions: toolVersions(process.cwd()),
++  artifacts: artifactSizes(process.cwd()),
++};
++writeFileSync(
++  path.join(directory, 'hosted-desktop-support.json'),
++  `${JSON.stringify(report, null, 2)}\n`,
++);
++console.log(
++  JSON.stringify({
++    featureSha: input.featureSha,
++    contentId: input.contentId,
++    status: report.status,
++    os: report.os,
++  }),
++);
++if (!passed) process.exitCode = 1;
+diff --git a/.github/scripts/desktop-agent-run.mjs b/.github/scripts/desktop-agent-run.mjs
+new file mode 100644
+index 0000000..7bb3cf7
+--- /dev/null
++++ b/.github/scripts/desktop-agent-run.mjs
+@@ -0,0 +1,54 @@
++import { spawn } from 'node:child_process';
++import { mkdirSync, openSync, closeSync, readFileSync, writeFileSync } from 'node:fs';
++import path from 'node:path';
++import { inputIdentity } from './desktop-agent-input.ts';
++const [phase, ...argv] = process.argv.slice(2);
++if (!phase || !argv.length) throw new Error('phase and command required');
++const directory = path.resolve('artifacts/agent-desktop');
++mkdirSync(path.join(directory, 'logs'), { recursive: true, mode: 0o700 });
++const reportFile = path.join(directory, 'commands.json');
++const reports = (() => {
++  try {
++    return JSON.parse(readFileSync(reportFile, 'utf8'));
++  } catch {
++    return [];
++  }
++})();
++const filename = `logs/${String(reports.length + 1).padStart(2, '0')}-${phase}.log`;
++const fd = openSync(path.join(directory, filename), 'w', 0o600);
++const inputBefore = inputIdentity();
++writeFileSync(fd, `${JSON.stringify({ phase, argv, inputBefore })}\n`);
++const start = performance.now();
++const startedAt = new Date().toISOString();
++const child = spawn(argv[0], argv.slice(1), {
++  stdio: ['ignore', fd, fd],
++  env: process.env,
++  shell: process.platform === 'win32' && /^(pnpm|mise)$/u.test(argv[0]),
++});
++child.on('error', (error) => {
++  writeFileSync(fd, String(error));
++});
++child.on('close', (exit, signal) => {
++  closeSync(fd);
++  const entry = {
++    phase,
++    inputBefore,
++    inputAfter: inputIdentity(),
++    argv,
++    exit: exit ?? 1,
++    signal,
++    startedAt,
++    milliseconds: Math.round(performance.now() - start),
++    os: process.platform,
++    environment: Object.fromEntries(
++      ['TMPDIR', 'TMP', 'TEMP', 'GIT_CEILING_DIRECTORIES', 'CARGO_TARGET_DIR']
++        .filter((key) => process.env[key])
++        .map((key) => [key, process.env[key]]),
++    ),
++    log: filename,
++  };
++  reports.push(entry);
++  writeFileSync(reportFile, `${JSON.stringify(reports, null, 2)}\n`);
++  console.log(JSON.stringify(entry));
++  process.exitCode = entry.exit;
++});
+diff --git a/.github/workflows/quality.yml b/.github/workflows/quality.yml
+index 6bb566d..650b954 100644
+--- a/.github/workflows/quality.yml
++++ b/.github/workflows/quality.yml
+@@ -5,6 +5,23 @@ on:
+   push:
+     branches: [main]
+   workflow_dispatch:
++    inputs:
++      agent_desktop:
++        description: Run the independent generated Desktop feature rehearsal on all three actual OS
++        type: boolean
++        default: false
++      agent_feature_content_id:
++        description: Exact committed generated-feature content ID
++        type: string
++        default: ''
++      agent_source_sha:
++        description: Exact clean generation-source SHA
++        type: string
++        default: ''
++      agent_source_content_id:
++        description: Exact clean generation-source content ID
++        type: string
++        default: ''
+ 
+ permissions:
+   contents: read
+@@ -15,6 +32,7 @@ concurrency:
+ 
+ jobs:
+   source:
++    if: inputs.agent_desktop != true
+     outputs:
+       fixtures: ${{ steps.plan.outputs.fixtures }}
+       native: ${{ steps.plan.outputs.native }}
+@@ -293,7 +311,7 @@ jobs:
+           path: fullstack/artifacts/o11y
+           if-no-files-found: error
+   required:
+-    if: always()
++    if: always() && inputs.agent_desktop != true
+     needs: [source, generated, native, worker-windows, observability]
+     runs-on: ubuntu-24.04
+     timeout-minutes: 5
+@@ -307,3 +325,96 @@ jobs:
+           OBSERVABILITY: ${{ needs.source.outputs.observability }}
+         run: >-
+           node -e 'const jobs=JSON.parse(process.env.RESULTS); const plan={source:"true",generated:process.env.FIXTURES,native:process.env.NATIVE,"worker-windows":process.env.WORKERS,observability:process.env.OBSERVABILITY}; for(const [name,required] of Object.entries(plan)) { if(!["true","false"].includes(required)) throw new Error(`Missing plan for ${name}`); const result=jobs[name]?.result; if(required==="true" && result!=="success") throw new Error(`${name} ${result}; planned checks must succeed`); if(required==="false" && result!=="skipped") throw new Error(`${name} unexpected result ${result}`); }'
++
++  desktop-agent:
++    env:
++      AGENT_EXPECTED_CONTENT_ID: ${{ inputs.agent_feature_content_id }}
++      AGENT_EXPECTED_ORIGIN_SHA: ${{ inputs.agent_source_sha }}
++      AGENT_EXPECTED_ORIGIN_CONTENT_ID: ${{ inputs.agent_source_content_id }}
++    if: github.event_name == 'workflow_dispatch' && inputs.agent_desktop == true
++    strategy:
++      fail-fast: false
++      matrix:
++        os: [ubuntu-24.04, macos-15, windows-2025]
++    runs-on: ${{ matrix.os }}
++    timeout-minutes: 90
++    defaults:
++      run:
++        shell: bash
++    steps:
++      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
++        with:
++          ref: ${{ github.sha }}
++          fetch-depth: 16
++          persist-credentials: false
++      - uses: jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca # v5.1.1
++        with:
++          version: 2026.10.7
++          cache: false
++          persist_github_token: false
++      - name: Linux native prerequisites
++        if: runner.os == 'Linux'
++        run: sudo apt-get update && sudo apt-get install -y libwebkit2gtk-4.1-dev build-essential libayatana-appindicator3-dev librsvg2-dev patchelf xvfb dbus-x11 at-spi2-core
++      - name: Owned temporary directory
++        run: |
++          mkdir -p .state/tmp
++          echo "TMPDIR=$GITHUB_WORKSPACE/.state/tmp" >> "$GITHUB_ENV"
++          echo "TMP=$GITHUB_WORKSPACE/.state/tmp" >> "$GITHUB_ENV"
++          echo "TEMP=$GITHUB_WORKSPACE/.state/tmp" >> "$GITHUB_ENV"
++      - name: Exact clean feature and origin before setup
++        run: node .github/scripts/desktop-agent-input.ts before-setup
++      - name: Native setup
++        run: node .github/scripts/desktop-agent-run.mjs setup pnpm env:setup
++      - name: Exact clean feature and origin after setup
++        run: node .github/scripts/desktop-agent-input.ts after-setup
++      - name: Native doctor
++        run: node .github/scripts/desktop-agent-run.mjs doctor pnpm env:doctor
++      - name: Targeted count regressions
++        run: node .github/scripts/desktop-agent-run.mjs targeted-test pnpm --filter @independent-native/desktop test
++      - name: Complete selected configuration
++        run: |
++          if [ "$RUNNER_OS" = Linux ]; then
++            dbus-run-session -- xvfb-run -a node .github/scripts/desktop-agent-run.mjs full pnpm gate:full
++          else
++            node .github/scripts/desktop-agent-run.mjs full pnpm gate:full
++          fi
++      - name: Actual native development startup and owned cleanup
++        run: |
++          if [ "$RUNNER_OS" = Linux ]; then
++            dbus-run-session -- xvfb-run -a node .github/scripts/desktop-agent-dev.ts
++          else
++            node .github/scripts/desktop-agent-dev.ts
++          fi
++      - name: Pre-PR standard entry
++        run: |
++          if [ "$RUNNER_OS" = Linux ]; then
++            dbus-run-session -- xvfb-run -a node .github/scripts/desktop-agent-run.mjs pre-pr pnpm gate:pre-pr -- --base e501b53e64504528b3029ce74fd222fc0a0fbc07
++          else
++            node .github/scripts/desktop-agent-run.mjs pre-pr pnpm gate:pre-pr -- --base e501b53e64504528b3029ce74fd222fc0a0fbc07
++          fi
++      - name: CI standard entry
++        run: |
++          if [ "$RUNNER_OS" = Linux ]; then
++            dbus-run-session -- xvfb-run -a node .github/scripts/desktop-agent-run.mjs ci pnpm gate:ci -- --base e501b53e64504528b3029ce74fd222fc0a0fbc07
++          else
++            node .github/scripts/desktop-agent-run.mjs ci pnpm gate:ci -- --base e501b53e64504528b3029ce74fd222fc0a0fbc07
++          fi
++      - name: Unsigned native build
++        run: node .github/scripts/desktop-agent-run.mjs build pnpm build
++      - name: Desktop deployment preflight
++        run: node .github/scripts/desktop-agent-run.mjs preflight pnpm deploy:preflight -- --target desktop --environment local
++      - name: Exact clean feature and origin after execution
++        if: always()
++        run: node .github/scripts/desktop-agent-input.ts after-execution
++      - name: Hosted supporting execution report
++        if: always()
++        run: node .github/scripts/desktop-agent-report.ts
++      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
++        if: always()
++        with:
++          name: agent-desktop-${{ runner.os }}
++          path: |
++            artifacts
++            packages/*/artifacts
++            packages/*/test-results
++          if-no-files-found: error
+diff --git a/docs/desktop-count.md b/docs/desktop-count.md
+new file mode 100644
+index 0000000..5faaff5
+--- /dev/null
++++ b/docs/desktop-count.md
+@@ -0,0 +1,15 @@
++# Desktop note count
++
++The existing command manifest and local capability explicitly allow only `count_notes` alongside the original note commands. The Desktop count indicator calls `count_notes` in Rust and announces the result through a polite, atomic status region. Successful add/delete operations refresh it. Success payloads pass through the shared integer count schema. Invalid success payloads or native state/transport failures show an unavailable count and a keyboard-accessible retry; failures never display a fabricated zero or clear saved notes. There is no automatic retry.
++
++The implementation follows the existing pinned Tauri API 2.12.2/native Tauri 2.12.2 and React 19.3.0 contracts. Official [Tauri command guidance](https://v2.tauri.app/develop/calling-rust/), [native testing guidance](https://v2.tauri.app/develop/tests/webdriver/), [React Effect cleanup](https://react.dev/reference/react/useEffect) and [status semantics](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/status_role) were read on 2026-10-12 UTC. Compatibility is established by the recorded targeted tests and actual target-OS native gates, not by documentation retrieval alone.
++
++The independent rehearsal starts from generated source origin `0f9611c1c8e6934aa3f8d0fce924bcc9f4da9d5d`, content ID `8d37cdc64694fb9997fd60c5df10bd412a18695ebb63480f2fd148363e835628`. It accesses this generated project and its own disposable `codex/agent-desktop-99c` branch/run artifacts only. `Quality` has an explicit `agent_desktop` dispatch input for this generated project; default dispatch, PR and main behavior retain the original workflow. The independent path runs the unchanged selected Desktop full gate and the standard pre-PR/CI entries on actual Linux/macOS/Windows runners, plus native development startup, unsigned build and deployment preflight. It does not represent the source template's complete cross-preset acceptance matrix.
++
++Renderer tests cover count updates, accessibility, retry, invalid payloads and IPC failure. Native Rust tests cover current state and poisoned-lock error projection; native-window tests invoke real count IPC and mutations, including rejected malformed command arguments. All original test assertions, deadlines, quality definitions, release isolation and failure severities remain active. Logs and per-command exit/timing/source identity reports are retained under `artifacts/agent-desktop` even on failure. Git commit/push use the generated project's repository-local hooks. No signing, distribution, PR, merge, production deployment or protection changes are part of this rehearsal.
++
++Development evidence distinguishes native startup/cleanup completion from the deliberately stopped process's exit code and signal.
++
++The specialized hosted checkout requests the exact dispatched feature commit and only its bounded independent ancestry. It does not fetch other branches or canonical repository history. Existing default CI checkout behavior remains unchanged.
++
++The specialized runner sets TMPDIR, TMP and TEMP to its project-owned `.state/tmp`, including Windows Node/Rust temp selection. Support command records preserve these environment paths.
+diff --git a/packages/contracts/src/index.ts b/packages/contracts/src/index.ts
+index 23a4601..8db8895 100644
+--- a/packages/contracts/src/index.ts
++++ b/packages/contracts/src/index.ts
+@@ -23,6 +23,7 @@ export const noteSchema = z.strictObject({
+   createdAt: z.int().check(z.gte(0)),
+ });
+ export const notesSchema = z.array(noteSchema);
++export const noteCountSchema = z.int().check(z.gte(0));
+ export const apiErrorSchema = z.strictObject({
+   error: publicErrorSchema,
+   requestId: z.string().check(z.uuid()),
+diff --git a/packages/desktop/package.json b/packages/desktop/package.json
+index d08aba9..be32d8b 100644
+--- a/packages/desktop/package.json
++++ b/packages/desktop/package.json
+@@ -28,6 +28,8 @@
+   "devDependencies": {
+     "@tailwindcss/vite": "catalog:",
+     "@tauri-apps/cli": "catalog:",
++    "@testing-library/react": "catalog:",
++    "@testing-library/user-event": "catalog:",
+     "@types/mocha": "catalog:",
+     "@types/react": "catalog:",
+     "@types/react-dom": "catalog:",
+@@ -41,6 +43,7 @@
+     "@wdio/tauri-plugin": "catalog:",
+     "@wdio/tauri-service": "catalog:",
+     "@wdio/types": "catalog:",
++    "jsdom": "catalog:",
+     "tailwindcss": "catalog:",
+     "typescript": "catalog:",
+     "vite-plus": "catalog:",
+diff --git a/packages/desktop/src-tauri/build.rs b/packages/desktop/src-tauri/build.rs
+index ca8d651..4b44026 100644
+--- a/packages/desktop/src-tauri/build.rs
++++ b/packages/desktop/src-tauri/build.rs
+@@ -1,6 +1,7 @@
+ fn main() {
+     let manifest = tauri_build::AppManifest::new().commands(&[
+         "list_notes",
++        "count_notes",
+         "add_note",
+         "delete_note",
+         "export_notes",
+diff --git a/packages/desktop/src-tauri/capabilities/default.json b/packages/desktop/src-tauri/capabilities/default.json
+index a25788a..5e0bdf3 100644
+--- a/packages/desktop/src-tauri/capabilities/default.json
++++ b/packages/desktop/src-tauri/capabilities/default.json
+@@ -6,6 +6,7 @@
+   "permissions": [
+     "core:default",
+     "allow-list-notes",
++    "allow-count-notes",
+     "allow-add-note",
+     "allow-delete-note",
+     "allow-export-notes"
+diff --git a/packages/desktop/src-tauri/src/main.rs b/packages/desktop/src-tauri/src/main.rs
+index ed42722..80f29bf 100644
+--- a/packages/desktop/src-tauri/src/main.rs
++++ b/packages/desktop/src-tauri/src/main.rs
+@@ -58,6 +58,14 @@ fn new_note(text: &str) -> Result<Note, AppError> {
+     })
+ }
+ 
++fn count_note_state(notes: &Notes) -> Result<usize, AppError> {
++    Ok(notes
++        .0
++        .lock()
++        .map_err(|_| AppError::new(ErrorCode::StateUnavailable))?
++        .len())
++}
++
+ fn read_notes(state: State<'_, Notes>) -> Result<Vec<Note>, AppError> {
+     Ok(state
+         .0
+@@ -145,6 +153,14 @@ fn list_notes(
+     project(operation, read_notes(state))
+ }
+ #[tauri::command]
++fn count_notes(
++    state: State<'_, Notes>,
++    telemetry: Option<TraceCarrier>,
++) -> Result<usize, PublicError> {
++    let operation = Operation::new(NativeOperation::Count, telemetry);
++    project(operation, count_note_state(state.inner()))
++}
++#[tauri::command]
+ fn add_note(
+     text: String,
+     state: State<'_, Notes>,
+@@ -183,6 +199,7 @@ fn main() {
+     if let Err(_error) = builder
+         .invoke_handler(tauri::generate_handler![
+             list_notes,
++            count_notes,
+             add_note,
+             delete_note,
+             export_notes
+@@ -204,6 +221,60 @@ fn main() {
+ mod tests {
+     use super::*;
+     #[test]
++    fn counts_current_native_state_without_changing_notes() -> Result<(), AppError> {
++        let notes = Notes::default();
++        assert_eq!(count_note_state(&notes)?, 0);
++        let note = new_note("counted note")?;
++        {
++            let mut saved = notes
++                .0
++                .lock()
++                .map_err(|_| AppError::new(ErrorCode::StateUnavailable))?;
++            saved.push(note.clone());
++            saved.push(new_note("second note")?);
++        }
++        assert_eq!(count_note_state(&notes)?, 2);
++        {
++            let mut saved = notes
++                .0
++                .lock()
++                .map_err(|_| AppError::new(ErrorCode::StateUnavailable))?;
++            assert_eq!(saved[0], note);
++            saved.remove(0);
++        }
++        assert_eq!(count_note_state(&notes)?, 1);
++        Ok(())
++    }
++    #[test]
++    fn count_reports_poisoned_native_state_as_public_failure() {
++        let notes = Notes::default();
++        std::thread::scope(|scope| {
++            let child = scope.spawn(|| {
++                let _guard = notes.0.lock().unwrap_or_else(|error| error.into_inner());
++                panic!("deliberately poison owned test state");
++            });
++            assert!(child.join().is_err());
++        });
++        let result = project(
++            Operation::new(NativeOperation::Count, None),
++            count_note_state(&notes),
++        );
++        let Err(error) = result else {
++            panic!("poisoned state must never report zero notes")
++        };
++        assert_eq!(error.code, "unavailable");
++        assert_eq!(error.failure_class, "transient");
++        assert_eq!(error.message, "The service is unavailable.");
++        assert!(
++            error
++                .diagnostic_id
++                .bytes()
++                .all(|byte| byte.is_ascii_hexdigit())
++        );
++        assert_eq!(error.retry, "owner_only");
++        assert_eq!(error.diagnostic_id.len(), 32);
++    }
++    #[test]
+     fn validates_text_and_serializes_portable_contract() -> Result<(), AppError> {
+         assert!(new_note("   ").is_err());
+         assert!(new_note(&"x".repeat(1001)).is_err());
+diff --git a/packages/desktop/src-tauri/src/telemetry.rs b/packages/desktop/src-tauri/src/telemetry.rs
+index e7b70b7..bd1b2fd 100644
+--- a/packages/desktop/src-tauri/src/telemetry.rs
++++ b/packages/desktop/src-tauri/src/telemetry.rs
+@@ -17,6 +17,7 @@ pub struct TraceCarrier {
+ }
+ pub enum NativeOperation {
+     List,
++    Count,
+     Add,
+     Remove,
+     Export,
+@@ -25,6 +26,7 @@ impl NativeOperation {
+     fn name(&self) -> &'static str {
+         match self {
+             Self::List => "notes.list",
++            Self::Count => "notes.count",
+             Self::Add => "notes.add",
+             Self::Remove => "notes.remove",
+             Self::Export => "notes.export",
+diff --git a/packages/desktop/src/main.tsx b/packages/desktop/src/main.tsx
+index bbfafd8..6e8cc41 100644
+--- a/packages/desktop/src/main.tsx
++++ b/packages/desktop/src/main.tsx
+@@ -1,7 +1,6 @@
+ import { StrictMode } from 'react';
+ import { createRoot } from 'react-dom/client';
+-import { NotesPanel } from '@independent-native/ui';
+-import { nativeNotes } from './native';
++import { DesktopNotes } from './notes';
+ import './styles.css';
+ 
+ // The compile-time branch is removed from ordinary renderer artifacts.
+@@ -13,10 +12,7 @@ if (!root) {
+   createRoot(root).render(
+     <StrictMode>
+       <main className="p-6">
+-        <NotesPanel
+-          adapter={nativeNotes}
+-          storage="Offline sample: notes are kept in memory until this window closes. JSON exports use the save destination you choose."
+-        />
++        <DesktopNotes />
+       </main>
+     </StrictMode>,
+   );
+diff --git a/packages/desktop/src/native.ts b/packages/desktop/src/native.ts
+index 5f81163..5bf2aa0 100644
+--- a/packages/desktop/src/native.ts
++++ b/packages/desktop/src/native.ts
+@@ -7,6 +7,7 @@ import { invoke } from '@tauri-apps/api/core';
+ import {
+   noteSchema,
+   notesSchema,
++  noteCountSchema,
+   capturePublic,
+   decode,
+   Err,
+@@ -63,3 +64,12 @@ export const nativeNotes: NotesAdapter = {
+     });
+   },
+ };
++
++export async function nativeCount(): Promise<Result<number, PublicError>> {
++  return observeAdapter(telemetry, 'notes.count', async (carrier) => {
++    const received = await command('count_notes', carrier);
++    if (!received.ok) return received;
++    const parsed = decode(noteCountSchema, received.value);
++    return parsed.ok ? parsed : Err(publicFailure(parsed.error));
++  });
++}
+diff --git a/packages/desktop/src/notes.tsx b/packages/desktop/src/notes.tsx
+new file mode 100644
+index 0000000..50fdb1f
+--- /dev/null
++++ b/packages/desktop/src/notes.tsx
+@@ -0,0 +1,83 @@
++import { useCallback, useEffect, useMemo, useState } from 'react';
++import { launch, type PublicError, type Result } from '@independent-native/contracts';
++import { NotesPanel, type NotesAdapter } from '@independent-native/ui';
++import { nativeCount, nativeNotes } from './native';
++
++type Count = () => Promise<Result<number, PublicError>>;
++
++export function DesktopNotes({
++  adapter = nativeNotes,
++  count = nativeCount,
++}: {
++  adapter?: NotesAdapter;
++  count?: Count;
++}) {
++  const [revision, setRevision] = useState(0);
++  const [label, setLabel] = useState('Counting notes…');
++  const [failed, setFailed] = useState(false);
++  const refresh = useCallback(() => {
++    setLabel('Counting notes…');
++    setFailed(false);
++    setRevision((current) => current + 1);
++  }, []);
++  const observed: NotesAdapter = useMemo(
++    () => ({
++      list: () => adapter.list(),
++      async add(input) {
++        const result = await adapter.add(input);
++        if (result.ok) refresh();
++        return result;
++      },
++      async remove(id) {
++        const result = await adapter.remove(id);
++        if (result.ok) refresh();
++        return result;
++      },
++      export: (notes) => adapter.export(notes),
++    }),
++    [adapter, refresh],
++  );
++
++  useEffect(() => {
++    let current = true;
++    launch(
++      async () => {
++        const result = await count();
++        if (!current) return;
++        setFailed(!result.ok);
++        setLabel(
++          result.ok
++            ? `${result.value} ${result.value === 1 ? 'note' : 'notes'}`
++            : 'Note count unavailable.',
++        );
++      },
++      () => {
++        if (!current) return;
++        setFailed(true);
++        setLabel('Note count unavailable.');
++      },
++    );
++    return () => {
++      current = false;
++    };
++  }, [count, revision]);
++
++  return (
++    <>
++      <div className="mx-auto mb-3 max-w-2xl">
++        <output aria-label="Note count" aria-live="polite" aria-atomic="true">
++          {label}
++        </output>
++        {failed && (
++          <button type="button" className="ml-3 rounded border px-3 py-1" onClick={refresh}>
++            Retry note count
++          </button>
++        )}
++      </div>
++      <NotesPanel
++        adapter={observed}
++        storage="Offline sample: notes are kept in memory until this window closes. JSON exports use the save destination you choose."
++      />
++    </>
++  );
++}
+diff --git a/packages/desktop/test/count.test.tsx b/packages/desktop/test/count.test.tsx
+new file mode 100644
+index 0000000..85e4059
+--- /dev/null
++++ b/packages/desktop/test/count.test.tsx
+@@ -0,0 +1,76 @@
++// @vitest-environment jsdom
++import { cleanup, render, screen, waitFor } from '@testing-library/react';
++import userEvent from '@testing-library/user-event';
++import { afterEach, describe, expect, it, vi } from 'vitest';
++import {
++  Err,
++  Ok,
++  publicFailure,
++  failure,
++  type Note,
++  type Result,
++  type PublicError,
++} from '@independent-native/contracts';
++import type { NotesAdapter } from '@independent-native/ui';
++import { DesktopNotes } from '../src/notes';
++
++afterEach(cleanup);
++
++function fixture() {
++  let notes: Note[] = [];
++  const adapter: NotesAdapter = {
++    list: () => Promise.resolve(Ok(notes)),
++    add: (input) => {
++      const note = { id: crypto.randomUUID(), text: input.text, createdAt: Date.now() };
++      notes = [...notes, note];
++      return Promise.resolve(Ok(note));
++    },
++    remove: (id) => {
++      notes = notes.filter((note) => note.id !== id);
++      return Promise.resolve(Ok(undefined));
++    },
++    export: () => Promise.resolve(Ok(undefined)),
++  };
++  const count = vi.fn<() => Promise<Result<number, PublicError>>>(() =>
++    Promise.resolve(Ok(notes.length)),
++  );
++  return { adapter, count };
++}
++
++describe('Desktop native count indicator (renderer regression)', () => {
++  it('announces native count and refreshes it after successful add/delete', async () => {
++    const { adapter, count } = fixture();
++    const user = userEvent.setup();
++    render(<DesktopNotes adapter={adapter} count={count} />);
++    const status = screen.getByRole('status', { name: 'Note count' });
++    expect(status.getAttribute('aria-live')).toBe('polite');
++    expect(status.getAttribute('aria-atomic')).toBe('true');
++    await waitFor(() => expect(status.textContent).toBe('0 notes'));
++    await user.type(screen.getByRole('textbox', { name: 'New note' }), 'Count me');
++    await user.click(screen.getByRole('button', { name: 'Add note' }));
++    await waitFor(() => expect(status.textContent).toBe('1 note'));
++    await user.click(screen.getByRole('button', { name: 'Delete Count me' }));
++    await waitFor(() => expect(status.textContent).toBe('0 notes'));
++    expect(count).toHaveBeenCalledTimes(3);
++  });
++
++  it('shows count failure without a false zero, preserves notes, and offers accessible retry', async () => {
++    const { adapter } = fixture();
++    await adapter.add({ text: 'Kept note' });
++    const count = vi
++      .fn<() => Promise<Result<number, PublicError>>>()
++      .mockResolvedValueOnce(Err(publicFailure(failure('state_unavailable'))))
++      .mockResolvedValueOnce(Ok(1));
++    const user = userEvent.setup();
++    render(<DesktopNotes adapter={adapter} count={count} />);
++    const status = screen.getByRole('status', { name: 'Note count' });
++    await waitFor(() => expect(status.textContent).toBe('Note count unavailable.'));
++    expect(screen.getByText('Kept note')).toBeTruthy();
++    const retry = screen.getByRole('button', { name: 'Retry note count' });
++    retry.focus();
++    await user.keyboard('{Enter}');
++    await waitFor(() => expect(status.textContent).toBe('1 note'));
++    expect(count).toHaveBeenCalledTimes(2);
++    expect(screen.queryByRole('button', { name: 'Retry note count' })).toBeNull();
++  });
++});
+diff --git a/packages/desktop/test/native.e2e.ts b/packages/desktop/test/native.e2e.ts
+index e7a8fa9..1efbd15 100644
+--- a/packages/desktop/test/native.e2e.ts
++++ b/packages/desktop/test/native.e2e.ts
+@@ -31,6 +31,32 @@ async function reloadNativeWindow() {
+ }
+ 
+ describe('real native Tauri window and Rust IPC', () => {
++  it('counts through real Rust IPC and announces native mutations', async () => {
++    const status = browser.$('output[aria-label="Note count"]');
++    expect(await status.getTagName()).toBe('output');
++    await expect(status).toHaveAttribute('aria-live', 'polite');
++    await expect(status).toHaveAttribute('aria-atomic', 'true');
++    await expect(status).toHaveText('0 notes');
++    expect(await browser.tauri.execute((tauri) => tauri.core.invoke('count_notes'))).toBe(0);
++    await browser.$('#note-text').setValue('Count regression');
++    await browser.$('button[type="submit"]').click();
++    await expect(status).toHaveText('1 note');
++    expect(await browser.tauri.execute((tauri) => tauri.core.invoke('count_notes'))).toBe(1);
++    const listed = notesSchema.parse(
++      await browser.tauri.execute((tauri) => tauri.core.invoke('list_notes')),
++    );
++    expect(listed).toHaveLength(1);
++    expect(listed[0]?.text).toBe('Count regression');
++    await expect(
++      browser.tauri.execute((tauri) => tauri.core.invoke('count_notes', { telemetry: 7 })),
++    ).rejects.toThrow();
++    // A rejected call must not mutate the Rust state or replace the displayed count.
++    expect(await browser.tauri.execute((tauri) => tauri.core.invoke('count_notes'))).toBe(1);
++    await expect(status).toHaveText('1 note');
++    await browser.$('button[aria-label="Delete Count regression"]').click();
++    await expect(status).toHaveText('0 notes');
++    expect(await browser.tauri.execute((tauri) => tauri.core.invoke('count_notes'))).toBe(0);
++  });
+   it('renders offline UI and validates real CRUD/export permissions', async () => {
+     await expect(browser.$('h1')).toHaveText('Notes');
+     for (const text of [
+diff --git a/packages/desktop/test/unit.test.ts b/packages/desktop/test/unit.test.ts
+index cb0b5b9..2128b18 100644
+--- a/packages/desktop/test/unit.test.ts
++++ b/packages/desktop/test/unit.test.ts
+@@ -1,6 +1,7 @@
+ import { describe, expect, it, vi } from 'vitest';
+ import { invoke } from '@tauri-apps/api/core';
+-import { nativeNotes } from '../src/native';
++import { nativeNotes, nativeCount } from '../src/native';
++import { failure, publicFailure } from '@independent-native/contracts';
+ 
+ vi.mock('@tauri-apps/api/core', () => ({ invoke: vi.fn<typeof invoke>() }));
+ describe('typed native adapter (renderer unit tests, separate from native E2E)', () => {
+@@ -16,6 +17,29 @@ describe('typed native adapter (renderer unit tests, separate from native E2E)',
+       error: { code: 'unavailable' },
+     });
+   });
++  it('validates native count payloads and preserves public failures', async () => {
++    vi.mocked(invoke).mockResolvedValueOnce(0).mockResolvedValueOnce(2);
++    await expect(nativeCount()).resolves.toEqual({ ok: true, value: 0 });
++    await expect(nativeCount()).resolves.toEqual({ ok: true, value: 2 });
++    expect(invoke).toHaveBeenLastCalledWith('count_notes', {
++      telemetry: { traceparent: expect.stringMatching(/^00-[a-f0-9]{32}-[a-f0-9]{16}-01$/u) },
++    });
++    for (const invalid of [-1, 0.5, '2', null, Number.NaN, Number.MAX_SAFE_INTEGER + 1]) {
++      vi.mocked(invoke).mockResolvedValueOnce(invalid);
++      await expect(nativeCount()).resolves.toMatchObject({
++        ok: false,
++        error: { code: 'internal_error' },
++      });
++    }
++    const error = publicFailure(failure('state_unavailable'));
++    vi.mocked(invoke).mockRejectedValueOnce(error);
++    await expect(nativeCount()).resolves.toEqual({ ok: false, error });
++    vi.mocked(invoke).mockRejectedValueOnce(new Error('IPC unavailable'));
++    await expect(nativeCount()).resolves.toMatchObject({
++      ok: false,
++      error: { code: 'unavailable' },
++    });
++  });
+   it('never sends a caller-supplied save path to the backend', async () => {
+     vi.mocked(invoke).mockResolvedValueOnce(null);
+     await nativeNotes.export([]);
+diff --git a/packages/observability/src/index.ts b/packages/observability/src/index.ts
+index 4e822b8..055ad07 100644
+--- a/packages/observability/src/index.ts
++++ b/packages/observability/src/index.ts
+@@ -30,6 +30,7 @@ import {
+ 
+ export const OPERATIONS = [
+   'notes.list',
++  'notes.count',
+   'notes.add',
+   'notes.remove',
+   'notes.export',
