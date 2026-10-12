@@ -1,0 +1,475 @@
+{"phase":"push","argv":["git","push","--set-upstream","origin","feat/notes-count"],"inputBefore":{"featureSha":"cbbbebea7045e1971b2fbf29af800201129c11f4","contentId":"57491160f7a8246813051efe63b845a79014e9c2c08a24d641d5c408ef6c610d","origin":{"sha":"653abf13ae3a54b2434c422ab8dc6800822387c3","dirty":false,"contentId":"00587edc5d0a1e4aea804ef2c5f0d75783222fdddfa32000dce438e3dfa3cb39"},"configuration":{"name":"independent-note-web","scope":"@independent-web","identifier":"com.example.independentnoteweb","preset":"fullstack","features":["d1","kv","r2","services"]},"kind":"project","clean":true,"supportSha":"8f29d12c808fe1cf9fa3f30a23f01e38b88bc488","canonical":true},"cwd":"/home/runner/work/super-starter/super-starter/feature","startedAt":"2026-10-12T19:40:37.886Z","environment":{"TMPDIR":"/home/runner/work/super-starter/super-starter/feature/.state/t","TMP":"/home/runner/work/super-starter/super-starter/feature/.state/t","TEMP":"/home/runner/work/super-starter/super-starter/feature/.state/t","WRANGLER_LOG_PATH":"/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"}}
+Scope: all 6 workspace projects
+✓ Lockfile passes supply-chain policies (verified 12s ago)
+Lockfile is up to date, resolution step is skipped
+Packages are hard linked from the content-addressable store to the virtual store.
+  Content-addressable store is at: /home/runner/.local/share/pnpm/store/v11
+  Virtual store is at:             node_modules/.pnpm
+Packages: +379
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 379, reused 379, downloaded 0, added 379, done
+Agent skills awaiting approval: @tanstack/react-start.
+Run "pnpm approve" to review them.
+
+devDependencies:
++ @types/node 24.19.1
++ knip 6.41.0
++ oxc-parser 0.153.0
++ typescript 7.0.2
++ vite-plus 1.1.0
++ vitest 5.0.3
++ yaml 2.9.1
+
+Done in 597ms using pnpm v12.11.2
+$ node tools/dev-environment/setup.ts -- --javascript
+Scope: all 6 workspace projects
+Agent skills awaiting approval: @tanstack/react-start.
+Run "pnpm approve" to review them.
+✓ Lockfile passes supply-chain policies (verified 13s ago)
+Lockfile is up to date, resolution step is skipped
+Done in 26ms using pnpm v12.11.2
+$ cf workers types -m local
+{
+  "path": ".cloudflare/types/index.d.ts"
+}
+$ node ../../tools/cloudflare/build.ts
+No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+├  Build
+│  Delegating to Vite
+transforming...
+✓ 254 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json    0.15 kB │ gzip:  0.11 kB
+.cloudflare/output/v0/workers/default/bundle/index.js             297.87 kB │ gzip: 69.39 kB
+
+[32m✓ built in 53ms[39m
+◆  Build complete
+$ node ../../tools/cloudflare/build.ts
+No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+├  Build
+│  Delegating to Vite
+transforming...
+✓ 254 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json    0.15 kB │ gzip:  0.11 kB
+.cloudflare/output/v0/workers/default/bundle/index.js             297.87 kB │ gzip: 69.39 kB
+
+[32m✓ built in 49ms[39m
+◆  Build complete
+
+ ⛅️ wrangler 4.149.0
+────────────────────
+Resource location: local 
+
+Use --remote if you want to access the remote instance.
+
+Migrations to be applied:
+┌────────────────┐
+│ name           │
+├────────────────┤
+│ 0001_notes.sql │
+└────────────────┘
+? About to apply 1 migration(s)
+Your database may not be available to serve requests during the migration, continue?
+🤖 Using fallback value in non-interactive context: yes
+🌀 Executing on local database DATABASE (9c890030-83ac-4fb8-8e26-f973bdef83a2) from ../../.state/api/v3/d1:
+🌀 To execute on your remote database, add a --remote flag to your wrangler command.
+🚣 2 commands executed successfully.
+┌────────────────┬────────┐
+│ name           │ status │
+├────────────────┼────────┤
+│ 0001_notes.sql │ ✅     │
+└────────────────┴────────┘
+
+ ⛅️ wrangler 4.149.0
+────────────────────
+Resource location: local 
+
+Use --remote if you want to access the remote instance.
+
+🌀 Executing on local database DATABASE (9c890030-83ac-4fb8-8e26-f973bdef83a2) from ../../.state/api/v3/d1:
+🌀 To execute on your remote database, add a --remote flag to your wrangler command.
+🚣 1 command executed successfully.
+[
+  {
+    "results": [],
+    "success": true,
+    "meta": {
+      "duration": 0
+    }
+  }
+]
+$ cf workers types -m local
+{
+  "path": ".cloudflare/types/index.d.ts"
+}
+$ node ../../tools/cloudflare/build.ts
+transforming...
+✓ 364 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/assets/assets/index-CgNpmhLx.css              6.81 kB │ gzip:  2.30 kB
+.cloudflare/output/v0/workers/default/assets/assets/about-CjEoILFc.js               0.42 kB │ gzip:  0.30 kB
+.cloudflare/output/v0/workers/default/assets/assets/rolldown-runtime-CbXtAM7H.js    0.58 kB │ gzip:  0.36 kB
+.cloudflare/output/v0/workers/default/assets/assets/react-BuqwL3YU.js               8.24 kB │ gzip:  3.11 kB
+.cloudflare/output/v0/workers/default/assets/assets/index-CZh5A4Dt.js              24.94 kB │ gzip:  8.62 kB
+.cloudflare/output/v0/workers/default/assets/assets/routes-5p9L3qlQ.js             46.67 kB │ gzip: 15.52 kB
+.cloudflare/output/v0/workers/default/assets/assets/client-l3f2aLp-.js            120.36 kB │ gzip: 41.05 kB
+.cloudflare/output/v0/workers/default/assets/assets/react-dom-uP1KSDv5.js         211.21 kB │ gzip: 65.86 kB
+
+[32m✓ built in 217ms[39m
+transforming...
+✓ 436 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json                              3.45 kB │ gzip:   0.71 kB
+.cloudflare/output/v0/workers/default/bundle/assets/router-CgNpmhLx.css                       6.81 kB │ gzip:   2.30 kB
+.cloudflare/output/v0/workers/default/bundle/assets/empty-plugin-adapters-CVykojMw.js         0.28 kB │ gzip:   0.18 kB
+.cloudflare/output/v0/workers/default/bundle/assets/start-DWcS3WmS.js                         0.29 kB │ gzip:   0.22 kB
+.cloudflare/output/v0/workers/default/bundle/assets/about-NjiltK0E.js                         0.72 kB │ gzip:   0.41 kB
+.cloudflare/output/v0/workers/default/bundle/assets/jsx-runtime-BZtfA-4f.js                   2.59 kB │ gzip:   1.11 kB
+.cloudflare/output/v0/workers/default/bundle/assets/_tanstack-start-manifest_v-BztxmnNw.js    7.93 kB │ gzip:   2.70 kB
+.cloudflare/output/v0/workers/default/bundle/assets/routes-CrMWXuzH.js                       11.88 kB │ gzip:   3.28 kB
+.cloudflare/output/v0/workers/default/bundle/assets/react-DOK9jBYa.js                        16.57 kB │ gzip:   4.47 kB
+.cloudflare/output/v0/workers/default/bundle/assets/router-NHLtMHcM.js                       40.80 kB │ gzip:  10.58 kB
+.cloudflare/output/v0/workers/default/bundle/assets/Match-BAqK4OKj.js                       145.22 kB │ gzip:  36.43 kB
+.cloudflare/output/v0/workers/default/bundle/assets/src-BqOr-Xkq.js                         161.16 kB │ gzip:  39.35 kB
+.cloudflare/output/v0/workers/default/bundle/index.js                                       724.52 kB │ gzip: 150.55 kB
+
+[32m✓ built in 261ms[39m
+Repository-local Git hooks installed
+Verified immutable checkout cbbbebea7045e1971b2fbf29af800201129c11f4
+$ node tools/quality/gate.ts push -- --base unknown
+CHECK static: Repository-wide static checks are lightweight and run once
+$ node tools/quality/check.ts
+pass: All 185 files are correctly formatted (127ms, 4 threads)
+pass: Found no warnings, lint errors, or type errors in 135 files (1.3s, 4 threads)
+Static quality, runtime boundaries and documentation passed
+CHECK tools-unit: Shared tooling contracts
+$ node tools/quality/vitest.ts
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/home/runner/work/super-starter/super-starter/feature/.state/t/starter-push-HzPDf6[39m
+
+ [32m✓[39m tools/generators/files.test.ts [2m([22m[2m23 tests[22m[2m)[22m[32m 249[2mms[22m[39m
+ [32m✓[39m tools/security/policy.test.ts [2m([22m[2m25 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m tools/quality/ci-plan.test.ts [2m([22m[2m17 tests[22m[2m)[22m[33m 2822[2mms[22m[39m
+   [32m✓[39m minimal CI execution with an actual committed diff [2m(16)[22m
+     [33m[2m✓[22m[39m selects real signal verification at application producer and Result boundaries[33m 2127[2mms[22m[39m
+[90mstdout[2m | tools/generators/format.test.ts[2m > [22m[2mcold app addition[2m > [22m[2mfinalizes a cold add with absent SDK and preserves user edits
+[22m[39m{
+  "root": "/home/runner/work/super-starter/super-starter/feature/.state/t/starter-cold-add-NC33as",
+  "writes": 14,
+  "remove": [],
+  "dryRun": false
+}
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2mkeeps added web shared UI owned when syncing an API reference
+[22m[39m{
+  "root": "/home/runner/work/super-starter/super-starter/feature/.state/t/reference-shared-sync-S5QPvc",
+  "writes": 33,
+  "remove": [],
+  "dryRun": false
+}
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2mkeeps added web shared UI owned when syncing an API reference
+[22m[39m{
+  "root": "/home/runner/work/super-starter/super-starter/feature/.state/t/reference-shared-sync-S5QPvc",
+  "writes": 26,
+  "remove": [],
+  "dryRun": false
+}
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2mkeeps added web shared UI owned when syncing an API reference
+[22m[39mReference matches canonical blueprints
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2mkeeps added desktop shared UI owned when syncing an API reference
+[22m[39m{
+  "root": "/home/runner/work/super-starter/super-starter/feature/.state/t/reference-shared-sync-wVFS7V",
+  "writes": 29,
+  "remove": [],
+  "dryRun": false
+}
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2mkeeps added desktop shared UI owned when syncing an API reference
+[22m[39m{
+  "root": "/home/runner/work/super-starter/super-starter/feature/.state/t/reference-shared-sync-wVFS7V",
+  "writes": 18,
+  "remove": [],
+  "dryRun": false
+}
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2mkeeps added desktop shared UI owned when syncing an API reference
+[22m[39mReference matches canonical blueprints
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2mregenerates an added reference service and protects edits without changing the original app
+[22m[39m{
+  "root": "/home/runner/work/super-starter/super-starter/feature/.state/t/reference-service-sync-0z627M",
+  "writes": 14,
+  "remove": [],
+  "dryRun": false
+}
+
+[90mstdout[2m | tools/generators/format.test.ts[2m > [22m[2mcold app addition[2m > [22m[2mfinalizes a cold add with partial SDK and preserves user edits
+[22m[39m{
+  "root": "/home/runner/work/super-starter/super-starter/feature/.state/t/starter-cold-add-9NOn6T",
+  "writes": 14,
+  "remove": [],
+  "dryRun": false
+}
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2mregenerates an added reference service and protects edits without changing the original app
+[22m[39m{
+  "root": "/home/runner/work/super-starter/super-starter/feature/.state/t/reference-service-sync-0z627M",
+  "writes": 11,
+  "remove": [],
+  "dryRun": false
+}
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2mregenerates an added reference service and protects edits without changing the original app
+[22m[39mReference matches canonical blueprints
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2msyncs the reference lock baseline after dependency updates without rewriting the lock
+[22m[39m{
+  "root": "/home/runner/work/super-starter/super-starter/feature/.state/t/reference-lock-sync-LzTwPZ",
+  "writes": 1,
+  "remove": [],
+  "dryRun": false
+}
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2msyncs the reference lock baseline after dependency updates without rewriting the lock
+[22m[39mReference matches canonical blueprints
+
+ [32m✓[39m tools/generators/baseline.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 11837[2mms[22m[39m
+   [33m[2m✓[22m[39m keeps added web shared UI owned when syncing an API reference[33m 4351[2mms[22m[39m
+   [33m[2m✓[22m[39m keeps added desktop shared UI owned when syncing an API reference[33m 2958[2mms[22m[39m
+   [33m[2m✓[22m[39m regenerates an added reference service and protects edits without changing the original app[33m 2416[2mms[22m[39m
+   [33m[2m✓[22m[39m syncs the reference lock baseline after dependency updates without rewriting the lock[33m 1604[2mms[22m[39m
+   [33m[2m✓[22m[39m renders identical frozen Cargo locks and binding-free config from LF and CRLF blueprints[33m 472[2mms[22m[39m
+ [32m✓[39m tools/quality/acceptance.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 4761[2mms[22m[39m
+   [33m[2m✓[22m[39m selects a complete canonical baseline after an earlier passed feature report[33m 2900[2mms[22m[39m
+   [33m[2m✓[22m[39m requires exact-source actual Windows Worker commands and rejects other OS or incomplete reports[33m 1773[2mms[22m[39m
+ [32m✓[39m tools/process.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 2050[2mms[22m[39m
+   [33m[2m✓[22m[39m forwards Worker build interruption to its detached non-cooperating child[33m 1159[2mms[22m[39m
+   [33m[2m✓[22m[39m cleans an orphaned descendant while preserving an unrelated server[33m 447[2mms[22m[39m
+[startup-fixture] $ node server.cjs
+[startup-fixture] http://127.0.0.1:37843
+[90mstdout[2m | tools/dev-environment/servers.test.ts[2m > [22m[2mcancels a pending start before spawn and permits an explicit real-server restart
+[22m[39mREADY startup-fixture http://127.0.0.1:37843 129ms; registry /home/runner/work/super-starter/super-starter/feature/.state/t/starter-cancel-bk9P0g/.state/registry/session-uXJdke
+
+[startup-fixture] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+[startup-fixture]   × "pnpm recursive run" failed in /home/runner/work/super-starter/super-
+  │ starter/feature/.state/t/starter-cancel-bk9P0g
+
+[startup-fixture] $ node server.cjs
+[startup-fixture] http://127.0.0.1:35521
+[90mstdout[2m | tools/dev-environment/servers.test.ts[2m > [22m[2mcancels a pending start before spawn and permits an explicit real-server restart
+[22m[39mREADY startup-fixture http://127.0.0.1:35521 106ms; registry /home/runner/work/super-starter/super-starter/feature/.state/t/starter-cancel-bk9P0g/.state/registry/session-6SvfqU
+
+[startup-fixture] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+[startup-fixture]   × "pnpm recursive run" failed in /home/runner/work/super-starter/super-
+  │ starter/feature/.state/t/starter-cancel-bk9P0g
+
+[lifecycle-exit-fixture] $ node server.cjs
+[lifecycle-exit-fixture] http://127.0.0.1:45649
+[90mstdout[2m | tools/dev-environment/servers.test.ts[2m > [22m[2mkeeps stopped lifecycle exits out of an immediate restart and reports unexpected termination
+[22m[39mREADY lifecycle-exit-fixture http://127.0.0.1:45649 106ms; registry /home/runner/work/super-starter/super-starter/feature/.state/t/starter-lifecycle-exit-pDsS3P/.state/registry/session-FfiRPE
+
+[lifecycle-exit-fixture] $ node server.cjs
+[lifecycle-exit-fixture] http://127.0.0.1:43237
+[90mstdout[2m | tools/dev-environment/servers.test.ts[2m > [22m[2mkeeps stopped lifecycle exits out of an immediate restart and reports unexpected termination
+[22m[39mREADY lifecycle-exit-fixture http://127.0.0.1:43237 105ms; registry /home/runner/work/super-starter/super-starter/feature/.state/t/starter-lifecycle-exit-pDsS3P/.state/registry/session-nIGlNX
+
+[lifecycle-exit-fixture] $ node server.cjs
+[lifecycle-exit-fixture] http://127.0.0.1:39091
+[90mstdout[2m | tools/dev-environment/servers.test.ts[2m > [22m[2mkeeps stopped lifecycle exits out of an immediate restart and reports unexpected termination
+[22m[39mREADY lifecycle-exit-fixture http://127.0.0.1:39091 105ms; registry /home/runner/work/super-starter/super-starter/feature/.state/t/starter-lifecycle-exit-pDsS3P/.state/registry/session-Gytj9A
+
+[lifecycle-exit-fixture] $ node server.cjs
+[lifecycle-exit-fixture] http://127.0.0.1:41699
+[90mstdout[2m | tools/dev-environment/servers.test.ts[2m > [22m[2mkeeps stopped lifecycle exits out of an immediate restart and reports unexpected termination
+[22m[39mREADY lifecycle-exit-fixture http://127.0.0.1:41699 105ms; registry /home/runner/work/super-starter/super-starter/feature/.state/t/starter-lifecycle-exit-pDsS3P/.state/registry/session-qOd6Vs
+
+[lifecycle-exit-fixture] Error: [lifecycle-exit-fixture] ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in /home/runner/work/super-starter/super-
+  │ starter/feature/.state/t/starter-lifecycle-exit-pDsS3P
+
+[colored-url-fixture] $ [colored-url-fixture] node server.cjs[colored-url-fixture] 
+[colored-url-fixture] Local: [36mhttp://127.0.0.1:[[colored-url-fixture] 1m44971[22m/[39m
+[90mstdout[2m | tools/dev-environment/servers.test.ts[2m > [22m[2mprobes an owned server whose logged URL contains split terminal color sequences
+[22m[39mREADY colored-url-fixture http://127.0.0.1:44971 105ms; registry /home/runner/work/super-starter/super-starter/feature/.state/t/starter-colored-url-LySgwi/.state/registry/session-BFgBBB
+
+[colored-url-fixture] Error: [colored-url-fixture] ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in /home/runner/work/super-starter/super-
+  │ starter/feature/.state/t/starter-colored-url-LySgwi
+
+[health-body-fixture] $ node server.cjs
+[health-body-fixture] http://127.0.0.1:36609
+[90mstdout[2m | tools/dev-environment/servers.test.ts[2m > [22m[2mwaits for the health body and retries a probe whose body exceeds its deadline
+[22m[39mREADY health-body-fixture http://127.0.0.1:36609 1454ms; registry /home/runner/work/super-starter/super-starter/feature/.state/t/starter-health-body-1VKME2/.state/registry/session-hIUpMY
+
+[health-body-fixture] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+[health-body-fixture]   × "pnpm recursive run" failed in /home/runner/work/super-starter/super-
+  │ starter/feature/.state/t/starter-health-body-1VKME2
+
+ [32m✓[39m tools/dev-environment/servers.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 2652[2mms[22m[39m
+   [33m[2m✓[22m[39m cancels a pending start before spawn and permits an explicit real-server restart[33m 359[2mms[22m[39m
+   [33m[2m✓[22m[39m keeps stopped lifecycle exits out of an immediate restart and reports unexpected termination[33m 463[2mms[22m[39m
+   [33m[2m✓[22m[39m waits for the health body and retries a probe whose body exceeds its deadline[33m 1661[2mms[22m[39m
+ [32m✓[39m tools/process.windows.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 21[2mms[22m[39m
+ [32m✓[39m tools/quality/hooks-cleanup.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 235[2mms[22m[39m
+ [32m✓[39m tools/quality/failure-handling.test.ts [2m([22m[2m14 tests[22m[2m)[22m[32m 31[2mms[22m[39m
+ [32m✓[39m tools/dev-environment/doctor.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m tools/quality/evidence.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 105[2mms[22m[39m
+ [32m✓[39m tools/security/execute.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 541[2mms[22m[39m
+   [33m[2m✓[22m[39m fails a hung real scanner process and rejects executable startup errors[33m 507[2mms[22m[39m
+[90mstdout[2m | tools/quality/fixture.test.ts[2m > [22m[2misolates retained verification output from parent ignore rules and hook configuration
+[22m[39mRepository-local Git hooks installed
+Repository-local Git hooks installed
+
+ [32m✓[39m tools/quality/fixture.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 75[2mms[22m[39m
+ [32m✓[39m tools/generators/format.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 28238[2mms[22m[39m
+   [32m✓[39m cold app addition [2m(2)[22m
+     [33m[2m✓[22m[39m finalizes a cold add with absent SDK and preserves user edits[33m 9177[2mms[22m[39m
+     [33m[2m✓[22m[39m finalizes a cold add with partial SDK and preserves user edits[33m 9131[2mms[22m[39m
+   [33m[2m✓[22m[39m matches the owning SDK CLI for mixed scripts, ignored build output and JSON[33m 1134[2mms[22m[39m
+   [33m[2m✓[22m[39m retains CLI semantics with custom formatter option[33m 509[2mms[22m[39m
+   [33m[2m✓[22m[39m retains CLI semantics with editorconfig[33m 487[2mms[22m[39m
+   [33m[2m✓[22m[39m invalidates cached formatting across roots and after a side configuration change[33m 1201[2mms[22m[39m
+   [33m[2m✓[22m[39m matches CLI stdin behavior for a gitignored source file and CLI runtime metadata[33m 361[2mms[22m[39m
+   [33m[2m✓[22m[39m reports malformed formatting before naturally draining a tracked SDK child[33m 3241[2mms[22m[39m
+ [32m✓[39m tools/quality/lighthouse.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m tools/quality/structure.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 21[2mms[22m[39m
+ [32m✓[39m tools/process-darwin.test.ts [2m([22m[2m14 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+[90mstdout[2m | tools/quality/hooks-install.test.ts[2m > [22m[2mprotects parent Git metadata during foreign hook installation and linked cleanup
+[22m[39mRepository-local Git hooks installed
+
+ [32m✓[39m tools/quality/hooks-install.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 77[2mms[22m[39m
+ [32m✓[39m tools/o11y/identity.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 156[2mms[22m[39m
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+ [32m✓[39m tools/errors/generate.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m tools/dev-environment/doctor-cli.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 200[2mms[22m[39m
+ [32m✓[39m tools/quality/graph.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 4[2mms[22m[39m
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+ [32m✓[39m tools/o11y/native-evidence.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m tools/generators/options.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+ [32m✓[39m tools/o11y/verify.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 262[2mms[22m[39m
+ [32m✓[39m tools/quality/rehearsal-boundary.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 4190[2mms[22m[39m
+   [33m[2m✓[22m[39m isolates hooks before setup inside an ignored committed parent[33m 3337[2mms[22m[39m
+   [33m[2m✓[22m[39m isolates faults before setup inside an ignored committed parent[33m 408[2mms[22m[39m
+   [33m[2m✓[22m[39m isolates lifecycle before setup inside an ignored committed parent[33m 444[2mms[22m[39m
+[90mstdout[2m | tools/quality/checkout.test.ts[2m > [22m[2mrejects preparation edits and first-party untracked files against the requested commit
+[22m[39mVerified immutable checkout cc7d9cf5690654edc4006c669fbf170eef8bd66a
+
+ [32m✓[39m tools/quality/checkout.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 67[2mms[22m[39m
+ [32m✓[39m tools/cloudflare/database.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 106[2mms[22m[39m
+ [32m✓[39m tools/quality/documentation.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 23[2mms[22m[39m
+ [32m✓[39m tools/cloudflare/preview.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 5[2mms[22m[39m
+ [32m✓[39m tools/o11y/policy.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+ [32m✓[39m tools/cloudflare/transport-diagnostics.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 51[2mms[22m[39m
+ [32m✓[39m tools/cloudflare/deployment.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 3[2mms[22m[39m
+ [32m✓[39m tools/quality/sanitize.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 4[2mms[22m[39m
+ [32m✓[39m tools/quality/test-results.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 4[2mms[22m[39m
+ [32m✓[39m tools/generators/verify-cli.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 337[2mms[22m[39m
+   [33m[2m✓[22m[39m rejects ambiguous, unknown and duplicate case selection before writing a generated destination[33m 336[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m37 passed[39m[22m[90m (37)[39m
+[2m      Tests [22m [1m[32m212 passed[39m[22m[90m (212)[39m
+[2m   Start at [22m 19:40:51
+[2m   Duration [22m 31.81s[2m (tests 98%, import 1%, transform 1%)[22m
+
+JSON report written to /home/runner/work/super-starter/super-starter/feature/.state/t/starter-push-HzPDf6/artifacts/tests-default.json
+Executed 212 required test cases
+CHECK @independent-web/api/unit: Selected worker @independent-web/api; test phase
+$ node ../../tools/quality/vitest.ts --config vitest.config.ts
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/home/runner/work/super-starter/super-starter/feature/.state/t/starter-push-HzPDf6/packages/api[39m
+
+ [32m✓[39m test/unit.test.ts [2m([22m[2m22 tests[22m[2m)[22m[33m 3097[2mms[22m[39m
+   [32m✓[39m API validation and safe publication defaults [2m(22)[22m
+     [33m[2m✓[22m[39m bounds a stalled ingress even when its cancellation never settles[33m 3004[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m22 passed[39m[22m[90m (22)[39m
+[2m   Start at [22m 19:41:24
+[2m   Duration [22m 3.32s[2m (tests 95%, import 3%, transform 2%)[22m
+
+JSON report written to /home/runner/work/super-starter/super-starter/feature/.state/t/starter-push-HzPDf6/packages/api/artifacts/tests-vitest.config.ts.json
+Executed 22 required test cases
+CHECK @independent-web/contracts/unit: Selected library @independent-web/contracts; test phase
+$ node ../../tools/quality/vitest.ts
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/home/runner/work/super-starter/super-starter/feature/.state/t/starter-push-HzPDf6/packages/contracts[39m
+
+ [32m✓[39m src/index.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m src/result.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[32m8 passed[39m[22m[90m (8)[39m
+[2m   Start at [22m 19:41:27
+[2m   Duration [22m 160ms[2m (import 55%, transform 30%, tests 12%, worker 3%)[22m
+
+JSON report written to /home/runner/work/super-starter/super-starter/feature/.state/t/starter-push-HzPDf6/packages/contracts/artifacts/tests-default.json
+Executed 8 required test cases
+CHECK @independent-web/observability/unit: Selected library @independent-web/observability; test phase
+$ node ../../tools/quality/vitest.ts
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/home/runner/work/super-starter/super-starter/feature/.state/t/starter-push-HzPDf6/packages/observability[39m
+
+ [32m✓[39m src/index.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 34[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m7 passed[39m[22m[90m (7)[39m
+[2m   Start at [22m 19:41:28
+[2m   Duration [22m 239ms[2m (import 46%, transform 32%, tests 21%, worker 2%)[22m
+
+JSON report written to /home/runner/work/super-starter/super-starter/feature/.state/t/starter-push-HzPDf6/packages/observability/artifacts/tests-default.json
+Executed 7 required test cases
+CHECK @independent-web/ui/unit: Selected library @independent-web/ui; test phase
+$ node ../../tools/quality/vitest.ts
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/home/runner/work/super-starter/super-starter/feature/.state/t/starter-push-HzPDf6/packages/ui[39m
+
+ [32m✓[39m src/index.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 307[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m3 passed[39m[22m[90m (3)[39m
+[2m   Start at [22m 19:41:28
+[2m   Duration [22m 898ms[2m (environment 44%, tests 37%, import 12%, transform 5%)[22m
+
+JSON report written to /home/runner/work/super-starter/super-starter/feature/.state/t/starter-push-HzPDf6/packages/ui/artifacts/tests-default.json
+Executed 3 required test cases
+CHECK @independent-web/web/unit: Selected worker @independent-web/web; test phase
+$ node ../../tools/quality/vitest.ts --config vitest.config.ts
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/home/runner/work/super-starter/super-starter/feature/.state/t/starter-push-HzPDf6/packages/web[39m
+
+ [32m✓[39m test/assets.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 37[2mms[22m[39m
+ [32m✓[39m test/unit.test.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 22[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[32m13 passed[39m[22m[90m (13)[39m
+[2m   Start at [22m 19:41:30
+[2m   Duration [22m 240ms[2m (import 37%, transform 34%, tests 26%, worker 3%)[22m
+
+JSON report written to /home/runner/work/super-starter/super-starter/feature/.state/t/starter-push-HzPDf6/packages/web/artifacts/tests-vitest.config.ts.json
+Executed 13 required test cases
+7/7 checks passed; content 57491160f7a8
+To /home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/owned-origin.git
+ * [new branch]      feat/notes-count -> feat/notes-count
+branch 'feat/notes-count' set up to track 'origin/feat/notes-count'.
+
+{"phase":"push","argv":["git","push","--set-upstream","origin","feat/notes-count"],"exit":0,"signal":null,"spawnError":null,"inputBefore":{"featureSha":"cbbbebea7045e1971b2fbf29af800201129c11f4","contentId":"57491160f7a8246813051efe63b845a79014e9c2c08a24d641d5c408ef6c610d","origin":{"sha":"653abf13ae3a54b2434c422ab8dc6800822387c3","dirty":false,"contentId":"00587edc5d0a1e4aea804ef2c5f0d75783222fdddfa32000dce438e3dfa3cb39"},"configuration":{"name":"independent-note-web","scope":"@independent-web","identifier":"com.example.independentnoteweb","preset":"fullstack","features":["d1","kv","r2","services"]},"kind":"project","clean":true,"supportSha":"8f29d12c808fe1cf9fa3f30a23f01e38b88bc488","canonical":true},"inputAfter":{"featureSha":"cbbbebea7045e1971b2fbf29af800201129c11f4","contentId":"57491160f7a8246813051efe63b845a79014e9c2c08a24d641d5c408ef6c610d","origin":{"sha":"653abf13ae3a54b2434c422ab8dc6800822387c3","dirty":false,"contentId":"00587edc5d0a1e4aea804ef2c5f0d75783222fdddfa32000dce438e3dfa3cb39"},"configuration":{"name":"independent-note-web","scope":"@independent-web","identifier":"com.example.independentnoteweb","preset":"fullstack","features":["d1","kv","r2","services"]},"kind":"project","clean":true,"supportSha":"8f29d12c808fe1cf9fa3f30a23f01e38b88bc488","canonical":true},"inputGuardError":null,"environment":{"TMPDIR":"/home/runner/work/super-starter/super-starter/feature/.state/t","TMP":"/home/runner/work/super-starter/super-starter/feature/.state/t","TEMP":"/home/runner/work/super-starter/super-starter/feature/.state/t","WRANGLER_LOG_PATH":"/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"},"cwd":"/home/runner/work/super-starter/super-starter/feature","startedAt":"2026-10-12T19:40:37.886Z","milliseconds":53192,"log":"logs/12-push.log"}

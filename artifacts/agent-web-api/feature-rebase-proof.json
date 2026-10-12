@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "execution": "hosted-tools",
+  "scope": "Mechanically apply Agent-authored count-only insertions onto complete committed fresh canonical baseline; no old whole API file transplant or Source repair authored here",
+  "origin": {
+    "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+    "dirty": false,
+    "contentId": "00587edc5d0a1e4aea804ef2c5f0d75783222fdddfa32000dce438e3dfa3cb39"
+  },
+  "sourceReferenceCid": "8a91208bf0be87ea59f830dd11d700618bfc46c75493dd9799b0c5c3815fff25",
+  "authenticatedActorLineage": {
+    "ownedPristineSha": "11e0d969e6749c7a0b5bda59e09cd4e192842863",
+    "authenticatedFeatureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+    "verifiedReceiptSha": "c4c79ceb8ecffc42729f6ccef0b7dfdaeb3b2320",
+    "priorSourceSha": "460ad19c970adaab7231795f3438943d9158b135",
+    "countExpandedUnitCases": 8
+  },
+  "files": {
+    "packages/api/src/notes.ts": {
+      "sourceBeforeSha256": "6e5d5d3f8a991664d36d1c47c091f89e410c30ac59836a754e36ffcf6831acab",
+      "featureAfterSha256": "4815c5269df5566815f35908bd96c9833c10826c5952d3dea0da7b81a4091ed7",
+      "sourceProjectionSha256": "6e5d5d3f8a991664d36d1c47c091f89e410c30ac59836a754e36ffcf6831acab",
+      "replacementSha256": "7985c647bb6160beab7d50252fe03bce51881492dfc8e40e9c9bcbd2cec39921",
+      "historicalBeforeSha256": "0ee88e7c8793da26614cd436df03e632485fb0eae63e499dad2bb4d9c2a3234e",
+      "historicalFeatureSha256": "50a79195dd8aa2cd58d9f4528aefaba9560056193b89b8130644c0bc69a174be",
+      "allFreshBaselineBytesPreserved": true
+    },
+    "packages/api/test/unit.test.ts": {
+      "sourceBeforeSha256": "375ea697d03ff29d8a12d172a3d39fee8928ef525efd22e97b28fbe8521afa04",
+      "featureAfterSha256": "92b50775150e3b449131009560badc559ec95f127ec734f4ff6b4c44a3a1147a",
+      "sourceProjectionSha256": "375ea697d03ff29d8a12d172a3d39fee8928ef525efd22e97b28fbe8521afa04",
+      "replacementSha256": "af667ae49f636e9754fcb40f6a028842c513ea25721111087eb20dfdb995cd88",
+      "historicalBeforeSha256": "c09780fea87e5542454fc53bac612925040b38e974bf2931b894c175b4ea0053",
+      "historicalFeatureSha256": "6d8bb448bf5863c83ab6c8da8c40e12388093d46a68141e68162c6dd28807e48",
+      "allFreshBaselineBytesPreserved": true
+    }
+  },
+  "expectedOwningSourceNewUnitCases": 4,
+  "independentlyAuthoredExpandedCountCases": 8
+}

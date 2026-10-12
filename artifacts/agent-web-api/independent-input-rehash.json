@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "featureSha": "cbbbebea7045e1971b2fbf29af800201129c11f4",
+  "baseSha": "e07fcdd5dd5d0bf7fea65d719826b6719b173119",
+  "contentId": "57491160f7a8246813051efe63b845a79014e9c2c08a24d641d5c408ef6c610d",
+  "origin": {
+    "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+    "dirty": false,
+    "contentId": "00587edc5d0a1e4aea804ef2c5f0d75783222fdddfa32000dce438e3dfa3cb39"
+  },
+  "renderedOriginRehashed": "00587edc5d0a1e4aea804ef2c5f0d75783222fdddfa32000dce438e3dfa3cb39",
+  "sourceReferenceCid": "8a91208bf0be87ea59f830dd11d700618bfc46c75493dd9799b0c5c3815fff25",
+  "managedFiles": 281,
+  "lockSha256": "b6fb2bdc86b51edfd548ce29e1162fdcd703515d05ff40a675d08143c0640c3b",
+  "sourceBaselineFiles": 283,
+  "metadataLockUnchangedAcrossFeature": true
+}

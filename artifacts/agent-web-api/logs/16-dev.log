@@ -1,0 +1,40 @@
+{"argv":["pnpm","dev","--","web"],"inputBefore":{"featureSha":"cbbbebea7045e1971b2fbf29af800201129c11f4","contentId":"57491160f7a8246813051efe63b845a79014e9c2c08a24d641d5c408ef6c610d","origin":{"sha":"653abf13ae3a54b2434c422ab8dc6800822387c3","dirty":false,"contentId":"00587edc5d0a1e4aea804ef2c5f0d75783222fdddfa32000dce438e3dfa3cb39"},"configuration":{"name":"independent-note-web","scope":"@independent-web","identifier":"com.example.independentnoteweb","preset":"fullstack","features":["d1","kv","r2","services"]},"kind":"project","clean":true,"supportSha":"8f29d12c808fe1cf9fa3f30a23f01e38b88bc488","canonical":true},"startedAt":"2026-10-12T19:41:57.006Z"}
+$ node tools/dev-environment/dev.ts -- web
+$ node ../../tools/cloudflare/build.ts
+No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+├  Build
+│  Delegating to Vite
+transforming...
+✓ 254 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json    0.15 kB │ gzip:  0.11 kB
+.cloudflare/output/v0/workers/default/bundle/index.js             297.87 kB │ gzip: 69.39 kB
+
+[32m✓ built in 48ms[39m
+◆  Build complete
+
+ ⛅️ wrangler 4.149.0
+────────────────────
+Resource location: local 
+
+Use --remote if you want to access the remote instance.
+
+✅ No migrations to apply!
+[@independent-web/api] $ cf dev --mode offline
+[@independent-web/api] No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+[@independent-web/api]   [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m43853[22m/[39m
+READY @independent-web/api http://127.0.0.1:43853 1648ms; registry /home/runner/work/super-starter/super-starter/feature/.state/registry/session-Hg5ckU
+[@independent-web/web] $ vp dev --mode offline
+[@independent-web/web] 
+  [34m[1mVITE+[22m v1.1.0[39m  [42m [1moffline[22m [49m  
+
+[@independent-web/web]   [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m44673[22m/[39m
+READY @independent-web/web http://127.0.0.1:44673 2737ms; registry /home/runner/work/super-starter/super-starter/feature/.state/registry/session-Hg5ckU
+[@independent-web/web] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+[@independent-web/web]   × "pnpm recursive run" failed in /home/runner/work/super-starter/super-
+  │ starter/feature/packages/web
+
+
+{"phase":"dev","argv":["pnpm","dev","--","web"],"exit":0,"startedAt":"2026-10-12T19:41:57.006Z","milliseconds":7051,"log":"logs/16-dev.log","inputBefore":{"featureSha":"cbbbebea7045e1971b2fbf29af800201129c11f4","contentId":"57491160f7a8246813051efe63b845a79014e9c2c08a24d641d5c408ef6c610d","origin":{"sha":"653abf13ae3a54b2434c422ab8dc6800822387c3","dirty":false,"contentId":"00587edc5d0a1e4aea804ef2c5f0d75783222fdddfa32000dce438e3dfa3cb39"},"configuration":{"name":"independent-note-web","scope":"@independent-web","identifier":"com.example.independentnoteweb","preset":"fullstack","features":["d1","kv","r2","services"]},"kind":"project","clean":true,"supportSha":"8f29d12c808fe1cf9fa3f30a23f01e38b88bc488","canonical":true},"inputAfter":{"featureSha":"cbbbebea7045e1971b2fbf29af800201129c11f4","contentId":"57491160f7a8246813051efe63b845a79014e9c2c08a24d641d5c408ef6c610d","origin":{"sha":"653abf13ae3a54b2434c422ab8dc6800822387c3","dirty":false,"contentId":"00587edc5d0a1e4aea804ef2c5f0d75783222fdddfa32000dce438e3dfa3cb39"},"configuration":{"name":"independent-note-web","scope":"@independent-web","identifier":"com.example.independentnoteweb","preset":"fullstack","features":["d1","kv","r2","services"]},"kind":"project","clean":true,"supportSha":"8f29d12c808fe1cf9fa3f30a23f01e38b88bc488","canonical":true},"processExit":null,"processSignal":"SIGTERM","failure":null,"checks":{"before":1,"countAfterDelete":1,"d1":true,"serviceBinding":true,"SSR":true},"cleanup":"passed","completion":"Standard Web dev READY and real HTTP/SSR count CRUD smoke, followed by deliberate owned shutdown"}

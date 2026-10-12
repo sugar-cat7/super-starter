@@ -1,0 +1,165 @@
+{"phase":"source-sdk-setup","argv":["pnpm","env:setup","--","--javascript"],"cwd":"/home/runner/work/super-starter/super-starter/source","startedAt":"2026-10-12T19:39:58.358Z","milliseconds":16789,"exit":0,"signal":null,"error":null,"log":"logs/04-source-sdk-setup.log"}
+Scope: all 8 workspace projects
+? Verifying lockfile against supply-chain policies (934 entries)...
+Packages are hard linked from the content-addressable store to the virtual store.
+  Content-addressable store is at: /home/runner/.local/share/pnpm/store/v11
+  Virtual store is at:             node_modules/.pnpm
+Downloading @typescript/typescript-linux-x64@7.0.2: 0.00 B/9.66 MB
+Downloading @oxlint-tsgolint/linux-x64@7.0.2003: 0.00 B/7.77 MB
+Downloading @oxlint/binding-linux-x64-gnu@1.87.0: 0.00 B/6.34 MB
+Downloading @tauri-apps/cli-linux-x64-gnu@2.12.1: 0.00 B/8.97 MB
+Downloading @cloudflare/workerd-linux-64@1.20261006.1: 0.00 B/39.86 MB
+Downloading @voidzero-dev/vite-plus-linux-x64-gnu@1.1.0: 0.00 B/13.54 MB
+Downloading @img/sharp-libvips-linux-x64@1.3.4: 0.00 B/8.21 MB
+✓ Lockfile passes supply-chain policies (934 entries in 2.7s)
+Lockfile is up to date, resolution step is skipped
+Packages: +709
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 709, reused 0, downloaded 708, added 709, done
+.../node_modules/workerd postinstall$ node install.js
+.../esbuild@0.28.2/node_modules/esbuild postinstall$ node install.js
+.../esbuild@0.28.2/node_modules/esbuild postinstall: Done
+.../node_modules/workerd postinstall: Done
+Agent skills awaiting approval: @tanstack/react-start.
+Run "pnpm approve" to review them.
+
+devDependencies:
++ @types/node 24.19.1
++ knip 6.41.0
++ oxc-parser 0.153.0
++ typescript 7.0.2
++ vite-plus 1.1.0
++ vitest 5.0.3
++ yaml 2.9.1
+
+Done in 4.6s using pnpm v12.11.2
+{
+  "path": ".cloudflare/types/index.d.ts"
+}
+├  Build
+│  Delegating to Vite
+transforming...
+✓ 254 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json    0.15 kB │ gzip:  0.11 kB
+.cloudflare/output/v0/workers/default/bundle/index.js             291.24 kB │ gzip: 68.21 kB
+
+[32m✓ built in 50ms[39m
+◆  Build complete
+├  Build
+│  Delegating to Vite
+transforming...
+✓ 254 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json    0.15 kB │ gzip:  0.11 kB
+.cloudflare/output/v0/workers/default/bundle/index.js             291.24 kB │ gzip: 68.21 kB
+
+[32m✓ built in 49ms[39m
+◆  Build complete
+
+ ⛅️ wrangler 4.149.0
+────────────────────
+Resource location: local 
+
+Use --remote if you want to access the remote instance.
+
+Migrations to be applied:
+┌────────────────┐
+│ name           │
+├────────────────┤
+│ 0001_notes.sql │
+└────────────────┘
+? About to apply 1 migration(s)
+Your database may not be available to serve requests during the migration, continue?
+🤖 Using fallback value in non-interactive context: yes
+🌀 Executing on local database DATABASE (e250999d-1f4e-4fa6-8cd2-5799da5fd582) from ../../.state/api/v3/d1:
+🌀 To execute on your remote database, add a --remote flag to your wrangler command.
+🚣 2 commands executed successfully.
+┌────────────────┬────────┐
+│ name           │ status │
+├────────────────┼────────┤
+│ 0001_notes.sql │ ✅     │
+└────────────────┴────────┘
+
+ ⛅️ wrangler 4.149.0
+────────────────────
+Resource location: local 
+
+Use --remote if you want to access the remote instance.
+
+🌀 Executing on local database DATABASE (e250999d-1f4e-4fa6-8cd2-5799da5fd582) from ../../.state/api/v3/d1:
+🌀 To execute on your remote database, add a --remote flag to your wrangler command.
+🚣 1 command executed successfully.
+[
+  {
+    "results": [],
+    "success": true,
+    "meta": {
+      "duration": 0
+    }
+  }
+]
+{
+  "path": ".cloudflare/types/index.d.ts"
+}
+├  Build
+│  Delegating to Vite
+transforming...
+✓ 254 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json    0.15 kB │ gzip:  0.11 kB
+.cloudflare/output/v0/workers/default/bundle/index.js             291.24 kB │ gzip: 68.21 kB
+
+[32m✓ built in 49ms[39m
+◆  Build complete
+{
+  "path": ".cloudflare/types/index.d.ts"
+}
+transforming...
+✓ 364 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/assets/assets/index-D17-EbZ6.css              6.68 kB │ gzip:  2.26 kB
+.cloudflare/output/v0/workers/default/assets/assets/about-CjEoILFc.js               0.42 kB │ gzip:  0.30 kB
+.cloudflare/output/v0/workers/default/assets/assets/rolldown-runtime-CbXtAM7H.js    0.58 kB │ gzip:  0.36 kB
+.cloudflare/output/v0/workers/default/assets/assets/react-BuqwL3YU.js               8.24 kB │ gzip:  3.11 kB
+.cloudflare/output/v0/workers/default/assets/assets/index-DwvIh3id.js              24.94 kB │ gzip:  8.63 kB
+.cloudflare/output/v0/workers/default/assets/assets/routes-CEm2Bmat.js             45.24 kB │ gzip: 15.01 kB
+.cloudflare/output/v0/workers/default/assets/assets/client-goE8wl6R.js            120.97 kB │ gzip: 41.29 kB
+.cloudflare/output/v0/workers/default/assets/assets/react-dom-uP1KSDv5.js         211.21 kB │ gzip: 65.86 kB
+
+[32m✓ built in 183ms[39m
+transforming...
+✓ 436 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json                              3.45 kB │ gzip:   0.71 kB
+.cloudflare/output/v0/workers/default/bundle/assets/router-D17-EbZ6.css                       6.68 kB │ gzip:   2.26 kB
+.cloudflare/output/v0/workers/default/bundle/assets/empty-plugin-adapters-CVykojMw.js         0.28 kB │ gzip:   0.18 kB
+.cloudflare/output/v0/workers/default/bundle/assets/start-TjFo_Qz5.js                         0.29 kB │ gzip:   0.22 kB
+.cloudflare/output/v0/workers/default/bundle/assets/about-NjiltK0E.js                         0.72 kB │ gzip:   0.41 kB
+.cloudflare/output/v0/workers/default/bundle/assets/jsx-runtime-BZtfA-4f.js                   2.59 kB │ gzip:   1.11 kB
+.cloudflare/output/v0/workers/default/bundle/assets/_tanstack-start-manifest_v-aRkHjUR2.js    7.71 kB │ gzip:   2.65 kB
+.cloudflare/output/v0/workers/default/bundle/assets/routes-DdCF_WI8.js                        9.07 kB │ gzip:   2.71 kB
+.cloudflare/output/v0/workers/default/bundle/assets/react-DOK9jBYa.js                        16.57 kB │ gzip:   4.47 kB
+.cloudflare/output/v0/workers/default/bundle/assets/router-B2VdnRko.js                       40.80 kB │ gzip:  10.58 kB
+.cloudflare/output/v0/workers/default/bundle/assets/Match-BAqK4OKj.js                       145.22 kB │ gzip:  36.43 kB
+.cloudflare/output/v0/workers/default/bundle/assets/src-BqOr-Xkq.js                         161.16 kB │ gzip:  39.35 kB
+.cloudflare/output/v0/workers/default/bundle/index.js                                       726.99 kB │ gzip: 150.96 kB
+
+[32m✓ built in 284ms[39m
+Repository-local Git hooks installed
+$ node tools/dev-environment/setup.ts -- --javascript
+$ cf workers types -m local
+$ node ../../tools/cloudflare/build.ts
+No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+$ node ../../tools/cloudflare/build.ts
+No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+$ cf workers types -m local
+$ node ../../tools/cloudflare/build.ts
+No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+$ cf workers types -m local
+$ node ../../tools/cloudflare/build.ts

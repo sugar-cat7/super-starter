@@ -1,0 +1,90 @@
+{"phase":"build","argv":["pnpm","build"],"inputBefore":{"featureSha":"cbbbebea7045e1971b2fbf29af800201129c11f4","contentId":"57491160f7a8246813051efe63b845a79014e9c2c08a24d641d5c408ef6c610d","origin":{"sha":"653abf13ae3a54b2434c422ab8dc6800822387c3","dirty":false,"contentId":"00587edc5d0a1e4aea804ef2c5f0d75783222fdddfa32000dce438e3dfa3cb39"},"configuration":{"name":"independent-note-web","scope":"@independent-web","identifier":"com.example.independentnoteweb","preset":"fullstack","features":["d1","kv","r2","services"]},"kind":"project","clean":true,"supportSha":"8f29d12c808fe1cf9fa3f30a23f01e38b88bc488","canonical":true},"cwd":"/home/runner/work/super-starter/super-starter/feature","startedAt":"2026-10-12T19:51:09.917Z","environment":{"TMPDIR":"/home/runner/work/super-starter/super-starter/feature/.state/t","TMP":"/home/runner/work/super-starter/super-starter/feature/.state/t","TEMP":"/home/runner/work/super-starter/super-starter/feature/.state/t","WRANGLER_LOG_PATH":"/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"}}
+$ node tools/quality/gate.ts build
+CHECK @independent-web/api/build: Selected worker @independent-web/api; build phase
+$ node ../../tools/cloudflare/build.ts
+No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+├  Build
+│  Delegating to Vite
+transforming...
+✓ 254 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json    0.15 kB │ gzip:  0.11 kB
+.cloudflare/output/v0/workers/default/bundle/index.js             297.87 kB │ gzip: 69.39 kB
+
+[32m✓ built in 50ms[39m
+◆  Build complete
+CHECK @independent-web/contracts/build: Selected library @independent-web/contracts; build phase
+$ vp pack
+ℹ entry: src/index.ts
+ℹ tsconfig: tsconfig.json
+ℹ Build start
+ℹ Cleaning 2 files
+warn: TypeScript 7.0 does not yet have a stable API and is experimental. Some options will be unavailable.
+ℹ Emit types with typescript@7.0.2
+ℹ dist/index.mjs    5.15 kB │ gzip: 1.71 kB
+ℹ dist/index.d.mts  5.83 kB │ gzip: 1.45 kB
+ℹ 2 files, total: 10.99 kB
+✔ Build complete in 153ms
+CHECK @independent-web/observability/build: Selected library @independent-web/observability; build phase
+$ vp pack
+ℹ entry: src/index.ts
+ℹ tsconfig: tsconfig.json
+ℹ Build start
+ℹ Cleaning 2 files
+warn: TypeScript 7.0 does not yet have a stable API and is experimental. Some options will be unavailable.
+ℹ Emit types with typescript@7.0.2
+ℹ dist/index.mjs    12.75 kB │ gzip: 4.22 kB
+ℹ dist/index.d.mts   1.82 kB │ gzip: 0.73 kB
+ℹ 2 files, total: 14.57 kB
+✔ Build complete in 144ms
+CHECK @independent-web/ui/build: Selected library @independent-web/ui; build phase
+$ vp pack
+ℹ entry: src/index.tsx
+ℹ tsconfig: tsconfig.json
+ℹ Build start
+ℹ Cleaning 2 files
+warn: TypeScript 7.0 does not yet have a stable API and is experimental. Some options will be unavailable.
+ℹ Emit types with typescript@7.0.2
+ℹ dist/index.mjs    5.11 kB │ gzip: 1.65 kB
+ℹ dist/index.d.mts  0.57 kB │ gzip: 0.31 kB
+ℹ 2 files, total: 5.68 kB
+✔ Build complete in 149ms
+CHECK @independent-web/web/build: Selected worker @independent-web/web; build phase
+$ node ../../tools/cloudflare/build.ts
+transforming...
+✓ 364 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/assets/assets/index-CgNpmhLx.css              6.81 kB │ gzip:  2.30 kB
+.cloudflare/output/v0/workers/default/assets/assets/about-CjEoILFc.js               0.42 kB │ gzip:  0.30 kB
+.cloudflare/output/v0/workers/default/assets/assets/rolldown-runtime-CbXtAM7H.js    0.58 kB │ gzip:  0.36 kB
+.cloudflare/output/v0/workers/default/assets/assets/react-BuqwL3YU.js               8.24 kB │ gzip:  3.11 kB
+.cloudflare/output/v0/workers/default/assets/assets/index-CZh5A4Dt.js              24.94 kB │ gzip:  8.62 kB
+.cloudflare/output/v0/workers/default/assets/assets/routes-5p9L3qlQ.js             46.67 kB │ gzip: 15.52 kB
+.cloudflare/output/v0/workers/default/assets/assets/client-l3f2aLp-.js            120.36 kB │ gzip: 41.05 kB
+.cloudflare/output/v0/workers/default/assets/assets/react-dom-uP1KSDv5.js         211.21 kB │ gzip: 65.86 kB
+
+[32m✓ built in 232ms[39m
+transforming...
+✓ 436 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json                              3.45 kB │ gzip:   0.71 kB
+.cloudflare/output/v0/workers/default/bundle/assets/router-CgNpmhLx.css                       6.81 kB │ gzip:   2.30 kB
+.cloudflare/output/v0/workers/default/bundle/assets/empty-plugin-adapters-CVykojMw.js         0.28 kB │ gzip:   0.18 kB
+.cloudflare/output/v0/workers/default/bundle/assets/start-DWcS3WmS.js                         0.29 kB │ gzip:   0.22 kB
+.cloudflare/output/v0/workers/default/bundle/assets/about-NjiltK0E.js                         0.72 kB │ gzip:   0.41 kB
+.cloudflare/output/v0/workers/default/bundle/assets/jsx-runtime-BZtfA-4f.js                   2.59 kB │ gzip:   1.11 kB
+.cloudflare/output/v0/workers/default/bundle/assets/_tanstack-start-manifest_v-D-ZYyJS-.js    7.84 kB │ gzip:   2.68 kB
+.cloudflare/output/v0/workers/default/bundle/assets/routes-CrMWXuzH.js                       11.88 kB │ gzip:   3.28 kB
+.cloudflare/output/v0/workers/default/bundle/assets/react-DOK9jBYa.js                        16.57 kB │ gzip:   4.47 kB
+.cloudflare/output/v0/workers/default/bundle/assets/router-NHLtMHcM.js                       40.80 kB │ gzip:  10.58 kB
+.cloudflare/output/v0/workers/default/bundle/assets/Match-BAqK4OKj.js                       145.22 kB │ gzip:  36.43 kB
+.cloudflare/output/v0/workers/default/bundle/assets/src-BqOr-Xkq.js                         161.16 kB │ gzip:  39.35 kB
+.cloudflare/output/v0/workers/default/bundle/index.js                                       724.52 kB │ gzip: 150.55 kB
+
+[32m✓ built in 284ms[39m
+5/5 checks passed; content 57491160f7a8
+
+{"phase":"build","argv":["pnpm","build"],"exit":0,"signal":null,"spawnError":null,"inputBefore":{"featureSha":"cbbbebea7045e1971b2fbf29af800201129c11f4","contentId":"57491160f7a8246813051efe63b845a79014e9c2c08a24d641d5c408ef6c610d","origin":{"sha":"653abf13ae3a54b2434c422ab8dc6800822387c3","dirty":false,"contentId":"00587edc5d0a1e4aea804ef2c5f0d75783222fdddfa32000dce438e3dfa3cb39"},"configuration":{"name":"independent-note-web","scope":"@independent-web","identifier":"com.example.independentnoteweb","preset":"fullstack","features":["d1","kv","r2","services"]},"kind":"project","clean":true,"supportSha":"8f29d12c808fe1cf9fa3f30a23f01e38b88bc488","canonical":true},"inputAfter":{"featureSha":"cbbbebea7045e1971b2fbf29af800201129c11f4","contentId":"57491160f7a8246813051efe63b845a79014e9c2c08a24d641d5c408ef6c610d","origin":{"sha":"653abf13ae3a54b2434c422ab8dc6800822387c3","dirty":false,"contentId":"00587edc5d0a1e4aea804ef2c5f0d75783222fdddfa32000dce438e3dfa3cb39"},"configuration":{"name":"independent-note-web","scope":"@independent-web","identifier":"com.example.independentnoteweb","preset":"fullstack","features":["d1","kv","r2","services"]},"kind":"project","clean":true,"supportSha":"8f29d12c808fe1cf9fa3f30a23f01e38b88bc488","canonical":true},"inputGuardError":null,"environment":{"TMPDIR":"/home/runner/work/super-starter/super-starter/feature/.state/t","TMP":"/home/runner/work/super-starter/super-starter/feature/.state/t","TEMP":"/home/runner/work/super-starter/super-starter/feature/.state/t","WRANGLER_LOG_PATH":"/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"},"cwd":"/home/runner/work/super-starter/super-starter/feature","startedAt":"2026-10-12T19:51:09.917Z","milliseconds":4104,"log":"logs/22-build.log"}

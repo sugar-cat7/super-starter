@@ -1,0 +1,45 @@
+{"phase":"doctor","argv":["pnpm","env:doctor"],"inputBefore":{"featureSha":"cbbbebea7045e1971b2fbf29af800201129c11f4","contentId":"57491160f7a8246813051efe63b845a79014e9c2c08a24d641d5c408ef6c610d","origin":{"sha":"653abf13ae3a54b2434c422ab8dc6800822387c3","dirty":false,"contentId":"00587edc5d0a1e4aea804ef2c5f0d75783222fdddfa32000dce438e3dfa3cb39"},"configuration":{"name":"independent-note-web","scope":"@independent-web","identifier":"com.example.independentnoteweb","preset":"fullstack","features":["d1","kv","r2","services"]},"kind":"project","clean":true,"supportSha":"8f29d12c808fe1cf9fa3f30a23f01e38b88bc488","canonical":true},"cwd":"/home/runner/work/super-starter/super-starter/feature","startedAt":"2026-10-12T19:41:38.509Z","environment":{"TMPDIR":"/home/runner/work/super-starter/super-starter/feature/.state/t","TMP":"/home/runner/work/super-starter/super-starter/feature/.state/t","TEMP":"/home/runner/work/super-starter/super-starter/feature/.state/t","WRANGLER_LOG_PATH":"/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"}}
+$ node tools/dev-environment/doctor.ts
+{
+  "os": "linux",
+  "scope": "all",
+  "checks": [
+    {
+      "id": "node",
+      "ok": true,
+      "detail": "Node 24.21.0; required 24.21.0 (mise install)"
+    },
+    {
+      "id": "pnpm",
+      "ok": true,
+      "detail": "pnpm 12.11.2 required (mise install aqua:pnpm/pnpm@12.11.2); mise pin 12.11.2"
+    },
+    {
+      "id": "vite-plus",
+      "ok": true,
+      "detail": "Project-local Vite+ required (pnpm install --frozen-lockfile)"
+    },
+    {
+      "id": "initialized",
+      "ok": true,
+      "detail": "Template state required (README cold start)"
+    },
+    {
+      "id": "@independent-web/api/types",
+      "ok": true,
+      "detail": "Local Worker types required (pnpm env:setup); no cloud credentials needed"
+    },
+    {
+      "id": "@independent-web/web/types",
+      "ok": true,
+      "detail": "Local Worker types required (pnpm env:setup); no cloud credentials needed"
+    },
+    {
+      "id": "hooks",
+      "ok": true,
+      "detail": "Repository hooks required (pnpm env:setup); existing hook conflicts require explicit migration"
+    }
+  ]
+}
+
+{"phase":"doctor","argv":["pnpm","env:doctor"],"exit":0,"signal":null,"spawnError":null,"inputBefore":{"featureSha":"cbbbebea7045e1971b2fbf29af800201129c11f4","contentId":"57491160f7a8246813051efe63b845a79014e9c2c08a24d641d5c408ef6c610d","origin":{"sha":"653abf13ae3a54b2434c422ab8dc6800822387c3","dirty":false,"contentId":"00587edc5d0a1e4aea804ef2c5f0d75783222fdddfa32000dce438e3dfa3cb39"},"configuration":{"name":"independent-note-web","scope":"@independent-web","identifier":"com.example.independentnoteweb","preset":"fullstack","features":["d1","kv","r2","services"]},"kind":"project","clean":true,"supportSha":"8f29d12c808fe1cf9fa3f30a23f01e38b88bc488","canonical":true},"inputAfter":{"featureSha":"cbbbebea7045e1971b2fbf29af800201129c11f4","contentId":"57491160f7a8246813051efe63b845a79014e9c2c08a24d641d5c408ef6c610d","origin":{"sha":"653abf13ae3a54b2434c422ab8dc6800822387c3","dirty":false,"contentId":"00587edc5d0a1e4aea804ef2c5f0d75783222fdddfa32000dce438e3dfa3cb39"},"configuration":{"name":"independent-note-web","scope":"@independent-web","identifier":"com.example.independentnoteweb","preset":"fullstack","features":["d1","kv","r2","services"]},"kind":"project","clean":true,"supportSha":"8f29d12c808fe1cf9fa3f30a23f01e38b88bc488","canonical":true},"inputGuardError":null,"environment":{"TMPDIR":"/home/runner/work/super-starter/super-starter/feature/.state/t","TMP":"/home/runner/work/super-starter/super-starter/feature/.state/t","TEMP":"/home/runner/work/super-starter/super-starter/feature/.state/t","WRANGLER_LOG_PATH":"/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"},"cwd":"/home/runner/work/super-starter/super-starter/feature","startedAt":"2026-10-12T19:41:38.509Z","milliseconds":128,"log":"logs/14-doctor.log"}

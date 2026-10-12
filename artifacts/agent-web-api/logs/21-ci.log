@@ -1,0 +1,1337 @@
+{"phase":"ci","argv":["pnpm","gate:ci","--","--base","e07fcdd5dd5d0bf7fea65d719826b6719b173119","--checks","javascript"],"inputBefore":{"featureSha":"cbbbebea7045e1971b2fbf29af800201129c11f4","contentId":"57491160f7a8246813051efe63b845a79014e9c2c08a24d641d5c408ef6c610d","origin":{"sha":"653abf13ae3a54b2434c422ab8dc6800822387c3","dirty":false,"contentId":"00587edc5d0a1e4aea804ef2c5f0d75783222fdddfa32000dce438e3dfa3cb39"},"configuration":{"name":"independent-note-web","scope":"@independent-web","identifier":"com.example.independentnoteweb","preset":"fullstack","features":["d1","kv","r2","services"]},"kind":"project","clean":true,"supportSha":"8f29d12c808fe1cf9fa3f30a23f01e38b88bc488","canonical":true},"cwd":"/home/runner/work/super-starter/super-starter/feature","startedAt":"2026-10-12T19:48:09.072Z","environment":{"TMPDIR":"/home/runner/work/super-starter/super-starter/feature/.state/t","TMP":"/home/runner/work/super-starter/super-starter/feature/.state/t","TEMP":"/home/runner/work/super-starter/super-starter/feature/.state/t","WRANGLER_LOG_PATH":"/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"}}
+$ node tools/quality/gate.ts ci -- --base e07fcdd5dd5d0bf7fea65d719826b6719b173119 --checks javascript
+CHECK static: Repository-wide static checks are lightweight and run once
+$ node tools/quality/check.ts
+pass: All 185 files are correctly formatted (124ms, 4 threads)
+pass: Found no warnings, lint errors, or type errors in 135 files (1.3s, 4 threads)
+Static quality, runtime boundaries and documentation passed
+CHECK tools-unit: Shared tooling contracts
+$ node tools/quality/vitest.ts
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/home/runner/work/super-starter/super-starter/feature[39m
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2mkeeps added web shared UI owned when syncing an API reference
+[22m[39m{
+  "root": "/home/runner/work/super-starter/super-starter/feature/.state/t/reference-shared-sync-prn2Kn",
+  "writes": 33,
+  "remove": [],
+  "dryRun": false
+}
+
+[90mstdout[2m | tools/generators/format.test.ts[2m > [22m[2mcold app addition[2m > [22m[2mfinalizes a cold add with absent SDK and preserves user edits
+[22m[39m{
+  "root": "/home/runner/work/super-starter/super-starter/feature/.state/t/starter-cold-add-IX9dFJ",
+  "writes": 14,
+  "remove": [],
+  "dryRun": false
+}
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2mkeeps added web shared UI owned when syncing an API reference
+[22m[39m{
+  "root": "/home/runner/work/super-starter/super-starter/feature/.state/t/reference-shared-sync-prn2Kn",
+  "writes": 26,
+  "remove": [],
+  "dryRun": false
+}
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2mkeeps added web shared UI owned when syncing an API reference
+[22m[39mReference matches canonical blueprints
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2mkeeps added desktop shared UI owned when syncing an API reference
+[22m[39m{
+  "root": "/home/runner/work/super-starter/super-starter/feature/.state/t/reference-shared-sync-4Yvwdu",
+  "writes": 29,
+  "remove": [],
+  "dryRun": false
+}
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2mkeeps added desktop shared UI owned when syncing an API reference
+[22m[39m{
+  "root": "/home/runner/work/super-starter/super-starter/feature/.state/t/reference-shared-sync-4Yvwdu",
+  "writes": 18,
+  "remove": [],
+  "dryRun": false
+}
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2mkeeps added desktop shared UI owned when syncing an API reference
+[22m[39mReference matches canonical blueprints
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2mregenerates an added reference service and protects edits without changing the original app
+[22m[39m{
+  "root": "/home/runner/work/super-starter/super-starter/feature/.state/t/reference-service-sync-01WYOv",
+  "writes": 14,
+  "remove": [],
+  "dryRun": false
+}
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2mregenerates an added reference service and protects edits without changing the original app
+[22m[39m{
+  "root": "/home/runner/work/super-starter/super-starter/feature/.state/t/reference-service-sync-01WYOv",
+  "writes": 11,
+  "remove": [],
+  "dryRun": false
+}
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2mregenerates an added reference service and protects edits without changing the original app
+[22m[39mReference matches canonical blueprints
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2msyncs the reference lock baseline after dependency updates without rewriting the lock
+[22m[39m{
+  "root": "/home/runner/work/super-starter/super-starter/feature/.state/t/reference-lock-sync-vxqVeA",
+  "writes": 1,
+  "remove": [],
+  "dryRun": false
+}
+
+[90mstdout[2m | tools/generators/baseline.test.ts[2m > [22m[2msyncs the reference lock baseline after dependency updates without rewriting the lock
+[22m[39mReference matches canonical blueprints
+
+ [32m✓[39m tools/generators/baseline.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 10578[2mms[22m[39m
+   [33m[2m✓[22m[39m keeps added web shared UI owned when syncing an API reference[33m 4155[2mms[22m[39m
+   [33m[2m✓[22m[39m keeps added desktop shared UI owned when syncing an API reference[33m 2005[2mms[22m[39m
+   [33m[2m✓[22m[39m regenerates an added reference service and protects edits without changing the original app[33m 2402[2mms[22m[39m
+   [33m[2m✓[22m[39m syncs the reference lock baseline after dependency updates without rewriting the lock[33m 1483[2mms[22m[39m
+   [33m[2m✓[22m[39m renders identical frozen Cargo locks and binding-free config from LF and CRLF blueprints[33m 490[2mms[22m[39m
+[90mstdout[2m | tools/generators/format.test.ts[2m > [22m[2mcold app addition[2m > [22m[2mfinalizes a cold add with partial SDK and preserves user edits
+[22m[39m{
+  "root": "/home/runner/work/super-starter/super-starter/feature/.state/t/starter-cold-add-FlinQy",
+  "writes": 14,
+  "remove": [],
+  "dryRun": false
+}
+
+ [32m✓[39m tools/quality/acceptance.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 4582[2mms[22m[39m
+   [33m[2m✓[22m[39m selects a complete canonical baseline after an earlier passed feature report[33m 2752[2mms[22m[39m
+   [33m[2m✓[22m[39m requires exact-source actual Windows Worker commands and rejects other OS or incomplete reports[33m 1745[2mms[22m[39m
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+ [32m✓[39m tools/quality/rehearsal-boundary.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 4398[2mms[22m[39m
+   [33m[2m✓[22m[39m isolates hooks before setup inside an ignored committed parent[33m 3572[2mms[22m[39m
+   [33m[2m✓[22m[39m isolates faults before setup inside an ignored committed parent[33m 407[2mms[22m[39m
+   [33m[2m✓[22m[39m isolates lifecycle before setup inside an ignored committed parent[33m 417[2mms[22m[39m
+[startup-fixture] $ node server.cjs
+[startup-fixture] http://127.0.0.1:33719
+[90mstdout[2m | tools/dev-environment/servers.test.ts[2m > [22m[2mcancels a pending start before spawn and permits an explicit real-server restart
+[22m[39mREADY startup-fixture http://127.0.0.1:33719 129ms; registry /home/runner/work/super-starter/super-starter/feature/.state/t/starter-cancel-poguqM/.state/registry/session-qxKEbp
+
+[startup-fixture] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL[startup-fixture] 
+
+  × "pnpm recursive run" failed in /home/runner/work/super-starter/super-
+  │ starter/feature/.state/t/starter-cancel-poguqM
+
+[startup-fixture] $ node server.cjs
+[startup-fixture] http://127.0.0.1:34859
+[90mstdout[2m | tools/dev-environment/servers.test.ts[2m > [22m[2mcancels a pending start before spawn and permits an explicit real-server restart
+[22m[39mREADY startup-fixture http://127.0.0.1:34859 106ms; registry /home/runner/work/super-starter/super-starter/feature/.state/t/starter-cancel-poguqM/.state/registry/session-OZJXha
+
+[startup-fixture] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+[startup-fixture]   × "pnpm recursive run" failed in /home/runner/work/super-starter/super-
+  │ starter/feature/.state/t/starter-cancel-poguqM
+
+[lifecycle-exit-fixture] $ node server.cjs
+[lifecycle-exit-fixture] http://127.0.0.1:38309
+[90mstdout[2m | tools/dev-environment/servers.test.ts[2m > [22m[2mkeeps stopped lifecycle exits out of an immediate restart and reports unexpected termination
+[22m[39mREADY lifecycle-exit-fixture http://127.0.0.1:38309 107ms; registry /home/runner/work/super-starter/super-starter/feature/.state/t/starter-lifecycle-exit-tv1njU/.state/registry/session-9AgQ1e
+
+[lifecycle-exit-fixture] $ node server.cjs
+[lifecycle-exit-fixture] http://127.0.0.1:42921
+[90mstdout[2m | tools/dev-environment/servers.test.ts[2m > [22m[2mkeeps stopped lifecycle exits out of an immediate restart and reports unexpected termination
+[22m[39mREADY lifecycle-exit-fixture http://127.0.0.1:42921 104ms; registry /home/runner/work/super-starter/super-starter/feature/.state/t/starter-lifecycle-exit-tv1njU/.state/registry/session-jLafm5
+
+[lifecycle-exit-fixture] $ node server.cjs
+[lifecycle-exit-fixture] http://127.0.0.1:38409
+[90mstdout[2m | tools/dev-environment/servers.test.ts[2m > [22m[2mkeeps stopped lifecycle exits out of an immediate restart and reports unexpected termination
+[22m[39mREADY lifecycle-exit-fixture http://127.0.0.1:38409 104ms; registry /home/runner/work/super-starter/super-starter/feature/.state/t/starter-lifecycle-exit-tv1njU/.state/registry/session-MuzUN4
+
+[lifecycle-exit-fixture] $ node server.cjs
+[lifecycle-exit-fixture] http://127.0.0.1:35747
+[90mstdout[2m | tools/dev-environment/servers.test.ts[2m > [22m[2mkeeps stopped lifecycle exits out of an immediate restart and reports unexpected termination
+[22m[39mREADY lifecycle-exit-fixture http://127.0.0.1:35747 105ms; registry /home/runner/work/super-starter/super-starter/feature/.state/t/starter-lifecycle-exit-tv1njU/.state/registry/session-2g4Xcj
+
+[lifecycle-exit-fixture] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+[lifecycle-exit-fixture]   × "pnpm recursive run" failed in /home/runner/work/super-starter/super-
+  │ starter/feature/.state/t/starter-lifecycle-exit-tv1njU
+
+[colored-url-fixture] $ node server.cjs
+[colored-url-fixture] Local: [36mhttp://127.0.0.1:[[colored-url-fixture] 1m34559[22m/[39m
+[90mstdout[2m | tools/dev-environment/servers.test.ts[2m > [22m[2mprobes an owned server whose logged URL contains split terminal color sequences
+[22m[39mREADY colored-url-fixture http://127.0.0.1:34559 105ms; registry /home/runner/work/super-starter/super-starter/feature/.state/t/starter-colored-url-XjoARL/.state/registry/session-pXn76u
+
+[colored-url-fixture] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+[colored-url-fixture]   × "pnpm recursive run" failed in /home/runner/work/super-starter/super-
+  │ starter/feature/.state/t/starter-colored-url-XjoARL
+
+[health-body-fixture] $ node server.cjs
+[health-body-fixture] http://127.0.0.1:46059
+[90mstdout[2m | tools/dev-environment/servers.test.ts[2m > [22m[2mwaits for the health body and retries a probe whose body exceeds its deadline
+[22m[39mREADY health-body-fixture http://127.0.0.1:46059 1455ms; registry /home/runner/work/super-starter/super-starter/feature/.state/t/starter-health-body-ukBvCF/.state/registry/session-Hii5QW
+
+[health-body-fixture] Error: [health-body-fixture] ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in /home/runner/work/super-starter/super-
+  │ starter/feature/.state/t/starter-health-body-ukBvCF
+
+ [32m✓[39m tools/dev-environment/servers.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 2691[2mms[22m[39m
+   [33m[2m✓[22m[39m cancels a pending start before spawn and permits an explicit real-server restart[33m 361[2mms[22m[39m
+   [33m[2m✓[22m[39m keeps stopped lifecycle exits out of an immediate restart and reports unexpected termination[33m 466[2mms[22m[39m
+   [33m[2m✓[22m[39m waits for the health body and retries a probe whose body exceeds its deadline[33m 1701[2mms[22m[39m
+ [32m✓[39m tools/process.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 2053[2mms[22m[39m
+   [33m[2m✓[22m[39m forwards Worker build interruption to its detached non-cooperating child[33m 1155[2mms[22m[39m
+   [33m[2m✓[22m[39m cleans an orphaned descendant while preserving an unrelated server[33m 450[2mms[22m[39m
+ [32m✓[39m tools/quality/ci-plan.test.ts [2m([22m[2m17 tests[22m[2m)[22m[33m 1282[2mms[22m[39m
+   [32m✓[39m minimal CI execution with an actual committed diff [2m(16)[22m
+     [33m[2m✓[22m[39m selects real signal verification at application producer and Result boundaries[33m 637[2mms[22m[39m
+ [32m✓[39m tools/security/execute.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 540[2mms[22m[39m
+   [33m[2m✓[22m[39m fails a hung real scanner process and rejects executable startup errors[33m 506[2mms[22m[39m
+ [32m✓[39m tools/generators/verify-cli.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 319[2mms[22m[39m
+   [33m[2m✓[22m[39m rejects ambiguous, unknown and duplicate case selection before writing a generated destination[33m 318[2mms[22m[39m
+ [32m✓[39m tools/o11y/verify.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 200[2mms[22m[39m
+ [32m✓[39m tools/generators/format.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 27550[2mms[22m[39m
+   [32m✓[39m cold app addition [2m(2)[22m
+     [33m[2m✓[22m[39m finalizes a cold add with absent SDK and preserves user edits[33m 9090[2mms[22m[39m
+     [33m[2m✓[22m[39m finalizes a cold add with partial SDK and preserves user edits[33m 8885[2mms[22m[39m
+   [33m[2m✓[22m[39m matches the owning SDK CLI for mixed scripts, ignored build output and JSON[33m 1060[2mms[22m[39m
+   [33m[2m✓[22m[39m retains CLI semantics with custom formatter option[33m 510[2mms[22m[39m
+   [33m[2m✓[22m[39m retains CLI semantics with editorconfig[33m 540[2mms[22m[39m
+   [33m[2m✓[22m[39m invalidates cached formatting across roots and after a side configuration change[33m 1162[2mms[22m[39m
+   [33m[2m✓[22m[39m matches CLI stdin behavior for a gitignored source file and CLI runtime metadata[33m 333[2mms[22m[39m
+   [33m[2m✓[22m[39m reports malformed formatting before naturally draining a tracked SDK child[33m 3212[2mms[22m[39m
+ [32m✓[39m tools/generators/files.test.ts [2m([22m[2m23 tests[22m[2m)[22m[32m 247[2mms[22m[39m
+ [32m✓[39m tools/quality/hooks-cleanup.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 252[2mms[22m[39m
+ [32m✓[39m tools/dev-environment/doctor-cli.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 203[2mms[22m[39m
+ [32m✓[39m tools/o11y/identity.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 165[2mms[22m[39m
+ [32m✓[39m tools/cloudflare/database.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 112[2mms[22m[39m
+ [32m✓[39m tools/quality/evidence.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 105[2mms[22m[39m
+[90mstdout[2m | tools/quality/fixture.test.ts[2m > [22m[2misolates retained verification output from parent ignore rules and hook configuration
+[22m[39mRepository-local Git hooks installed
+Repository-local Git hooks installed
+
+ [32m✓[39m tools/quality/fixture.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 95[2mms[22m[39m
+[90mstdout[2m | tools/quality/hooks-install.test.ts[2m > [22m[2mprotects parent Git metadata during foreign hook installation and linked cleanup
+[22m[39mRepository-local Git hooks installed
+
+ [32m✓[39m tools/quality/hooks-install.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 87[2mms[22m[39m
+[90mstdout[2m | tools/quality/checkout.test.ts[2m > [22m[2mrejects preparation edits and first-party untracked files against the requested commit
+[22m[39mVerified immutable checkout e5305ff4b94afe7ea921a0fdee26f14605e5e455
+
+ [32m✓[39m tools/quality/checkout.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 102[2mms[22m[39m
+ [32m✓[39m tools/cloudflare/transport-diagnostics.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 56[2mms[22m[39m
+ [32m✓[39m tools/quality/structure.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 25[2mms[22m[39m
+ [32m✓[39m tools/quality/failure-handling.test.ts [2m([22m[2m14 tests[22m[2m)[22m[32m 38[2mms[22m[39m
+ [32m✓[39m tools/process.windows.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 21[2mms[22m[39m
+ [32m✓[39m tools/quality/documentation.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 21[2mms[22m[39m
+ [32m✓[39m tools/errors/generate.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 18[2mms[22m[39m
+ [32m✓[39m tools/security/policy.test.ts [2m([22m[2m25 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m tools/o11y/native-evidence.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m tools/dev-environment/doctor.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m tools/process-darwin.test.ts [2m([22m[2m14 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m tools/quality/lighthouse.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m tools/generators/options.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m tools/cloudflare/preview.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 5[2mms[22m[39m
+ [32m✓[39m tools/o11y/policy.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 4[2mms[22m[39m
+ [32m✓[39m tools/quality/graph.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+ [32m✓[39m tools/quality/sanitize.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 3[2mms[22m[39m
+ [32m✓[39m tools/cloudflare/deployment.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 4[2mms[22m[39m
+ [32m✓[39m tools/quality/test-results.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 3[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m37 passed[39m[22m[90m (37)[39m
+[2m      Tests [22m [1m[32m212 passed[39m[22m[90m (212)[39m
+[2m   Start at [22m 19:48:12
+[2m   Duration [22m 29.91s[2m (tests 98%, import 1%, transform 1%)[22m
+
+JSON report written to /home/runner/work/super-starter/super-starter/feature/artifacts/tests-default.json
+Executed 212 required test cases
+CHECK @independent-web/api/unit: Selected worker @independent-web/api; full phase
+$ node ../../tools/quality/vitest.ts --config vitest.config.ts
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/home/runner/work/super-starter/super-starter/feature/packages/api[39m
+
+ [32m✓[39m test/unit.test.ts [2m([22m[2m22 tests[22m[2m)[22m[33m 3098[2mms[22m[39m
+   [32m✓[39m API validation and safe publication defaults [2m(22)[22m
+     [33m[2m✓[22m[39m bounds a stalled ingress even when its cancellation never settles[33m 3004[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m22 passed[39m[22m[90m (22)[39m
+[2m   Start at [22m 19:48:43
+[2m   Duration [22m 3.30s[2m (tests 96%, import 2%, transform 2%)[22m
+
+JSON report written to /home/runner/work/super-starter/super-starter/feature/packages/api/artifacts/tests-vitest.config.ts.json
+Executed 22 required test cases
+CHECK @independent-web/api/build: Selected worker @independent-web/api; full phase
+$ node ../../tools/cloudflare/build.ts
+No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+├  Build
+│  Delegating to Vite
+transforming...
+✓ 254 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json    0.15 kB │ gzip:  0.11 kB
+.cloudflare/output/v0/workers/default/bundle/index.js             297.87 kB │ gzip: 69.39 kB
+
+[32m✓ built in 48ms[39m
+◆  Build complete
+CHECK @independent-web/api/runtime: Selected worker @independent-web/api; full phase
+$ node ../../tools/cloudflare/runtime.ts
+$ node ../../tools/cloudflare/build.ts
+No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+├  Build
+│  Delegating to Vite
+transforming...
+✓ 254 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json    0.15 kB │ gzip:  0.11 kB
+.cloudflare/output/v0/workers/default/bundle/index.js             297.87 kB │ gzip: 69.39 kB
+
+[32m✓ built in 48ms[39m
+◆  Build complete
+
+ ⛅️ wrangler 4.149.0
+────────────────────
+Resource location: local 
+
+Use --remote if you want to access the remote instance.
+
+Migrations to be applied:
+┌────────────────┐
+│ name           │
+├────────────────┤
+│ 0001_notes.sql │
+└────────────────┘
+? About to apply 1 migration(s)
+Your database may not be available to serve requests during the migration, continue?
+🤖 Using fallback value in non-interactive context: yes
+🌀 Executing on local database DATABASE (9c890030-83ac-4fb8-8e26-f973bdef83a2) from ../../.state/t/starter-runtime-Ipy7aJ/api/v3/d1:
+🌀 To execute on your remote database, add a --remote flag to your wrangler command.
+🚣 2 commands executed successfully.
+┌────────────────┬────────┐
+│ name           │ status │
+├────────────────┼────────┤
+│ 0001_notes.sql │ ✅     │
+└────────────────┴────────┘
+
+ ⛅️ wrangler 4.149.0
+────────────────────
+Resource location: local 
+
+Use --remote if you want to access the remote instance.
+
+🌀 Executing on local database DATABASE (9c890030-83ac-4fb8-8e26-f973bdef83a2) from ../../.state/t/starter-runtime-Ipy7aJ/api/v3/d1:
+🌀 To execute on your remote database, add a --remote flag to your wrangler command.
+🚣 1 command executed successfully.
+[
+  {
+    "results": [],
+    "success": true,
+    "meta": {
+      "duration": 0
+    }
+  }
+]
+[@independent-web/api] $ cf dev --mode offline
+[@independent-web/api] No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+[@independent-web/api]   [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m44621[22m/[39m
+READY @independent-web/api http://127.0.0.1:44621 1544ms; registry /home/runner/work/super-starter/super-starter/feature/.state/t/starter-runtime-Ipy7aJ/registry/session-VDvKe4
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/home/runner/work/super-starter/super-starter/feature/packages/api[39m
+
+ [32m✓[39m test/runtime.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 348[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m5 passed[39m[22m[90m (5)[39m
+[2m   Start at [22m 19:48:52
+[2m   Duration [22m 488ms[2m (tests 83%, import 9%, transform 7%, worker 1%)[22m
+
+JSON report written to /home/runner/work/super-starter/super-starter/feature/packages/api/artifacts/tests-vitest.runtime.config.ts.json
+Executed 5 required test cases
+[@independent-web/api] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+[@independent-web/api]   × "pnpm recursive run" failed in /home/runner/work/super-starter/super-
+  │ starter/feature/packages/api
+
+CHECK @independent-web/api/restart: Selected worker @independent-web/api; full phase
+$ node test/restart.ts
+$ node ../../tools/cloudflare/build.ts
+No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+├  Build
+│  Delegating to Vite
+transforming...
+✓ 254 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json    0.15 kB │ gzip:  0.11 kB
+.cloudflare/output/v0/workers/default/bundle/index.js             297.87 kB │ gzip: 69.39 kB
+
+[32m✓ built in 49ms[39m
+◆  Build complete
+
+ ⛅️ wrangler 4.149.0
+────────────────────
+Resource location: local 
+
+Use --remote if you want to access the remote instance.
+
+Migrations to be applied:
+┌────────────────┐
+│ name           │
+├────────────────┤
+│ 0001_notes.sql │
+└────────────────┘
+? About to apply 1 migration(s)
+Your database may not be available to serve requests during the migration, continue?
+🤖 Using fallback value in non-interactive context: yes
+🌀 Executing on local database DATABASE (9c890030-83ac-4fb8-8e26-f973bdef83a2) from ../../.state/t/starter-persistence-kUZX1A/api/v3/d1:
+🌀 To execute on your remote database, add a --remote flag to your wrangler command.
+🚣 2 commands executed successfully.
+┌────────────────┬────────┐
+│ name           │ status │
+├────────────────┼────────┤
+│ 0001_notes.sql │ ✅     │
+└────────────────┴────────┘
+
+ ⛅️ wrangler 4.149.0
+────────────────────
+Resource location: local 
+
+Use --remote if you want to access the remote instance.
+
+🌀 Executing on local database DATABASE (9c890030-83ac-4fb8-8e26-f973bdef83a2) from ../../.state/t/starter-persistence-kUZX1A/api/v3/d1:
+🌀 To execute on your remote database, add a --remote flag to your wrangler command.
+🚣 1 command executed successfully.
+[
+  {
+    "results": [],
+    "success": true,
+    "meta": {
+      "duration": 1
+    }
+  }
+]
+[@independent-web/api] $ cf dev --mode offline
+[@independent-web/api] No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+[@independent-web/api]   [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m38189[22m/[39m
+READY @independent-web/api http://127.0.0.1:38189 1645ms; registry /home/runner/work/super-starter/super-starter/feature/.state/t/starter-persistence-kUZX1A/registry/session-PaGKPY
+[@independent-web/api] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+[@independent-web/api]   × "pnpm recursive run" failed in /home/runner/work/super-starter/super-
+  │ starter/feature/packages/api
+
+$ node ../../tools/cloudflare/build.ts
+No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+├  Build
+│  Delegating to Vite
+transforming...
+✓ 254 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json    0.15 kB │ gzip:  0.11 kB
+.cloudflare/output/v0/workers/default/bundle/index.js             297.87 kB │ gzip: 69.39 kB
+
+[32m✓ built in 49ms[39m
+◆  Build complete
+
+ ⛅️ wrangler 4.149.0
+────────────────────
+Resource location: local 
+
+Use --remote if you want to access the remote instance.
+
+✅ No migrations to apply!
+[@independent-web/api] $ cf dev --mode offline
+[@independent-web/api] No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+[@independent-web/api]   [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m35227[22m/[39m
+READY @independent-web/api http://127.0.0.1:35227 1626ms; registry /home/runner/work/super-starter/super-starter/feature/.state/t/starter-persistence-kUZX1A/registry/session-aD0Qvb
+Real D1 migration reapply, seed and restart persistence passed
+[@independent-web/api] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+[@independent-web/api]   × "pnpm recursive run" failed in /home/runner/work/super-starter/super-
+  │ starter/feature/packages/api
+
+CHECK @independent-web/web/unit: Selected worker @independent-web/web; full phase
+$ node ../../tools/quality/vitest.ts --config vitest.config.ts
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/home/runner/work/super-starter/super-starter/feature/packages/web[39m
+
+ [32m✓[39m test/assets.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 35[2mms[22m[39m
+ [32m✓[39m test/unit.test.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 21[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[32m13 passed[39m[22m[90m (13)[39m
+[2m   Start at [22m 19:49:02
+[2m   Duration [22m 229ms[2m (import 38%, transform 33%, tests 26%, worker 2%)[22m
+
+JSON report written to /home/runner/work/super-starter/super-starter/feature/packages/web/artifacts/tests-vitest.config.ts.json
+Executed 13 required test cases
+CHECK @independent-web/web/build: Selected worker @independent-web/web; full phase
+$ node ../../tools/cloudflare/build.ts
+transforming...
+✓ 364 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/assets/assets/index-CgNpmhLx.css              6.81 kB │ gzip:  2.30 kB
+.cloudflare/output/v0/workers/default/assets/assets/about-CjEoILFc.js               0.42 kB │ gzip:  0.30 kB
+.cloudflare/output/v0/workers/default/assets/assets/rolldown-runtime-CbXtAM7H.js    0.58 kB │ gzip:  0.36 kB
+.cloudflare/output/v0/workers/default/assets/assets/react-BuqwL3YU.js               8.24 kB │ gzip:  3.11 kB
+.cloudflare/output/v0/workers/default/assets/assets/index-CZh5A4Dt.js              24.94 kB │ gzip:  8.62 kB
+.cloudflare/output/v0/workers/default/assets/assets/routes-5p9L3qlQ.js             46.67 kB │ gzip: 15.52 kB
+.cloudflare/output/v0/workers/default/assets/assets/client-l3f2aLp-.js            120.36 kB │ gzip: 41.05 kB
+.cloudflare/output/v0/workers/default/assets/assets/react-dom-uP1KSDv5.js         211.21 kB │ gzip: 65.86 kB
+
+[32m✓ built in 214ms[39m
+transforming...
+✓ 436 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json                              3.45 kB │ gzip:   0.71 kB
+.cloudflare/output/v0/workers/default/bundle/assets/router-CgNpmhLx.css                       6.81 kB │ gzip:   2.30 kB
+.cloudflare/output/v0/workers/default/bundle/assets/empty-plugin-adapters-CVykojMw.js         0.28 kB │ gzip:   0.18 kB
+.cloudflare/output/v0/workers/default/bundle/assets/start-DWcS3WmS.js                         0.29 kB │ gzip:   0.22 kB
+.cloudflare/output/v0/workers/default/bundle/assets/about-NjiltK0E.js                         0.72 kB │ gzip:   0.41 kB
+.cloudflare/output/v0/workers/default/bundle/assets/jsx-runtime-BZtfA-4f.js                   2.59 kB │ gzip:   1.11 kB
+.cloudflare/output/v0/workers/default/bundle/assets/_tanstack-start-manifest_v-D-ZYyJS-.js    7.84 kB │ gzip:   2.68 kB
+.cloudflare/output/v0/workers/default/bundle/assets/routes-CrMWXuzH.js                       11.88 kB │ gzip:   3.28 kB
+.cloudflare/output/v0/workers/default/bundle/assets/react-DOK9jBYa.js                        16.57 kB │ gzip:   4.47 kB
+.cloudflare/output/v0/workers/default/bundle/assets/router-NHLtMHcM.js                       40.80 kB │ gzip:  10.58 kB
+.cloudflare/output/v0/workers/default/bundle/assets/Match-BAqK4OKj.js                       145.22 kB │ gzip:  36.43 kB
+.cloudflare/output/v0/workers/default/bundle/assets/src-BqOr-Xkq.js                         161.16 kB │ gzip:  39.35 kB
+.cloudflare/output/v0/workers/default/bundle/index.js                                       724.52 kB │ gzip: 150.55 kB
+
+[32m✓ built in 263ms[39m
+CHECK @independent-web/web/runtime: Selected worker @independent-web/web; full phase
+$ node ../../tools/cloudflare/runtime.ts
+$ node ../../tools/cloudflare/build.ts
+No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+├  Build
+│  Delegating to Vite
+transforming...
+✓ 254 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json    0.15 kB │ gzip:  0.11 kB
+.cloudflare/output/v0/workers/default/bundle/index.js             297.87 kB │ gzip: 69.39 kB
+
+[32m✓ built in 49ms[39m
+◆  Build complete
+
+ ⛅️ wrangler 4.149.0
+────────────────────
+Resource location: local 
+
+Use --remote if you want to access the remote instance.
+
+Migrations to be applied:
+┌────────────────┐
+│ name           │
+├────────────────┤
+│ 0001_notes.sql │
+└────────────────┘
+? About to apply 1 migration(s)
+Your database may not be available to serve requests during the migration, continue?
+🤖 Using fallback value in non-interactive context: yes
+🌀 Executing on local database DATABASE (9c890030-83ac-4fb8-8e26-f973bdef83a2) from ../../.state/t/starter-runtime-PGO8nc/api/v3/d1:
+🌀 To execute on your remote database, add a --remote flag to your wrangler command.
+🚣 2 commands executed successfully.
+┌────────────────┬────────┐
+│ name           │ status │
+├────────────────┼────────┤
+│ 0001_notes.sql │ ✅     │
+└────────────────┴────────┘
+
+ ⛅️ wrangler 4.149.0
+────────────────────
+Resource location: local 
+
+Use --remote if you want to access the remote instance.
+
+🌀 Executing on local database DATABASE (9c890030-83ac-4fb8-8e26-f973bdef83a2) from ../../.state/t/starter-runtime-PGO8nc/api/v3/d1:
+🌀 To execute on your remote database, add a --remote flag to your wrangler command.
+🚣 1 command executed successfully.
+[
+  {
+    "results": [],
+    "success": true,
+    "meta": {
+      "duration": 0
+    }
+  }
+]
+[@independent-web/api] $ cf dev --mode offline
+[@independent-web/api] No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+[@independent-web/api]   [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m39853[22m/[39m
+READY @independent-web/api http://127.0.0.1:39853 1644ms; registry /home/runner/work/super-starter/super-starter/feature/.state/t/starter-runtime-PGO8nc/registry/session-eAeYtd
+[@independent-web/web] $ vp dev --mode offline
+[@independent-web/web] 
+  [34m[1mVITE+[22m v1.1.0[39m  [42m [1moffline[22m [49m  
+
+[@independent-web/web]   [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m33677[22m/[39m
+READY @independent-web/web http://127.0.0.1:33677 2626ms; registry /home/runner/work/super-starter/super-starter/feature/.state/t/starter-runtime-PGO8nc/registry/session-eAeYtd
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/home/runner/work/super-starter/super-starter/feature/packages/web[39m
+
+ [32m✓[39m test/runtime.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 376[2mms[22m[39m
+   [32m✓[39m Web Worker and same-origin API [2m(2)[22m
+     [33m[2m✓[22m[39m returns server-rendered HTML and communicates through the selected transport[33m 305[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m   Start at [22m 19:49:12
+[2m   Duration [22m 512ms[2m (tests 85%, import 8%, transform 6%, worker 1%)[22m
+
+JSON report written to /home/runner/work/super-starter/super-starter/feature/packages/web/artifacts/tests-vitest.runtime.config.ts.json
+Executed 2 required test cases
+[@independent-web/web] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+[@independent-web/web]   × "pnpm recursive run" failed in /home/runner/work/super-starter/super-
+  │ starter/feature/packages/web
+
+[@independent-web/api] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+[@independent-web/api]   × "pnpm recursive run" failed in /home/runner/work/super-starter/super-
+  │ starter/feature/packages/api
+
+CHECK @independent-web/web/browser: Selected worker @independent-web/web; full phase
+$ node ../../tools/quality/browser.ts
+$ node ../../tools/cloudflare/build.ts
+No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+├  Build
+│  Delegating to Vite
+transforming...
+✓ 254 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json    0.15 kB │ gzip:  0.11 kB
+.cloudflare/output/v0/workers/default/bundle/index.js             297.87 kB │ gzip: 69.39 kB
+
+[32m✓ built in 47ms[39m
+◆  Build complete
+
+ ⛅️ wrangler 4.149.0
+────────────────────
+Resource location: local 
+
+Use --remote if you want to access the remote instance.
+
+Migrations to be applied:
+┌────────────────┐
+│ name           │
+├────────────────┤
+│ 0001_notes.sql │
+└────────────────┘
+? About to apply 1 migration(s)
+Your database may not be available to serve requests during the migration, continue?
+🤖 Using fallback value in non-interactive context: yes
+🌀 Executing on local database DATABASE (9c890030-83ac-4fb8-8e26-f973bdef83a2) from ../../.state/t/starter-browser-8ageqP/api/v3/d1:
+🌀 To execute on your remote database, add a --remote flag to your wrangler command.
+🚣 2 commands executed successfully.
+┌────────────────┬────────┐
+│ name           │ status │
+├────────────────┼────────┤
+│ 0001_notes.sql │ ✅     │
+└────────────────┴────────┘
+
+ ⛅️ wrangler 4.149.0
+────────────────────
+Resource location: local 
+
+Use --remote if you want to access the remote instance.
+
+🌀 Executing on local database DATABASE (9c890030-83ac-4fb8-8e26-f973bdef83a2) from ../../.state/t/starter-browser-8ageqP/api/v3/d1:
+🌀 To execute on your remote database, add a --remote flag to your wrangler command.
+🚣 1 command executed successfully.
+[
+  {
+    "results": [],
+    "success": true,
+    "meta": {
+      "duration": 1
+    }
+  }
+]
+[@independent-web/api] $ cf dev --mode offline
+[@independent-web/api] No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+[@independent-web/api]   [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m44309[22m/[39m
+READY @independent-web/api http://127.0.0.1:44309 1545ms; registry /home/runner/work/super-starter/super-starter/feature/.state/t/starter-browser-8ageqP/registry/session-ty5xbB
+[@independent-web/web] $ vp dev --mode offline
+[@independent-web/web] 
+  [34m[1mVITE+[22m v1.1.0[39m  [42m [1moffline[22m [49m  
+
+[@independent-web/web]   [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m39247[22m/[39m
+READY @independent-web/web http://127.0.0.1:39247 2631ms; registry /home/runner/work/super-starter/super-starter/feature/.state/t/starter-browser-8ageqP/registry/session-ty5xbB
+
+Running 6 tests using 1 worker
+
+  ✓  1 test/browser/notes.spec.ts:6:1 › styled SSR and safe input remain available while hydration is loading (1.4s)
+  ✓  2 test/browser/notes.spec.ts:45:1 › SSR, hydration, CRUD, same-origin export, routes and accessibility (1.9s)
+  ✓  3 test/browser/notes.spec.ts:85:1 › count failure after a successful create preserves notes and supports retry (1.7s)
+  ✓  4 test/browser/notes.spec.ts:129:1 › a delayed initial count cannot replace a newer count after a create (1.5s)
+  ✓  5 test/browser/notes.spec.ts:179:1 › cold static page preserves styled native navigation and the destination hydrates (1.6s)
+  ✓  6 test/browser/notes.spec.ts:226:1 › loading, empty and API-error states have reviewed visual baselines (2.1s)
+
+  6 passed (10.8s)
+Executed 6 required browser cases
+[@independent-web/web] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+[@independent-web/web]   × "pnpm recursive run" failed in /home/runner/work/super-starter/super-
+  │ starter/feature/packages/web
+
+[@independent-web/api] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in /home/runner/work/super-starter/super-
+  │ starter/feature/packages/api[@independent-web/api] 
+
+CHECK @independent-web/web/browser-production: Selected worker @independent-web/web; full phase
+$ node ../../tools/quality/browser.ts --preview
+$ node ../../tools/cloudflare/build.ts
+No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+├  Build
+│  Delegating to Vite
+transforming...
+✓ 254 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json    0.15 kB │ gzip:  0.11 kB
+.cloudflare/output/v0/workers/default/bundle/index.js             297.87 kB │ gzip: 69.39 kB
+
+[32m✓ built in 76ms[39m
+◆  Build complete
+
+ ⛅️ wrangler 4.149.0
+────────────────────
+Resource location: local 
+
+Use --remote if you want to access the remote instance.
+
+Migrations to be applied:
+┌────────────────┐
+│ name           │
+├────────────────┤
+│ 0001_notes.sql │
+└────────────────┘
+? About to apply 1 migration(s)
+Your database may not be available to serve requests during the migration, continue?
+🤖 Using fallback value in non-interactive context: yes
+🌀 Executing on local database DATABASE (9c890030-83ac-4fb8-8e26-f973bdef83a2) from ../../.state/t/starter-browser-yH1N89/api/v3/d1:
+🌀 To execute on your remote database, add a --remote flag to your wrangler command.
+🚣 2 commands executed successfully.
+┌────────────────┬────────┐
+│ name           │ status │
+├────────────────┼────────┤
+│ 0001_notes.sql │ ✅     │
+└────────────────┴────────┘
+
+ ⛅️ wrangler 4.149.0
+────────────────────
+Resource location: local 
+
+Use --remote if you want to access the remote instance.
+
+🌀 Executing on local database DATABASE (9c890030-83ac-4fb8-8e26-f973bdef83a2) from ../../.state/t/starter-browser-yH1N89/api/v3/d1:
+🌀 To execute on your remote database, add a --remote flag to your wrangler command.
+🚣 1 command executed successfully.
+[
+  {
+    "results": [],
+    "success": true,
+    "meta": {
+      "duration": 0
+    }
+  }
+]
+[@independent-web/api] $ node preview.ts
+[@independent-web/api] 
+ ⛅️ wrangler 4.149.0
+────────────────────
+[@independent-web/api] Your Worker has access to the following bindings:
+[@independent-web/api] Binding                                                           Resource                  Mode
+env.NOTE_CACHE (independent-note-web-api-local)                   KV Namespace              local
+env.NOTES (9c890030-83ac-4fb8-8e26-f973bdef83a2)                  D1 Database               local
+env.NOTE_EXPORTS (independent-note-web-api-local)                 R2 Bucket                 local
+[@independent-web/api] env.OTEL_SERVICE_NAME ("independent-note-web-api")                Environment Variable      local
+env.OTEL_VERSION ("development")                                  Environment Variable      local
+[@independent-web/api] env.OTEL_INSTANCE ("independent-note-web")                        Environment Variable      local
+[@independent-web/api] env.OTEL_RUN_ID ("local")                                         Environment Variable      local
+[@independent-web/api] env.OTEL_ENDPOINT ("")                                            Environment Variable      local
+[@independent-web/api] env.WRITE_MODE ("allow")                                          Environment Variable      local
+
+[@independent-web/api] ⎔ Starting local server...
+[@independent-web/api] [wrangler:info] Ready on http://127.0.0.1:41029
+[@independent-web/api] [wrangler:info] GET /health 200 OK (9ms)
+READY @independent-web/api http://127.0.0.1:41029 1138ms; registry /home/runner/work/super-starter/super-starter/feature/.state/t/starter-browser-yH1N89/registry/session-c3SCrS
+[@independent-web/web] $ node preview.ts
+[@independent-web/web] 
+ ⛅️ wrangler 4.149.0
+────────────────────
+[@independent-web/web] Your Worker has access to the following bindings:
+[@independent-web/web] Binding                                                 Resource                  Mode
+env.API (independent-note-web-api)                      Worker                    local [connected]
+env.ASSETS                                              Assets                    local
+env.OTEL_SERVICE_NAME ("independent-note-web-web")      Environment Variable      local
+env.OTEL_INSTANCE ("independent-note-web")              Environment Variable      local
+[@independent-web/web] env.OTEL_RUN_ID ("local")                               Environment Variable      local
+[@independent-web/web] env.OTEL_VERSION ("development")                        Environment Variable      local
+[@independent-web/web] env.OTEL_ENDPOINT ("")                                  Environment Variable      local
+[@independent-web/web] env.WRITE_MODE ("allow")                                Environment Variable      local
+[@independent-web/web] 
+[@independent-web/web] 
+Service bindings, Durable Object bindings, and Tail consumers connect to other Wrangler or Vite dev processes running locally, with their connection status indicated by [connected] or [not connected]. For more details, refer to https://developers.cloudflare.com/workers/runtime-apis/bindings/service-bindings/#local-development
+
+[@independent-web/web] Attaching additional modules:
+[@independent-web/web] ┌───────────────────────────────────────────────┬──────┬────────────┐
+│ Name                                          │ Type │ Size       │
+├───────────────────────────────────────────────┼──────┼────────────┤
+│ assets/Match-BAqK4OKj.js                      │ esm  │ 141.82 KiB │
+├───────────────────────────────────────────────┼──────┼────────────┤
+│ assets/_tanstack-start-manifest_v-D-ZYyJS-.js │ esm  │ 7.66 KiB   │
+├───────────────────────────────────────────────┼──────┼────────────┤
+│ assets/about-NjiltK0E.js                      │ esm  │ 0.71 KiB   │
+├───────────────────────────────────────────────┼──────┼────────────┤
+│ assets/empty-plugin-adapters-CVykojMw.js      │ esm  │ 0.28 KiB   │
+├───────────────────────────────────────────────┼──────┼────────────┤
+│ assets/jsx-runtime-BZtfA-4f.js                │ esm  │ 2.53 KiB   │
+├───────────────────────────────────────────────┼──────┼────────────┤
+│ assets/react-DOK9jBYa.js                      │ esm  │ 16.18 KiB  │
+├───────────────────────────────────────────────┼──────┼────────────┤
+│ assets/router-NHLtMHcM.js                     │ esm  │ 39.85 KiB  │
+├───────────────────────────────────────────────┼──────┼────────────┤
+│ assets/routes-CrMWXuzH.js                     │ esm  │ 11.60 KiB  │
+├───────────────────────────────────────────────┼──────┼────────────┤
+│ assets/src-BqOr-Xkq.js                        │ esm  │ 157.39 KiB │
+├───────────────────────────────────────────────┼──────┼────────────┤
+│ assets/start-DWcS3WmS.js                      │ esm  │ 0.29 KiB   │
+├───────────────────────────────────────────────┼──────┼────────────┤
+│ Total (10 modules)                            │      │ 378.32 KiB │
+└───────────────────────────────────────────────┴──────┴────────────┘
+[@independent-web/web] ⎔ Starting local server...
+[@independent-web/web] ⎔ Connection status updated
+[@independent-web/web] Your Worker has access to the following bindings:
+[@independent-web/web] Binding                                                 Resource                  Mode
+env.API (independent-note-web-api)                      Worker                    local [connected]
+env.ASSETS                                              Assets                    local
+env.OTEL_SERVICE_NAME ("independent-note-web-web")      Environment Variable      local
+[@independent-web/web] env.OTEL_INSTANCE ("independent-note-web")              Environment Variable      local
+env.OTEL_RUN_ID ("local")                               Environment Variable      local
+env.OTEL_VERSION ("development")                        Environment Variable      local
+[@independent-web/web] env.OTEL_ENDPOINT ("")                                  Environment Variable      local
+env.WRITE_MODE ("allow")                                Environment Variable      local
+
+[@independent-web/web] [wrangler:info] Ready on http://127.0.0.1:36043
+[@independent-web/web] [wrangler:info] GET /health 200 OK (9ms)
+READY @independent-web/web http://127.0.0.1:36043 1114ms; registry /home/runner/work/super-starter/super-starter/feature/.state/t/starter-browser-yH1N89/registry/session-c3SCrS
+
+Running 6 tests using 1 worker
+
+[@independent-web/web] [wrangler:info] GET / 200 OK (19ms)
+[@independent-web/web] [wrangler:info] GET /assets/index-CZh5A4Dt.js 200 OK (10ms)
+[@independent-web/web] [wrangler:info] GET /assets/routes-5p9L3qlQ.js 200 OK (18ms)
+[@independent-web/web] [wrangler:info] GET /assets/rolldown-runtime-CbXtAM7H.js 200 OK (21ms)
+[@independent-web/web] [wrangler:info] GET /assets/react-BuqwL3YU.js 200 OK (21ms)
+[@independent-web/web] [wrangler:info] GET /assets/react-dom-uP1KSDv5.js 200 OK (7ms)
+[@independent-web/web] [wrangler:info] GET /assets/client-l3f2aLp-.js 200 OK (7ms)
+[@independent-web/web] [wrangler:info] GET /assets/index-CgNpmhLx.css 200 OK (5ms)
+[@independent-web/web] [wrangler:info] GET /api/notes 200 OK (24ms)
+[@independent-web/web] [wrangler:info] GET /api/notes/count 200 OK (38ms)
+[@independent-web/web] [wrangler:info] GET /api/notes/count 200 OK (7ms)
+[@independent-web/web] [wrangler:info] GET /assets/about-CjEoILFc.js 200 OK (6ms)
+  ✓  1 test/browser/notes.spec.ts:6:1 › styled SSR and safe input remain available while hydration is loading (579ms)
+[@independent-web/web] [wrangler:info] GET / 200 OK (6ms)
+[@independent-web/web] [wrangler:info] GET /api/notes 200 OK (14ms)
+[@independent-web/web] [wrangler:info] DELETE /api/notes/993a848f-d07f-43a2-85f8-333b05292ed4 204 No Content (8ms)
+[@independent-web/web] [wrangler:info] GET / 200 OK (5ms)
+[@independent-web/web] [wrangler:info] GET /assets/index-CZh5A4Dt.js 200 OK (5ms)
+[@independent-web/web] [wrangler:info] GET /assets/routes-5p9L3qlQ.js 200 OK (12ms)
+[@independent-web/web] [wrangler:info] GET /assets/rolldown-runtime-CbXtAM7H.js 200 OK (15ms)
+[@independent-web/web] [wrangler:info] GET /assets/react-BuqwL3YU.js 200 OK (15ms)
+[@independent-web/web] [wrangler:info] GET /assets/react-dom-uP1KSDv5.js 200 OK (7ms)
+[@independent-web/web] [wrangler:info] GET /assets/client-l3f2aLp-.js 200 OK (9ms)
+[@independent-web/web] [wrangler:info] GET /assets/index-CgNpmhLx.css 200 OK (3ms)
+[@independent-web/web] [wrangler:info] GET /api/notes 200 OK (6ms)
+[@independent-web/web] [wrangler:info] GET /api/notes/count 200 OK (8ms)
+[@independent-web/web] [wrangler:info] GET /api/notes/count 200 OK (7ms)
+[@independent-web/web] [wrangler:info] POST /api/notes 201 Created (9ms)
+[@independent-web/web] [wrangler:info] GET /api/notes/count 200 OK (8ms)
+[@independent-web/web] [wrangler:info] DELETE /api/notes/837c4169-c26f-446d-a493-305793ddd24f 204 No Content (10ms)
+[@independent-web/web] [wrangler:info] GET /api/notes/count 200 OK (10ms)
+[@independent-web/web] [wrangler:info] GET /assets/about-CjEoILFc.js 200 OK (4ms)
+[@independent-web/web] [wrangler:info] GET /api/notes 200 OK (10ms)
+[@independent-web/web] [wrangler:info] GET /api/notes/count 200 OK (14ms)
+[@independent-web/web] [wrangler:info] GET /api/notes/count 200 OK (10ms)
+  ✓  2 test/browser/notes.spec.ts:45:1 › SSR, hydration, CRUD, same-origin export, routes and accessibility (991ms)
+[@independent-web/web] [wrangler:info] GET /api/notes 200 OK (6ms)
+[@independent-web/web] [wrangler:info] GET / 200 OK (6ms)
+[@independent-web/web] [wrangler:info] GET /assets/index-CZh5A4Dt.js 200 OK (6ms)
+[@independent-web/web] [wrangler:info] GET /assets/routes-5p9L3qlQ.js 200 OK (13ms)
+[@independent-web/web] [wrangler:info] GET /assets/rolldown-runtime-CbXtAM7H.js 200 OK (15ms)
+[@independent-web/web] [wrangler:info] GET /assets/react-BuqwL3YU.js 200 OK (14ms)
+[@independent-web/web] [wrangler:info] GET /assets/react-dom-uP1KSDv5.js 200 OK (9ms)
+[@independent-web/web] [wrangler:info] GET /assets/client-l3f2aLp-.js 200 OK (5ms)
+[@independent-web/web] [wrangler:info] GET /assets/index-CgNpmhLx.css 200 OK (4ms)
+[@independent-web/web] [wrangler:info] GET /api/notes 200 OK (8ms)
+[@independent-web/web] [wrangler:info] GET /api/notes/count 200 OK (9ms)
+[@independent-web/web] [wrangler:info] GET /api/notes/count 200 OK (7ms)
+[@independent-web/web] [wrangler:info] POST /api/notes 201 Created (9ms)
+[@independent-web/web] [wrangler:info] GET /api/notes/count 200 OK (6ms)
+[@independent-web/web] [wrangler:info] GET /api/notes/count 200 OK (7ms)
+[@independent-web/web] [wrangler:info] POST /api/notes 201 Created (7ms)
+[@independent-web/web] [wrangler:info] GET /api/notes 200 OK (8ms)
+[@independent-web/web] [wrangler:info] GET /api/notes/count 200 OK (7ms)
+[@independent-web/web] [wrangler:info] DELETE /api/notes/88d54b25-83a4-4e60-88fb-1020e2597eb6 204 No Content (11ms)
+[@independent-web/web] [wrangler:info] GET /api/notes/count 200 OK (8ms)
+[@independent-web/web] [wrangler:info] DELETE /api/notes/99cb240d-c459-4150-a514-8e056dfe77ff 204 No Content (8ms)
+[@independent-web/web] [wrangler:info] GET /api/notes/count 200 OK (7ms)
+  ✓  3 test/browser/notes.spec.ts:85:1 › count failure after a successful create preserves notes and supports retry (692ms)
+[@independent-web/web] [wrangler:info] GET /api/notes 200 OK (6ms)
+[@independent-web/web] [wrangler:info] GET / 200 OK (5ms)
+[@independent-web/web] [wrangler:info] GET /assets/index-CZh5A4Dt.js 200 OK (5ms)
+[@independent-web/web] [wrangler:info] GET /assets/routes-5p9L3qlQ.js 200 OK (13ms)
+[@independent-web/web] [wrangler:info] GET /assets/rolldown-runtime-CbXtAM7H.js 200 OK (14ms)
+[@independent-web/web] [wrangler:info] GET /assets/react-BuqwL3YU.js 200 OK (14ms)
+[@independent-web/web] [wrangler:info] GET /assets/react-dom-uP1KSDv5.js 200 OK (6ms)
+[@independent-web/web] [wrangler:info] GET /assets/client-l3f2aLp-.js 200 OK (6ms)
+[@independent-web/web] [wrangler:info] GET /assets/index-CgNpmhLx.css 200 OK (3ms)
+[@independent-web/web] [wrangler:info] GET /api/notes 200 OK (6ms)
+[@independent-web/web] [wrangler:info] POST /api/notes 201 Created (11ms)
+[@independent-web/web] [wrangler:info] GET /api/notes/count 200 OK (7ms)
+[@independent-web/web] [wrangler:info] DELETE /api/notes/5ea835b6-4b7c-4fe9-b35a-57374ae1d5f5 204 No Content (8ms)
+[@independent-web/web] [wrangler:info] GET /api/notes/count 200 OK (7ms)
+  ✓  4 test/browser/notes.spec.ts:129:1 › a delayed initial count cannot replace a newer count after a create (573ms)
+[@independent-web/web] [wrangler:info] GET /about 200 OK (7ms)
+[@independent-web/web] [wrangler:info] GET /assets/index-CZh5A4Dt.js 200 OK (6ms)
+[@independent-web/web] [wrangler:info] GET /assets/about-CjEoILFc.js 200 OK (12ms)
+[@independent-web/web] [wrangler:info] GET /assets/rolldown-runtime-CbXtAM7H.js 200 OK (13ms)
+[@independent-web/web] [wrangler:info] GET /assets/react-BuqwL3YU.js 200 OK (13ms)
+[@independent-web/web] [wrangler:info] GET / 200 OK (5ms)
+[@independent-web/web] [wrangler:info] GET /assets/routes-5p9L3qlQ.js 200 OK (6ms)
+[@independent-web/web] [wrangler:info] GET /assets/react-BuqwL3YU.js 304 Not Modified (14ms)
+[wrangler:info] GET /assets/index-CZh5A4Dt.js 304 Not Modified (15ms)
+[wrangler:info] GET /assets/rolldown-runtime-CbXtAM7H.js 304 Not Modified (15ms)
+[@independent-web/web] [wrangler:info] GET /assets/react-dom-uP1KSDv5.js 200 OK (6ms)
+[@independent-web/web] [wrangler:info] GET /assets/client-l3f2aLp-.js 200 OK (5ms)
+[@independent-web/web] [wrangler:info] GET /assets/index-CgNpmhLx.css 200 OK (4ms)
+[@independent-web/web] [wrangler:info] GET /api/notes 200 OK (7ms)
+[@independent-web/web] [wrangler:info] GET /api/notes/count 200 OK (10ms)
+[@independent-web/web] [wrangler:info] GET /api/notes/count 200 OK (9ms)
+[@independent-web/web] [wrangler:info] POST /api/notes 201 Created (11ms)
+[@independent-web/web] [wrangler:info] GET /api/notes/count 200 OK (7ms)
+[@independent-web/web] [wrangler:info] DELETE /api/notes/5fabe52b-c6f0-4084-bdcf-390ea6910296 204 No Content (8ms)
+[@independent-web/web] [wrangler:info] GET /api/notes/count 200 OK (8ms)
+[@independent-web/web] [wrangler:info] GET /about 200 OK (5ms)
+[@independent-web/web] [wrangler:info] GET / 200 OK (5ms)
+  ✓  5 test/browser/notes.spec.ts:179:1 › cold static page preserves styled native navigation and the destination hydrates (1.2s)
+[@independent-web/web] [wrangler:info] GET / 200 OK (5ms)
+[@independent-web/web] [wrangler:info] GET /assets/index-CZh5A4Dt.js 200 OK (5ms)
+[@independent-web/web] [wrangler:info] GET /assets/routes-5p9L3qlQ.js 200 OK (13ms)
+[@independent-web/web] [wrangler:info] GET /assets/rolldown-runtime-CbXtAM7H.js 200 OK (13ms)
+[@independent-web/web] [wrangler:info] GET /assets/react-BuqwL3YU.js 200 OK (13ms)
+[@independent-web/web] [wrangler:info] GET /assets/react-dom-uP1KSDv5.js 200 OK (8ms)
+[@independent-web/web] [wrangler:info] GET /assets/client-l3f2aLp-.js 200 OK (6ms)
+[@independent-web/web] [wrangler:info] GET /assets/index-CgNpmhLx.css 200 OK (4ms)
+[@independent-web/web] [wrangler:info] GET /api/notes/count 200 OK (20ms)
+[@independent-web/web] [wrangler:info] GET /api/notes/count 200 OK (23ms)
+[@independent-web/web] [wrangler:info] GET / 200 OK (4ms)
+[@independent-web/web] [wrangler:info] GET /assets/index-CZh5A4Dt.js 200 OK (7ms)
+[@independent-web/web] [wrangler:info] GET /assets/routes-5p9L3qlQ.js 200 OK (15ms)
+[@independent-web/web] [wrangler:info] GET /assets/rolldown-runtime-CbXtAM7H.js 200 OK (16ms)
+[@independent-web/web] [wrangler:info] GET /assets/react-BuqwL3YU.js 200 OK (16ms)
+[@independent-web/web] [wrangler:info] GET /assets/react-dom-uP1KSDv5.js 200 OK (7ms)
+[@independent-web/web] [wrangler:info] GET /assets/client-l3f2aLp-.js 200 OK (5ms)
+[@independent-web/web] [wrangler:info] GET /assets/index-CgNpmhLx.css 200 OK (4ms)
+[@independent-web/web] [wrangler:info] GET /api/notes/count 200 OK (8ms)
+  ✓  6 test/browser/notes.spec.ts:226:1 › loading, empty and API-error states have reviewed visual baselines (971ms)
+
+  6 passed (5.6s)
+Executed 6 required browser cases
+[@independent-web/api] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+[@independent-web/api]   × "pnpm recursive run" failed in /home/runner/work/super-starter/super-
+  │ starter/feature/packages/api
+
+[@independent-web/web] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in /home/runner/work/super-starter/super-
+  │ starter/feature/packages/web
+
+CHECK @independent-web/web/lighthouse: Selected worker @independent-web/web; full phase
+$ node ../../tools/quality/lighthouse.ts
+$ node ../../tools/cloudflare/build.ts
+No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+├  Build
+│  Delegating to Vite
+transforming...
+✓ 254 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json    0.15 kB │ gzip:  0.11 kB
+.cloudflare/output/v0/workers/default/bundle/index.js             297.87 kB │ gzip: 69.39 kB
+
+[32m✓ built in 55ms[39m
+◆  Build complete
+$ node ../../tools/cloudflare/build.ts
+transforming...
+✓ 364 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/assets/assets/index-CgNpmhLx.css              6.81 kB │ gzip:  2.30 kB
+.cloudflare/output/v0/workers/default/assets/assets/about-CjEoILFc.js               0.42 kB │ gzip:  0.30 kB
+.cloudflare/output/v0/workers/default/assets/assets/rolldown-runtime-CbXtAM7H.js    0.58 kB │ gzip:  0.36 kB
+.cloudflare/output/v0/workers/default/assets/assets/react-BuqwL3YU.js               8.24 kB │ gzip:  3.11 kB
+.cloudflare/output/v0/workers/default/assets/assets/index-CZh5A4Dt.js              24.94 kB │ gzip:  8.62 kB
+.cloudflare/output/v0/workers/default/assets/assets/routes-5p9L3qlQ.js             46.67 kB │ gzip: 15.52 kB
+.cloudflare/output/v0/workers/default/assets/assets/client-l3f2aLp-.js            120.36 kB │ gzip: 41.05 kB
+.cloudflare/output/v0/workers/default/assets/assets/react-dom-uP1KSDv5.js         211.21 kB │ gzip: 65.86 kB
+
+[32m✓ built in 229ms[39m
+transforming...
+✓ 436 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json                              3.45 kB │ gzip:   0.71 kB
+.cloudflare/output/v0/workers/default/bundle/assets/router-CgNpmhLx.css                       6.81 kB │ gzip:   2.30 kB
+.cloudflare/output/v0/workers/default/bundle/assets/empty-plugin-adapters-CVykojMw.js         0.28 kB │ gzip:   0.18 kB
+.cloudflare/output/v0/workers/default/bundle/assets/start-DWcS3WmS.js                         0.29 kB │ gzip:   0.22 kB
+.cloudflare/output/v0/workers/default/bundle/assets/about-NjiltK0E.js                         0.72 kB │ gzip:   0.41 kB
+.cloudflare/output/v0/workers/default/bundle/assets/jsx-runtime-BZtfA-4f.js                   2.59 kB │ gzip:   1.11 kB
+.cloudflare/output/v0/workers/default/bundle/assets/_tanstack-start-manifest_v-D-ZYyJS-.js    7.84 kB │ gzip:   2.68 kB
+.cloudflare/output/v0/workers/default/bundle/assets/routes-CrMWXuzH.js                       11.88 kB │ gzip:   3.28 kB
+.cloudflare/output/v0/workers/default/bundle/assets/react-DOK9jBYa.js                        16.57 kB │ gzip:   4.47 kB
+.cloudflare/output/v0/workers/default/bundle/assets/router-NHLtMHcM.js                       40.80 kB │ gzip:  10.58 kB
+.cloudflare/output/v0/workers/default/bundle/assets/Match-BAqK4OKj.js                       145.22 kB │ gzip:  36.43 kB
+.cloudflare/output/v0/workers/default/bundle/assets/src-BqOr-Xkq.js                         161.16 kB │ gzip:  39.35 kB
+.cloudflare/output/v0/workers/default/bundle/index.js                                       724.52 kB │ gzip: 150.55 kB
+
+[32m✓ built in 301ms[39m
+$ node ../../tools/cloudflare/build.ts
+No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+├  Build
+│  Delegating to Vite
+transforming...
+✓ 254 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json    0.15 kB │ gzip:  0.11 kB
+.cloudflare/output/v0/workers/default/bundle/index.js             297.87 kB │ gzip: 69.39 kB
+
+[32m✓ built in 57ms[39m
+◆  Build complete
+
+ ⛅️ wrangler 4.149.0
+────────────────────
+Resource location: local 
+
+Use --remote if you want to access the remote instance.
+
+Migrations to be applied:
+┌────────────────┐
+│ name           │
+├────────────────┤
+│ 0001_notes.sql │
+└────────────────┘
+? About to apply 1 migration(s)
+Your database may not be available to serve requests during the migration, continue?
+🤖 Using fallback value in non-interactive context: yes
+🌀 Executing on local database DATABASE (9c890030-83ac-4fb8-8e26-f973bdef83a2) from ../../.state/t/starter-lighthouse-04JhGe/api/v3/d1:
+🌀 To execute on your remote database, add a --remote flag to your wrangler command.
+🚣 2 commands executed successfully.
+┌────────────────┬────────┐
+│ name           │ status │
+├────────────────┼────────┤
+│ 0001_notes.sql │ ✅     │
+└────────────────┴────────┘
+
+ ⛅️ wrangler 4.149.0
+────────────────────
+Resource location: local 
+
+Use --remote if you want to access the remote instance.
+
+🌀 Executing on local database DATABASE (9c890030-83ac-4fb8-8e26-f973bdef83a2) from ../../.state/t/starter-lighthouse-04JhGe/api/v3/d1:
+🌀 To execute on your remote database, add a --remote flag to your wrangler command.
+🚣 1 command executed successfully.
+[
+  {
+    "results": [],
+    "success": true,
+    "meta": {
+      "duration": 1
+    }
+  }
+]
+[@independent-web/api] $ node preview.ts
+[@independent-web/api] 
+ ⛅️ wrangler 4.149.0
+────────────────────
+[@independent-web/api] Your Worker has access to the following bindings:
+[@independent-web/api] Binding                                                           Resource                  Mode
+env.NOTE_CACHE (independent-note-web-api-local)                   KV Namespace              local
+env.NOTES (9c890030-83ac-4fb8-8e26-f973bdef83a2)                  D1 Database               local
+env.NOTE_EXPORTS (independent-note-web-api-local)                 R2 Bucket                 local
+[@independent-web/api] env.OTEL_SERVICE_NAME ("independent-note-web-api")                Environment Variable      local
+[@independent-web/api] env.OTEL_VERSION ("development")                                  Environment Variable      local
+[@independent-web/api] env.OTEL_INSTANCE ("independent-note-web")                        Environment Variable      local
+[@independent-web/api] env.OTEL_RUN_ID ("local")                                         Environment Variable      local
+[@independent-web/api] env.OTEL_ENDPOINT ("")                                            Environment Variable      local
+[@independent-web/api] env.WRITE_MODE ("allow")                                          Environment Variable      local
+
+[@independent-web/api] ⎔ Starting local server...
+[@independent-web/api] [wrangler:info] Ready on http://127.0.0.1:35125
+[@independent-web/api] [wrangler:info] GET /health 200 OK (10ms)
+READY @independent-web/api http://127.0.0.1:35125 1129ms; registry /home/runner/work/super-starter/super-starter/feature/.state/t/starter-lighthouse-04JhGe/registry/session-26oc29
+[@independent-web/web] $ node preview.ts
+[@independent-web/web] 
+ ⛅️ wrangler 4.149.0
+────────────────────
+[@independent-web/web] Your Worker has access to the following bindings:
+[@independent-web/web] Binding                                                 Resource                  Mode
+[@independent-web/web] env.API (independent-note-web-api)                      Worker                    local [connected]
+[@independent-web/web] env.ASSETS                                              Assets                    local
+[@independent-web/web] env.OTEL_SERVICE_NAME ("independent-note-web-web")      Environment Variable      local
+[@independent-web/web] env.OTEL_INSTANCE ("independent-note-web")              Environment Variable      local
+[@independent-web/web] env.OTEL_RUN_ID ("local")                               Environment Variable      local
+[@independent-web/web] env.OTEL_VERSION ("development")                        Environment Variable      local
+[@independent-web/web] env.OTEL_ENDPOINT ("")                                  Environment Variable      local
+[@independent-web/web] env.WRITE_MODE ("allow")                                Environment Variable      local
+[@independent-web/web] 
+[@independent-web/web] 
+Service bindings, Durable Object bindings, and Tail consumers connect to other Wrangler or Vite dev processes running locally, with their connection status indicated by [connected] or [not connected]. For more details, refer to https://developers.cloudflare.com/workers/runtime-apis/bindings/service-bindings/#local-development
+
+[@independent-web/web] Attaching additional modules:
+[@independent-web/web] ┌───────────────────────────────────────────────┬──────┬────────────┐
+│ Name                                          │ Type │ Size       │
+├───────────────────────────────────────────────┼──────┼────────────┤
+│ assets/Match-BAqK4OKj.js                      │ esm  │ 141.82 KiB │
+├───────────────────────────────────────────────┼──────┼────────────┤
+│ assets/_tanstack-start-manifest_v-D-ZYyJS-.js │ esm  │ 7.66 KiB   │
+├───────────────────────────────────────────────┼──────┼────────────┤
+│ assets/about-NjiltK0E.js                      │ esm  │ 0.71 KiB   │
+├───────────────────────────────────────────────┼──────┼────────────┤
+│ assets/empty-plugin-adapters-CVykojMw.js      │ esm  │ 0.28 KiB   │
+├───────────────────────────────────────────────┼──────┼────────────┤
+│ assets/jsx-runtime-BZtfA-4f.js                │ esm  │ 2.53 KiB   │
+├───────────────────────────────────────────────┼──────┼────────────┤
+│ assets/react-DOK9jBYa.js                      │ esm  │ 16.18 KiB  │
+├───────────────────────────────────────────────┼──────┼────────────┤
+│ assets/router-NHLtMHcM.js                     │ esm  │ 39.85 KiB  │
+├───────────────────────────────────────────────┼──────┼────────────┤
+│ assets/routes-CrMWXuzH.js                     │ esm  │ 11.60 KiB  │
+├───────────────────────────────────────────────┼──────┼────────────┤
+│ assets/src-BqOr-Xkq.js                        │ esm  │ 157.39 KiB │
+├───────────────────────────────────────────────┼──────┼────────────┤
+│ assets/start-DWcS3WmS.js                      │ esm  │ 0.29 KiB   │
+├───────────────────────────────────────────────┼──────┼────────────┤
+│ Total (10 modules)                            │      │ 378.32 KiB │
+└───────────────────────────────────────────────┴──────┴────────────┘
+[@independent-web/web] ⎔ Starting local server...
+[@independent-web/web] ⎔ Connection status updated
+[@independent-web/web] Your Worker has access to the following bindings:
+[@independent-web/web] Binding                                                 Resource                  Mode
+env.API (independent-note-web-api)                      Worker                    local [connected]
+env.ASSETS                                              Assets                    local
+env.OTEL_SERVICE_NAME ("independent-note-web-web")      Environment Variable      local
+[@independent-web/web] env.OTEL_INSTANCE ("independent-note-web")              Environment Variable      local
+env.OTEL_RUN_ID ("local")                               Environment Variable      local
+[@independent-web/web] env.OTEL_VERSION ("development")                        Environment Variable      local
+env.OTEL_ENDPOINT ("")                                  Environment Variable      local
+[@independent-web/web] env.WRITE_MODE ("allow")                                Environment Variable      local
+
+[@independent-web/web] [wrangler:info] Ready on http://127.0.0.1:44581
+[@independent-web/web] [wrangler:info] GET /health 200 OK (9ms)
+READY @independent-web/web http://127.0.0.1:44581 1218ms; registry /home/runner/work/super-starter/super-starter/feature/.state/t/starter-lighthouse-04JhGe/registry/session-26oc29
+[@independent-web/web] [wrangler:info] GET / 200 OK (22ms)
+LIGHTHOUSE_BROWSER 58011 http://127.0.0.1:45569
+[@independent-web/web] [wrangler:info] GET / 200 OK (7ms)
+[@independent-web/web] [wrangler:info] GET /assets/index-CZh5A4Dt.js 200 OK (10ms)
+[@independent-web/web] [wrangler:info] GET /assets/rolldown-runtime-CbXtAM7H.js 200 OK (14ms)
+[@independent-web/web] [wrangler:info] GET /assets/routes-5p9L3qlQ.js 200 OK (22ms)
+[wrangler:info] GET /assets/react-BuqwL3YU.js 200 OK (24ms)
+[@independent-web/web] [wrangler:info] GET /assets/react-dom-uP1KSDv5.js 200 OK (7ms)
+[@independent-web/web] [wrangler:info] GET /assets/client-l3f2aLp-.js 200 OK (6ms)
+[@independent-web/web] [wrangler:info] GET /assets/index-CgNpmhLx.css 200 OK (5ms)
+[@independent-web/web] [wrangler:info] GET /api/notes 200 OK (14ms)
+[@independent-web/web] [wrangler:info] GET /api/notes/count 200 OK (17ms)
+[@independent-web/web] [wrangler:info] GET /api/notes/count 200 OK (9ms)
+[@independent-web/web] [wrangler:info] GET /llms.txt 404 Not Found (5ms)
+[@independent-web/web] [wrangler:info] GET /assets/index-CgNpmhLx.css 304 Not Modified (5ms)
+[@independent-web/web] [wrangler:info] GET /robots.txt 404 Not Found (5ms)
+[@independent-web/web] [wrangler:info] GET / 200 OK (7ms)
+[@independent-web/web] [wrangler:info] GET /.well-known/ai-catalog.json 404 Not Found (4ms)
+LIGHTHOUSE @independent-web/web / mobile run 1: {"performance":1,"accessibility":1,"best-practices":1,"seo":1,"agentic-browsing":1}
+LIGHTHOUSE_BROWSER 58188 http://127.0.0.1:44559
+[@independent-web/web] [wrangler:info] GET / 200 OK (7ms)
+[@independent-web/web] [wrangler:info] GET /assets/index-CZh5A4Dt.js 200 OK (13ms)
+[@independent-web/web] [wrangler:info] GET /assets/rolldown-runtime-CbXtAM7H.js 200 OK (18ms)
+[@independent-web/web] [wrangler:info] GET /assets/routes-5p9L3qlQ.js 200 OK (22ms)
+[@independent-web/web] [wrangler:info] GET /assets/react-BuqwL3YU.js 200 OK (23ms)
+[@independent-web/web] [wrangler:info] GET /assets/react-dom-uP1KSDv5.js 200 OK (6ms)
+[@independent-web/web] [wrangler:info] GET /assets/client-l3f2aLp-.js 200 OK (6ms)
+[@independent-web/web] [wrangler:info] GET /assets/index-CgNpmhLx.css 200 OK (4ms)
+[@independent-web/web] [wrangler:info] GET /api/notes 200 OK (9ms)
+[@independent-web/web] [wrangler:info] GET /api/notes/count 200 OK (10ms)
+[@independent-web/web] [wrangler:info] GET /api/notes/count 200 OK (7ms)
+[@independent-web/web] [wrangler:info] GET /llms.txt 404 Not Found (5ms)
+[@independent-web/web] [wrangler:info] GET /assets/index-CgNpmhLx.css 304 Not Modified (5ms)
+[@independent-web/web] [wrangler:info] GET /robots.txt 404 Not Found (5ms)
+[@independent-web/web] [wrangler:info] GET / 200 OK (6ms)
+[@independent-web/web] [wrangler:info] GET /.well-known/ai-catalog.json 404 Not Found (10ms)
+LIGHTHOUSE @independent-web/web / mobile run 2: {"performance":1,"accessibility":1,"best-practices":1,"seo":1,"agentic-browsing":1}
+LIGHTHOUSE_BROWSER 58369 http://127.0.0.1:42753
+[@independent-web/web] [wrangler:info] GET / 200 OK (6ms)
+[@independent-web/web] [wrangler:info] GET /assets/index-CZh5A4Dt.js 200 OK (6ms)
+[@independent-web/web] [wrangler:info] GET /assets/routes-5p9L3qlQ.js 200 OK (11ms)
+[@independent-web/web] [wrangler:info] GET /assets/rolldown-runtime-CbXtAM7H.js 200 OK (16ms)
+[wrangler:info] GET /assets/react-BuqwL3YU.js 200 OK (13ms)
+[@independent-web/web] [wrangler:info] GET /assets/react-dom-uP1KSDv5.js 200 OK (7ms)
+[@independent-web/web] [wrangler:info] GET /assets/client-l3f2aLp-.js 200 OK (7ms)
+[@independent-web/web] [wrangler:info] GET /assets/index-CgNpmhLx.css 200 OK (5ms)
+[@independent-web/web] [wrangler:info] GET /api/notes 200 OK (8ms)
+[@independent-web/web] [wrangler:info] GET /api/notes/count 200 OK (9ms)
+[@independent-web/web] [wrangler:info] GET /api/notes/count 200 OK (10ms)
+[@independent-web/web] [wrangler:info] GET /llms.txt 404 Not Found (5ms)
+[@independent-web/web] [wrangler:info] GET /assets/index-CgNpmhLx.css 304 Not Modified (6ms)
+[@independent-web/web] [wrangler:info] GET /robots.txt 404 Not Found (4ms)
+[@independent-web/web] [wrangler:info] GET / 200 OK (5ms)
+[@independent-web/web] [wrangler:info] GET /.well-known/ai-catalog.json 404 Not Found (4ms)
+LIGHTHOUSE @independent-web/web / mobile run 3: {"performance":1,"accessibility":1,"best-practices":1,"seo":1,"agentic-browsing":1}
+LIGHTHOUSE_BROWSER 58552 http://127.0.0.1:43705
+[@independent-web/web] [wrangler:info] GET / 200 OK (6ms)
+[@independent-web/web] [wrangler:info] GET /assets/index-CZh5A4Dt.js 200 OK (9ms)
+[@independent-web/web] [wrangler:info] GET /assets/routes-5p9L3qlQ.js 200 OK (18ms)
+[@independent-web/web] [wrangler:info] GET /assets/rolldown-runtime-CbXtAM7H.js 200 OK (20ms)
+[@independent-web/web] [wrangler:info] GET /assets/react-BuqwL3YU.js 200 OK (19ms)
+[@independent-web/web] [wrangler:info] GET /assets/react-dom-uP1KSDv5.js 200 OK (6ms)
+[@independent-web/web] [wrangler:info] GET /assets/client-l3f2aLp-.js 200 OK (6ms)
+[@independent-web/web] [wrangler:info] GET /assets/index-CgNpmhLx.css 200 OK (4ms)
+[@independent-web/web] [wrangler:info] GET /api/notes 200 OK (9ms)
+[@independent-web/web] [wrangler:info] GET /api/notes/count 200 OK (12ms)
+[@independent-web/web] [wrangler:info] GET /api/notes/count 200 OK (8ms)
+[@independent-web/web] [wrangler:info] GET /llms.txt 404 Not Found (5ms)
+[@independent-web/web] [wrangler:info] GET /assets/index-CgNpmhLx.css 304 Not Modified (5ms)
+[@independent-web/web] [wrangler:info] GET /robots.txt 404 Not Found (5ms)
+[@independent-web/web] [wrangler:info] GET / 200 OK (4ms)
+[@independent-web/web] [wrangler:info] GET /.well-known/ai-catalog.json 404 Not Found (5ms)
+LIGHTHOUSE @independent-web/web / desktop run 1: {"performance":1,"accessibility":1,"best-practices":1,"seo":1,"agentic-browsing":1}
+LIGHTHOUSE_BROWSER 58731 http://127.0.0.1:35567
+[@independent-web/web] [wrangler:info] GET / 200 OK (8ms)
+[@independent-web/web] [wrangler:info] GET /assets/index-CZh5A4Dt.js 200 OK (9ms)
+[@independent-web/web] [wrangler:info] GET /assets/routes-5p9L3qlQ.js 200 OK (19ms)
+[@independent-web/web] [wrangler:info] GET /assets/rolldown-runtime-CbXtAM7H.js 200 OK (20ms)
+[@independent-web/web] [wrangler:info] GET /assets/react-BuqwL3YU.js 200 OK (20ms)
+[@independent-web/web] [wrangler:info] GET /assets/react-dom-uP1KSDv5.js 200 OK (7ms)
+[@independent-web/web] [wrangler:info] GET /assets/client-l3f2aLp-.js 200 OK (6ms)
+[@independent-web/web] [wrangler:info] GET /assets/index-CgNpmhLx.css 200 OK (5ms)
+[@independent-web/web] [wrangler:info] GET /api/notes 200 OK (10ms)
+[@independent-web/web] [wrangler:info] GET /api/notes/count 200 OK (12ms)
+[@independent-web/web] [wrangler:info] GET /api/notes/count 200 OK (7ms)
+[@independent-web/web] [wrangler:info] GET /llms.txt 404 Not Found (4ms)
+[@independent-web/web] [wrangler:info] GET /assets/index-CgNpmhLx.css 304 Not Modified (5ms)
+[@independent-web/web] [wrangler:info] GET /robots.txt 404 Not Found (6ms)
+[@independent-web/web] [wrangler:info] GET / 200 OK (6ms)
+[@independent-web/web] [wrangler:info] GET /.well-known/ai-catalog.json 404 Not Found (4ms)
+LIGHTHOUSE @independent-web/web / desktop run 2: {"performance":1,"accessibility":1,"best-practices":1,"seo":1,"agentic-browsing":1}
+LIGHTHOUSE_BROWSER 58906 http://127.0.0.1:46279
+[@independent-web/web] [wrangler:info] GET / 200 OK (6ms)
+[@independent-web/web] [wrangler:info] GET /assets/index-CZh5A4Dt.js 200 OK (11ms)
+[@independent-web/web] [wrangler:info] GET /assets/routes-5p9L3qlQ.js 200 OK (23ms)
+[wrangler:info] GET /assets/rolldown-runtime-CbXtAM7H.js 200 OK (24ms)
+[@independent-web/web] [wrangler:info] GET /assets/react-BuqwL3YU.js 200 OK (25ms)
+[@independent-web/web] [wrangler:info] GET /assets/react-dom-uP1KSDv5.js 200 OK (7ms)
+[@independent-web/web] [wrangler:info] GET /assets/client-l3f2aLp-.js 200 OK (6ms)
+[@independent-web/web] [wrangler:info] GET /assets/index-CgNpmhLx.css 200 OK (5ms)
+[@independent-web/web] [wrangler:info] GET /api/notes 200 OK (8ms)
+[@independent-web/web] [wrangler:info] GET /api/notes/count 200 OK (12ms)
+[@independent-web/web] [wrangler:info] GET /api/notes/count 200 OK (9ms)
+[@independent-web/web] [wrangler:info] GET /llms.txt 404 Not Found (4ms)
+[@independent-web/web] [wrangler:info] GET /assets/index-CgNpmhLx.css 304 Not Modified (5ms)
+[@independent-web/web] [wrangler:info] GET /robots.txt 404 Not Found (5ms)
+[@independent-web/web] [wrangler:info] GET / 200 OK (5ms)
+[@independent-web/web] [wrangler:info] GET /.well-known/ai-catalog.json 404 Not Found (5ms)
+LIGHTHOUSE @independent-web/web / desktop run 3: {"performance":1,"accessibility":1,"best-practices":1,"seo":1,"agentic-browsing":1}
+[@independent-web/web] [wrangler:info] GET /about 200 OK (7ms)
+LIGHTHOUSE_BROWSER 59082 http://127.0.0.1:33299
+[@independent-web/web] [wrangler:info] GET /about 200 OK (6ms)
+[@independent-web/web] [wrangler:info] GET /assets/index-CZh5A4Dt.js 200 OK (12ms)
+[@independent-web/web] [wrangler:info] GET /assets/rolldown-runtime-CbXtAM7H.js 200 OK (17ms)
+[@independent-web/web] [wrangler:info] GET /assets/about-CjEoILFc.js 200 OK (15ms)
+[@independent-web/web] [wrangler:info] GET /assets/react-BuqwL3YU.js 200 OK (18ms)
+[@independent-web/web] [wrangler:info] GET /llms.txt 404 Not Found (5ms)
+[@independent-web/web] [wrangler:info] GET /robots.txt 404 Not Found (4ms)
+[@independent-web/web] [wrangler:info] GET /about 200 OK (4ms)
+[@independent-web/web] [wrangler:info] GET /.well-known/ai-catalog.json 404 Not Found (6ms)
+LIGHTHOUSE @independent-web/web /about mobile run 1: {"performance":1,"accessibility":1,"best-practices":1,"seo":1,"agentic-browsing":1}
+LIGHTHOUSE_BROWSER 59259 http://127.0.0.1:45301
+[@independent-web/web] [wrangler:info] GET /about 200 OK (6ms)
+[@independent-web/web] [wrangler:info] GET /assets/index-CZh5A4Dt.js 200 OK (6ms)
+[@independent-web/web] [wrangler:info] GET /assets/about-CjEoILFc.js 200 OK (15ms)
+[@independent-web/web] [wrangler:info] GET /assets/rolldown-runtime-CbXtAM7H.js 200 OK (16ms)
+[@independent-web/web] [wrangler:info] GET /assets/react-BuqwL3YU.js 200 OK (16ms)
+[@independent-web/web] [wrangler:info] GET /llms.txt 404 Not Found (5ms)
+[@independent-web/web] [wrangler:info] GET /robots.txt 404 Not Found (4ms)
+[@independent-web/web] [wrangler:info] GET /about 200 OK (4ms)
+[@independent-web/web] [wrangler:info] GET /.well-known/ai-catalog.json 404 Not Found (5ms)
+LIGHTHOUSE @independent-web/web /about mobile run 2: {"performance":1,"accessibility":1,"best-practices":1,"seo":1,"agentic-browsing":1}
+LIGHTHOUSE_BROWSER 59436 http://127.0.0.1:36449
+[@independent-web/web] [wrangler:info] GET /about 200 OK (5ms)
+[@independent-web/web] [wrangler:info] GET /assets/index-CZh5A4Dt.js 200 OK (9ms)
+[@independent-web/web] [wrangler:info] GET /assets/about-CjEoILFc.js 200 OK (14ms)
+[@independent-web/web] [wrangler:info] GET /assets/rolldown-runtime-CbXtAM7H.js 200 OK (15ms)
+[@independent-web/web] [wrangler:info] GET /assets/react-BuqwL3YU.js 200 OK (15ms)
+[@independent-web/web] [wrangler:info] GET /llms.txt 404 Not Found (5ms)
+[@independent-web/web] [wrangler:info] GET /robots.txt 404 Not Found (4ms)
+[@independent-web/web] [wrangler:info] GET /about 200 OK (3ms)
+[@independent-web/web] [wrangler:info] GET /.well-known/ai-catalog.json 404 Not Found (4ms)
+LIGHTHOUSE @independent-web/web /about mobile run 3: {"performance":1,"accessibility":1,"best-practices":1,"seo":1,"agentic-browsing":1}
+LIGHTHOUSE_BROWSER 59618 http://127.0.0.1:40351
+[@independent-web/web] [wrangler:info] GET /about 200 OK (15ms)
+[@independent-web/web] [wrangler:info] GET /assets/index-CZh5A4Dt.js 200 OK (10ms)
+[@independent-web/web] [wrangler:info] GET /assets/rolldown-runtime-CbXtAM7H.js 200 OK (20ms)
+[@independent-web/web] [wrangler:info] GET /assets/about-CjEoILFc.js 200 OK (26ms)
+[@independent-web/web] [wrangler:info] GET /assets/react-BuqwL3YU.js 200 OK (27ms)
+[@independent-web/web] [wrangler:info] GET /llms.txt 404 Not Found (8ms)
+[@independent-web/web] [wrangler:info] GET /robots.txt 404 Not Found (4ms)
+[@independent-web/web] [wrangler:info] GET /about 200 OK (3ms)
+[@independent-web/web] [wrangler:info] GET /.well-known/ai-catalog.json 404 Not Found (10ms)
+LIGHTHOUSE @independent-web/web /about desktop run 1: {"performance":1,"accessibility":1,"best-practices":1,"seo":1,"agentic-browsing":1}
+LIGHTHOUSE_BROWSER 59802 http://127.0.0.1:35481
+[@independent-web/web] [wrangler:info] GET /about 200 OK (5ms)
+[@independent-web/web] [wrangler:info] GET /assets/react-BuqwL3YU.js 200 OK (6ms)
+[@independent-web/web] [wrangler:info] GET /assets/about-CjEoILFc.js 200 OK (15ms)
+[@independent-web/web] [wrangler:info] GET /assets/index-CZh5A4Dt.js 200 OK (17ms)
+[@independent-web/web] [wrangler:info] GET /assets/rolldown-runtime-CbXtAM7H.js 200 OK (17ms)
+[@independent-web/web] [wrangler:info] GET /llms.txt 404 Not Found (6ms)
+[@independent-web/web] [wrangler:info] GET /robots.txt 404 Not Found (4ms)
+[@independent-web/web] [wrangler:info] GET /about 200 OK (3ms)
+[@independent-web/web] [wrangler:info] GET /.well-known/ai-catalog.json 404 Not Found (4ms)
+LIGHTHOUSE @independent-web/web /about desktop run 2: {"performance":1,"accessibility":1,"best-practices":1,"seo":1,"agentic-browsing":1}
+LIGHTHOUSE_BROWSER 59983 http://127.0.0.1:34265
+[@independent-web/web] [wrangler:info] GET /about 200 OK (5ms)
+[@independent-web/web] [wrangler:info] GET /assets/index-CZh5A4Dt.js 200 OK (7ms)
+[@independent-web/web] [wrangler:info] GET /assets/about-CjEoILFc.js 200 OK (13ms)
+[@independent-web/web] [wrangler:info] GET /assets/rolldown-runtime-CbXtAM7H.js 200 OK (16ms)
+[@independent-web/web] [wrangler:info] GET /assets/react-BuqwL3YU.js 200 OK (15ms)
+[@independent-web/web] [wrangler:info] GET /llms.txt 404 Not Found (4ms)
+[@independent-web/web] [wrangler:info] GET /robots.txt 404 Not Found (4ms)
+[@independent-web/web] [wrangler:info] GET /about 200 OK (15ms)
+[@independent-web/web] [wrangler:info] GET /.well-known/ai-catalog.json 404 Not Found (6ms)
+LIGHTHOUSE @independent-web/web /about desktop run 3: {"performance":1,"accessibility":1,"best-practices":1,"seo":1,"agentic-browsing":1}
+[@independent-web/api] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+[@independent-web/api]   × "pnpm recursive run" failed in /home/runner/work/super-starter/super-
+  │ starter/feature/packages/api
+
+[@independent-web/web] Error: [@independent-web/web] ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in /home/runner/work/super-starter/super-
+  │ starter/feature/packages/web
+
+12/12 checks passed; content 57491160f7a8
+
+{"phase":"ci","argv":["pnpm","gate:ci","--","--base","e07fcdd5dd5d0bf7fea65d719826b6719b173119","--checks","javascript"],"exit":0,"signal":null,"spawnError":null,"inputBefore":{"featureSha":"cbbbebea7045e1971b2fbf29af800201129c11f4","contentId":"57491160f7a8246813051efe63b845a79014e9c2c08a24d641d5c408ef6c610d","origin":{"sha":"653abf13ae3a54b2434c422ab8dc6800822387c3","dirty":false,"contentId":"00587edc5d0a1e4aea804ef2c5f0d75783222fdddfa32000dce438e3dfa3cb39"},"configuration":{"name":"independent-note-web","scope":"@independent-web","identifier":"com.example.independentnoteweb","preset":"fullstack","features":["d1","kv","r2","services"]},"kind":"project","clean":true,"supportSha":"8f29d12c808fe1cf9fa3f30a23f01e38b88bc488","canonical":true},"inputAfter":{"featureSha":"cbbbebea7045e1971b2fbf29af800201129c11f4","contentId":"57491160f7a8246813051efe63b845a79014e9c2c08a24d641d5c408ef6c610d","origin":{"sha":"653abf13ae3a54b2434c422ab8dc6800822387c3","dirty":false,"contentId":"00587edc5d0a1e4aea804ef2c5f0d75783222fdddfa32000dce438e3dfa3cb39"},"configuration":{"name":"independent-note-web","scope":"@independent-web","identifier":"com.example.independentnoteweb","preset":"fullstack","features":["d1","kv","r2","services"]},"kind":"project","clean":true,"supportSha":"8f29d12c808fe1cf9fa3f30a23f01e38b88bc488","canonical":true},"inputGuardError":null,"environment":{"TMPDIR":"/home/runner/work/super-starter/super-starter/feature/.state/t","TMP":"/home/runner/work/super-starter/super-starter/feature/.state/t","TEMP":"/home/runner/work/super-starter/super-starter/feature/.state/t","WRANGLER_LOG_PATH":"/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"},"cwd":"/home/runner/work/super-starter/super-starter/feature","startedAt":"2026-10-12T19:48:09.072Z","milliseconds":180716,"log":"logs/21-ci.log"}

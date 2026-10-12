@@ -1,0 +1,183 @@
+[
+  {
+    "phase": "published-source-boundary",
+    "argv": [
+      "git",
+      "ls-remote",
+      "--exit-code",
+      "origin",
+      "refs/pull/4/head"
+    ],
+    "cwd": "/home/runner/work/super-starter/super-starter/source",
+    "startedAt": "2026-10-12T19:39:58.153Z",
+    "milliseconds": 183,
+    "exit": 0,
+    "signal": null,
+    "error": null,
+    "log": "logs/01-published-source-boundary.log"
+  },
+  {
+    "phase": "initial-source-head",
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/runner/work/super-starter/super-starter/source",
+    "startedAt": "2026-10-12T19:39:58.337Z",
+    "milliseconds": 2,
+    "exit": 0,
+    "signal": null,
+    "error": null,
+    "log": "logs/02-initial-source-head.log"
+  },
+  {
+    "phase": "initial-source-clean",
+    "argv": [
+      "git",
+      "status",
+      "--porcelain"
+    ],
+    "cwd": "/home/runner/work/super-starter/super-starter/source",
+    "startedAt": "2026-10-12T19:39:58.340Z",
+    "milliseconds": 18,
+    "exit": 0,
+    "signal": null,
+    "error": null,
+    "log": "logs/03-initial-source-clean.log"
+  },
+  {
+    "phase": "source-sdk-setup",
+    "argv": [
+      "pnpm",
+      "env:setup",
+      "--",
+      "--javascript"
+    ],
+    "cwd": "/home/runner/work/super-starter/super-starter/source",
+    "startedAt": "2026-10-12T19:39:58.358Z",
+    "milliseconds": 16789,
+    "exit": 0,
+    "signal": null,
+    "error": null,
+    "log": "logs/04-source-sdk-setup.log"
+  },
+  {
+    "phase": "prepared-source-head",
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/runner/work/super-starter/super-starter/source",
+    "startedAt": "2026-10-12T19:40:15.148Z",
+    "milliseconds": 3,
+    "exit": 0,
+    "signal": null,
+    "error": null,
+    "log": "logs/05-prepared-source-head.log"
+  },
+  {
+    "phase": "prepared-source-clean",
+    "argv": [
+      "git",
+      "status",
+      "--porcelain"
+    ],
+    "cwd": "/home/runner/work/super-starter/super-starter/source",
+    "startedAt": "2026-10-12T19:40:15.151Z",
+    "milliseconds": 5,
+    "exit": 0,
+    "signal": null,
+    "error": null,
+    "log": "logs/06-prepared-source-clean.log"
+  },
+  {
+    "phase": "fresh-own-cli-init",
+    "argv": [
+      "node",
+      "tools/generators/cli.ts",
+      "init",
+      "--target",
+      "/home/runner/work/super-starter/super-starter/feature",
+      "--name",
+      "independent-note-web",
+      "--scope",
+      "@independent-web",
+      "--identifier",
+      "com.example.independentnoteweb",
+      "--preset",
+      "fullstack",
+      "--features",
+      "d1,kv,r2",
+      "--no-install"
+    ],
+    "cwd": "/home/runner/work/super-starter/super-starter/source",
+    "startedAt": "2026-10-12T19:40:15.202Z",
+    "milliseconds": 3753,
+    "exit": 0,
+    "signal": null,
+    "error": null,
+    "log": "logs/07-fresh-own-cli-init.log"
+  },
+  {
+    "phase": "after-generation-source-head",
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/runner/work/super-starter/super-starter/source",
+    "startedAt": "2026-10-12T19:40:18.956Z",
+    "milliseconds": 3,
+    "exit": 0,
+    "signal": null,
+    "error": null,
+    "log": "logs/08-after-generation-source-head.log"
+  },
+  {
+    "phase": "after-generation-source-clean",
+    "argv": [
+      "git",
+      "status",
+      "--porcelain"
+    ],
+    "cwd": "/home/runner/work/super-starter/super-starter/source",
+    "startedAt": "2026-10-12T19:40:18.959Z",
+    "milliseconds": 5,
+    "exit": 0,
+    "signal": null,
+    "error": null,
+    "log": "logs/09-after-generation-source-clean.log"
+  },
+  {
+    "phase": "before-source-removal-head",
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/runner/work/super-starter/super-starter/source",
+    "startedAt": "2026-10-12T19:40:18.981Z",
+    "milliseconds": 2,
+    "exit": 0,
+    "signal": null,
+    "error": null,
+    "log": "logs/10-before-source-removal-head.log"
+  },
+  {
+    "phase": "before-source-removal-clean",
+    "argv": [
+      "git",
+      "status",
+      "--porcelain"
+    ],
+    "cwd": "/home/runner/work/super-starter/super-starter/source",
+    "startedAt": "2026-10-12T19:40:18.984Z",
+    "milliseconds": 5,
+    "exit": 0,
+    "signal": null,
+    "error": null,
+    "log": "logs/11-before-source-removal-clean.log"
+  }
+]

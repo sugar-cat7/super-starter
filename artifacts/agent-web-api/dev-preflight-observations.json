@@ -1,0 +1,147 @@
+{
+  "execution": "hosted-tools",
+  "commands": [
+    {
+      "phase": "preflight-dev",
+      "argv": [
+        "pnpm",
+        "deploy:preflight",
+        "--",
+        "--target",
+        "api",
+        "--environment",
+        "dev"
+      ],
+      "exit": 1,
+      "signal": null,
+      "spawnError": null,
+      "inputBefore": {
+        "featureSha": "cbbbebea7045e1971b2fbf29af800201129c11f4",
+        "contentId": "57491160f7a8246813051efe63b845a79014e9c2c08a24d641d5c408ef6c610d",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "00587edc5d0a1e4aea804ef2c5f0d75783222fdddfa32000dce438e3dfa3cb39"
+        },
+        "configuration": {
+          "name": "independent-note-web",
+          "scope": "@independent-web",
+          "identifier": "com.example.independentnoteweb",
+          "preset": "fullstack",
+          "features": [
+            "d1",
+            "kv",
+            "r2",
+            "services"
+          ]
+        },
+        "kind": "project",
+        "clean": true,
+        "supportSha": "8f29d12c808fe1cf9fa3f30a23f01e38b88bc488",
+        "canonical": true
+      },
+      "inputAfter": {
+        "featureSha": "cbbbebea7045e1971b2fbf29af800201129c11f4",
+        "contentId": "57491160f7a8246813051efe63b845a79014e9c2c08a24d641d5c408ef6c610d",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "00587edc5d0a1e4aea804ef2c5f0d75783222fdddfa32000dce438e3dfa3cb39"
+        },
+        "configuration": {
+          "name": "independent-note-web",
+          "scope": "@independent-web",
+          "identifier": "com.example.independentnoteweb",
+          "preset": "fullstack",
+          "features": [
+            "d1",
+            "kv",
+            "r2",
+            "services"
+          ]
+        },
+        "kind": "project",
+        "clean": true,
+        "supportSha": "8f29d12c808fe1cf9fa3f30a23f01e38b88bc488",
+        "canonical": true
+      },
+      "startedAt": "2026-10-12T19:51:44.541Z",
+      "milliseconds": 14255,
+      "log": "logs/dev-api-preflight.log",
+      "target": "api",
+      "status": "blocked-missing-approved-resources",
+      "scope": "Dev connection observation; nonzero CLI remains blocked and is not successful mandatory local preflight evidence."
+    },
+    {
+      "phase": "preflight-dev",
+      "argv": [
+        "pnpm",
+        "deploy:preflight",
+        "--",
+        "--target",
+        "web",
+        "--environment",
+        "dev"
+      ],
+      "exit": 1,
+      "signal": null,
+      "spawnError": null,
+      "inputBefore": {
+        "featureSha": "cbbbebea7045e1971b2fbf29af800201129c11f4",
+        "contentId": "57491160f7a8246813051efe63b845a79014e9c2c08a24d641d5c408ef6c610d",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "00587edc5d0a1e4aea804ef2c5f0d75783222fdddfa32000dce438e3dfa3cb39"
+        },
+        "configuration": {
+          "name": "independent-note-web",
+          "scope": "@independent-web",
+          "identifier": "com.example.independentnoteweb",
+          "preset": "fullstack",
+          "features": [
+            "d1",
+            "kv",
+            "r2",
+            "services"
+          ]
+        },
+        "kind": "project",
+        "clean": true,
+        "supportSha": "8f29d12c808fe1cf9fa3f30a23f01e38b88bc488",
+        "canonical": true
+      },
+      "inputAfter": {
+        "featureSha": "cbbbebea7045e1971b2fbf29af800201129c11f4",
+        "contentId": "57491160f7a8246813051efe63b845a79014e9c2c08a24d641d5c408ef6c610d",
+        "origin": {
+          "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+          "dirty": false,
+          "contentId": "00587edc5d0a1e4aea804ef2c5f0d75783222fdddfa32000dce438e3dfa3cb39"
+        },
+        "configuration": {
+          "name": "independent-note-web",
+          "scope": "@independent-web",
+          "identifier": "com.example.independentnoteweb",
+          "preset": "fullstack",
+          "features": [
+            "d1",
+            "kv",
+            "r2",
+            "services"
+          ]
+        },
+        "kind": "project",
+        "clean": true,
+        "supportSha": "8f29d12c808fe1cf9fa3f30a23f01e38b88bc488",
+        "canonical": true
+      },
+      "startedAt": "2026-10-12T19:51:58.825Z",
+      "milliseconds": 14025,
+      "log": "logs/dev-web-preflight.log",
+      "target": "web",
+      "status": "blocked-missing-approved-resources",
+      "scope": "Dev connection observation; nonzero CLI remains blocked and is not successful mandatory local preflight evidence."
+    }
+  ]
+}

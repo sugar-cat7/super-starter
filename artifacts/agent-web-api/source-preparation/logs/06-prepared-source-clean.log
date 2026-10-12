@@ -1,0 +1,1 @@
+{"phase":"prepared-source-clean","argv":["git","status","--porcelain"],"cwd":"/home/runner/work/super-starter/super-starter/source","startedAt":"2026-10-12T19:40:15.151Z","milliseconds":5,"exit":0,"signal":null,"error":null,"log":"logs/06-prepared-source-clean.log"}

@@ -1,0 +1,153 @@
+{"argv":["pnpm","deploy:preflight","--","--target","web","--environment","dev"],"inputBefore":{"featureSha":"cbbbebea7045e1971b2fbf29af800201129c11f4","contentId":"57491160f7a8246813051efe63b845a79014e9c2c08a24d641d5c408ef6c610d","origin":{"sha":"653abf13ae3a54b2434c422ab8dc6800822387c3","dirty":false,"contentId":"00587edc5d0a1e4aea804ef2c5f0d75783222fdddfa32000dce438e3dfa3cb39"},"configuration":{"name":"independent-note-web","scope":"@independent-web","identifier":"com.example.independentnoteweb","preset":"fullstack","features":["d1","kv","r2","services"]},"kind":"project","clean":true,"supportSha":"8f29d12c808fe1cf9fa3f30a23f01e38b88bc488","canonical":true},"startedAt":"2026-10-12T19:51:58.825Z","cwd":"/home/runner/work/super-starter/super-starter/feature"}
+$ node tools/cloudflare/deploy.ts preflight -- --target web --environment dev
+$ node tools/quality/check.ts
+pass: All 185 files are correctly formatted (123ms, 4 threads)
+pass: Found no warnings, lint errors, or type errors in 135 files (1.3s, 4 threads)
+Static quality, runtime boundaries and documentation passed
+$ node ../../tools/quality/vitest.ts --config vitest.config.ts
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/home/runner/work/super-starter/super-starter/feature/packages/web[39m
+
+ [32m✓[39m test/assets.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 38[2mms[22m[39m
+ [32m✓[39m test/unit.test.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 23[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[32m13 passed[39m[22m[90m (13)[39m
+[2m   Start at [22m 19:52:02
+[2m   Duration [22m 250ms[2m (transform 38%, import 34%, tests 25%, worker 3%)[22m
+
+JSON report written to /home/runner/work/super-starter/super-starter/feature/packages/web/artifacts/tests-vitest.config.ts.json
+Executed 13 required test cases
+$ node ../../tools/cloudflare/runtime.ts
+$ node ../../tools/cloudflare/build.ts
+No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+├  Build
+│  Delegating to Vite
+transforming...
+✓ 254 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json    0.15 kB │ gzip:  0.11 kB
+.cloudflare/output/v0/workers/default/bundle/index.js             297.87 kB │ gzip: 69.39 kB
+
+[32m✓ built in 50ms[39m
+◆  Build complete
+
+ ⛅️ wrangler 4.149.0
+────────────────────
+Resource location: local 
+
+Use --remote if you want to access the remote instance.
+
+Migrations to be applied:
+┌────────────────┐
+│ name           │
+├────────────────┤
+│ 0001_notes.sql │
+└────────────────┘
+? About to apply 1 migration(s)
+Your database may not be available to serve requests during the migration, continue?
+🤖 Using fallback value in non-interactive context: yes
+🌀 Executing on local database DATABASE (9c890030-83ac-4fb8-8e26-f973bdef83a2) from ../../.state/t/starter-runtime-RKBSbG/api/v3/d1:
+🌀 To execute on your remote database, add a --remote flag to your wrangler command.
+🚣 2 commands executed successfully.
+┌────────────────┬────────┐
+│ name           │ status │
+├────────────────┼────────┤
+│ 0001_notes.sql │ ✅     │
+└────────────────┴────────┘
+
+ ⛅️ wrangler 4.149.0
+────────────────────
+Resource location: local 
+
+Use --remote if you want to access the remote instance.
+
+🌀 Executing on local database DATABASE (9c890030-83ac-4fb8-8e26-f973bdef83a2) from ../../.state/t/starter-runtime-RKBSbG/api/v3/d1:
+🌀 To execute on your remote database, add a --remote flag to your wrangler command.
+🚣 1 command executed successfully.
+[
+  {
+    "results": [],
+    "success": true,
+    "meta": {
+      "duration": 0
+    }
+  }
+]
+[@independent-web/api] $ cf dev --mode offline
+[@independent-web/api] No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+[@independent-web/api]   [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m40285[22m/[39m
+READY @independent-web/api http://127.0.0.1:40285 1546ms; registry /home/runner/work/super-starter/super-starter/feature/.state/t/starter-runtime-RKBSbG/registry/session-79BaGZ
+[@independent-web/web] $ vp dev --mode offline
+[@independent-web/web] 
+  [34m[1mVITE+[22m v1.1.0[39m  [42m [1moffline[22m [49m  
+
+[@independent-web/web]   [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m38949[22m/[39m
+READY @independent-web/web http://127.0.0.1:38949 2635ms; registry /home/runner/work/super-starter/super-starter/feature/.state/t/starter-runtime-RKBSbG/registry/session-79BaGZ
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/home/runner/work/super-starter/super-starter/feature/packages/web[39m
+
+ [32m✓[39m test/runtime.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 348[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m   Start at [22m 19:52:10
+[2m   Duration [22m 479ms[2m (tests 85%, import 8%, transform 6%, worker 1%)[22m
+
+JSON report written to /home/runner/work/super-starter/super-starter/feature/packages/web/artifacts/tests-vitest.runtime.config.ts.json
+Executed 2 required test cases
+[@independent-web/web] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+[@independent-web/web]   × "pnpm recursive run" failed in /home/runner/work/super-starter/super-
+  │ starter/feature/packages/web
+
+[@independent-web/api] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+[@independent-web/api]   × "pnpm recursive run" failed in /home/runner/work/super-starter/super-
+  │ starter/feature/packages/api
+
+$ node ../../tools/cloudflare/build.ts
+transforming...
+✓ 364 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/assets/assets/index-CgNpmhLx.css              6.81 kB │ gzip:  2.30 kB
+.cloudflare/output/v0/workers/default/assets/assets/about-CjEoILFc.js               0.42 kB │ gzip:  0.30 kB
+.cloudflare/output/v0/workers/default/assets/assets/rolldown-runtime-CbXtAM7H.js    0.58 kB │ gzip:  0.36 kB
+.cloudflare/output/v0/workers/default/assets/assets/react-BuqwL3YU.js               8.24 kB │ gzip:  3.11 kB
+.cloudflare/output/v0/workers/default/assets/assets/index-CZh5A4Dt.js              24.94 kB │ gzip:  8.62 kB
+.cloudflare/output/v0/workers/default/assets/assets/routes-5p9L3qlQ.js             46.67 kB │ gzip: 15.52 kB
+.cloudflare/output/v0/workers/default/assets/assets/client-l3f2aLp-.js            120.36 kB │ gzip: 41.05 kB
+.cloudflare/output/v0/workers/default/assets/assets/react-dom-uP1KSDv5.js         211.21 kB │ gzip: 65.86 kB
+
+[32m✓ built in 192ms[39m
+transforming...
+✓ 436 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json                              3.45 kB │ gzip:   0.71 kB
+.cloudflare/output/v0/workers/default/bundle/assets/router-CgNpmhLx.css                       6.81 kB │ gzip:   2.30 kB
+.cloudflare/output/v0/workers/default/bundle/assets/empty-plugin-adapters-CVykojMw.js         0.28 kB │ gzip:   0.18 kB
+.cloudflare/output/v0/workers/default/bundle/assets/start-DWcS3WmS.js                         0.29 kB │ gzip:   0.22 kB
+.cloudflare/output/v0/workers/default/bundle/assets/about-NjiltK0E.js                         0.72 kB │ gzip:   0.41 kB
+.cloudflare/output/v0/workers/default/bundle/assets/jsx-runtime-BZtfA-4f.js                   2.59 kB │ gzip:   1.11 kB
+.cloudflare/output/v0/workers/default/bundle/assets/_tanstack-start-manifest_v-D-ZYyJS-.js    7.84 kB │ gzip:   2.68 kB
+.cloudflare/output/v0/workers/default/bundle/assets/routes-CrMWXuzH.js                       11.88 kB │ gzip:   3.28 kB
+.cloudflare/output/v0/workers/default/bundle/assets/react-DOK9jBYa.js                        16.57 kB │ gzip:   4.47 kB
+.cloudflare/output/v0/workers/default/bundle/assets/router-NHLtMHcM.js                       40.80 kB │ gzip:  10.58 kB
+.cloudflare/output/v0/workers/default/bundle/assets/Match-BAqK4OKj.js                       145.22 kB │ gzip:  36.43 kB
+.cloudflare/output/v0/workers/default/bundle/assets/src-BqOr-Xkq.js                         161.16 kB │ gzip:  39.35 kB
+.cloudflare/output/v0/workers/default/bundle/index.js                                       724.52 kB │ gzip: 150.55 kB
+
+[32m✓ built in 254ms[39m
+file:///home/runner/work/super-starter/super-starter/feature/tools/cloudflare/deploy.ts:70
+  throw new Error(
+        ^
+
+Error: CLOUDFLARE_ACCOUNT_ID is missing. Configure a named approved dev account and resource IDs; see docs/cloudflare.md. No deployment occurred.
+    at file:///home/runner/work/super-starter/super-starter/feature/tools/cloudflare/deploy.ts:70:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.21.0
+[ELIFECYCLE] Command failed with exit code 1.
