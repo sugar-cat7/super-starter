@@ -1,0 +1,45 @@
+{"argv":["pnpm","dev","--","web"],"inputBefore":{"featureSha":"4a8bd01ed37d5786d66e8e0668e77507a48194cc","contentId":"1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031","origin":{"sha":"460ad19c970adaab7231795f3438943d9158b135","dirty":false,"contentId":"a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"},"configuration":{"name":"independent-note-web","scope":"@independent-web","identifier":"com.example.independentnoteweb","preset":"fullstack","features":["d1","kv","r2","services"]},"kind":"project","clean":true,"supportSha":"9472a912cbec8f9729ae9af5a4a20e9c82611e27","canonical":true},"startedAt":"2026-10-12T17:23:39.882Z"}
+$ node tools/dev-environment/dev.ts -- web
+$ node ../../tools/cloudflare/build.ts
+No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+├  Build
+│  Delegating to Vite
+transforming...
+✓ 254 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json    0.15 kB │ gzip:  0.11 kB
+.cloudflare/output/v0/workers/default/bundle/index.js             297.86 kB │ gzip: 69.39 kB
+
+[32m✓ built in 82ms[39m
+◆  Build complete
+
+ ⛅️ wrangler 4.149.0
+────────────────────
+Resource location: local 
+
+Use --remote if you want to access the remote instance.
+
+✅ No migrations to apply!
+[@independent-web/api] $ cf dev --mode offline
+[@independent-web/api] No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+[@independent-web/api]   [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m43445[22m/[39m
+READY @independent-web/api http://127.0.0.1:43445 2473ms; registry /home/runner/work/super-starter/super-starter/feature/.state/registry/session-RcmdiA
+[@independent-web/web] $ vp dev --mode offline
+[@independent-web/web] 
+  [34m[1mVITE+[22m v1.1.0[39m  [42m [1moffline[22m [49m  
+
+[@independent-web/web]   [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m44785[22m/[39m
+READY @independent-web/web http://127.0.0.1:44785 4084ms; registry /home/runner/work/super-starter/super-starter/feature/.state/registry/session-RcmdiA
+[@independent-web/web] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+[@independent-web/web]   × "pnpm recursive run" failed in /home/runner/work/super-starter/super-
+  │ starter/feature/packages/web
+
+[@independent-web/api] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+[@independent-web/api]   × "pnpm recursive run" failed in /home/runner/work/super-starter/super-
+  │ starter/feature/packages/api
+
+
+{"phase":"dev","argv":["pnpm","dev","--","web"],"exit":0,"startedAt":"2026-10-12T17:23:39.882Z","milliseconds":10702,"log":"logs/16-dev.log","inputBefore":{"featureSha":"4a8bd01ed37d5786d66e8e0668e77507a48194cc","contentId":"1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031","origin":{"sha":"460ad19c970adaab7231795f3438943d9158b135","dirty":false,"contentId":"a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"},"configuration":{"name":"independent-note-web","scope":"@independent-web","identifier":"com.example.independentnoteweb","preset":"fullstack","features":["d1","kv","r2","services"]},"kind":"project","clean":true,"supportSha":"9472a912cbec8f9729ae9af5a4a20e9c82611e27","canonical":true},"inputAfter":{"featureSha":"4a8bd01ed37d5786d66e8e0668e77507a48194cc","contentId":"1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031","origin":{"sha":"460ad19c970adaab7231795f3438943d9158b135","dirty":false,"contentId":"a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"},"configuration":{"name":"independent-note-web","scope":"@independent-web","identifier":"com.example.independentnoteweb","preset":"fullstack","features":["d1","kv","r2","services"]},"kind":"project","clean":true,"supportSha":"9472a912cbec8f9729ae9af5a4a20e9c82611e27","canonical":true},"processExit":null,"processSignal":"SIGTERM","failure":null,"checks":{"before":1,"countAfterDelete":1,"d1":true,"serviceBinding":true,"SSR":true},"cleanup":"passed","completion":"Standard Web dev READY and real HTTP/SSR count CRUD smoke, followed by deliberate owned shutdown"}

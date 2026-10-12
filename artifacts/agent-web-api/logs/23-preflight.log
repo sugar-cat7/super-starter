@@ -1,0 +1,125 @@
+{"phase":"preflight","argv":["pnpm","deploy:preflight","--","--target","api","--environment","local"],"inputBefore":{"featureSha":"4a8bd01ed37d5786d66e8e0668e77507a48194cc","contentId":"1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031","origin":{"sha":"460ad19c970adaab7231795f3438943d9158b135","dirty":false,"contentId":"a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"},"configuration":{"name":"independent-note-web","scope":"@independent-web","identifier":"com.example.independentnoteweb","preset":"fullstack","features":["d1","kv","r2","services"]},"kind":"project","clean":true,"supportSha":"9472a912cbec8f9729ae9af5a4a20e9c82611e27","canonical":true},"cwd":"/home/runner/work/super-starter/super-starter/feature","startedAt":"2026-10-12T17:35:52.173Z","environment":{"TMPDIR":"/home/runner/work/super-starter/super-starter/feature/.state/t","TMP":"/home/runner/work/super-starter/super-starter/feature/.state/t","TEMP":"/home/runner/work/super-starter/super-starter/feature/.state/t","WRANGLER_LOG_PATH":"/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"}}
+$ node tools/cloudflare/deploy.ts preflight -- --target api --environment local
+$ node tools/quality/check.ts
+pass: All 185 files are correctly formatted (195ms, 4 threads)
+pass: Found no warnings, lint errors, or type errors in 135 files (2.0s, 4 threads)
+Static quality, runtime boundaries and documentation passed
+$ node ../../tools/quality/vitest.ts --config vitest.config.ts
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/home/runner/work/super-starter/super-starter/feature/packages/api[39m
+
+ [32m✓[39m test/unit.test.ts [2m([22m[2m18 tests[22m[2m)[22m[33m 3129[2mms[22m[39m
+   [32m✓[39m API validation and safe publication defaults [2m(18)[22m
+     [33m[2m✓[22m[39m bounds a stalled ingress even when its cancellation never settles[33m 3005[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m18 passed[39m[22m[90m (18)[39m
+[2m   Start at [22m 17:35:58
+[2m   Duration [22m 3.45s[2m (tests 94%, import 4%, transform 2%)[22m
+
+JSON report written to /home/runner/work/super-starter/super-starter/feature/packages/api/artifacts/tests-vitest.config.ts.json
+Executed 18 required test cases
+$ node ../../tools/cloudflare/runtime.ts
+$ node ../../tools/cloudflare/build.ts
+No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+├  Build
+│  Delegating to Vite
+transforming...
+✓ 254 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json    0.15 kB │ gzip:  0.11 kB
+.cloudflare/output/v0/workers/default/bundle/index.js             297.86 kB │ gzip: 69.39 kB
+
+[32m✓ built in 86ms[39m
+◆  Build complete
+
+ ⛅️ wrangler 4.149.0
+────────────────────
+Resource location: local 
+
+Use --remote if you want to access the remote instance.
+
+Migrations to be applied:
+┌────────────────┐
+│ name           │
+├────────────────┤
+│ 0001_notes.sql │
+└────────────────┘
+? About to apply 1 migration(s)
+Your database may not be available to serve requests during the migration, continue?
+🤖 Using fallback value in non-interactive context: yes
+🌀 Executing on local database DATABASE (9c890030-83ac-4fb8-8e26-f973bdef83a2) from ../../.state/t/starter-runtime-Rnqa24/api/v3/d1:
+🌀 To execute on your remote database, add a --remote flag to your wrangler command.
+🚣 2 commands executed successfully.
+┌────────────────┬────────┐
+│ name           │ status │
+├────────────────┼────────┤
+│ 0001_notes.sql │ ✅     │
+└────────────────┴────────┘
+
+ ⛅️ wrangler 4.149.0
+────────────────────
+Resource location: local 
+
+Use --remote if you want to access the remote instance.
+
+🌀 Executing on local database DATABASE (9c890030-83ac-4fb8-8e26-f973bdef83a2) from ../../.state/t/starter-runtime-Rnqa24/api/v3/d1:
+🌀 To execute on your remote database, add a --remote flag to your wrangler command.
+🚣 1 command executed successfully.
+[
+  {
+    "results": [],
+    "success": true,
+    "meta": {
+      "duration": 0
+    }
+  }
+]
+[@independent-web/api] $ cf dev --mode offline
+[@independent-web/api] No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+[@independent-web/api]   [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m45905[22m/[39m
+READY @independent-web/api http://127.0.0.1:45905 2473ms; registry /home/runner/work/super-starter/super-starter/feature/.state/t/starter-runtime-Rnqa24/registry/session-xFWbgJ
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/home/runner/work/super-starter/super-starter/feature/packages/api[39m
+
+ [32m✓[39m test/runtime.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 428[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m5 passed[39m[22m[90m (5)[39m
+[2m   Start at [22m 17:36:09
+[2m   Duration [22m 642ms[2m (tests 80%, import 12%, transform 8%, worker 1%)[22m
+
+JSON report written to /home/runner/work/super-starter/super-starter/feature/packages/api/artifacts/tests-vitest.runtime.config.ts.json
+Executed 5 required test cases
+[@independent-web/api] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+[@independent-web/api]   × "pnpm recursive run" failed in /home/runner/work/super-starter/super-
+  │ starter/feature/packages/api
+
+$ node ../../tools/cloudflare/build.ts
+No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+├  Build
+│  Delegating to Vite
+transforming...
+✓ 254 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json    0.15 kB │ gzip:  0.11 kB
+.cloudflare/output/v0/workers/default/bundle/index.js             297.86 kB │ gzip: 69.39 kB
+
+[32m✓ built in 82ms[39m
+◆  Build complete
+{
+  "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+  "target": "@independent-web/api",
+  "environment": "local",
+  "configSource": "packages/api/cloudflare.config.ts",
+  "artifact": "packages/api/.cloudflare/output/v0",
+  "deployed": false,
+  "smoked": false,
+  "account": null,
+  "artifactId": "816a8e9c392621932c452801a3a1ce4e0077e71c8293aae201d15ea0daa508ca"
+}
+
+{"phase":"preflight","argv":["pnpm","deploy:preflight","--","--target","api","--environment","local"],"exit":0,"signal":null,"spawnError":null,"inputBefore":{"featureSha":"4a8bd01ed37d5786d66e8e0668e77507a48194cc","contentId":"1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031","origin":{"sha":"460ad19c970adaab7231795f3438943d9158b135","dirty":false,"contentId":"a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"},"configuration":{"name":"independent-note-web","scope":"@independent-web","identifier":"com.example.independentnoteweb","preset":"fullstack","features":["d1","kv","r2","services"]},"kind":"project","clean":true,"supportSha":"9472a912cbec8f9729ae9af5a4a20e9c82611e27","canonical":true},"inputAfter":{"featureSha":"4a8bd01ed37d5786d66e8e0668e77507a48194cc","contentId":"1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031","origin":{"sha":"460ad19c970adaab7231795f3438943d9158b135","dirty":false,"contentId":"a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"},"configuration":{"name":"independent-note-web","scope":"@independent-web","identifier":"com.example.independentnoteweb","preset":"fullstack","features":["d1","kv","r2","services"]},"kind":"project","clean":true,"supportSha":"9472a912cbec8f9729ae9af5a4a20e9c82611e27","canonical":true},"inputGuardError":null,"environment":{"TMPDIR":"/home/runner/work/super-starter/super-starter/feature/.state/t","TMP":"/home/runner/work/super-starter/super-starter/feature/.state/t","TEMP":"/home/runner/work/super-starter/super-starter/feature/.state/t","WRANGLER_LOG_PATH":"/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"},"cwd":"/home/runner/work/super-starter/super-starter/feature","startedAt":"2026-10-12T17:35:52.173Z","milliseconds":19962,"log":"logs/23-preflight.log"}

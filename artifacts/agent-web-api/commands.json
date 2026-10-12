@@ -1,0 +1,2493 @@
+[
+  {
+    "phase": "bootstrap-git-init",
+    "argv": [
+      "git",
+      "init",
+      "--initial-branch=main"
+    ],
+    "exit": 0,
+    "signal": null,
+    "spawnError": null,
+    "inputBefore": {
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "contentId": "3934fc124de0d7f2994c0b2d379d48df37055bf7224806ca8e8077a8a73d5472",
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "featureSha": null,
+      "clean": null,
+      "stage": "pristine-pending-owned-git"
+    },
+    "inputAfter": {
+      "featureSha": null,
+      "contentId": "3934fc124de0d7f2994c0b2d379d48df37055bf7224806ca8e8077a8a73d5472",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": false,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": false
+    },
+    "inputGuardError": null,
+    "environment": {
+      "TMPDIR": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TEMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "WRANGLER_LOG_PATH": "/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"
+    },
+    "cwd": "/home/runner/work/super-starter/super-starter/feature",
+    "startedAt": "2026-10-12T17:21:30.760Z",
+    "milliseconds": 27,
+    "log": "logs/01-bootstrap-git-init.log"
+  },
+  {
+    "phase": "bootstrap-git-config",
+    "argv": [
+      "git",
+      "config",
+      "--local",
+      "user.name",
+      "Codex independent verifier"
+    ],
+    "exit": 0,
+    "signal": null,
+    "spawnError": null,
+    "inputBefore": {
+      "featureSha": null,
+      "contentId": "3934fc124de0d7f2994c0b2d379d48df37055bf7224806ca8e8077a8a73d5472",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": false,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": false
+    },
+    "inputAfter": {
+      "featureSha": null,
+      "contentId": "3934fc124de0d7f2994c0b2d379d48df37055bf7224806ca8e8077a8a73d5472",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": false,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": false
+    },
+    "inputGuardError": null,
+    "environment": {
+      "TMPDIR": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TEMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "WRANGLER_LOG_PATH": "/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"
+    },
+    "cwd": "/home/runner/work/super-starter/super-starter/feature",
+    "startedAt": "2026-10-12T17:21:30.815Z",
+    "milliseconds": 28,
+    "log": "logs/02-bootstrap-git-config.log"
+  },
+  {
+    "phase": "bootstrap-git-config",
+    "argv": [
+      "git",
+      "config",
+      "--local",
+      "user.email",
+      "agent-web@example.invalid"
+    ],
+    "exit": 0,
+    "signal": null,
+    "spawnError": null,
+    "inputBefore": {
+      "featureSha": null,
+      "contentId": "3934fc124de0d7f2994c0b2d379d48df37055bf7224806ca8e8077a8a73d5472",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": false,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": false
+    },
+    "inputAfter": {
+      "featureSha": null,
+      "contentId": "3934fc124de0d7f2994c0b2d379d48df37055bf7224806ca8e8077a8a73d5472",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": false,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": false
+    },
+    "inputGuardError": null,
+    "environment": {
+      "TMPDIR": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TEMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "WRANGLER_LOG_PATH": "/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"
+    },
+    "cwd": "/home/runner/work/super-starter/super-starter/feature",
+    "startedAt": "2026-10-12T17:21:30.869Z",
+    "milliseconds": 28,
+    "log": "logs/03-bootstrap-git-config.log"
+  },
+  {
+    "phase": "bootstrap-setup",
+    "argv": [
+      "pnpm",
+      "env:setup"
+    ],
+    "exit": 0,
+    "signal": null,
+    "spawnError": null,
+    "inputBefore": {
+      "featureSha": null,
+      "contentId": "3934fc124de0d7f2994c0b2d379d48df37055bf7224806ca8e8077a8a73d5472",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": false,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": false
+    },
+    "inputAfter": {
+      "featureSha": null,
+      "contentId": "f060266bd6f0d088b23aaee14bce2332a82a0d0ab6e54afefccb318472004f69",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": false,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputGuardError": null,
+    "environment": {
+      "TMPDIR": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TEMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "WRANGLER_LOG_PATH": "/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"
+    },
+    "cwd": "/home/runner/work/super-starter/super-starter/feature",
+    "startedAt": "2026-10-12T17:21:30.923Z",
+    "milliseconds": 18410,
+    "log": "logs/04-bootstrap-setup.log"
+  },
+  {
+    "phase": "baseline-stage",
+    "argv": [
+      "git",
+      "add",
+      "--all"
+    ],
+    "exit": 0,
+    "signal": null,
+    "spawnError": null,
+    "inputBefore": {
+      "featureSha": null,
+      "contentId": "f060266bd6f0d088b23aaee14bce2332a82a0d0ab6e54afefccb318472004f69",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": false,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputAfter": {
+      "featureSha": null,
+      "contentId": "f060266bd6f0d088b23aaee14bce2332a82a0d0ab6e54afefccb318472004f69",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": false,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputGuardError": null,
+    "environment": {
+      "TMPDIR": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TEMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "WRANGLER_LOG_PATH": "/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"
+    },
+    "cwd": "/home/runner/work/super-starter/super-starter/feature",
+    "startedAt": "2026-10-12T17:21:49.393Z",
+    "milliseconds": 99,
+    "log": "logs/05-baseline-stage.log"
+  },
+  {
+    "phase": "baseline-commit",
+    "argv": [
+      "git",
+      "commit",
+      "-m",
+      "Record complete pristine generated fullstack baseline after standard setup"
+    ],
+    "exit": 0,
+    "signal": null,
+    "spawnError": null,
+    "inputBefore": {
+      "featureSha": null,
+      "contentId": "f060266bd6f0d088b23aaee14bce2332a82a0d0ab6e54afefccb318472004f69",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": false,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputAfter": {
+      "featureSha": "11e0d969e6749c7a0b5bda59e09cd4e192842863",
+      "contentId": "f060266bd6f0d088b23aaee14bce2332a82a0d0ab6e54afefccb318472004f69",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputGuardError": null,
+    "environment": {
+      "TMPDIR": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TEMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "WRANGLER_LOG_PATH": "/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"
+    },
+    "cwd": "/home/runner/work/super-starter/super-starter/feature",
+    "startedAt": "2026-10-12T17:21:49.519Z",
+    "milliseconds": 1367,
+    "log": "logs/06-baseline-commit.log"
+  },
+  {
+    "phase": "bootstrap-branch",
+    "argv": [
+      "git",
+      "switch",
+      "-c",
+      "feat/notes-count"
+    ],
+    "exit": 0,
+    "signal": null,
+    "spawnError": null,
+    "inputBefore": {
+      "featureSha": "11e0d969e6749c7a0b5bda59e09cd4e192842863",
+      "contentId": "f060266bd6f0d088b23aaee14bce2332a82a0d0ab6e54afefccb318472004f69",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputAfter": {
+      "featureSha": "11e0d969e6749c7a0b5bda59e09cd4e192842863",
+      "contentId": "f060266bd6f0d088b23aaee14bce2332a82a0d0ab6e54afefccb318472004f69",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputGuardError": null,
+    "environment": {
+      "TMPDIR": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TEMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "WRANGLER_LOG_PATH": "/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"
+    },
+    "cwd": "/home/runner/work/super-starter/super-starter/feature",
+    "startedAt": "2026-10-12T17:21:50.955Z",
+    "milliseconds": 33,
+    "log": "logs/07-bootstrap-branch.log"
+  },
+  {
+    "phase": "feature-stage",
+    "argv": [
+      "git",
+      "add",
+      "--",
+      "packages/api/src/notes.ts",
+      "packages/api/test/runtime.test.ts",
+      "packages/api/test/unit.test.ts",
+      "packages/web/src/client/notes.ts",
+      "packages/web/src/routes/index.tsx",
+      "packages/web/test/browser/notes.spec.ts",
+      "packages/web/test/unit.test.ts"
+    ],
+    "exit": 0,
+    "signal": null,
+    "spawnError": null,
+    "inputBefore": {
+      "featureSha": "11e0d969e6749c7a0b5bda59e09cd4e192842863",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": false,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputAfter": {
+      "featureSha": "11e0d969e6749c7a0b5bda59e09cd4e192842863",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": false,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputGuardError": null,
+    "environment": {
+      "TMPDIR": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TEMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "WRANGLER_LOG_PATH": "/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"
+    },
+    "cwd": "/home/runner/work/super-starter/super-starter/feature",
+    "startedAt": "2026-10-12T17:21:51.047Z",
+    "milliseconds": 36,
+    "log": "logs/08-feature-stage.log"
+  },
+  {
+    "phase": "commit",
+    "argv": [
+      "git",
+      "commit",
+      "-m",
+      "Add reactive note count with normal, failure and stale response regressions"
+    ],
+    "exit": 0,
+    "signal": null,
+    "spawnError": null,
+    "inputBefore": {
+      "featureSha": "11e0d969e6749c7a0b5bda59e09cd4e192842863",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": false,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputAfter": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputGuardError": null,
+    "environment": {
+      "TMPDIR": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TEMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "WRANGLER_LOG_PATH": "/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"
+    },
+    "cwd": "/home/runner/work/super-starter/super-starter/feature",
+    "startedAt": "2026-10-12T17:21:51.117Z",
+    "milliseconds": 1314,
+    "log": "logs/09-commit.log"
+  },
+  {
+    "phase": "bootstrap-bare",
+    "argv": [
+      "git",
+      "init",
+      "--bare",
+      "/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/owned-origin.git"
+    ],
+    "exit": 0,
+    "signal": null,
+    "spawnError": null,
+    "inputBefore": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputAfter": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputGuardError": null,
+    "environment": {
+      "TMPDIR": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TEMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "WRANGLER_LOG_PATH": "/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"
+    },
+    "cwd": "/home/runner/work/super-starter/super-starter/feature",
+    "startedAt": "2026-10-12T17:21:52.649Z",
+    "milliseconds": 46,
+    "log": "logs/10-bootstrap-bare.log"
+  },
+  {
+    "phase": "bootstrap-origin",
+    "argv": [
+      "git",
+      "remote",
+      "add",
+      "origin",
+      "/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/owned-origin.git"
+    ],
+    "exit": 0,
+    "signal": null,
+    "spawnError": null,
+    "inputBefore": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputAfter": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputGuardError": null,
+    "environment": {
+      "TMPDIR": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TEMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "WRANGLER_LOG_PATH": "/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"
+    },
+    "cwd": "/home/runner/work/super-starter/super-starter/feature",
+    "startedAt": "2026-10-12T17:21:52.731Z",
+    "milliseconds": 39,
+    "log": "logs/11-bootstrap-origin.log"
+  },
+  {
+    "phase": "push",
+    "argv": [
+      "git",
+      "push",
+      "--set-upstream",
+      "origin",
+      "feat/notes-count"
+    ],
+    "exit": 0,
+    "signal": null,
+    "spawnError": null,
+    "inputBefore": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputAfter": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputGuardError": null,
+    "environment": {
+      "TMPDIR": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TEMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "WRANGLER_LOG_PATH": "/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"
+    },
+    "cwd": "/home/runner/work/super-starter/super-starter/feature",
+    "startedAt": "2026-10-12T17:21:52.806Z",
+    "milliseconds": 75147,
+    "log": "logs/12-push.log"
+  },
+  {
+    "phase": "setup",
+    "argv": [
+      "pnpm",
+      "env:setup"
+    ],
+    "exit": 0,
+    "signal": null,
+    "spawnError": null,
+    "inputBefore": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputAfter": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputGuardError": null,
+    "environment": {
+      "TMPDIR": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TEMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "WRANGLER_LOG_PATH": "/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"
+    },
+    "cwd": "/home/runner/work/super-starter/super-starter/feature",
+    "startedAt": "2026-10-12T17:23:08.307Z",
+    "milliseconds": 10249,
+    "log": "logs/13-setup.log"
+  },
+  {
+    "phase": "doctor",
+    "argv": [
+      "pnpm",
+      "env:doctor"
+    ],
+    "exit": 0,
+    "signal": null,
+    "spawnError": null,
+    "inputBefore": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputAfter": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputGuardError": null,
+    "environment": {
+      "TMPDIR": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TEMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "WRANGLER_LOG_PATH": "/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"
+    },
+    "cwd": "/home/runner/work/super-starter/super-starter/feature",
+    "startedAt": "2026-10-12T17:23:18.905Z",
+    "milliseconds": 176,
+    "log": "logs/14-doctor.log"
+  },
+  {
+    "phase": "browser-prerequisites",
+    "argv": [
+      "pnpm",
+      "--filter",
+      "@independent-web/web",
+      "exec",
+      "playwright",
+      "install",
+      "--with-deps",
+      "chromium"
+    ],
+    "exit": 0,
+    "signal": null,
+    "spawnError": null,
+    "inputBefore": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputAfter": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputGuardError": null,
+    "environment": {
+      "TMPDIR": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TEMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "WRANGLER_LOG_PATH": "/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"
+    },
+    "cwd": "/home/runner/work/super-starter/super-starter/feature",
+    "startedAt": "2026-10-12T17:23:19.259Z",
+    "milliseconds": 20446,
+    "log": "logs/15-browser-prerequisites.log"
+  },
+  {
+    "phase": "dev",
+    "argv": [
+      "pnpm",
+      "dev",
+      "--",
+      "web"
+    ],
+    "exit": 0,
+    "startedAt": "2026-10-12T17:23:39.882Z",
+    "milliseconds": 10702,
+    "log": "logs/16-dev.log",
+    "inputBefore": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputAfter": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "processExit": null,
+    "processSignal": "SIGTERM",
+    "failure": null,
+    "checks": {
+      "before": 1,
+      "countAfterDelete": 1,
+      "d1": true,
+      "serviceBinding": true,
+      "SSR": true
+    },
+    "cleanup": "passed",
+    "completion": "Standard Web dev READY and real HTTP/SSR count CRUD smoke, followed by deliberate owned shutdown"
+  },
+  {
+    "phase": "targeted-test",
+    "argv": [
+      "pnpm",
+      "--filter",
+      "@independent-web/api",
+      "test"
+    ],
+    "exit": 0,
+    "signal": null,
+    "spawnError": null,
+    "inputBefore": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputAfter": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputGuardError": null,
+    "environment": {
+      "TMPDIR": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TEMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "WRANGLER_LOG_PATH": "/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"
+    },
+    "cwd": "/home/runner/work/super-starter/super-starter/feature",
+    "startedAt": "2026-10-12T17:23:50.762Z",
+    "milliseconds": 4033,
+    "log": "logs/17-targeted-test.log"
+  },
+  {
+    "phase": "targeted-test",
+    "argv": [
+      "pnpm",
+      "--filter",
+      "@independent-web/web",
+      "test"
+    ],
+    "exit": 0,
+    "signal": null,
+    "spawnError": null,
+    "inputBefore": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputAfter": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputGuardError": null,
+    "environment": {
+      "TMPDIR": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TEMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "WRANGLER_LOG_PATH": "/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"
+    },
+    "cwd": "/home/runner/work/super-starter/super-starter/feature",
+    "startedAt": "2026-10-12T17:23:54.973Z",
+    "milliseconds": 953,
+    "log": "logs/18-targeted-test.log"
+  },
+  {
+    "phase": "pre-pr",
+    "argv": [
+      "pnpm",
+      "gate:pre-pr",
+      "--",
+      "--base",
+      "11e0d969e6749c7a0b5bda59e09cd4e192842863"
+    ],
+    "exit": 0,
+    "signal": null,
+    "spawnError": null,
+    "inputBefore": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputAfter": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputGuardError": null,
+    "environment": {
+      "TMPDIR": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TEMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "WRANGLER_LOG_PATH": "/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"
+    },
+    "cwd": "/home/runner/work/super-starter/super-starter/feature",
+    "startedAt": "2026-10-12T17:23:56.104Z",
+    "milliseconds": 236216,
+    "log": "logs/19-pre-pr.log"
+  },
+  {
+    "phase": "full",
+    "argv": [
+      "pnpm",
+      "gate:full"
+    ],
+    "exit": 0,
+    "signal": null,
+    "spawnError": null,
+    "inputBefore": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputAfter": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputGuardError": null,
+    "environment": {
+      "TMPDIR": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TEMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "WRANGLER_LOG_PATH": "/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"
+    },
+    "cwd": "/home/runner/work/super-starter/super-starter/feature",
+    "startedAt": "2026-10-12T17:27:52.502Z",
+    "milliseconds": 239042,
+    "log": "logs/20-full.log"
+  },
+  {
+    "phase": "ci",
+    "argv": [
+      "pnpm",
+      "gate:ci",
+      "--",
+      "--base",
+      "11e0d969e6749c7a0b5bda59e09cd4e192842863",
+      "--checks",
+      "javascript"
+    ],
+    "exit": 0,
+    "signal": null,
+    "spawnError": null,
+    "inputBefore": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputAfter": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputGuardError": null,
+    "environment": {
+      "TMPDIR": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TEMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "WRANGLER_LOG_PATH": "/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"
+    },
+    "cwd": "/home/runner/work/super-starter/super-starter/feature",
+    "startedAt": "2026-10-12T17:31:51.730Z",
+    "milliseconds": 234064,
+    "log": "logs/21-ci.log"
+  },
+  {
+    "phase": "build",
+    "argv": [
+      "pnpm",
+      "build"
+    ],
+    "exit": 0,
+    "signal": null,
+    "spawnError": null,
+    "inputBefore": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputAfter": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputGuardError": null,
+    "environment": {
+      "TMPDIR": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TEMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "WRANGLER_LOG_PATH": "/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"
+    },
+    "cwd": "/home/runner/work/super-starter/super-starter/feature",
+    "startedAt": "2026-10-12T17:35:45.968Z",
+    "milliseconds": 6031,
+    "log": "logs/22-build.log"
+  },
+  {
+    "phase": "preflight",
+    "argv": [
+      "pnpm",
+      "deploy:preflight",
+      "--",
+      "--target",
+      "api",
+      "--environment",
+      "local"
+    ],
+    "exit": 0,
+    "signal": null,
+    "spawnError": null,
+    "inputBefore": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputAfter": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputGuardError": null,
+    "environment": {
+      "TMPDIR": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TEMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "WRANGLER_LOG_PATH": "/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"
+    },
+    "cwd": "/home/runner/work/super-starter/super-starter/feature",
+    "startedAt": "2026-10-12T17:35:52.173Z",
+    "milliseconds": 19962,
+    "log": "logs/23-preflight.log"
+  },
+  {
+    "phase": "preflight",
+    "argv": [
+      "pnpm",
+      "deploy:preflight",
+      "--",
+      "--target",
+      "web",
+      "--environment",
+      "local"
+    ],
+    "exit": 0,
+    "signal": null,
+    "spawnError": null,
+    "inputBefore": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputAfter": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputGuardError": null,
+    "environment": {
+      "TMPDIR": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TEMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "WRANGLER_LOG_PATH": "/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"
+    },
+    "cwd": "/home/runner/work/super-starter/super-starter/feature",
+    "startedAt": "2026-10-12T17:36:12.314Z",
+    "milliseconds": 21845,
+    "log": "logs/24-preflight.log"
+  },
+  {
+    "phase": "final-git-bundle",
+    "argv": [
+      "git",
+      "bundle",
+      "create",
+      "/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/final-feature.bundle",
+      "refs/heads/main",
+      "refs/heads/feat/notes-count"
+    ],
+    "exit": 0,
+    "signal": null,
+    "spawnError": null,
+    "inputBefore": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputAfter": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputGuardError": null,
+    "environment": {
+      "TMPDIR": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TEMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "WRANGLER_LOG_PATH": "/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"
+    },
+    "cwd": "/home/runner/work/super-starter/super-starter/feature",
+    "startedAt": "2026-10-12T17:37:16.321Z",
+    "milliseconds": 55,
+    "log": "logs/25-final-git-bundle.log"
+  },
+  {
+    "phase": "raw-feature-commit",
+    "argv": [
+      "git",
+      "cat-file",
+      "-p",
+      "HEAD"
+    ],
+    "exit": 0,
+    "signal": null,
+    "spawnError": null,
+    "inputBefore": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputAfter": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputGuardError": null,
+    "environment": {
+      "TMPDIR": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TEMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "WRANGLER_LOG_PATH": "/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"
+    },
+    "cwd": "/home/runner/work/super-starter/super-starter/feature",
+    "startedAt": "2026-10-12T17:37:16.848Z",
+    "milliseconds": 40,
+    "log": "logs/26-raw-feature-commit.log"
+  },
+  {
+    "phase": "raw-baseline-commit",
+    "argv": [
+      "git",
+      "cat-file",
+      "-p",
+      "main"
+    ],
+    "exit": 0,
+    "signal": null,
+    "spawnError": null,
+    "inputBefore": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputAfter": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputGuardError": null,
+    "environment": {
+      "TMPDIR": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TEMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "WRANGLER_LOG_PATH": "/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"
+    },
+    "cwd": "/home/runner/work/super-starter/super-starter/feature",
+    "startedAt": "2026-10-12T17:37:16.928Z",
+    "milliseconds": 38,
+    "log": "logs/27-raw-baseline-commit.log"
+  },
+  {
+    "phase": "raw-feature-tree",
+    "argv": [
+      "git",
+      "ls-tree",
+      "-r",
+      "--long",
+      "HEAD"
+    ],
+    "exit": 0,
+    "signal": null,
+    "spawnError": null,
+    "inputBefore": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputAfter": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputGuardError": null,
+    "environment": {
+      "TMPDIR": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TEMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "WRANGLER_LOG_PATH": "/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"
+    },
+    "cwd": "/home/runner/work/super-starter/super-starter/feature",
+    "startedAt": "2026-10-12T17:37:17.001Z",
+    "milliseconds": 40,
+    "log": "logs/28-raw-feature-tree.log"
+  },
+  {
+    "phase": "raw-baseline-tree",
+    "argv": [
+      "git",
+      "ls-tree",
+      "-r",
+      "--long",
+      "main"
+    ],
+    "exit": 0,
+    "signal": null,
+    "spawnError": null,
+    "inputBefore": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputAfter": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputGuardError": null,
+    "environment": {
+      "TMPDIR": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TEMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "WRANGLER_LOG_PATH": "/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"
+    },
+    "cwd": "/home/runner/work/super-starter/super-starter/feature",
+    "startedAt": "2026-10-12T17:37:17.080Z",
+    "milliseconds": 43,
+    "log": "logs/29-raw-baseline-tree.log"
+  },
+  {
+    "phase": "raw-feature-diff",
+    "argv": [
+      "git",
+      "show",
+      "--format=fuller",
+      "--stat",
+      "--patch",
+      "HEAD"
+    ],
+    "exit": 0,
+    "signal": null,
+    "spawnError": null,
+    "inputBefore": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputAfter": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputGuardError": null,
+    "environment": {
+      "TMPDIR": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TEMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "WRANGLER_LOG_PATH": "/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"
+    },
+    "cwd": "/home/runner/work/super-starter/super-starter/feature",
+    "startedAt": "2026-10-12T17:37:17.160Z",
+    "milliseconds": 39,
+    "log": "logs/30-raw-feature-diff.log"
+  },
+  {
+    "phase": "raw-hook-config",
+    "argv": [
+      "git",
+      "config",
+      "--show-origin",
+      "--get-regexp",
+      "^core[.]hooks[pP]ath$"
+    ],
+    "exit": 0,
+    "signal": null,
+    "spawnError": null,
+    "inputBefore": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputAfter": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputGuardError": null,
+    "environment": {
+      "TMPDIR": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TEMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "WRANGLER_LOG_PATH": "/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"
+    },
+    "cwd": "/home/runner/work/super-starter/super-starter/feature",
+    "startedAt": "2026-10-12T17:37:17.236Z",
+    "milliseconds": 40,
+    "log": "logs/31-raw-hook-config.log"
+  },
+  {
+    "phase": "raw-bare-ref",
+    "argv": [
+      "git",
+      "--git-dir",
+      "/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/owned-origin.git",
+      "rev-parse",
+      "refs/heads/feat/notes-count"
+    ],
+    "exit": 0,
+    "signal": null,
+    "spawnError": null,
+    "inputBefore": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputAfter": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputGuardError": null,
+    "environment": {
+      "TMPDIR": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TEMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "WRANGLER_LOG_PATH": "/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"
+    },
+    "cwd": "/home/runner/work/super-starter/super-starter/feature",
+    "startedAt": "2026-10-12T17:37:17.312Z",
+    "milliseconds": 38,
+    "log": "logs/32-raw-bare-ref.log"
+  },
+  {
+    "phase": "raw-git-object-list",
+    "argv": [
+      "git",
+      "rev-list",
+      "--objects",
+      "main",
+      "HEAD"
+    ],
+    "exit": 0,
+    "signal": null,
+    "spawnError": null,
+    "inputBefore": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputAfter": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputGuardError": null,
+    "environment": {
+      "TMPDIR": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "TEMP": "/home/runner/work/super-starter/super-starter/feature/.state/t",
+      "WRANGLER_LOG_PATH": "/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"
+    },
+    "cwd": "/home/runner/work/super-starter/super-starter/feature",
+    "startedAt": "2026-10-12T17:37:17.388Z",
+    "milliseconds": 39,
+    "log": "logs/33-raw-git-object-list.log"
+  },
+  {
+    "phase": "raw-git-objects",
+    "argv": [
+      "git",
+      "cat-file",
+      "--batch"
+    ],
+    "exit": 0,
+    "signal": null,
+    "spawnError": null,
+    "inputGuardError": null,
+    "inputBefore": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "inputAfter": {
+      "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "origin": {
+        "sha": "460ad19c970adaab7231795f3438943d9158b135",
+        "dirty": false,
+        "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+      },
+      "configuration": {
+        "name": "independent-note-web",
+        "scope": "@independent-web",
+        "identifier": "com.example.independentnoteweb",
+        "preset": "fullstack",
+        "features": [
+          "d1",
+          "kv",
+          "r2",
+          "services"
+        ]
+      },
+      "kind": "project",
+      "clean": true,
+      "supportSha": "9472a912cbec8f9729ae9af5a4a20e9c82611e27",
+      "canonical": true
+    },
+    "cwd": "/home/runner/work/super-starter/super-starter/feature",
+    "startedAt": "2026-10-12T17:37:17.464Z",
+    "milliseconds": 50,
+    "log": "logs/34-raw-git-objects.log",
+    "stdin": {
+      "objects": 349,
+      "sha256": "b5fb2f8ad25ba09d61285b84d7073ac39ec674504d90c78bff886c85905b64f8"
+    },
+    "stdoutBytes": 1645415,
+    "scope": "Actual binary Git object bytes; exported as base64 with verified SHA/type/size below"
+  }
+]

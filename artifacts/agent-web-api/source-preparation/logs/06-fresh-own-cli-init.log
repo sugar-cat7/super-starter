@@ -1,0 +1,7 @@
+{"phase":"fresh-own-cli-init","argv":["node","tools/generators/cli.ts","init","--target","/home/runner/work/super-starter/super-starter/feature","--name","independent-note-web","--scope","@independent-web","--identifier","com.example.independentnoteweb","--preset","fullstack","--features","d1,kv,r2","--no-install"],"cwd":"/home/runner/work/super-starter/super-starter/source","startedAt":"2026-10-12T17:21:24.428Z","milliseconds":5546,"exit":0,"signal":null,"error":null,"log":"logs/06-fresh-own-cli-init.log"}
+{
+  "root": "/home/runner/work/super-starter/super-starter/feature",
+  "writes": 282,
+  "remove": [],
+  "dryRun": false
+}

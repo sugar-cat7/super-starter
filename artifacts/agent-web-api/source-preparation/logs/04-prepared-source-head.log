@@ -1,0 +1,2 @@
+{"phase":"prepared-source-head","argv":["git","rev-parse","HEAD"],"cwd":"/home/runner/work/super-starter/super-starter/source","startedAt":"2026-10-12T17:21:24.349Z","milliseconds":3,"exit":0,"signal":null,"error":null,"log":"logs/04-prepared-source-head.log"}
+460ad19c970adaab7231795f3438943d9158b135

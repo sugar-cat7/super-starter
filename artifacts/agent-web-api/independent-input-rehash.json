@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "featureSha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+  "baseSha": "11e0d969e6749c7a0b5bda59e09cd4e192842863",
+  "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+  "origin": {
+    "sha": "460ad19c970adaab7231795f3438943d9158b135",
+    "dirty": false,
+    "contentId": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"
+  },
+  "renderedOriginRehashed": "a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68",
+  "managedFiles": 281,
+  "lockSha256": "b6fb2bdc86b51edfd548ce29e1162fdcd703515d05ff40a675d08143c0640c3b",
+  "metadataLockUnchangedAcrossFeature": true,
+  "sourceBaselineFiles": 283,
+  "authoredFiles": 7
+}

@@ -1,0 +1,1 @@
+{"phase":"after-generation-source-clean","argv":["git","status","--porcelain"],"cwd":"/home/runner/work/super-starter/super-starter/source","startedAt":"2026-10-12T17:21:29.979Z","milliseconds":5,"exit":0,"signal":null,"error":null,"log":"logs/08-after-generation-source-clean.log"}

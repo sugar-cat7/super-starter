@@ -1,0 +1,266 @@
+{
+  "passed": true,
+  "expectedChecks": 18,
+  "actualChecks": 18,
+  "checks": [
+    {
+      "id": "static",
+      "command": [
+        "check"
+      ],
+      "requirements": [
+        "layout",
+        "quality",
+        "boundaries",
+        "docs",
+        "secrets"
+      ],
+      "timeout": 180000
+    },
+    {
+      "id": "tools-unit",
+      "command": [
+        "test:tools"
+      ],
+      "requirements": [
+        "generator-safety",
+        "affected",
+        "failure-propagation"
+      ],
+      "timeout": 180000
+    },
+    {
+      "id": "@independent-web/api/unit",
+      "command": [
+        "--filter",
+        "@independent-web/api",
+        "test"
+      ],
+      "requirements": [
+        "contracts",
+        "ui-states"
+      ],
+      "timeout": 180000
+    },
+    {
+      "id": "@independent-web/api/build",
+      "command": [
+        "--filter",
+        "@independent-web/api",
+        "build"
+      ],
+      "requirements": [
+        "build"
+      ],
+      "timeout": 180000
+    },
+    {
+      "id": "@independent-web/api/runtime",
+      "command": [
+        "--filter",
+        "@independent-web/api",
+        "test:runtime"
+      ],
+      "requirements": [
+        "worker",
+        "bindings",
+        "environments"
+      ],
+      "timeout": 180000
+    },
+    {
+      "id": "@independent-web/api/restart",
+      "command": [
+        "--filter",
+        "@independent-web/api",
+        "test:restart"
+      ],
+      "requirements": [
+        "migration",
+        "seed",
+        "persistence"
+      ],
+      "timeout": 180000
+    },
+    {
+      "id": "@independent-web/contracts/unit",
+      "command": [
+        "--filter",
+        "@independent-web/contracts",
+        "test"
+      ],
+      "requirements": [
+        "contracts",
+        "ui-states"
+      ],
+      "timeout": 180000
+    },
+    {
+      "id": "@independent-web/contracts/build",
+      "command": [
+        "--filter",
+        "@independent-web/contracts",
+        "build"
+      ],
+      "requirements": [
+        "build"
+      ],
+      "timeout": 180000
+    },
+    {
+      "id": "@independent-web/observability/unit",
+      "command": [
+        "--filter",
+        "@independent-web/observability",
+        "test"
+      ],
+      "requirements": [
+        "contracts",
+        "ui-states"
+      ],
+      "timeout": 180000
+    },
+    {
+      "id": "@independent-web/observability/build",
+      "command": [
+        "--filter",
+        "@independent-web/observability",
+        "build"
+      ],
+      "requirements": [
+        "build"
+      ],
+      "timeout": 180000
+    },
+    {
+      "id": "@independent-web/ui/unit",
+      "command": [
+        "--filter",
+        "@independent-web/ui",
+        "test"
+      ],
+      "requirements": [
+        "contracts",
+        "ui-states"
+      ],
+      "timeout": 180000
+    },
+    {
+      "id": "@independent-web/ui/build",
+      "command": [
+        "--filter",
+        "@independent-web/ui",
+        "build"
+      ],
+      "requirements": [
+        "build"
+      ],
+      "timeout": 180000
+    },
+    {
+      "id": "@independent-web/web/unit",
+      "command": [
+        "--filter",
+        "@independent-web/web",
+        "test"
+      ],
+      "requirements": [
+        "contracts",
+        "ui-states"
+      ],
+      "timeout": 180000
+    },
+    {
+      "id": "@independent-web/web/build",
+      "command": [
+        "--filter",
+        "@independent-web/web",
+        "build"
+      ],
+      "requirements": [
+        "build"
+      ],
+      "timeout": 180000
+    },
+    {
+      "id": "@independent-web/web/runtime",
+      "command": [
+        "--filter",
+        "@independent-web/web",
+        "test:runtime"
+      ],
+      "requirements": [
+        "worker",
+        "bindings",
+        "environments"
+      ],
+      "timeout": 180000
+    },
+    {
+      "id": "@independent-web/web/browser",
+      "command": [
+        "--filter",
+        "@independent-web/web",
+        "test:e2e"
+      ],
+      "requirements": [
+        "web",
+        "browser",
+        "accessibility",
+        "vrt"
+      ],
+      "timeout": 180000
+    },
+    {
+      "id": "@independent-web/web/browser-production",
+      "command": [
+        "--filter",
+        "@independent-web/web",
+        "test:e2e:production"
+      ],
+      "requirements": [
+        "web",
+        "browser",
+        "production-ui"
+      ],
+      "timeout": 180000
+    },
+    {
+      "id": "@independent-web/web/lighthouse",
+      "command": [
+        "--filter",
+        "@independent-web/web",
+        "test:lighthouse"
+      ],
+      "requirements": [
+        "web",
+        "browser",
+        "lighthouse-all-100"
+      ],
+      "timeout": 900000
+    }
+  ],
+  "gates": {
+    "pre-pr": {
+      "checks": 12,
+      "status": "passed",
+      "sha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "variant": "all"
+    },
+    "full": {
+      "checks": 18,
+      "status": "passed",
+      "sha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "variant": "all"
+    },
+    "ci": {
+      "checks": 12,
+      "status": "passed",
+      "sha": "4a8bd01ed37d5786d66e8e0668e77507a48194cc",
+      "contentId": "1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031",
+      "variant": "javascript"
+    }
+  }
+}

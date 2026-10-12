@@ -1,0 +1,464 @@
+{"phase":"raw-feature-diff","argv":["git","show","--format=fuller","--stat","--patch","HEAD"],"inputBefore":{"featureSha":"4a8bd01ed37d5786d66e8e0668e77507a48194cc","contentId":"1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031","origin":{"sha":"460ad19c970adaab7231795f3438943d9158b135","dirty":false,"contentId":"a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"},"configuration":{"name":"independent-note-web","scope":"@independent-web","identifier":"com.example.independentnoteweb","preset":"fullstack","features":["d1","kv","r2","services"]},"kind":"project","clean":true,"supportSha":"9472a912cbec8f9729ae9af5a4a20e9c82611e27","canonical":true},"cwd":"/home/runner/work/super-starter/super-starter/feature","startedAt":"2026-10-12T17:37:17.160Z","environment":{"TMPDIR":"/home/runner/work/super-starter/super-starter/feature/.state/t","TMP":"/home/runner/work/super-starter/super-starter/feature/.state/t","TEMP":"/home/runner/work/super-starter/super-starter/feature/.state/t","WRANGLER_LOG_PATH":"/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"}}
+commit 4a8bd01ed37d5786d66e8e0668e77507a48194cc
+Author:     Codex independent verifier <agent-web@example.invalid>
+AuthorDate: Mon Oct 12 17:21:51 2026 +0000
+Commit:     Codex independent verifier <agent-web@example.invalid>
+CommitDate: Mon Oct 12 17:21:51 2026 +0000
+
+    Add reactive note count with normal, failure and stale response regressions
+---
+ packages/api/src/notes.ts               | 16 +++++-
+ packages/api/test/runtime.test.ts       | 21 +++++++
+ packages/api/test/unit.test.ts          | 75 +++++++++++++++++++++++++
+ packages/web/src/client/notes.ts        | 21 +++++++
+ packages/web/src/routes/index.tsx       | 81 ++++++++++++++++++++++++++-
+ packages/web/test/browser/notes.spec.ts | 97 +++++++++++++++++++++++++++++++++
+ packages/web/test/unit.test.ts          | 38 ++++++++++++-
+ 7 files changed, 344 insertions(+), 5 deletions(-)
+
+diff --git a/packages/api/src/notes.ts b/packages/api/src/notes.ts
+index 4b40807..d1d42a4 100644
+--- a/packages/api/src/notes.ts
++++ b/packages/api/src/notes.ts
+@@ -92,7 +92,21 @@ export async function handleNotes(request: Request, env: SampleBindings): Promis
+         : Ok('');
+     if (!text.ok) return text;
+     let response: Response;
+-    if (url.pathname === '/api/notes' && request.method === 'GET') {
++    if (url.pathname === '/api/notes/count' && request.method === 'GET') {
++      let raw: unknown = { count: volatileNotes.size };
++      if (env.NOTES) {
++        const stored = await binding(
++          'binding.d1.read',
++          () => env.NOTES!.prepare('SELECT COUNT(*) AS count FROM notes').all<{ count: number }>(),
++          (value) => value.success,
++        );
++        if (!stored.ok) return stored;
++        raw = stored.value.results[0];
++      }
++      const count = decode(z.object({ count: z.number().int().nonnegative() }).strict(), raw);
++      if (!count.ok) return count;
++      response = json(count.value);
++    } else if (url.pathname === '/api/notes' && request.method === 'GET') {
+       let raw: unknown = [...volatileNotes.values()];
+       if (env.NOTES) {
+         const stored = await binding(
+diff --git a/packages/api/test/runtime.test.ts b/packages/api/test/runtime.test.ts
+index 3049496..7c6541d 100644
+--- a/packages/api/test/runtime.test.ts
++++ b/packages/api/test/runtime.test.ts
+@@ -11,6 +11,27 @@ const fetchStatus = async (route: string, init?: RequestInit) => {
+ };
+ 
+ describe('real workerd HTTP contract', () => {
++  it('counts persisted notes after actual HTTP creates and deletes', async () => {
++    const initial = (await (await fetchLocal('/api/notes/count')).json()) as { count: number };
++    expect(initial.count).toBe(
++      notesSchema.parse(await (await fetchLocal('/api/notes')).json()).length,
++    );
++    const added = await fetchLocal('/api/notes', {
++      method: 'POST',
++      body: JSON.stringify({ text: 'Runtime count note' }),
++    });
++    expect(added.status).toBe(201);
++    const note = noteSchema.parse(await added.json());
++    try {
++      const counted = await fetchLocal('/api/notes/count');
++      expect(counted.status).toBe(200);
++      expect(counted.headers.get('x-storage-mode')).toBe('persistent-d1');
++      expect(await counted.json()).toEqual({ count: initial.count + 1 });
++    } finally {
++      expect(await fetchStatus(`/api/notes/${note.id}`, { method: 'DELETE' })).toBe(204);
++    }
++    expect(await (await fetchLocal('/api/notes/count')).json()).toEqual(initial);
++  });
+   it('serves health, validates input and completes CRUD', async () => {
+     expect(await fetchStatus('/health')).toBe(200);
+     const invalid = await fetchLocal('/api/notes', { method: 'POST', body: '{"text":""}' });
+diff --git a/packages/api/test/unit.test.ts b/packages/api/test/unit.test.ts
+index 54dfe29..d64be96 100644
+--- a/packages/api/test/unit.test.ts
++++ b/packages/api/test/unit.test.ts
+@@ -2,6 +2,81 @@ import { describe, expect, it, vi } from 'vitest';
+ import { handleNotes } from '../src/notes';
+ 
+ describe('API validation and safe publication defaults', () => {
++  it('counts volatile notes through create/delete without allowing denied writes', async () => {
++    const read = () =>
++      handleNotes(new Request('https://sample.invalid/api/notes/count'), { WRITE_MODE: 'deny' });
++    const before = (await (await read()).json()) as { count: number };
++    const added = await handleNotes(
++      new Request('https://sample.invalid/api/notes', {
++        method: 'POST',
++        body: JSON.stringify({ text: 'Counted note' }),
++      }),
++      { WRITE_MODE: 'allow' },
++    );
++    expect(added.status).toBe(201);
++    const note = (await added.json()) as { id: string };
++    expect(await (await read()).json()).toEqual({ count: before.count + 1 });
++    expect(
++      (
++        await handleNotes(
++          new Request(`https://sample.invalid/api/notes/${note.id}`, { method: 'DELETE' }),
++          { WRITE_MODE: 'allow' },
++        )
++      ).status,
++    ).toBe(204);
++    expect(await (await read()).json()).toEqual(before);
++  });
++  it('uses a D1 aggregate for read-only count requests', async () => {
++    const all = vi
++      .fn<() => Promise<{ success: boolean; results: { count: number }[] }>>()
++      .mockResolvedValue({ success: true, results: [{ count: 17 }] });
++    const prepare = vi.fn<(query: string) => { all: typeof all }>().mockReturnValue({ all });
++    const response = await handleNotes(new Request('https://sample.invalid/api/notes/count'), {
++      WRITE_MODE: 'deny',
++      NOTES: { prepare } as unknown as D1Database,
++    });
++    expect(response.status).toBe(200);
++    expect(await response.json()).toEqual({ count: 17 });
++    expect(prepare).toHaveBeenCalledExactlyOnceWith('SELECT COUNT(*) AS count FROM notes');
++    expect(all).toHaveBeenCalledOnce();
++    expect(response.headers.get('x-storage-mode')).toBe('persistent-d1');
++  });
++  it.each([
++    { results: [] },
++    { results: [{ count: -1 }] },
++    { results: [{ count: 0.5 }] },
++    { results: [{ count: '2' }] },
++  ])('rejects malformed count rows: $results', async ({ results }) => {
++    const response = await handleNotes(new Request('https://sample.invalid/api/notes/count'), {
++      WRITE_MODE: 'deny',
++      NOTES: {
++        prepare: () => ({ all: () => Promise.resolve({ success: true, results }) }),
++      } as unknown as D1Database,
++    });
++    expect(response.status).toBe(500);
++    expect(await response.json()).toMatchObject({ error: { code: 'internal_error' } });
++  });
++  it.each(['rejection', 'declared_failure'])(
++    'preserves opaque storage failure on count: %s',
++    async (mode) => {
++      const response = await handleNotes(new Request('https://sample.invalid/api/notes/count'), {
++        WRITE_MODE: 'deny',
++        NOTES: {
++          prepare: () => ({
++            all: () =>
++              mode === 'rejection'
++                ? Promise.reject(new Error('PRIVATE-COUNT-SQL'))
++                : Promise.resolve({ success: false, error: 'PRIVATE-COUNT-SQL' }),
++          }),
++        } as unknown as D1Database,
++      });
++      expect(response.status).toBe(500);
++      const body = await response.text();
++      expect(body).toContain('internal_error');
++      expect(body).not.toContain('PRIVATE-COUNT-SQL');
++      expect(response.headers.get('x-diagnostic-id')).toMatch(/^[a-f0-9]{32}$/u);
++    },
++  );
+   it('refuses writes in a deployment environment before touching storage', async () => {
+     const request = new Request('https://sample.invalid/api/notes', {
+       method: 'POST',
+diff --git a/packages/web/src/client/notes.ts b/packages/web/src/client/notes.ts
+index cc1d430..bb55c28 100644
+--- a/packages/web/src/client/notes.ts
++++ b/packages/web/src/client/notes.ts
+@@ -43,6 +43,27 @@ const telemetry = createTelemetry({
+   ...(import.meta.env.VITE_OTEL_ENDPOINT ? { endpoint: import.meta.env.VITE_OTEL_ENDPOINT } : {}),
+ });
+ 
++export async function countNotes(): Promise<Result<number, PublicError>> {
++  return observeAdapter(telemetry, 'notes.list', async (carrier) => {
++    const response = await request('/api/notes/count', carrier);
++    if (!response.ok) return response;
++    const body = await capture(() => response.value.json(), 'response_invalid');
++    if (!body.ok) return Err(publicFailure(body.error));
++    const value: unknown = body.value;
++    if (
++      typeof value !== 'object' ||
++      value === null ||
++      Object.keys(value).length !== 1 ||
++      !('count' in value) ||
++      typeof value.count !== 'number' ||
++      !Number.isSafeInteger(value.count) ||
++      value.count < 0
++    )
++      return Err(publicFailure(failure('response_invalid')));
++    return Ok(value.count);
++  });
++}
++
+ export const browserNotes: NotesAdapter = {
+   async list() {
+     return observeAdapter(telemetry, 'notes.list', async (carrier) => {
+diff --git a/packages/web/src/routes/index.tsx b/packages/web/src/routes/index.tsx
+index 5290968..2d45fe9 100644
+--- a/packages/web/src/routes/index.tsx
++++ b/packages/web/src/routes/index.tsx
+@@ -1,7 +1,82 @@
+ import { createFileRoute } from '@tanstack/react-router';
+-import { NotesPanel } from '@independent-web/ui';
+-import { browserNotes } from '../client/notes';
++import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
++import { launch } from '@independent-web/contracts';
++import { NotesPanel, type NotesAdapter } from '@independent-web/ui';
++import { browserNotes, countNotes } from '../client/notes';
+ 
+ export const Route = createFileRoute('/')({
+-  component: () => <NotesPanel adapter={browserNotes} storage="Local D1 persistence" />,
++  component: NotesPage,
+ });
++
++function NotesPage() {
++  const [count, setCount] = useState<number | null>(null);
++  const [countState, setCountState] = useState<'loading' | 'ready' | 'error'>('loading');
++  const current = useRef(true);
++  const generation = useRef(0);
++  const reportCountFailure = useCallback(() => {
++    if (current.current) {
++      setCount(null);
++      setCountState('error');
++    }
++  }, []);
++  const refreshCount = useCallback(() => {
++    const request = ++generation.current;
++    if (current.current) setCountState('loading');
++    launch(async () => {
++      const result = await countNotes();
++      if (!current.current || request !== generation.current) return;
++      if (result.ok) {
++        setCount(result.value);
++        setCountState('ready');
++      } else reportCountFailure();
++    }, reportCountFailure);
++  }, [reportCountFailure]);
++  useEffect(() => {
++    current.current = true;
++    refreshCount();
++    return () => {
++      current.current = false;
++      generation.current += 1;
++    };
++  }, [refreshCount]);
++  const adapter: NotesAdapter = useMemo<NotesAdapter>(
++    () => ({
++      ...browserNotes,
++      async list() {
++        const result = await browserNotes.list();
++        if (result.ok) refreshCount();
++        return result;
++      },
++      async add(input) {
++        const result = await browserNotes.add(input);
++        if (result.ok) refreshCount();
++        return result;
++      },
++      async remove(id) {
++        const result = await browserNotes.remove(id);
++        if (result.ok) refreshCount();
++        return result;
++      },
++    }),
++    [refreshCount],
++  );
++  return (
++    <>
++      <div className="mx-auto mb-3 max-w-2xl text-sm">
++        <output aria-label="Note count" aria-live="polite">
++          {countState === 'loading'
++            ? 'Counting notes…'
++            : countState === 'error'
++              ? 'Note count unavailable.'
++              : `${count} ${count === 1 ? 'note' : 'notes'}`}
++        </output>
++        {countState === 'error' && (
++          <button type="button" className="ml-3 underline" onClick={refreshCount}>
++            Retry count
++          </button>
++        )}
++      </div>
++      <NotesPanel adapter={adapter} storage="Local D1 persistence" />
++    </>
++  );
++}
+diff --git a/packages/web/test/browser/notes.spec.ts b/packages/web/test/browser/notes.spec.ts
+index 88c9209..89245ca 100644
+--- a/packages/web/test/browser/notes.spec.ts
++++ b/packages/web/test/browser/notes.spec.ts
+@@ -56,11 +56,13 @@ test('SSR, hydration, CRUD, same-origin export, routes and accessibility', async
+   page.on('pageerror', (error) => errors.push(error.message));
+   await page.goto('/');
+   await expect(page.getByText('No notes yet. Add your first note.')).toBeVisible();
++  await expect(page.getByRole('status', { name: 'Note count' })).toHaveText('0 notes');
+   await page.getByRole('button', { name: 'Add note', exact: true }).click();
+   await expect(page.getByRole('alert')).toContainText('between 1 and 1000');
+   await page.getByLabel('New note').fill('Browser note');
+   await page.getByRole('button', { name: 'Add note', exact: true }).click();
+   await expect(page.getByText('Browser note', { exact: true })).toBeVisible();
++  await expect(page.getByRole('status', { name: 'Note count' })).toHaveText('1 note');
+   const download = page.waitForEvent('download');
+   await page.getByRole('button', { name: 'Export JSON' }).click();
+   const exported = await download;
+@@ -72,6 +74,7 @@ test('SSR, hydration, CRUD, same-origin export, routes and accessibility', async
+   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+   await page.getByRole('button', { name: 'Delete Browser note' }).click();
+   await expect(page.getByText('No notes yet. Add your first note.')).toBeVisible();
++  await expect(page.getByRole('status', { name: 'Note count' })).toHaveText('0 notes');
+   await page.getByRole('link', { name: 'About' }).click();
+   await expect(page.getByRole('heading', { name: 'About this sample' })).toBeVisible();
+   await page.getByRole('link', { name: 'Notes', exact: true }).click();
+@@ -79,6 +82,100 @@ test('SSR, hydration, CRUD, same-origin export, routes and accessibility', async
+   expect(errors).toEqual([]);
+ });
+ 
++test('count failure after a successful create preserves notes and supports retry', async ({
++  page,
++  request,
++}) => {
++  const existing = notesSchema.parse(await (await request.get('/api/notes')).json());
++  for (const note of existing)
++    expect((await request.delete(`/api/notes/${note.id}`)).status()).toBe(204);
++  await page.goto('/');
++  const count = page.getByRole('status', { name: 'Note count' });
++  await expect(count).toHaveText('0 notes');
++  await page.route('**/api/notes/count', (route) =>
++    route.fulfill({ status: 503, body: 'unavailable' }),
++  );
++  await page.getByLabel('New note').fill('Kept after count failure');
++  await page.getByRole('button', { name: 'Add note', exact: true }).click();
++  await expect(page.getByText('Kept after count failure', { exact: true })).toBeVisible();
++  await expect(count).toHaveText('Note count unavailable.');
++  await expect(page.getByRole('alert')).toHaveCount(0);
++  expect((await request.get('/api/notes/count')).status()).toBe(200);
++  await page.unroute('**/api/notes/count');
++  await page.getByRole('button', { name: 'Retry count' }).click();
++  await expect(count).toHaveText('1 note');
++  await page.route('**/api/notes', (route) => route.fulfill({ status: 503, body: 'unavailable' }));
++  await page.getByLabel('New note').fill('Failed create');
++  await page.getByRole('button', { name: 'Add note', exact: true }).click();
++  await expect(page.getByRole('alert')).toBeVisible();
++  await expect(count).toHaveText('1 note');
++  await expect(
++    page.getByRole('list', { name: 'Saved notes' }).getByText('Failed create', { exact: true }),
++  ).toHaveCount(0);
++  await expect(page.getByLabel('New note')).toHaveValue('Failed create');
++  await page.unroute('**/api/notes');
++  expect((await request.post('/api/notes', { data: { text: 'Found on retry' } })).status()).toBe(
++    201,
++  );
++  await page.getByRole('button', { name: 'Retry', exact: true }).click();
++  await expect(page.getByText('Found on retry', { exact: true })).toBeVisible();
++  await expect(count).toHaveText('2 notes');
++  await page.getByRole('button', { name: 'Delete Kept after count failure' }).click();
++  await expect(count).toHaveText('1 note');
++  await page.getByRole('button', { name: 'Delete Found on retry' }).click();
++  await expect(count).toHaveText('0 notes');
++});
++
++test('a delayed initial count cannot replace a newer count after a create', async ({
++  page,
++  request,
++}) => {
++  const existing = notesSchema.parse(await (await request.get('/api/notes')).json());
++  for (const note of existing)
++    expect((await request.delete(`/api/notes/${note.id}`)).status()).toBe(204);
++  let release: (() => void) | undefined;
++  const waiting = new Promise<void>((resolve) => {
++    release = resolve;
++  });
++  let requests = 0;
++  let holdingInitial = true;
++  let completedInitial = 0;
++  // Both the page's independent count read and each successful list load refresh the count.
++  const expectedInitial = process.env.STARTER_BROWSER_MODE === 'production' ? 2 : 4;
++  await page.route('**/api/notes/count', async (route) => {
++    requests += 1;
++    if (holdingInitial) {
++      await waiting;
++      await route.fulfill({ json: { count: 0 } });
++      completedInitial += 1;
++    } else await route.continue();
++  });
++  try {
++    await page.goto('/');
++    const count = page.getByRole('status', { name: 'Note count' });
++    await expect(count).toHaveText('Counting notes…');
++    await expect.poll(() => requests).toBe(expectedInitial);
++    await page.getByLabel('New note').fill('Newer count');
++    holdingInitial = false;
++    await page.getByRole('button', { name: 'Add note', exact: true }).click();
++    await expect(count).toHaveText('1 note');
++    await expect.poll(() => requests).toBe(expectedInitial + 1);
++    release?.();
++    await expect.poll(() => completedInitial).toBe(expectedInitial);
++    await page.evaluate(
++      () =>
++        new Promise<void>((resolve) =>
++          requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
++        ),
++    );
++    await expect(count).toHaveText('1 note');
++    await page.getByRole('button', { name: 'Delete Newer count' }).click();
++    await expect(count).toHaveText('0 notes');
++  } finally {
++    release?.();
++  }
++});
++
+ test('cold static page preserves styled native navigation and the destination hydrates', async ({
+   page,
+   browser,
+diff --git a/packages/web/test/unit.test.ts b/packages/web/test/unit.test.ts
+index db0f882..b07529f 100644
+--- a/packages/web/test/unit.test.ts
++++ b/packages/web/test/unit.test.ts
+@@ -1,8 +1,44 @@
+ import { afterEach, describe, expect, it, vi } from 'vitest';
+-import { browserNotes } from '../src/client/notes';
++import { browserNotes, countNotes } from '../src/client/notes';
+ 
+ afterEach(() => vi.unstubAllGlobals());
+ describe('browser adapter contract', () => {
++  it('requests the same-origin count endpoint and decodes a valid zero', async () => {
++    const fetch = vi.fn<typeof globalThis.fetch>().mockResolvedValue(Response.json({ count: 0 }));
++    vi.stubGlobal('fetch', fetch);
++    await expect(countNotes()).resolves.toEqual({ ok: true, value: 0 });
++    expect(fetch).toHaveBeenCalledWith(
++      '/api/notes/count',
++      expect.objectContaining({ headers: expect.any(Headers) }),
++    );
++  });
++  it.each([{ count: -1 }, { count: 1.5 }, { count: '2' }, {}, { count: 2, private: 'extra' }])(
++    'rejects invalid count payload %j',
++    async (payload) => {
++      vi.stubGlobal('fetch', vi.fn().mockResolvedValue(Response.json(payload)));
++      await expect(countNotes()).resolves.toMatchObject({
++        ok: false,
++        error: { code: 'internal_error' },
++      });
++    },
++  );
++  it('does not turn failed count requests into zero', async () => {
++    vi.stubGlobal(
++      'fetch',
++      vi.fn().mockResolvedValue(new Response('PRIVATE-FAILURE', { status: 503 })),
++    );
++    await expect(countNotes()).resolves.toMatchObject({
++      ok: false,
++      error: { code: 'internal_error' },
++    });
++  });
++  it('normalizes a rejected count transport', async () => {
++    vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error('PRIVATE-TRANSPORT')));
++    await expect(countNotes()).resolves.toMatchObject({
++      ok: false,
++      error: { code: 'unavailable' },
++    });
++  });
+   it('does not turn API failures into successful empty data', async () => {
+     vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response('unavailable', { status: 503 })));
+     await expect(browserNotes.list()).resolves.toMatchObject({
+
+{"phase":"raw-feature-diff","argv":["git","show","--format=fuller","--stat","--patch","HEAD"],"exit":0,"signal":null,"spawnError":null,"inputBefore":{"featureSha":"4a8bd01ed37d5786d66e8e0668e77507a48194cc","contentId":"1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031","origin":{"sha":"460ad19c970adaab7231795f3438943d9158b135","dirty":false,"contentId":"a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"},"configuration":{"name":"independent-note-web","scope":"@independent-web","identifier":"com.example.independentnoteweb","preset":"fullstack","features":["d1","kv","r2","services"]},"kind":"project","clean":true,"supportSha":"9472a912cbec8f9729ae9af5a4a20e9c82611e27","canonical":true},"inputAfter":{"featureSha":"4a8bd01ed37d5786d66e8e0668e77507a48194cc","contentId":"1c4696df1f9da96c71d0699d2c1a7b4bfaee00b280dfafffbf1249cae070e031","origin":{"sha":"460ad19c970adaab7231795f3438943d9158b135","dirty":false,"contentId":"a589d2f700bdbfdad1dba2ef222d964ac7c5085656a8ba3b9269a42aa6335d68"},"configuration":{"name":"independent-note-web","scope":"@independent-web","identifier":"com.example.independentnoteweb","preset":"fullstack","features":["d1","kv","r2","services"]},"kind":"project","clean":true,"supportSha":"9472a912cbec8f9729ae9af5a4a20e9c82611e27","canonical":true},"inputGuardError":null,"environment":{"TMPDIR":"/home/runner/work/super-starter/super-starter/feature/.state/t","TMP":"/home/runner/work/super-starter/super-starter/feature/.state/t","TEMP":"/home/runner/work/super-starter/super-starter/feature/.state/t","WRANGLER_LOG_PATH":"/home/runner/work/super-starter/super-starter/feature/artifacts/agent-web-api/wrangler-logs"},"cwd":"/home/runner/work/super-starter/super-starter/feature","startedAt":"2026-10-12T17:37:17.160Z","milliseconds":39,"log":"logs/30-raw-feature-diff.log"}
