@@ -76,7 +76,7 @@
     "tools/generators/files.test.ts": "88a65cf16c68dc0a36a5e649c00b67a89f975631e7ba478b67c08f495ab44511",
     "tools/generators/files.ts": "4d8b21c24ae0ba82368da255218afa7373c1ca8357831a78eccd95397616c333",
     "tools/generators/format-batch.mjs": "213edb6623ac913e3e211a9c811c6cbffbb0e20a8c493fb7ee06d49dd38bf900",
-    "tools/generators/format.test.ts": "642625ba3a596ccc92400f1e449e409963ef93b3235226e4d7387896a7039a3e",
+    "tools/generators/format.test.ts": "0fd12c38efd6109cce81fe6619e8484f84a3089625095a4050ebe3f5371d231f",
     "tools/generators/format.ts": "e3ea0b5909750d43a2e76d86ec68324ad3d966ca3f48a641257f3865f34f6fda",
     "tools/generators/lifecycle.ts": "a7bd12915a7f69754d1fc5507f43f5a36d9ca81cd14b7441d3f4f865daaf1151",
     "tools/generators/options.test.ts": "0bf10a3a44d652511e6eb17da2f608be365e0a574919d849272e05a27265a968",
