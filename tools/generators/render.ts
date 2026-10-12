@@ -6,7 +6,7 @@ import { digest, walk, type Files } from './files.ts';
 import { selectedPackages, type ProjectOptions } from './options.ts';
 import { formatFiles, formatterKey } from './format.ts';
 import { generatedErrors } from '../errors/generate.ts';
-import { ownHeadSha } from '../quality/checkout.ts';
+import { ownHeadSha, foreignGitEnvironment } from '../quality/checkout.ts';
 
 const infrastructure = [
   '.agents',
@@ -241,6 +241,7 @@ export function generationOrigin(source: string): { sha: string | null; dirty: b
   const status = head
     ? spawnSync('git', ['status', '--porcelain'], {
         cwd: source,
+        env: foreignGitEnvironment(source),
         encoding: 'utf8',
         timeout: 10000,
       })

@@ -7,12 +7,12 @@ import { invoke } from '@tauri-apps/api/core';
 import {
   noteSchema,
   notesSchema,
+  noteCountSchema,
   capturePublic,
   decode,
   Err,
   Ok,
   publicFailure,
-  failure,
   type Result,
   type PublicError,
 } from '@independent-desktop/contracts';
@@ -69,9 +69,7 @@ export async function nativeCount(): Promise<Result<number, PublicError>> {
   return observeAdapter(telemetry, 'notes.count', async (carrier) => {
     const received = await command('count_notes', carrier);
     if (!received.ok) return received;
-    const value = received.value;
-    return typeof value === 'number' && Number.isSafeInteger(value) && value >= 0
-      ? Ok(value)
-      : Err(publicFailure(failure('response_invalid')));
+    const parsed = decode(noteCountSchema, received.value);
+    return parsed.ok ? parsed : Err(publicFailure(parsed.error));
   });
 }

@@ -41,7 +41,7 @@ child.on('close', (exit, signal) => {
     milliseconds: Math.round(performance.now() - start),
     os: process.platform,
     environment: Object.fromEntries(
-      ['TMPDIR', 'GIT_CEILING_DIRECTORIES', 'CARGO_TARGET_DIR']
+      ['TMPDIR', 'TMP', 'TEMP', 'GIT_CEILING_DIRECTORIES', 'CARGO_TARGET_DIR']
         .filter((key) => process.env[key])
         .map((key) => [key, process.env[key]]),
     ),

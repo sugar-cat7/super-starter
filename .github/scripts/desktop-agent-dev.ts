@@ -60,6 +60,8 @@ try {
     processSignal: child.signalCode,
     environment: {
       TMPDIR: process.env.TMPDIR,
+      TMP: process.env.TMP,
+      TEMP: process.env.TEMP,
       GIT_CEILING_DIRECTORIES: process.env.GIT_CEILING_DIRECTORIES,
     },
     argv,

@@ -55,7 +55,7 @@ export function ciPlan(root: string, base?: string, full = false) {
     complete ||
     execution.some(
       (file) =>
-        /^tools\/quality\/(?:hooks[^/]*\.ts|git-hooks\/)/u.test(file) ||
+        /^tools\/quality\/(?:hooks[^/]*\.ts|(?:fixture|checkout)\.ts$|git-hooks\/)/u.test(file) ||
         /^(?:tools\/dev-environment\/setup\.ts|tools\/process[^/]*\.ts|\.gitignore|\.gitattributes)$/u.test(
           file,
         ),
@@ -66,6 +66,7 @@ export function ciPlan(root: string, base?: string, full = false) {
       (file) =>
         /^tools\/generators\/(?!templates\/)/u.test(file) ||
         /^tools\/dev-environment\//u.test(file) ||
+        /^(?:tools\/quality\/(?:fixture|checkout)\.ts)$/u.test(file) ||
         /^(?:tools\/process[^/]*\.ts|package\.json|pnpm[^/]*\.yaml|mise\.toml)$/u.test(file),
     );
   const fixtureCases = verificationCases.filter((entry) => {

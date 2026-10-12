@@ -1,10 +1,10 @@
-import { it, expect } from 'vitest';
+import { it, expect, vi } from 'vitest';
 import { mkdtempSync, writeFileSync, rmSync, mkdirSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { verificationIdentity } from './identity.ts';
 import { generationOrigin } from '../generators/render.ts';
-import { ownHeadSha } from '../quality/checkout.ts';
+import { headSha, ownHeadSha } from '../quality/checkout.ts';
 import { runSync } from '../process.ts';
 import { digest } from '../generators/files.ts';
 
@@ -68,14 +68,27 @@ it('prefers an owned generated checkout, excludes enclosing Git and keeps no-Git
     expect(verificationIdentity(root, source)).toBe(source);
     expect(() => verificationIdentity(root, enclosing)).toThrow(/does not match/u);
     expect(generationOrigin(root)).toEqual({ sha: source, dirty: false });
+    vi.stubEnv('GIT_DIR', path.join(parent, '.git'));
+    expect(headSha(root)).toBe(enclosing);
+    expect(ownHeadSha(root)).toBeNull();
+    expect(verificationIdentity(root, source)).toBe(source);
+    expect(generationOrigin(root)).toEqual({ sha: source, dirty: false });
+    vi.unstubAllEnvs();
     const owned = commit(root);
     expect(ownHeadSha(root)).toBe(owned);
     expect(verificationIdentity(root, owned)).toBe(owned);
     expect(() => verificationIdentity(root, source)).toThrow(/does not match/u);
     expect(generationOrigin(root)).toEqual({ sha: owned, dirty: false });
+    writeFileSync(path.join(parent, 'parent-only.txt'), 'Foreign dirty input');
+    vi.stubEnv('GIT_DIR', path.join(parent, '.git'));
+    expect(headSha(root)).toBe(enclosing);
+    expect(ownHeadSha(root)).toBe(owned);
+    expect(verificationIdentity(root, owned)).toBe(owned);
+    expect(generationOrigin(root)).toEqual({ sha: owned, dirty: false });
     writeFileSync(path.join(root, 'package.json'), '{"changed":true}');
     expect(generationOrigin(root)).toEqual({ sha: owned, dirty: true });
   } finally {
+    vi.unstubAllEnvs();
     rmSync(parent, { recursive: true });
   }
 });
