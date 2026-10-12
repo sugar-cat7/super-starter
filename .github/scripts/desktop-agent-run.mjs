@@ -35,6 +35,11 @@ child.on('close', (exit, signal) => {
     startedAt,
     milliseconds: Math.round(performance.now() - start),
     os: process.platform,
+    environment: Object.fromEntries(
+      ['TMPDIR', 'GIT_CEILING_DIRECTORIES', 'CARGO_TARGET_DIR']
+        .filter((key) => process.env[key])
+        .map((key) => [key, process.env[key]]),
+    ),
     log: filename,
   };
   reports.push(entry);

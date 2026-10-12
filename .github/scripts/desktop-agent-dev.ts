@@ -51,6 +51,13 @@ try {
   writeFileSync(path.join(directory, log), `${output}\n${error}\n`, { mode: 0o600 });
   const entry = {
     phase: 'dev',
+    completion: 'Actual native readiness followed by deliberate shutdown and owned process cleanup',
+    processExitCode: child.exitCode,
+    processSignal: child.signalCode,
+    environment: {
+      TMPDIR: process.env.TMPDIR,
+      GIT_CEILING_DIRECTORIES: process.env.GIT_CEILING_DIRECTORIES,
+    },
     argv,
     exit,
     startedAt,

@@ -342,6 +342,7 @@ jobs:
         run: |
           mkdir -p .state/tmp
           echo "TMPDIR=$GITHUB_WORKSPACE/.state/tmp" >> "$GITHUB_ENV"
+          echo "GIT_CEILING_DIRECTORIES=$GITHUB_WORKSPACE/.state/tmp" >> "$GITHUB_ENV"
       - name: Native setup
         run: node .github/scripts/desktop-agent-run.mjs setup pnpm env:setup
       - name: Native doctor
