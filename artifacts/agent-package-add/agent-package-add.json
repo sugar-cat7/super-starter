@@ -1013,70 +1013,80 @@
       {
         "group": 8,
         "jobId": 114918229180,
-        "log": "hosted-jobs/group-8.log",
+        "url": "https://github.com/sugar-cat7/super-starter/actions/runs/38280350997/job/114918229180",
+        "retrieval": "Existing GitHub MCP fetch_workflow_job_logs; original full bytes retained in this Agent's V8",
         "sha256": "e1aa005c85e2770a68d777b5263afdb87bc5a3f7ad2957973321ed5a5dcbe992",
         "envelopeSha256": "901294d0c1dc3ae53cd98b632eb3105a62f3d798bf74cd0f1e3fe81bfff8c56f"
       },
       {
         "group": 7,
         "jobId": 114918229242,
-        "log": "hosted-jobs/group-7.log",
+        "url": "https://github.com/sugar-cat7/super-starter/actions/runs/38280350997/job/114918229242",
+        "retrieval": "Existing GitHub MCP fetch_workflow_job_logs; original full bytes retained in this Agent's V8",
         "sha256": "ec11307aca390548be01a3d6e682cad311540c33538ba0cb8af47b503c6b057a",
         "envelopeSha256": "7afe094eee19f0e23210663643f32861db15d48afa1670722683180a6cd93aff"
       },
       {
         "group": 4,
         "jobId": 114918229245,
-        "log": "hosted-jobs/group-4.log",
+        "url": "https://github.com/sugar-cat7/super-starter/actions/runs/38280350997/job/114918229245",
+        "retrieval": "Existing GitHub MCP fetch_workflow_job_logs; original full bytes retained in this Agent's V8",
         "sha256": "d3c45efbe6bed2ac033e45d5dfd5dba6c87c13aa78747eff00be60eb7680f097",
         "envelopeSha256": "e0df8b8ecb34aff94cdc4a101d46735259df26011ea7acb828547cd90daf7fdc"
       },
       {
         "group": 6,
         "jobId": 114918229246,
-        "log": "hosted-jobs/group-6.log",
+        "url": "https://github.com/sugar-cat7/super-starter/actions/runs/38280350997/job/114918229246",
+        "retrieval": "Existing GitHub MCP fetch_workflow_job_logs; original full bytes retained in this Agent's V8",
         "sha256": "660fa3f344573e45f98b97f6fc7a22fd6751f05dc5d5abc9003647635e1f8f48",
         "envelopeSha256": "cee2505423b482f1d0121dbd70fb211242a19080bbd7170288464bb3301a010e"
       },
       {
         "group": 2,
         "jobId": 114918229272,
-        "log": "hosted-jobs/group-2.log",
+        "url": "https://github.com/sugar-cat7/super-starter/actions/runs/38280350997/job/114918229272",
+        "retrieval": "Existing GitHub MCP fetch_workflow_job_logs; original full bytes retained in this Agent's V8",
         "sha256": "e440b2bc37d7aba2d2cc1aaf53535223aa407b9de682706b0bd84f93be28b4a3",
         "envelopeSha256": "4b72cde9838349d8ecde1602392cd1342650157282d7db1ae38801b45c2bcb25"
       },
       {
         "group": 1,
         "jobId": 114918229290,
-        "log": "hosted-jobs/group-1.log",
+        "url": "https://github.com/sugar-cat7/super-starter/actions/runs/38280350997/job/114918229290",
+        "retrieval": "Existing GitHub MCP fetch_workflow_job_logs; original full bytes retained in this Agent's V8",
         "sha256": "40be2e8574e58c00cddf6fee981311cc1e334f70ee5d37da645fb1b2057d3a07",
         "envelopeSha256": "031b427ef88398bc412896404be39efae9e1ad7012e3dcd7ec381d3d6660802a"
       },
       {
         "group": 3,
         "jobId": 114918229344,
-        "log": "hosted-jobs/group-3.log",
+        "url": "https://github.com/sugar-cat7/super-starter/actions/runs/38280350997/job/114918229344",
+        "retrieval": "Existing GitHub MCP fetch_workflow_job_logs; original full bytes retained in this Agent's V8",
         "sha256": "2f490fc6e87e20f4ef13f4a4a9195c56cdfe234f9f41b734c4d40fba8f0c2d1f",
         "envelopeSha256": "51e0dc52f6a38e06f7f9b074e3ac369b9457b2d8e4a71b8c44d6f652f2bcabab"
       },
       {
         "group": 9,
         "jobId": 114918229356,
-        "log": "hosted-jobs/group-9.log",
+        "url": "https://github.com/sugar-cat7/super-starter/actions/runs/38280350997/job/114918229356",
+        "retrieval": "Existing GitHub MCP fetch_workflow_job_logs; original full bytes retained in this Agent's V8",
         "sha256": "09742a4bd8981a2ebc12a960d65ade87e1a14f579f30e48259f600f205e5d214",
         "envelopeSha256": "f2c7b9dc0d747dcf413f148a4280fc04b6ea1909894dccbbf618441e4b4df28c"
       },
       {
         "group": 5,
         "jobId": 114918229415,
-        "log": "hosted-jobs/group-5.log",
+        "url": "https://github.com/sugar-cat7/super-starter/actions/runs/38280350997/job/114918229415",
+        "retrieval": "Existing GitHub MCP fetch_workflow_job_logs; original full bytes retained in this Agent's V8",
         "sha256": "393b64537f41593d6b23f21527acc7bcf4160305dbd10d7df2f8378d28b48563",
         "envelopeSha256": "9d33698e174280857ba44da68c11b8069f19242c7eb68d27f880e8dfe7fc550f"
       },
       {
         "group": 0,
         "jobId": 114918229427,
-        "log": "hosted-jobs/group-0.log",
+        "url": "https://github.com/sugar-cat7/super-starter/actions/runs/38280350997/job/114918229427",
+        "retrieval": "Existing GitHub MCP fetch_workflow_job_logs; original full bytes retained in this Agent's V8",
         "sha256": "08f6f3f86e316367e92ee88d7902cd51786956e456fdfbb920488246649e3f90",
         "envelopeSha256": "8e856617d8c687169eecb8503a623de8dd45b5200c9cc61e57e5191523d3af71"
       }
