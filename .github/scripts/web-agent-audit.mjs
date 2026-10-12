@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
-import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { assertInput } from './web-agent-input.mjs';
 import { recordCommand, directory, commandsFile } from './web-agent-run.mjs';
@@ -78,15 +78,18 @@ const entries = [...picks].sort().map(file => {
   return { file, bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex'),
     chunks: Math.max(1, Math.ceil(content.length / 12000)), content };
 });
-console.log('WEB_AGENT_AUDIT_BEGIN ' + JSON.stringify({ schema: 1, execution: 'hosted-tools',
-  scope: 'Plain evidence export only; no Agent approval', identityFailure,
-  files: entries.map(({ content, ...entry }) => entry) }));
-for (const entry of entries) {
-  for (let index = 0; index < entry.chunks; index++)
-    console.log('WEB_AGENT_AUDIT_CHUNK ' + JSON.stringify({ file: entry.file, bytes: entry.bytes,
-      sha256: entry.sha256, index, chunks: entry.chunks, content: entry.content.slice(index * 12000, (index + 1) * 12000) }));
-}
-console.log('WEB_AGENT_AUDIT_END ' + JSON.stringify({ files: entries.length,
-  aggregateSha256: createHash('sha256').update(entries.map(({ content, ...entry }) => JSON.stringify(entry)).join('\n')).digest('hex'),
-  identityFailure }));
+// Preserve every complete raw UTF8 file; bounded jobs transport these bytes in this workflow.
+const exportDirectory = path.resolve('../support/evidence-export');
+mkdirSync(path.join(exportDirectory, 'files'), { recursive: true });
+const files = entries.map(({ content, ...entry }, index) => {
+  const exportPath = 'files/' + String(index).padStart(5, '0') + '.utf8';
+  writeFileSync(path.join(exportDirectory, exportPath), content);
+  return { ...entry, exportPath };
+});
+const aggregateSha256 = createHash('sha256').update(entries.map(({ content, ...entry }) => JSON.stringify(entry)).join('\n')).digest('hex');
+writeFileSync(path.join(exportDirectory, 'audit-manifest.json'), JSON.stringify({
+  schema: 1, execution: 'hosted-tools', scope: 'Complete raw evidence only; no Agent approval',
+  supportSha: process.env.GITHUB_SHA, identityFailure, aggregateSha256, files,
+}, null, 2) + '\n');
+console.log('WEB_AGENT_AUDIT_SNAPSHOT ' + JSON.stringify({ files: files.length, aggregateSha256, identityFailure }));
 if (!identityFailure) await assertInput();
