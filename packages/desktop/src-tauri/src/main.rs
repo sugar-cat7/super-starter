@@ -263,6 +263,14 @@ mod tests {
             panic!("poisoned state must never report zero notes")
         };
         assert_eq!(error.code, "unavailable");
+        assert_eq!(error.failure_class, "transient");
+        assert_eq!(error.message, "The service is unavailable.");
+        assert!(
+            error
+                .diagnostic_id
+                .bytes()
+                .all(|byte| byte.is_ascii_hexdigit())
+        );
         assert_eq!(error.retry, "owner_only");
         assert_eq!(error.diagnostic_id.len(), 32);
     }

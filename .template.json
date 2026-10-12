@@ -28,7 +28,7 @@
     ".github/pull_request_template.md": "dad5393876ffd5b2f24d998322c3e9725e0cb9ed6b5570c90f4bb8654721d082",
     ".github/workflows/quality.yml": "41dedf56d71338bc425a24be82ccf5abd2024a2afb71395e9be052a983d52195",
     ".github/workflows/security.yml": "c3d30b9ea9bef33b38174b97d809d262f0e0044447f0b3b0002614e4f4d5f6b3",
-    "docs/adoption.md": "22eacec64e14fb807d62951c42cafd5205e83a2d201b88d0e0e4598d53768d47",
+    "docs/adoption.md": "37442a2b44c998e389b2f1fcfdf620de24bccde5540d2e42ce92e2f104311566",
     "docs/cloudflare.md": "7e9fe07e122c9ec51d9c9973c0b13315b5457a7f326e02098f562c610b09d4a9",
     "docs/errors.generated.md": "01cfb7bd5809e2e42548b7dad0073f35ce77f012c3c45c1208b49a07ce7de192",
     "docs/errors.md": "f6f7eccd350bc3f953731168ab27f2e622982fcd94b088b9dd92db48dc8fdb0b",
@@ -39,7 +39,7 @@
     "docs/security.md": "7ce14f09773d1271f25b14a60dc4fe58f0f06aec88b36af0a5e543908313c9ba",
     "docs/stack.md": "53fb50b1fd64c7f9f6cc8dd9aea5b76861df1be5688655bc355ab7e4f8c6875a",
     "docs/template.md": "f28fa78d96474d0f0286c287aa925b26977952914e450f56849d58cc3cf4d654",
-    "docs/troubleshooting.md": "57c16bab2b69f0d67890a3aff4a4f7cc3b9db24c24b2dabf19a5358ffcb035ff",
+    "docs/troubleshooting.md": "71086b112d3577b5d28ea3962501009871b578fd88689c1ed4b14f74ccba38f3",
     "tools/cloudflare/build.ts": "5658cccfe4ad23f6fc07463d7f03dd9a3e3ea56cc5a74f11018597a894cd0858",
     "tools/cloudflare/database.ts": "4e73fc0fd0322093bb4174f90d8804f720038949af43341d38acb35b0d9d5fc9",
     "tools/cloudflare/deploy.ts": "1bdb36e4384d4512ddebdba82af397151dbdc3a004c832b8e1d4aebcc83d3c54",
@@ -181,7 +181,7 @@
     "tools/quality/acceptance.ts": "4e1be884282ba22f316a499cb24bb5c8e66f635f5bf397a14a7a991fe73046e4",
     "tools/quality/browser.ts": "a4978ec92d3efe347535ca0d5d2414c43f89973a6873f8f391c507659a911978",
     "tools/quality/check.ts": "29885f95f4bdbe584fec46d35a2db3b49fd467085978adc5f79368df1df4e614",
-    "tools/quality/checkout.test.ts": "1f3bf58cccfd6a98ddc9aeca8ffbf253be0e123eaf3d2a4d2d6195385eaa9e14",
+    "tools/quality/checkout.test.ts": "e23fa2e7b86b4daaeccf36b1ab9deca0e244efa5393f6a4b3b90a6f987b72a8b",
     "tools/quality/checkout.ts": "3596f400e4286e9531704a006d4fd0ad44de49cded8b4e0b519a70fc0ba14782",
     "tools/quality/ci-plan.test.ts": "a3c11e6d3c39e1f581d37fa2c43fbabbe25b743b2f98fc8dc777e2d6f743ace0",
     "tools/quality/ci-plan.ts": "8ece726fb7bfbeea3c1dae612411139afeb219fee78d2fda0a7c9380906088dd",
@@ -200,7 +200,7 @@
     "tools/quality/git-hooks/pre-push": "236b6db0583416793173c0724bca320d90d4bfd3d40e59afa6a8b4d1b55fe2b8",
     "tools/quality/graph.test.ts": "ffd104780f2ec3b9e219015801c9cb37c1b5ff71a1220cc8d3ae00fe67e06c80",
     "tools/quality/graph.ts": "cb3224c301430f83da872ab63e948ec593f6e86728af260e02cada490d14a031",
-    "tools/quality/hooks-cleanup.test.ts": "2975089d9544658df78fc08ae873851402552510e8016a7f925dd2249ec1dba6",
+    "tools/quality/hooks-cleanup.test.ts": "0339b20ee586d54c3f99bbd10c456457c43c6fc4adf1e9827204c886387d3925",
     "tools/quality/hooks-install.test.ts": "9006e595937499a67c708511eb4195a78395c8bb558120340405c80beb1ec9b6",
     "tools/quality/hooks-rehearsal.ts": "8a51d0e7b4b3fda202f6a327cee1cdd1ba20b5f958330bdbbe2a32c2a033aabf",
     "tools/quality/hooks.ts": "79e1ecbc49aec6287654f89da78d040fb50d7cb125e2b7c3d24f4ecd3631e96f",
@@ -279,9 +279,9 @@
     "packages/desktop/wdio.conf.ts": "ef43b6024700d8658e31ef6ecd726d304fdeae70a6b5fa6bcfaf9bd399a9e61e"
   },
   "origin": {
-    "sha": "99c84bdab6dc1462c89c45997594d1bffd2779ef",
+    "sha": "127a4dccc39389fca667b4117863997a2d041336",
     "dirty": false,
-    "contentId": "0a468033e1b24fc1aeee46cf5c021d1a4b7a253dac175226a13ab692c167017a"
+    "contentId": "44d26e0bd1fecaec8acada4e5c1101795c46564c7189d9fe6c45a274f2983380"
   },
   "formatKey": "cd305f168d8657c8353deaf4136f0a340792f1dff9a30ded0b9b435c8cb33c25",
   "lockId": "a9205b8e8bdbf146459fa50d8ad0aef135b7ddbfe8b052d5d607289cc182b347"
