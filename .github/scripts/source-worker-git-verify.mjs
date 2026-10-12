@@ -220,9 +220,52 @@ async function verify() {
 function pack() {
   mkdirSync(parts, { recursive: true }); exported.set('verification-report.json', jsonBytes(report));
   const segments = [];
+  const knownPngBlobs = new Map([
+  [
+    "head-files/packages/web/test/browser/snapshots/persistent-empty.png",
+    "d6047c9c32b66ce76a25d115de0dd5b327535f92"
+  ],
+  [
+    "head-files/packages/web/test/browser/snapshots/persistent-error.png",
+    "e5a8b2b11c62bd60648ff6cab363910df0fe0aca"
+  ],
+  [
+    "head-files/packages/web/test/browser/snapshots/persistent-loading.png",
+    "b7c67114c19b38761ba116aab4551b62303f47ef"
+  ],
+  [
+    "head-files/tools/generators/templates/web/test/browser/snapshots/persistent-empty.png.template",
+    "d6047c9c32b66ce76a25d115de0dd5b327535f92"
+  ],
+  [
+    "head-files/tools/generators/templates/web/test/browser/snapshots/persistent-error.png.template",
+    "e5a8b2b11c62bd60648ff6cab363910df0fe0aca"
+  ],
+  [
+    "head-files/tools/generators/templates/web/test/browser/snapshots/persistent-loading.png.template",
+    "b7c67114c19b38761ba116aab4551b62303f47ef"
+  ],
+  [
+    "head-files/tools/generators/templates/web/test/browser/snapshots/volatile-empty.png.template",
+    "39982c510aa5bb51f397cca0f4cdedac4a5060aa"
+  ],
+  [
+    "head-files/tools/generators/templates/web/test/browser/snapshots/volatile-error.png.template",
+    "8bb28168bc6bb5591c120e1dd07bfdadc5c1eefb"
+  ],
+  [
+    "head-files/tools/generators/templates/web/test/browser/snapshots/volatile-loading.png.template",
+    "b6111ea4593069d99e382c4c074156116acf42f3"
+  ]
+]);
   for (const [file, bytes] of exported) {
     safe(file); mkdirSync(path.dirname(path.join(out, file)), { recursive: true }); writeFileSync(path.join(out, file), bytes);
-    const encoding = file === 'source.bundle' || file.startsWith('head-files/') && file.endsWith('.png') ? 'binary' : 'utf-8';
+    const knownPng = knownPngBlobs.get(file);
+    if (knownPng) {
+      assert.ok(bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10])), 'Known PNG must retain its exact binary signature');
+      assert.equal(createHash('sha1').update(Buffer.from('blob ' + bytes.length + '\0')).update(bytes).digest('hex'), knownPng, 'Known PNG must retain its exact Source Git blob');
+    }
+    const encoding = file === 'source.bundle' || knownPng ? 'binary' : 'utf-8';
     if (encoding === 'utf-8') {
       const text = new TextDecoder('utf-8', { fatal: true }).decode(bytes);
       assert.ok(!/(?:gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----)/u.test(text), 'Unsafe material must not be emitted');
