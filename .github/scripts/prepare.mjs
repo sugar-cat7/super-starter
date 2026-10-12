@@ -1,0 +1,62 @@
+import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import path from 'node:path';
+import { spawnSync } from 'node:child_process';
+const root = path.resolve('source');
+const out = path.join(root, 'artifacts/source-fixture-preparation');
+mkdirSync(out, { recursive: true });
+const base = '0f9611c1c8e6934aa3f8d0fce924bcc9f4da9d5d';
+const payload = JSON.parse(readFileSync('support/.github/payload/fixture.json', 'utf8'));
+const expectedPaths = ['.template.json', 'tools/generators/format.test.ts'];
+const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
+const commands = [];
+function run(phase, argv, timeout = 20 * 60_000) {
+  const start = Date.now();
+  const result = spawnSync(argv[0], argv.slice(1), { cwd: root, encoding: 'utf8', timeout, maxBuffer: 12_000_000, env: process.env });
+  const log = String(commands.length + 1).padStart(2, '0') + '-' + phase + '.log';
+  writeFileSync(path.join(out, log), (result.stdout ?? '') + (result.stderr ?? ''));
+  commands.push({ phase, argv, milliseconds: Date.now() - start, exit: result.status, signal: result.signal, error: result.error?.message ?? null, log });
+  writeFileSync(path.join(out, 'commands.json'), JSON.stringify(commands, null, 2) + '\n');
+  console.log(JSON.stringify(commands.at(-1)));
+  console.log(result.stdout ?? '');
+  console.error(result.stderr ?? '');
+  assert.equal(result.status, 0, phase);
+  return result.stdout.trim();
+}
+try {
+  assert.equal(payload.sourceBase, base);
+  assert.equal(run('base', ['git', 'rev-parse', 'HEAD']), base);
+  assert.equal(run('initial-clean', ['git', 'status', '--porcelain']), '');
+  const before = Object.fromEntries(expectedPaths.map((p) => [p, hash(readFileSync(path.join(root, p)))]));
+  run('setup', ['pnpm', 'env:setup', '--', '--javascript']);
+  assert.equal(run('prepared-clean', ['git', 'status', '--porcelain']), '');
+  const testPath = 'tools/generators/format.test.ts';
+  assert.equal(readFileSync(path.join(root, testPath), 'utf8'), payload.before);
+  writeFileSync(path.join(root, testPath), payload.after);
+  run('format', ['pnpm', 'exec', 'vp', 'fmt', '--write', testPath]);
+  run('sync', ['pnpm', 'template:sync']);
+  const finalFiles = expectedPaths.map((p) => ({ path: p, content: readFileSync(path.join(root, p), 'utf8'), beforeSha256: before[p], afterSha256: hash(readFileSync(path.join(root, p))) }));
+  assert.deepEqual(run('changed-paths', ['git', 'diff', 'HEAD', '--no-renames', '--name-only', '-z']).split('\0').filter(Boolean).sort(), expectedPaths);
+  assert.equal(run('untracked', ['git', 'ls-files', '--others', '--exclude-standard', '-z']), '');
+  run('doctor', ['pnpm', 'env:doctor', '--', '--javascript']);
+  run('static', ['pnpm', 'check']);
+  run('targeted', ['pnpm', 'test:tools', '--', testPath], 180_000);
+  const tests = JSON.parse(readFileSync(path.join(root, 'artifacts/tests-default.json'), 'utf8'));
+  assert.equal(tests.numTotalTests, 9);
+  assert.equal(tests.numPassedTests, 9);
+  assert.equal(tests.numFailedTests, 0);
+  run('sync-check', ['node', 'tools/generators/cli.ts', 'sync', '--check', '--no-install']);
+  for (const file of finalFiles) assert.equal(hash(readFileSync(path.join(root, file.path))), file.afterSha256);
+  assert.deepEqual(run('final-changed', ['git', 'diff', 'HEAD', '--no-renames', '--name-only', '-z']).split('\0').filter(Boolean).sort(), expectedPaths);
+  assert.equal(run('final-index', ['git', 'diff', '--cached', '--name-only', '-z']), '');
+  assert.equal(run('final-untracked', ['git', 'ls-files', '--others', '--exclude-standard', '-z']), '');
+  assert.equal(run('final-head', ['git', 'rev-parse', 'HEAD']), base);
+  const report = { schema: 1, kind: 'mechanical-source-fixture-preparation', status: 'passed', sourceBase: base, supportSha: process.env.GITHUB_SHA, platform: process.platform, files: finalFiles, commands };
+  writeFileSync(path.join(out, 'report.json'), JSON.stringify(report, null, 2) + '\n');
+  console.log('SOURCE_FIXTURE_PAYLOAD ' + JSON.stringify(report));
+} catch (error) {
+  writeFileSync(path.join(out, 'failed.json'), JSON.stringify({ status: 'failed', sourceBase: base, commands, error: String(error) }, null, 2) + '\n');
+  console.error(error);
+  process.exitCode = 1;
+}
