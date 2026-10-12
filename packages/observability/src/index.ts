@@ -30,6 +30,7 @@ import {
 
 export const OPERATIONS = [
   'notes.list',
+  'notes.count',
   'notes.add',
   'notes.remove',
   'notes.export',

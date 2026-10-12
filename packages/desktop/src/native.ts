@@ -12,6 +12,7 @@ import {
   Err,
   Ok,
   publicFailure,
+  failure,
   type Result,
   type PublicError,
 } from '@independent-desktop/contracts';
@@ -63,3 +64,14 @@ export const nativeNotes: NotesAdapter = {
     });
   },
 };
+
+export async function nativeCount(): Promise<Result<number, PublicError>> {
+  return observeAdapter(telemetry, 'notes.count', async (carrier) => {
+    const received = await command('count_notes', carrier);
+    if (!received.ok) return received;
+    const value = received.value;
+    return typeof value === 'number' && Number.isSafeInteger(value) && value >= 0
+      ? Ok(value)
+      : Err(publicFailure(failure('response_invalid')));
+  });
+}

@@ -31,6 +31,32 @@ async function reloadNativeWindow() {
 }
 
 describe('real native Tauri window and Rust IPC', () => {
+  it('counts through real Rust IPC and announces native mutations', async () => {
+    const status = browser.$('output[aria-label="Note count"]');
+    expect(await status.getTagName()).toBe('output');
+    await expect(status).toHaveAttribute('aria-live', 'polite');
+    await expect(status).toHaveAttribute('aria-atomic', 'true');
+    await expect(status).toHaveText('0 notes');
+    expect(await browser.tauri.execute((tauri) => tauri.core.invoke('count_notes'))).toBe(0);
+    await browser.$('#note-text').setValue('Count regression');
+    await browser.$('button[type="submit"]').click();
+    await expect(status).toHaveText('1 note');
+    expect(await browser.tauri.execute((tauri) => tauri.core.invoke('count_notes'))).toBe(1);
+    const listed = notesSchema.parse(
+      await browser.tauri.execute((tauri) => tauri.core.invoke('list_notes')),
+    );
+    expect(listed).toHaveLength(1);
+    expect(listed[0]?.text).toBe('Count regression');
+    await expect(
+      browser.tauri.execute((tauri) => tauri.core.invoke('count_notes', { telemetry: 7 })),
+    ).rejects.toThrow();
+    // A rejected call must not mutate the Rust state or replace the displayed count.
+    expect(await browser.tauri.execute((tauri) => tauri.core.invoke('count_notes'))).toBe(1);
+    await expect(status).toHaveText('1 note');
+    await browser.$('button[aria-label="Delete Count regression"]').click();
+    await expect(status).toHaveText('0 notes');
+    expect(await browser.tauri.execute((tauri) => tauri.core.invoke('count_notes'))).toBe(0);
+  });
   it('renders offline UI and validates real CRUD/export permissions', async () => {
     await expect(browser.$('h1')).toHaveText('Notes');
     for (const text of [

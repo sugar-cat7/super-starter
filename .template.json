@@ -1,7 +1,7 @@
 {
   "version": "0.1.0",
   "kind": "project",
-  "lockPending": true,
+  "lockPending": false,
   "options": {
     "name": "independent-note-desktop",
     "scope": "@independent-desktop",
@@ -283,5 +283,6 @@
     "dirty": false,
     "contentId": "0a468033e1b24fc1aeee46cf5c021d1a4b7a253dac175226a13ab692c167017a"
   },
-  "formatKey": "cd305f168d8657c8353deaf4136f0a340792f1dff9a30ded0b9b435c8cb33c25"
+  "formatKey": "cd305f168d8657c8353deaf4136f0a340792f1dff9a30ded0b9b435c8cb33c25",
+  "lockId": "a9205b8e8bdbf146459fa50d8ad0aef135b7ddbfe8b052d5d607289cc182b347"
 }
