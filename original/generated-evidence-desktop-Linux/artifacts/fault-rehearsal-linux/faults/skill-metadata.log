@@ -1,0 +1,13 @@
+$ node tools/quality/check.ts
+pass: All 167 files are correctly formatted (310ms, 4 threads)
+pass: Found no warnings, lint errors, or type errors in 114 files (1.4s, 4 threads)
+file:///tmp/starter-faults-dgJZ7c/project/tools/quality/check.ts:20
+if (errors.length) throw new Error(errors.join('\n'));
+                         ^
+
+Error: .agents/skills/application/SKILL.md: skill requires YAML frontmatter
+    at file:///tmp/starter-faults-dgJZ7c/project/tools/quality/check.ts:20:26
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.21.0
+[ELIFECYCLE] Command failed with exit code 1.

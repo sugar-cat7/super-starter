@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "sha": "uncommitted",
+  "origin": {
+    "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+    "dirty": false,
+    "contentId": "e602701040622b93dbcd836911483759a0a8673b56d1bcb13be9d5ff6fb8f0bd"
+  },
+  "configuration": {
+    "name": "rehearsal-web-kv",
+    "scope": "@rehearsal",
+    "identifier": "com.example.rehearsalwebkv",
+    "preset": "web",
+    "features": [
+      "kv"
+    ]
+  },
+  "contentId": "a3cbe9605a587bce97ed594b6b7775ce7134cbece45784d707bfe33d9a4ef8c4",
+  "os": "linux/x64",
+  "status": "passed",
+  "baselineDifferences": []
+}

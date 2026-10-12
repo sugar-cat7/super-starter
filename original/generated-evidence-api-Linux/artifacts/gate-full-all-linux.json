@@ -1,0 +1,301 @@
+{
+  "schema": 1,
+  "sha": "uncommitted",
+  "base": null,
+  "contentId": "ee4f05f388d67b4c2e9af190c74af9b5c95967b3fe18b5a663f86db4d1254b49",
+  "os": "linux/x64",
+  "node": "v24.21.0",
+  "tools": {
+    "node": "v24.21.0",
+    "pnpm": "12.11.2",
+    "@types/node": "24.19.1",
+    "knip": "6.41.0",
+    "oxc-parser": "0.153.0",
+    "typescript": "7.0.2",
+    "vite-plus": "1.1.0",
+    "vitest": "5.0.3",
+    "yaml": "2.9.1",
+    "@rehearsal/contracts": "0.1.0",
+    "@rehearsal/observability": "0.1.0",
+    "zod": "4.6.5",
+    "@cloudflare/build-output-utils": "0.9.0",
+    "@cloudflare/config": "0.24.1",
+    "@cloudflare/vite-plugin": "2.0.0-beta.sha-91c870c02",
+    "cf": "1.0.0-beta.14",
+    "wrangler": "4.149.0",
+    "@opentelemetry/api": "1.9.1",
+    "@opentelemetry/resources": "2.12.0",
+    "@opentelemetry/sdk-trace-base": "2.12.0"
+  },
+  "origin": {
+    "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+    "dirty": false,
+    "contentId": "9c1b98aa89ec9d0663d2277677a4231faa153b67ba87110d1b9faa06c4e19103"
+  },
+  "variant": "all",
+  "configuration": {
+    "name": "rehearsal-api",
+    "scope": "@rehearsal",
+    "identifier": "com.example.rehearsalapi",
+    "preset": "api",
+    "features": []
+  },
+  "workspace": [
+    {
+      "name": "@rehearsal/api",
+      "directory": "packages/api",
+      "runtime": "worker",
+      "dependencies": [
+        "@rehearsal/contracts",
+        "@rehearsal/observability",
+        "zod",
+        "@cloudflare/build-output-utils",
+        "@cloudflare/config",
+        "@cloudflare/vite-plugin",
+        "cf",
+        "typescript",
+        "vite-plus",
+        "vitest",
+        "wrangler"
+      ],
+      "scripts": {
+        "cf": "cf",
+        "dev": "cf dev --mode offline",
+        "preview": "node preview.ts",
+        "check": "vp check .",
+        "test": "node ../../tools/quality/vitest.ts --config vitest.config.ts",
+        "test:runtime": "node ../../tools/cloudflare/runtime.ts",
+        "build": "node ../../tools/cloudflare/build.ts",
+        "typegen": "cf workers types -m local"
+      }
+    },
+    {
+      "name": "@rehearsal/contracts",
+      "directory": "packages/contracts",
+      "runtime": "library",
+      "dependencies": [
+        "zod",
+        "typescript",
+        "vite-plus",
+        "vitest"
+      ],
+      "scripts": {
+        "check": "vp check .",
+        "test": "node ../../tools/quality/vitest.ts",
+        "build": "vp pack"
+      }
+    },
+    {
+      "name": "@rehearsal/observability",
+      "directory": "packages/observability",
+      "runtime": "library",
+      "dependencies": [
+        "@opentelemetry/api",
+        "@opentelemetry/resources",
+        "@opentelemetry/sdk-trace-base",
+        "@rehearsal/contracts",
+        "typescript",
+        "vite-plus",
+        "vitest"
+      ],
+      "scripts": {
+        "check": "vp check .",
+        "test": "node ../../tools/quality/vitest.ts",
+        "build": "vp pack"
+      }
+    }
+  ],
+  "cpus": 4,
+  "memoryBytes": 16765378560,
+  "selected": [
+    "@rehearsal/api",
+    "@rehearsal/contracts",
+    "@rehearsal/observability"
+  ],
+  "selectionReason": "Full selected configuration (unknown base or explicit full gate)",
+  "notRequired": [],
+  "checks": [
+    {
+      "id": "static",
+      "requirements": [
+        "layout",
+        "quality",
+        "boundaries",
+        "docs",
+        "secrets"
+      ],
+      "command": [
+        "check"
+      ],
+      "timeout": 180000,
+      "reason": "Repository-wide static checks are lightweight and run once",
+      "milliseconds": 4170,
+      "status": "passed"
+    },
+    {
+      "id": "tools-unit",
+      "requirements": [
+        "generator-safety",
+        "affected",
+        "failure-propagation"
+      ],
+      "command": [
+        "test:tools"
+      ],
+      "timeout": 180000,
+      "reason": "Shared tooling contracts",
+      "milliseconds": 40466,
+      "status": "passed"
+    },
+    {
+      "id": "@rehearsal/api/unit",
+      "requirements": [
+        "contracts",
+        "ui-states"
+      ],
+      "package": "@rehearsal/api",
+      "command": [
+        "--filter",
+        "@rehearsal/api",
+        "test"
+      ],
+      "timeout": 180000,
+      "reason": "Selected worker @rehearsal/api; full phase",
+      "milliseconds": 3904,
+      "status": "passed"
+    },
+    {
+      "id": "@rehearsal/api/build",
+      "requirements": [
+        "build"
+      ],
+      "package": "@rehearsal/api",
+      "command": [
+        "--filter",
+        "@rehearsal/api",
+        "build"
+      ],
+      "timeout": 180000,
+      "reason": "Selected worker @rehearsal/api; full phase",
+      "milliseconds": 1478,
+      "status": "passed"
+    },
+    {
+      "id": "@rehearsal/api/runtime",
+      "requirements": [
+        "worker",
+        "bindings",
+        "environments"
+      ],
+      "package": "@rehearsal/api",
+      "command": [
+        "--filter",
+        "@rehearsal/api",
+        "test:runtime"
+      ],
+      "timeout": 180000,
+      "reason": "Selected worker @rehearsal/api; full phase",
+      "milliseconds": 3540,
+      "status": "passed"
+    },
+    {
+      "id": "@rehearsal/contracts/unit",
+      "requirements": [
+        "contracts",
+        "ui-states"
+      ],
+      "package": "@rehearsal/contracts",
+      "command": [
+        "--filter",
+        "@rehearsal/contracts",
+        "test"
+      ],
+      "timeout": 180000,
+      "reason": "Selected library @rehearsal/contracts; full phase",
+      "milliseconds": 719,
+      "status": "passed"
+    },
+    {
+      "id": "@rehearsal/contracts/build",
+      "requirements": [
+        "build"
+      ],
+      "package": "@rehearsal/contracts",
+      "command": [
+        "--filter",
+        "@rehearsal/contracts",
+        "build"
+      ],
+      "timeout": 180000,
+      "reason": "Selected library @rehearsal/contracts; full phase",
+      "milliseconds": 522,
+      "status": "passed"
+    },
+    {
+      "id": "@rehearsal/observability/unit",
+      "requirements": [
+        "contracts",
+        "ui-states"
+      ],
+      "package": "@rehearsal/observability",
+      "command": [
+        "--filter",
+        "@rehearsal/observability",
+        "test"
+      ],
+      "timeout": 180000,
+      "reason": "Selected library @rehearsal/observability; full phase",
+      "milliseconds": 789,
+      "status": "passed"
+    },
+    {
+      "id": "@rehearsal/observability/build",
+      "requirements": [
+        "build"
+      ],
+      "package": "@rehearsal/observability",
+      "command": [
+        "--filter",
+        "@rehearsal/observability",
+        "build"
+      ],
+      "timeout": 180000,
+      "reason": "Selected library @rehearsal/observability; full phase",
+      "milliseconds": 506,
+      "status": "passed"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "packages/api/.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json",
+      "bytes": 157,
+      "gzipBytes": 114
+    },
+    {
+      "path": "packages/api/.cloudflare/output/v0/workers/default/bundle/index.js",
+      "bytes": 291243,
+      "gzipBytes": 67839
+    },
+    {
+      "path": "packages/contracts/dist/index.d.mts",
+      "bytes": 5835,
+      "gzipBytes": 1448
+    },
+    {
+      "path": "packages/contracts/dist/index.mjs",
+      "bytes": 5153,
+      "gzipBytes": 1707
+    },
+    {
+      "path": "packages/observability/dist/index.d.mts",
+      "bytes": 1816,
+      "gzipBytes": 726
+    },
+    {
+      "path": "packages/observability/dist/index.mjs",
+      "bytes": 12741,
+      "gzipBytes": 4216
+    }
+  ],
+  "status": "passed"
+}

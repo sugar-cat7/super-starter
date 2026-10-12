@@ -1,0 +1,98 @@
+$ node ../../tools/quality/browser.ts -- --grep 'reviewed visual baselines'
+[@rehearsal/web] $ vp dev --mode offline
+[@rehearsal/web] 
+  [34m[1mVITE+[22m v1.1.0[39m  [42m [1moffline[22m [49m  
+
+[@rehearsal/web]   [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m36219[22m/[39m
+READY @rehearsal/web http://127.0.0.1:36219 3469ms; registry /tmp/starter-browser-OaSgcP/registry/session-pFDgWa
+
+Running 1 test using 1 worker
+
+  ✘  1 test/browser/notes.spec.ts:129:1 › loading, empty and API-error states have reviewed visual baselines (1.2s)
+
+
+  1) test/browser/notes.spec.ts:129:1 › loading, empty and API-error states have reviewed visual baselines 
+
+    Error: expect(locator).toHaveScreenshot(expected) failed
+
+    Locator: getByRole('region', { name: 'Notes' })
+      Expected an image 672px by 393px, received 672px by 431px. 55099 pixels (ratio 0.20 of all image pixels) are different.
+
+      Snapshot: volatile-loading.png
+
+    Call log:
+      - Expect "toHaveScreenshot(volatile-loading.png)" getByRole('region', { name: 'Notes' }) with timeout 5000ms
+        - verifying given screenshot expectation
+      - waiting for getByRole('region', { name: 'Notes' })
+        - locator resolved to <section aria-label="Notes" class="mx-auto max-w-2xl rounded-xl border p-6">…</section>
+      - taking element screenshot
+        - disabled all CSS animations
+      - waiting for fonts to load...
+      - fonts loaded
+      - attempting scroll into view action
+        - waiting for element to be stable
+      - Expected an image 672px by 393px, received 672px by 431px. 55099 pixels (ratio 0.20 of all image pixels) are different.
+      - waiting 100ms before taking screenshot
+      - waiting for getByRole('region', { name: 'Notes' })
+        - locator resolved to <section aria-label="Notes" class="mx-auto max-w-2xl rounded-xl border p-6">…</section>
+      - taking element screenshot
+        - disabled all CSS animations
+      - waiting for fonts to load...
+      - fonts loaded
+      - attempting scroll into view action
+        - waiting for element to be stable
+      - captured a stable screenshot
+      - Expected an image 672px by 393px, received 672px by 431px. 55099 pixels (ratio 0.20 of all image pixels) are different.
+
+
+      139 |   await expect(page.getByText('Loading notes…')).toBeVisible();
+      140 |   const region = page.getByRole('region', { name: 'Notes' });
+    > 141 |   await expect(region).toHaveScreenshot('volatile-loading.png');
+          |                        ^
+      142 |   release?.();
+      143 |   await expect(page.getByText('No notes yet. Add your first note.')).toBeVisible();
+      144 |   await expect(region).toHaveScreenshot('volatile-empty.png');
+        at /tmp/starter-faults-6fzqJJ/project/packages/web/test/browser/notes.spec.ts:141:24
+
+    attachment #1: volatile-loading (image/png) ────────────────────────────────────────────────────
+    Expected: test/browser/snapshots/volatile-loading.png
+    Received: test-results/notes-loading-empty-and-AP-827d2-e-reviewed-visual-baselines/volatile-loading-actual.png
+    Diff:     test-results/notes-loading-empty-and-AP-827d2-e-reviewed-visual-baselines/volatile-loading-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/notes-loading-empty-and-AP-827d2-e-reviewed-visual-baselines/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/notes-loading-empty-and-AP-827d2-e-reviewed-visual-baselines/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/notes-loading-empty-and-AP-827d2-e-reviewed-visual-baselines/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/notes-loading-empty-and-AP-827d2-e-reviewed-visual-baselines/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/notes.spec.ts:129:1 › loading, empty and API-error states have reviewed visual baselines 
+[@rehearsal/web] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+[@rehearsal/web] 
+  × "pnpm recursive run" failed in /tmp/starter-faults-6fzqJJ/project/
+  │ packages/web
+
+file:///tmp/starter-faults-6fzqJJ/project/tools/process.ts:293
+            new Error(
+            ^
+
+Error: /home/runner/.local/share/mise/installs/aqua-pnpm-pnpm/12.11.2/pnpm exec playwright test --grep reviewed visual baselines: exit 1, signal null
+    at file:///tmp/starter-faults-6fzqJJ/project/tools/process.ts:293:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.21.0
+[ELIFECYCLE] Command failed with exit code 1.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in /tmp/starter-faults-6fzqJJ/project/
+  │ packages/web
+

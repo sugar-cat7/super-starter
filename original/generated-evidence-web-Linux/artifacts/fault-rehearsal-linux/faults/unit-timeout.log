@@ -1,0 +1,40 @@
+$ node tools/quality/vitest.ts -- tools/quality/test-results.test.ts
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/tmp/starter-faults-6fzqJJ/project[39m
+
+ [31m❯[39m tools/quality/test-results.test.ts [2m([22m[2m1 test[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 23[2mms[22m[39m
+[31m   [31m×[31m injected timeout[39m[32m 23[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m tools/quality/test-results.test.ts[2m > [22minjected timeout
+[31m[1mError[22m: Test timed out in 20ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+[36m [2m❯[22m tools/quality/test-results.test.ts:[2m2:1[22m[39m
+    [90m  1|[39m import { it } from 'vitest';
+    [90m  2|[39m it('injected timeout', async () => { await new Promise<void>(() => {})…
+    [90m   |[39m [31m^[39m
+    [90m  3|[39m
+[90m [2m❯[22m VitestModuleRunner.directRequest node_modules/.pnpm/@voidzero-dev+vite-plus-core@1.1.0_@types+node@24.19.1_esbuild@0.28.2_jiti@2.7.0_typescript@7.0.2_yaml@2.9.1/node_modules/@voidzero-dev/vite-plus-core/dist/vite/node/module-runner.js:[2m1286:59[22m[39m
+[90m [2m❯[22m VitestModuleRunner.cachedRequest node_modules/.pnpm/@voidzero-dev+vite-plus-core@1.1.0_@types+node@24.19.1_esbuild@0.28.2_jiti@2.7.0_typescript@7.0.2_yaml@2.9.1/node_modules/@voidzero-dev/vite-plus-core/dist/vite/node/module-runner.js:[2m1193:73[22m[39m
+[90m [2m❯[22m VitestModuleRunner.import node_modules/.pnpm/@voidzero-dev+vite-plus-core@1.1.0_@types+node@24.19.1_esbuild@0.28.2_jiti@2.7.0_typescript@7.0.2_yaml@2.9.1/node_modules/@voidzero-dev/vite-plus-core/dist/vite/node/module-runner.js:[2m1148:10[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m   Start at [22m 20:30:20
+[2m   Duration [22m 129ms[2m (tests 50%, transform 28%, import 15%, worker 6%)[22m
+
+JSON report written to /tmp/starter-faults-6fzqJJ/project/artifacts/tests-default.json
+file:///tmp/starter-faults-6fzqJJ/project/tools/process.ts:293
+            new Error(
+            ^
+
+Error: /home/runner/.local/share/mise/installs/aqua-pnpm-pnpm/12.11.2/pnpm exec vp test run tools/quality/test-results.test.ts --allowOnly=false --reporter default --reporter json --outputFile /tmp/starter-faults-6fzqJJ/project/artifacts/tests-default.json: exit 1, signal null
+    at file:///tmp/starter-faults-6fzqJJ/project/tools/process.ts:293:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.21.0
+[ELIFECYCLE] Command failed with exit code 1.

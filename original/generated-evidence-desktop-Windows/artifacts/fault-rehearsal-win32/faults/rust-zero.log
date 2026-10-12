@@ -1,0 +1,28 @@
+$ node ../../tools/quality/native.ts rust
+    Checking rehearsal-desktop-desktop v0.1.0 (C:\Users\runneradmin\AppData\Local\Temp\starter-faults-8SDVp1\project\packages\desktop\src-tauri)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.96s
+   Compiling rehearsal-desktop-desktop v0.1.0 (C:\Users\runneradmin\AppData\Local\Temp\starter-faults-8SDVp1\project\packages\desktop\src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.02s
+     Running unittests src\main.rs (C:\Users\runneradmin\AppData\Local\Temp\starter-faults-8SDVp1\project\.state\desktop\target-release\debug\deps\rehearsal_desktop_desktop-a7d82a7a5debdac4.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+file:///C:/Users/runneradmin/AppData/Local/Temp/starter-faults-8SDVp1/project/tools/quality/test-results.ts:12
+    throw new Error(
+          ^
+
+Error: Required Rust tests must execute cases without failures, ignored or filtered tests
+    at rustCases (file:///C:/Users/runneradmin/AppData/Local/Temp/starter-faults-8SDVp1/project/tools/quality/test-results.ts:12:11)
+    at file:///C:/Users/runneradmin/AppData/Local/Temp/starter-faults-8SDVp1/project/tools/quality/native.ts:58:27
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.21.0
+[ELIFECYCLE] Command failed with exit code 1.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in C:
+  │ \Users\runneradmin\AppData\Local\Temp\starter-faults-
+  │ 8SDVp1\project\packages\desktop
+

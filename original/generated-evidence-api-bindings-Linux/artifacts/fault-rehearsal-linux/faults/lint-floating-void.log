@@ -1,0 +1,4 @@
+::error file=tools/fault-probe.ts,line=2,endLine=2,col=6,endColumn=12,title=typescript(no-floating-promises)::tools/fault-probe.ts:2:6: Promises must be awaited, add await operator.
+
+Found 0 warnings and 1 error.
+Finished in 387ms on 1 file with 182 rules using 4 threads.

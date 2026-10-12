@@ -1,0 +1,49 @@
+$ node ../../tools/quality/browser.ts -- --grep 'injected browser timeout' --timeout 50
+[@rehearsal/web] $ vp dev --mode offline
+[@rehearsal/web] 
+  [34m[1mVITE+[22m v1.1.0[39m  [42m [1moffline[22m [49m  
+
+[@rehearsal/web]   [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m42565[22m/[39m
+READY @rehearsal/web http://127.0.0.1:42565 3054ms; registry /tmp/starter-browser-a9twPl/registry/session-OHhkmE
+
+Running 1 test using 1 worker
+
+  ✘  1 test/browser/fault.spec.ts:2:1 › injected browser timeout (50ms)
+
+
+  1) test/browser/fault.spec.ts:2:1 › injected browser timeout ─────────────────────────────────────
+
+    Test timeout of 50ms exceeded.
+
+    Error Context: test-results/fault-injected-browser-timeout/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/fault-injected-browser-timeout/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/fault-injected-browser-timeout/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/fault.spec.ts:2:1 › injected browser timeout ──────────────────────────────────────
+[@rehearsal/web] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+[@rehearsal/web]   × "pnpm recursive run" failed in /tmp/starter-faults-6fzqJJ/project/
+  │ packages/web
+
+file:///tmp/starter-faults-6fzqJJ/project/tools/process.ts:293
+            new Error(
+            ^
+
+Error: /home/runner/.local/share/mise/installs/aqua-pnpm-pnpm/12.11.2/pnpm exec playwright test --grep injected browser timeout --timeout 50: exit 1, signal null
+    at file:///tmp/starter-faults-6fzqJJ/project/tools/process.ts:293:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.21.0
+[ELIFECYCLE] Command failed with exit code 1.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in /tmp/starter-faults-6fzqJJ/project/
+  │ packages/web
+

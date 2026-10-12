@@ -1,0 +1,43 @@
+$ node tools/quality/vitest.ts -- tools/quality/test-results.test.ts
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/tmp/starter-faults-6fzqJJ/project[39m
+
+ [31m❯[39m tools/quality/test-results.test.ts [2m([22m[2m1 test[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 6[2mms[22m[39m
+[31m   [31m×[31m injected fault[39m[32m 5[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m tools/quality/test-results.test.ts[2m > [22minjected fault
+[31m[1mAssertionError[22m: expected 1 to be 2 // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 2[39m
+[31m+ 1[39m
+
+[36m [2m❯[22m tools/quality/test-results.test.ts:[2m2:40[22m[39m
+    [90m  1|[39m import { it, expect } from 'vitest';
+    [90m  2|[39m it('injected fault', () => { expect(1).toBe(2); });
+    [90m   |[39m                                        [31m^[39m
+    [90m  3|[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m   Start at [22m 20:30:17
+[2m   Duration [22m 116ms[2m (transform 40%, import 32%, tests 19%, worker 9%)[22m
+
+JSON report written to /tmp/starter-faults-6fzqJJ/project/artifacts/tests-default.json
+file:///tmp/starter-faults-6fzqJJ/project/tools/process.ts:293
+            new Error(
+            ^
+
+Error: /home/runner/.local/share/mise/installs/aqua-pnpm-pnpm/12.11.2/pnpm exec vp test run tools/quality/test-results.test.ts --allowOnly=false --reporter default --reporter json --outputFile /tmp/starter-faults-6fzqJJ/project/artifacts/tests-default.json: exit 1, signal null
+    at file:///tmp/starter-faults-6fzqJJ/project/tools/process.ts:293:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.21.0
+[ELIFECYCLE] Command failed with exit code 1.

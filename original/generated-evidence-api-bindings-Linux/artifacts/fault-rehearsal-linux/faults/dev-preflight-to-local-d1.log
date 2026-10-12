@@ -1,0 +1,121 @@
+$ node tools/cloudflare/deploy.ts preflight -- --target @rehearsal/api --environment dev
+$ node tools/quality/check.ts
+pass: All 159 files are correctly formatted (189ms, 4 threads)
+pass: Found no warnings, lint errors, or type errors in 114 files (1.5s, 4 threads)
+Static quality, runtime boundaries and documentation passed
+$ node ../../tools/quality/vitest.ts --config vitest.config.ts
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/tmp/starter-faults-DbBr7a/project/packages/api[39m
+
+ [32m✓[39m test/unit.test.ts [2m([22m[2m14 tests[22m[2m)[22m[33m 3127[2mms[22m[39m
+   [32m✓[39m API validation and safe publication defaults [2m(14)[22m
+     [33m[2m✓[22m[39m bounds a stalled ingress even when its cancellation never settles[33m 3004[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m14 passed[39m[22m[90m (14)[39m
+[2m   Start at [22m 20:31:29
+[2m   Duration [22m 3.46s[2m (tests 93%, import 4%, transform 2%)[22m
+
+JSON report written to /tmp/starter-faults-DbBr7a/project/packages/api/artifacts/tests-vitest.config.ts.json
+Executed 14 required test cases
+$ node ../../tools/cloudflare/runtime.ts
+$ node ../../tools/cloudflare/build.ts
+No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+├  Build
+│  Delegating to Vite
+transforming...
+✓ 254 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json    0.15 kB │ gzip:  0.11 kB
+.cloudflare/output/v0/workers/default/bundle/index.js             291.24 kB │ gzip: 68.21 kB
+
+[32m✓ built in 79ms[39m
+◆  Build complete
+
+ ⛅️ wrangler 4.149.0
+────────────────────
+Resource location: local 
+
+Use --remote if you want to access the remote instance.
+
+Migrations to be applied:
+┌────────────────┐
+│ name           │
+├────────────────┤
+│ 0001_notes.sql │
+└────────────────┘
+? About to apply 1 migration(s)
+Your database may not be available to serve requests during the migration, continue?
+🤖 Using fallback value in non-interactive context: yes
+🌀 Executing on local database DATABASE (0bcbb546-fda6-4677-8530-c5869111108b) from ../../../../starter-runtime-hBrFsx/api/v3/d1:
+🌀 To execute on your remote database, add a --remote flag to your wrangler command.
+🚣 2 commands executed successfully.
+┌────────────────┬────────┐
+│ name           │ status │
+├────────────────┼────────┤
+│ 0001_notes.sql │ ✅     │
+└────────────────┴────────┘
+
+ ⛅️ wrangler 4.149.0
+────────────────────
+Resource location: local 
+
+Use --remote if you want to access the remote instance.
+
+🌀 Executing on local database DATABASE (0bcbb546-fda6-4677-8530-c5869111108b) from ../../../../starter-runtime-hBrFsx/api/v3/d1:
+🌀 To execute on your remote database, add a --remote flag to your wrangler command.
+🚣 1 command executed successfully.
+[
+  {
+    "results": [],
+    "success": true,
+    "meta": {
+      "duration": 0
+    }
+  }
+]
+[@rehearsal/api] $ cf dev --mode offline
+[@rehearsal/api] No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+[@rehearsal/api]   [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m40749[22m/[39m
+READY @rehearsal/api http://127.0.0.1:40749 2368ms; registry /tmp/starter-runtime-hBrFsx/registry/session-UGvm7F
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/tmp/starter-faults-DbBr7a/project/packages/api[39m
+
+ [32m✓[39m test/runtime.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 344[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m4 passed[39m[22m[90m (4)[39m
+[2m   Start at [22m 20:31:40
+[2m   Duration [22m 561ms[2m (tests 76%, import 14%, transform 10%, worker 1%)[22m
+
+JSON report written to /tmp/starter-faults-DbBr7a/project/packages/api/artifacts/tests-vitest.runtime.config.ts.json
+Executed 4 required test cases
+[@rehearsal/api] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+[@rehearsal/api]   × "pnpm recursive run" failed in /tmp/starter-faults-DbBr7a/project/
+  │ packages/api
+
+$ node ../../tools/cloudflare/build.ts
+No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+├  Build
+│  Delegating to Vite
+transforming...
+✓ 254 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json    0.15 kB │ gzip:  0.11 kB
+.cloudflare/output/v0/workers/default/bundle/index.js             291.24 kB │ gzip: 68.21 kB
+
+[32m✓ built in 79ms[39m
+◆  Build complete
+file:///tmp/starter-faults-DbBr7a/project/tools/cloudflare/deploy.ts:70
+  throw new Error(
+        ^
+
+Error: CLOUDFLARE_ACCOUNT_ID is missing. Configure a named approved dev account and resource IDs; see docs/cloudflare.md. No deployment occurred.
+    at file:///tmp/starter-faults-DbBr7a/project/tools/cloudflare/deploy.ts:70:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.21.0
+[ELIFECYCLE] Command failed with exit code 1.

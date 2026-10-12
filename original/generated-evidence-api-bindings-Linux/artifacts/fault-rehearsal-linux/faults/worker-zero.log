@@ -1,0 +1,108 @@
+$ node ../../tools/cloudflare/runtime.ts
+$ node ../../tools/cloudflare/build.ts
+No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+├  Build
+│  Delegating to Vite
+transforming...
+✓ 254 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json    0.15 kB │ gzip:  0.11 kB
+.cloudflare/output/v0/workers/default/bundle/index.js             291.24 kB │ gzip: 68.21 kB
+
+[32m✓ built in 75ms[39m
+◆  Build complete
+
+ ⛅️ wrangler 4.149.0
+────────────────────
+Resource location: local 
+
+Use --remote if you want to access the remote instance.
+
+Migrations to be applied:
+┌────────────────┐
+│ name           │
+├────────────────┤
+│ 0001_notes.sql │
+└────────────────┘
+? About to apply 1 migration(s)
+Your database may not be available to serve requests during the migration, continue?
+🤖 Using fallback value in non-interactive context: yes
+🌀 Executing on local database DATABASE (0bcbb546-fda6-4677-8530-c5869111108b) from ../../../../starter-runtime-9eiZS2/api/v3/d1:
+🌀 To execute on your remote database, add a --remote flag to your wrangler command.
+🚣 2 commands executed successfully.
+┌────────────────┬────────┐
+│ name           │ status │
+├────────────────┼────────┤
+│ 0001_notes.sql │ ✅     │
+└────────────────┴────────┘
+
+ ⛅️ wrangler 4.149.0
+────────────────────
+Resource location: local 
+
+Use --remote if you want to access the remote instance.
+
+🌀 Executing on local database DATABASE (0bcbb546-fda6-4677-8530-c5869111108b) from ../../../../starter-runtime-9eiZS2/api/v3/d1:
+🌀 To execute on your remote database, add a --remote flag to your wrangler command.
+🚣 1 command executed successfully.
+[
+  {
+    "results": [],
+    "success": true,
+    "meta": {
+      "duration": 1
+    }
+  }
+]
+[@rehearsal/api] $ cf dev --mode offline
+[@rehearsal/api] No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+[@rehearsal/api]   [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m46691[22m/[39m
+READY @rehearsal/api http://127.0.0.1:46691 2369ms; registry /tmp/starter-runtime-9eiZS2/registry/session-pRRNfF
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/tmp/starter-faults-DbBr7a/project/packages/api[39m
+
+ [31m❯[39m test/runtime.test.ts [2m([22m[2m0 test[22m[2m)[22m
+
+[31m⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Suites 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m test/runtime.test.ts[2m [ test/runtime.test.ts ][22m
+[31m[1mError[22m: No test suite found in file /tmp/starter-faults-DbBr7a/project/packages/api/test/runtime.test.ts[39m
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [2mno tests[22m
+[2m   Start at [22m 20:30:16
+[2m   Duration [22m 128ms[2m (transform 56%, import 26%, worker 18%, environment 1%)[22m
+
+JSON report written to /tmp/starter-faults-DbBr7a/project/packages/api/artifacts/tests-vitest.runtime.config.ts.json
+file:///tmp/starter-faults-DbBr7a/project/tools/process.ts:293
+            new Error(
+            ^
+
+Error: /home/runner/.local/share/mise/installs/aqua-pnpm-pnpm/12.11.2/pnpm exec vp test run --config vitest.runtime.config.ts --allowOnly=false --reporter default --reporter json --outputFile /tmp/starter-faults-DbBr7a/project/packages/api/artifacts/tests-vitest.runtime.config.ts.json: exit 1, signal null
+    at file:///tmp/starter-faults-DbBr7a/project/tools/process.ts:293:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.21.0
+[@rehearsal/api] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+[@rehearsal/api]   × "pnpm recursive run" failed in /tmp/starter-faults-DbBr7a/project/
+  │ packages/api
+
+file:///tmp/starter-faults-DbBr7a/project/tools/process.ts:293
+            new Error(
+            ^
+
+Error: /home/runner/.local/share/mise/installs/aqua-pnpm-pnpm/12.11.2/pnpm exec node ../../tools/quality/vitest.ts --config vitest.runtime.config.ts: exit 1, signal null
+    at file:///tmp/starter-faults-DbBr7a/project/tools/process.ts:293:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.21.0
+[ELIFECYCLE] Command failed with exit code 1.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in /tmp/starter-faults-DbBr7a/project/
+  │ packages/api
+

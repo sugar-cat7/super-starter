@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "sha": "uncommitted",
+  "origin": {
+    "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+    "dirty": false,
+    "contentId": "8b4e476320b2eb5395cf28ef4ac62ca0cb6ab0a2b3da0823be45c3db9468e86b"
+  },
+  "configuration": {
+    "name": "different-identity",
+    "scope": "@different",
+    "identifier": "com.example.differentidentity",
+    "preset": "api",
+    "features": []
+  },
+  "contentId": "517310ab4110006334e624add1ddfa6e65034dd2014e01e3bfb3e6653affc0bc",
+  "os": "linux/x64",
+  "status": "passed",
+  "baselineDifferences": [
+    "packages/api/package.json",
+    "packages/api/src/index.ts",
+    "packages/api/src/notes.ts",
+    "packages/api/test/custom.runtime.test.ts",
+    "packages/api/test/custom.test.ts",
+    "packages/api/test/runtime.test.ts",
+    "packages/api/test/unit.test.ts",
+    "packages/jobs/package.json",
+    "packages/jobs/src/index.ts",
+    "packages/jobs/src/notes.ts",
+    "packages/jobs/test/custom.runtime.test.ts",
+    "packages/jobs/test/custom.test.ts",
+    "packages/jobs/test/runtime.test.ts",
+    "packages/jobs/test/unit.test.ts"
+  ]
+}

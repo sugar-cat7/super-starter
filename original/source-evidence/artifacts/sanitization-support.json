@@ -1,0 +1,526 @@
+{
+  "schema": 1,
+  "kind": "external-source-sanitization-support",
+  "execution": "hosted-tools",
+  "sourceSha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+  "sourceCid": "8a91208bf0be87ea59f830dd11d700618bfc46c75493dd9799b0c5c3815fff25",
+  "profileSha256": "38f2cbe9f89f18109fe04fd7705a2385ca304937bb7d25ed7a7868ac553a5f04",
+  "carrierSha": "480001a3fcdd2475e9ee670fa120f9ed8faafa4b",
+  "runId": "38303540755",
+  "controls": [
+    {
+      "name": "brand",
+      "expectedRules": [
+        "source-product-brand"
+      ],
+      "head": "2ac18d52087a86f6c7e58583de0f90d3cf38e9a4",
+      "contentId": "2874eff22b1e9b7a6a4c70503eeec58ecded2a7fa1591ef270e2e6017342ae27",
+      "reportSha256": "50bf7f091d5f5eae7779d61a8932bac8903d07182747dc1c1ef9c478d7188f60",
+      "argv": [
+        "/home/runner/.local/share/mise/installs/node/24.21.0/bin/node",
+        "/home/runner/work/super-starter/super-starter/tools/quality/sanitize.ts",
+        "--rules",
+        "/home/runner/work/_temp/source-sanitization-38303540755/rules.json"
+      ],
+      "cwd": "/home/runner/work/_temp/source-sanitization-38303540755/control-brand-POhtIv",
+      "started": "2026-10-12T20:25:18.932Z",
+      "ended": "2026-10-12T20:25:19.030Z",
+      "exit": 1,
+      "classification": "actual-controlled-negative-only",
+      "repair": {
+        "argv": [
+          "/home/runner/.local/share/mise/installs/node/24.21.0/bin/node",
+          "/home/runner/work/super-starter/super-starter/tools/quality/sanitize.ts",
+          "--rules",
+          "/home/runner/work/_temp/source-sanitization-38303540755/rules.json"
+        ],
+        "cwd": "/home/runner/work/_temp/source-sanitization-38303540755/control-brand-POhtIv",
+        "started": "2026-10-12T20:25:19.038Z",
+        "ended": "2026-10-12T20:25:19.138Z",
+        "exit": 0,
+        "head": "2ac18d52087a86f6c7e58583de0f90d3cf38e9a4",
+        "contentId": "123057e523f2668cc947749925959fb6e48bac6fd2417e08b2a6d13304d8a20b",
+        "reportSha256": "c1ef35e67ce542c0a9beefc7d0586a4fe865d16e1266fcad3b5f121ae3100d3f",
+        "onlyChangedPath": "docs/witness.txt",
+        "indexUnchanged": true,
+        "classification": "actual-same-input-repair-only"
+      }
+    },
+    {
+      "name": "scope",
+      "expectedRules": [
+        "source-product-brand",
+        "source-workspace-scope"
+      ],
+      "head": "cb5d8b2fa85a329cc2ee05aa0cee341f5258484a",
+      "contentId": "2cb9533068fac6c4a6f1ebd25eb77f57aa36fa81db47fdaa34e1f0ec4895ac95",
+      "reportSha256": "a2046e5e6a70ff1914de36fd3db7f28352bd8892efac3bb9890d76e1dce685d3",
+      "argv": [
+        "/home/runner/.local/share/mise/installs/node/24.21.0/bin/node",
+        "/home/runner/work/super-starter/super-starter/tools/quality/sanitize.ts",
+        "--rules",
+        "/home/runner/work/_temp/source-sanitization-38303540755/rules.json"
+      ],
+      "cwd": "/home/runner/work/_temp/source-sanitization-38303540755/control-scope-VWDPKb",
+      "started": "2026-10-12T20:25:19.185Z",
+      "ended": "2026-10-12T20:25:19.286Z",
+      "exit": 1,
+      "classification": "actual-controlled-negative-only",
+      "repair": {
+        "argv": [
+          "/home/runner/.local/share/mise/installs/node/24.21.0/bin/node",
+          "/home/runner/work/super-starter/super-starter/tools/quality/sanitize.ts",
+          "--rules",
+          "/home/runner/work/_temp/source-sanitization-38303540755/rules.json"
+        ],
+        "cwd": "/home/runner/work/_temp/source-sanitization-38303540755/control-scope-VWDPKb",
+        "started": "2026-10-12T20:25:19.294Z",
+        "ended": "2026-10-12T20:25:19.396Z",
+        "exit": 0,
+        "head": "cb5d8b2fa85a329cc2ee05aa0cee341f5258484a",
+        "contentId": "123057e523f2668cc947749925959fb6e48bac6fd2417e08b2a6d13304d8a20b",
+        "reportSha256": "551eb6779ae466efa1d5d56d6dbb5a5fe9e7fd46ad7e6aa1d09d0d28ee44d692",
+        "onlyChangedPath": "docs/witness.txt",
+        "indexUnchanged": true,
+        "classification": "actual-same-input-repair-only"
+      }
+    },
+    {
+      "name": "layout",
+      "expectedRules": [
+        "source-layout-and-harness"
+      ],
+      "head": "0df1e6d1ce756ffa6558ca5590999b365533aa41",
+      "contentId": "bbd278cbcf9e82f9f44e058f6bbbf8fb8ef47dd0e6885d01ce535b62a23fedc0",
+      "reportSha256": "a2672eca3d58c9e9c7b142f540640878b637c873710e55e84b9f08d162a87efa",
+      "argv": [
+        "/home/runner/.local/share/mise/installs/node/24.21.0/bin/node",
+        "/home/runner/work/super-starter/super-starter/tools/quality/sanitize.ts",
+        "--rules",
+        "/home/runner/work/_temp/source-sanitization-38303540755/rules.json"
+      ],
+      "cwd": "/home/runner/work/_temp/source-sanitization-38303540755/control-layout-zBmQbV",
+      "started": "2026-10-12T20:25:19.443Z",
+      "ended": "2026-10-12T20:25:19.540Z",
+      "exit": 1,
+      "classification": "actual-controlled-negative-only",
+      "repair": {
+        "argv": [
+          "/home/runner/.local/share/mise/installs/node/24.21.0/bin/node",
+          "/home/runner/work/super-starter/super-starter/tools/quality/sanitize.ts",
+          "--rules",
+          "/home/runner/work/_temp/source-sanitization-38303540755/rules.json"
+        ],
+        "cwd": "/home/runner/work/_temp/source-sanitization-38303540755/control-layout-zBmQbV",
+        "started": "2026-10-12T20:25:19.548Z",
+        "ended": "2026-10-12T20:25:19.651Z",
+        "exit": 0,
+        "head": "0df1e6d1ce756ffa6558ca5590999b365533aa41",
+        "contentId": "123057e523f2668cc947749925959fb6e48bac6fd2417e08b2a6d13304d8a20b",
+        "reportSha256": "d76bef9a377809691b0512a48120ff8754def11b0b9d71fd40e0e82a157c176d",
+        "onlyChangedPath": "docs/witness.txt",
+        "indexUnchanged": true,
+        "classification": "actual-same-input-repair-only"
+      }
+    },
+    {
+      "name": "media",
+      "expectedRules": [
+        "source-media-sdk"
+      ],
+      "head": "5430791d1e4c0266de9e348053c9d61e60a52d01",
+      "contentId": "0376c3ed18313f94ebe97070c8d356c93208acf4a419ee382a2491758a22112f",
+      "reportSha256": "3c58b20e6711a72956225994f47fe821d3fdaee060741caddfb05409934bb499",
+      "argv": [
+        "/home/runner/.local/share/mise/installs/node/24.21.0/bin/node",
+        "/home/runner/work/super-starter/super-starter/tools/quality/sanitize.ts",
+        "--rules",
+        "/home/runner/work/_temp/source-sanitization-38303540755/rules.json"
+      ],
+      "cwd": "/home/runner/work/_temp/source-sanitization-38303540755/control-media-qQAN2O",
+      "started": "2026-10-12T20:25:19.698Z",
+      "ended": "2026-10-12T20:25:19.799Z",
+      "exit": 1,
+      "classification": "actual-controlled-negative-only",
+      "repair": {
+        "argv": [
+          "/home/runner/.local/share/mise/installs/node/24.21.0/bin/node",
+          "/home/runner/work/super-starter/super-starter/tools/quality/sanitize.ts",
+          "--rules",
+          "/home/runner/work/_temp/source-sanitization-38303540755/rules.json"
+        ],
+        "cwd": "/home/runner/work/_temp/source-sanitization-38303540755/control-media-qQAN2O",
+        "started": "2026-10-12T20:25:19.807Z",
+        "ended": "2026-10-12T20:25:19.912Z",
+        "exit": 0,
+        "head": "5430791d1e4c0266de9e348053c9d61e60a52d01",
+        "contentId": "123057e523f2668cc947749925959fb6e48bac6fd2417e08b2a6d13304d8a20b",
+        "reportSha256": "21e873872d1762bbe6f495a6ab188423756861b49182a4f3cc9a10f7ab66cd10",
+        "onlyChangedPath": "docs/witness.txt",
+        "indexUnchanged": true,
+        "classification": "actual-same-input-repair-only"
+      }
+    },
+    {
+      "name": "runner",
+      "expectedRules": [
+        "private-runner-coupling"
+      ],
+      "head": "9a8a9a68e7adb5182944f82e4296e1aba8a4fc84",
+      "contentId": "7ec2a6ccc0de84a1f9255d029e8a4428e5caac39bd173f88059986e09a2b637f",
+      "reportSha256": "481fe15eaff3b34c76730ab1b2d4e3a84695f96c9edb370cfe630d630827e180",
+      "argv": [
+        "/home/runner/.local/share/mise/installs/node/24.21.0/bin/node",
+        "/home/runner/work/super-starter/super-starter/tools/quality/sanitize.ts",
+        "--rules",
+        "/home/runner/work/_temp/source-sanitization-38303540755/rules.json"
+      ],
+      "cwd": "/home/runner/work/_temp/source-sanitization-38303540755/control-runner-UjhWS3",
+      "started": "2026-10-12T20:25:19.960Z",
+      "ended": "2026-10-12T20:25:20.062Z",
+      "exit": 1,
+      "classification": "actual-controlled-negative-only",
+      "repair": {
+        "argv": [
+          "/home/runner/.local/share/mise/installs/node/24.21.0/bin/node",
+          "/home/runner/work/super-starter/super-starter/tools/quality/sanitize.ts",
+          "--rules",
+          "/home/runner/work/_temp/source-sanitization-38303540755/rules.json"
+        ],
+        "cwd": "/home/runner/work/_temp/source-sanitization-38303540755/control-runner-UjhWS3",
+        "started": "2026-10-12T20:25:20.070Z",
+        "ended": "2026-10-12T20:25:20.171Z",
+        "exit": 0,
+        "head": "9a8a9a68e7adb5182944f82e4296e1aba8a4fc84",
+        "contentId": "123057e523f2668cc947749925959fb6e48bac6fd2417e08b2a6d13304d8a20b",
+        "reportSha256": "93e70b7e92e5bd96e0b9c8afc4c72b122e10d75639f6a20e38528f951cf2ce3e",
+        "onlyChangedPath": "docs/witness.txt",
+        "indexUnchanged": true,
+        "classification": "actual-same-input-repair-only"
+      }
+    },
+    {
+      "name": "updater",
+      "expectedRules": [
+        "native-updater-coupling"
+      ],
+      "head": "c60cc27bad6b54cfe03b4900e4a61b3f7ed1fad0",
+      "contentId": "d5b199fc4e57ad0ed0a38e975829ca52c9f3449bc312012abd109c5b042ece3e",
+      "reportSha256": "7f7d36b8d72d1c71f242bdae7902085768590d7bd41034a6e5957a9b6b5cd85d",
+      "argv": [
+        "/home/runner/.local/share/mise/installs/node/24.21.0/bin/node",
+        "/home/runner/work/super-starter/super-starter/tools/quality/sanitize.ts",
+        "--rules",
+        "/home/runner/work/_temp/source-sanitization-38303540755/rules.json"
+      ],
+      "cwd": "/home/runner/work/_temp/source-sanitization-38303540755/control-updater-6lrJUQ",
+      "started": "2026-10-12T20:25:20.217Z",
+      "ended": "2026-10-12T20:25:20.318Z",
+      "exit": 1,
+      "classification": "actual-controlled-negative-only",
+      "repair": {
+        "argv": [
+          "/home/runner/.local/share/mise/installs/node/24.21.0/bin/node",
+          "/home/runner/work/super-starter/super-starter/tools/quality/sanitize.ts",
+          "--rules",
+          "/home/runner/work/_temp/source-sanitization-38303540755/rules.json"
+        ],
+        "cwd": "/home/runner/work/_temp/source-sanitization-38303540755/control-updater-6lrJUQ",
+        "started": "2026-10-12T20:25:20.326Z",
+        "ended": "2026-10-12T20:25:20.426Z",
+        "exit": 0,
+        "head": "c60cc27bad6b54cfe03b4900e4a61b3f7ed1fad0",
+        "contentId": "123057e523f2668cc947749925959fb6e48bac6fd2417e08b2a6d13304d8a20b",
+        "reportSha256": "1393a9b5884a4bcddcb1c0bba0f55ec09e21b1276607b1cc95e553a320f46a35",
+        "onlyChangedPath": "docs/witness.txt",
+        "indexUnchanged": true,
+        "classification": "actual-same-input-repair-only"
+      }
+    }
+  ],
+  "builtOutputs": [
+    {
+      "package": "@starter/api",
+      "runtime": "worker",
+      "check": "@starter/api/build",
+      "outputs": [
+        {
+          "kind": "worker-bundle",
+          "directory": "packages/api/.cloudflare/output/v0/workers/default/bundle",
+          "files": [
+            {
+              "path": "packages/api/.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json",
+              "size": 157,
+              "sha256": "adc6cbede6ffdd0f4ff071c941fea1448fb726fc5b86039b8a41b4b97a5a22a1"
+            },
+            {
+              "path": "packages/api/.cloudflare/output/v0/workers/default/bundle/index.js",
+              "size": 291243,
+              "sha256": "784c96e270b17631240ddd93b428b4c0000c18d39396fedae09ff1bdbf579d6f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "package": "@starter/contracts",
+      "runtime": "library",
+      "check": "@starter/contracts/build",
+      "outputs": [
+        {
+          "kind": "library-dist",
+          "directory": "packages/contracts/dist",
+          "files": [
+            {
+              "path": "packages/contracts/dist/index.d.mts",
+              "size": 5835,
+              "sha256": "225693a565a73682c9d26ac34331e81744f6686d700d1ae5aadafe0e29ee5b6b"
+            },
+            {
+              "path": "packages/contracts/dist/index.mjs",
+              "size": 5153,
+              "sha256": "85d9bf3c39fc07b866491f13486f43fd588c9cbeba4b74745391980c94bb7d01"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "package": "@starter/desktop",
+      "runtime": "desktop",
+      "check": "@starter/desktop/build",
+      "outputs": [
+        {
+          "kind": "desktop-dist",
+          "directory": "packages/desktop/dist",
+          "files": [
+            {
+              "path": "packages/desktop/dist/assets/index-B72_aK_y.js",
+              "size": 286879,
+              "sha256": "09df22bf675e272130080531384d43859fc57135f85197d45f606fbcad1d6459"
+            },
+            {
+              "path": "packages/desktop/dist/assets/index-BvNagr1_.css",
+              "size": 6489,
+              "sha256": "14e817e4428619b4e31102588134fc6d1a556d239e85c2ade0944e9efda247ac"
+            },
+            {
+              "path": "packages/desktop/dist/index.html",
+              "size": 398,
+              "sha256": "4efb1f24a14f8b9c550e3e7951c1dc92c5fd89d73286a10f2a376583faacc134"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "package": "@starter/observability",
+      "runtime": "library",
+      "check": "@starter/observability/build",
+      "outputs": [
+        {
+          "kind": "library-dist",
+          "directory": "packages/observability/dist",
+          "files": [
+            {
+              "path": "packages/observability/dist/index.d.mts",
+              "size": 1814,
+              "sha256": "1238c0650c6cbc744f072c31a45e40568dc6715a01bf6ff20242e0595c67f039"
+            },
+            {
+              "path": "packages/observability/dist/index.mjs",
+              "size": 12739,
+              "sha256": "81656d15d96fe481c107d2932eff466d2ca12e08223e839cbf5e8558d9797b31"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "package": "@starter/sample-api",
+      "runtime": "worker",
+      "check": "@starter/sample-api/build",
+      "outputs": [
+        {
+          "kind": "worker-bundle",
+          "directory": "packages/sample-api/.cloudflare/output/v0/workers/default/bundle",
+          "files": [
+            {
+              "path": "packages/sample-api/.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json",
+              "size": 157,
+              "sha256": "adc6cbede6ffdd0f4ff071c941fea1448fb726fc5b86039b8a41b4b97a5a22a1"
+            },
+            {
+              "path": "packages/sample-api/.cloudflare/output/v0/workers/default/bundle/index.js",
+              "size": 291243,
+              "sha256": "784c96e270b17631240ddd93b428b4c0000c18d39396fedae09ff1bdbf579d6f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "package": "@starter/ui",
+      "runtime": "library",
+      "check": "@starter/ui/build",
+      "outputs": [
+        {
+          "kind": "library-dist",
+          "directory": "packages/ui/dist",
+          "files": [
+            {
+              "path": "packages/ui/dist/index.d.mts",
+              "size": 563,
+              "sha256": "dada9d6af74e552b8e38436c49046f8592f096b16dd7df7760d6ed067c0f3cfe"
+            },
+            {
+              "path": "packages/ui/dist/index.mjs",
+              "size": 5106,
+              "sha256": "06008c785fb503bd5afd71ad69672ece34249936adf31264bff9828d4f752412"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "package": "@starter/web",
+      "runtime": "worker",
+      "check": "@starter/web/build",
+      "outputs": [
+        {
+          "kind": "worker-bundle",
+          "directory": "packages/web/.cloudflare/output/v0/workers/default/bundle",
+          "files": [
+            {
+              "path": "packages/web/.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json",
+              "size": 3454,
+              "sha256": "30245a855aeefedfbd08e2313962c08373ea25d3a8609ee588110370a4a32b2b"
+            },
+            {
+              "path": "packages/web/.cloudflare/output/v0/workers/default/bundle/assets/Match-BAqK4OKj.js",
+              "size": 145227,
+              "sha256": "5ed996bf621bbdc1def93c2e6b10e204738395de5bee5214cd66038caa8312d0"
+            },
+            {
+              "path": "packages/web/.cloudflare/output/v0/workers/default/bundle/assets/_tanstack-start-manifest_v-CqUi7CPh.js",
+              "size": 7694,
+              "sha256": "81e994fc46ae79c3c9ca60d0f47ed28598d33c1179c42eb8c32524586fb6edf8"
+            },
+            {
+              "path": "packages/web/.cloudflare/output/v0/workers/default/bundle/assets/about-NjiltK0E.js",
+              "size": 728,
+              "sha256": "82996d9b9f0abfc8c746528c9b93abc81741bf84142604eab61e8ed3fc5f7322"
+            },
+            {
+              "path": "packages/web/.cloudflare/output/v0/workers/default/bundle/assets/empty-plugin-adapters-CVykojMw.js",
+              "size": 288,
+              "sha256": "76130793b31d34c9b45230b84ba6be9261ea2c21337b05235b46f64f93139254"
+            },
+            {
+              "path": "packages/web/.cloudflare/output/v0/workers/default/bundle/assets/jsx-runtime-BZtfA-4f.js",
+              "size": 2592,
+              "sha256": "596c680542b040604f33d4ce4a7f350dd04b458aadd7be65c87dd0612482fdb9"
+            },
+            {
+              "path": "packages/web/.cloudflare/output/v0/workers/default/bundle/assets/react-DOK9jBYa.js",
+              "size": 16573,
+              "sha256": "ad2e82de411e6848d40490b24bb1436d369cfd7bc1880ccaa91312ff5bece186"
+            },
+            {
+              "path": "packages/web/.cloudflare/output/v0/workers/default/bundle/assets/router-B2VdnRko.js",
+              "size": 40802,
+              "sha256": "7c7a4dfe052824bf386218fc1675a782a7154bcbe09163113ad1c4231abf83d3"
+            },
+            {
+              "path": "packages/web/.cloudflare/output/v0/workers/default/bundle/assets/router-D17-EbZ6.css",
+              "size": 6687,
+              "sha256": "283d7801824ca544ec900bc0faa28d58d96ee7c6864be47f27c9d1c0273d1151"
+            },
+            {
+              "path": "packages/web/.cloudflare/output/v0/workers/default/bundle/assets/routes-DdCF_WI8.js",
+              "size": 9076,
+              "sha256": "50d933a4d151d8f02df987b1382664db30e7d42afca94e4329108e969030e9b7"
+            },
+            {
+              "path": "packages/web/.cloudflare/output/v0/workers/default/bundle/assets/src-BqOr-Xkq.js",
+              "size": 161165,
+              "sha256": "8637af1376e6079aed50156a27861cd6206ea11977c3e7e5f77f86c547b4de63"
+            },
+            {
+              "path": "packages/web/.cloudflare/output/v0/workers/default/bundle/assets/start-TjFo_Qz5.js",
+              "size": 293,
+              "sha256": "02f128e21ee9676752ee8a332c564d0c1ef88ee0c7eccfde147f2e9ee29edfa8"
+            },
+            {
+              "path": "packages/web/.cloudflare/output/v0/workers/default/bundle/index.js",
+              "size": 726994,
+              "sha256": "35205b14c978d22adec05c02bcd664e136457a7f2645f9d55e772a52f37c100a"
+            }
+          ]
+        },
+        {
+          "kind": "worker-assets",
+          "directory": "packages/web/.cloudflare/output/v0/workers/default/assets",
+          "files": [
+            {
+              "path": "packages/web/.cloudflare/output/v0/workers/default/assets/assets/about-CjEoILFc.js",
+              "size": 424,
+              "sha256": "1aa98dd8076943ec1654ce02c7a168a661fdeb025b6131ccd26b5e3931ffb51a"
+            },
+            {
+              "path": "packages/web/.cloudflare/output/v0/workers/default/assets/assets/client-goE8wl6R.js",
+              "size": 120973,
+              "sha256": "503c7e4eb55b6ff66af04627edf126760a7458bed61c02042f3a460d02108fc6"
+            },
+            {
+              "path": "packages/web/.cloudflare/output/v0/workers/default/assets/assets/index-D17-EbZ6.css",
+              "size": 6687,
+              "sha256": "283d7801824ca544ec900bc0faa28d58d96ee7c6864be47f27c9d1c0273d1151"
+            },
+            {
+              "path": "packages/web/.cloudflare/output/v0/workers/default/assets/assets/index-DwvIh3id.js",
+              "size": 24941,
+              "sha256": "f1eec2d6923dcb1c7d8c394892a34e5c1a149edc30e92ead164db87df9f1000a"
+            },
+            {
+              "path": "packages/web/.cloudflare/output/v0/workers/default/assets/assets/react-BuqwL3YU.js",
+              "size": 8243,
+              "sha256": "68d0f5ff1f04ad5b6625d368f55d5e26c4138cb78b0f87104e83a3c6682e2f3c"
+            },
+            {
+              "path": "packages/web/.cloudflare/output/v0/workers/default/assets/assets/react-dom-uP1KSDv5.js",
+              "size": 211212,
+              "sha256": "feafed3040939a26727b3acd1011e69e5cdb727c85ee3f2f23576133796b930d"
+            },
+            {
+              "path": "packages/web/.cloudflare/output/v0/workers/default/assets/assets/rolldown-runtime-CbXtAM7H.js",
+              "size": 589,
+              "sha256": "bbf7c5086ae414dc3f33777e3eebf16ea8631325b8bb4690d25091c03567f31a"
+            },
+            {
+              "path": "packages/web/.cloudflare/output/v0/workers/default/assets/assets/routes-CEm2Bmat.js",
+              "size": 45242,
+              "sha256": "c644447085bbac8c12de892ed976abcd4f3a8287eb2d16964fb3717c2e2ff544"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "status": "passed",
+  "classification": "External controlled fail/repair/pass bytes are preserved separately and excluded from accepted Source evidence. The original Source CLI owns the final actual build scan.",
+  "final": {
+    "argv": [
+      "/home/runner/.local/share/mise/installs/node/24.21.0/bin/node",
+      "/home/runner/work/super-starter/super-starter/tools/quality/sanitize.ts",
+      "--rules",
+      "/home/runner/work/_temp/source-sanitization-38303540755/rules.json"
+    ],
+    "cwd": "/home/runner/work/super-starter/super-starter",
+    "started": "2026-10-12T20:25:20.833Z",
+    "ended": "2026-10-12T20:25:21.015Z",
+    "exit": 0,
+    "reportSha256": "9c325116a16e53942570696a219f3efa3ff47ecf055fc5372a9baee758702260",
+    "controlsPassed": 6
+  }
+}

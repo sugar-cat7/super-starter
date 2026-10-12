@@ -1,0 +1,155 @@
+$ node ../../tools/quality/native.ts e2e
+        Info Looking up installed tauri packages to check mismatched versions...
+     Running beforeBuildCommand `pnpm build:renderer --mode e2e`
+$ vp build --mode e2e
+transforming...
+✓ 249 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                           0.48 kB │ gzip:  0.29 kB
+dist/assets/index-BvNagr1_.css            6.48 kB │ gzip:  2.21 kB
+dist/assets/core-B_7XDIRk.js              0.05 kB │ gzip:  0.07 kB
+dist/assets/core-B3IRXRGI.js              0.20 kB │ gzip:  0.16 kB
+dist/assets/event-C5LDQCVX.js             1.04 kB │ gzip:  0.54 kB
+dist/assets/preload-helper-DjzSQ1t3.js    1.38 kB │ gzip:  0.75 kB
+dist/assets/dist-js-Dj0aRydg.js          16.35 kB │ gzip:  4.55 kB
+dist/assets/index-DZtZ1ehn.js           287.15 kB │ gzip: 90.38 kB
+
+[32m✓ built in 207ms[39m
+   Compiling rehearsal-desktop-desktop v0.1.0 (/tmp/starter-faults-dgJZ7c/project/packages/desktop/src-tauri)
+    Finished `release` profile [optimized] target(s) in 37.06s
+       Built application at: /tmp/starter-faults-dgJZ7c/project/.state/desktop/target-e2e/release/rehearsal-desktop-desktop
+2026-10-12T20:46:47.273Z INFO @wdio/cli:launcher: Run onPrepare hook
+2026-10-12T20:46:47.275Z INFO tauri-service:launcher: Using embedded WebDriver provider (tauri-plugin-wdio-webdriver) - no external driver needed
+2026-10-12T20:46:47.275Z INFO tauri-service:launcher: Embedded provider mode - spawning Tauri app with embedded WebDriver server
+2026-10-12T20:46:47.280Z INFO tauri-service:launcher: Tauri app spawned (PID: 65270)
+2026-10-12T20:46:47.801Z INFO tauri-service:launcher: WebDriver server ready on port 33471
+
+Execution of 1 workers started at 2026-10-12T20:46:48.809Z
+
+2026-10-12T20:46:48.811Z INFO @wdio/cli:launcher: Run onWorkerStart hook
+2026-10-12T20:46:48.813Z INFO @wdio/xvfb: XvfbManager.init() called
+2026-10-12T20:46:48.813Z INFO @wdio/xvfb: Xvfb not needed on current platform
+2026-10-12T20:46:48.814Z INFO @wdio/local-runner: Start worker 0-0 with arg: run wdio.conf.ts
+2026-10-12T20:46:48.819Z INFO @wdio/xvfb:ProcessFactory: xvfb-run found in PATH
+2026-10-12T20:46:48.819Z INFO @wdio/xvfb:ProcessFactory: ProcessFactory: shouldRun=false, isAvailable=true
+2026-10-12T20:46:48.819Z INFO @wdio/xvfb:ProcessFactory: Creating worker process with regular fork
+[0-0] 2026-10-12T20:46:49.538Z INFO @wdio/local-runner: Run worker command: run
+[0-0] 2026-10-12T20:46:49.815Z WARN @wdio/mocha-framework: Unable to load spec files quite likely because they rely on `browser` object that is not fully initialized.
+[0-0] `browser` object has only `capabilities` and some flags like `isMobile`.
+[0-0] Helper files that use other `browser` commands have to be moved to `before` hook.
+[0-0] Spec file(s): file:///tmp/starter-faults-dgJZ7c/project/packages/desktop/test/native.e2e.ts
+[0-0] Error: Error: `.only` forbidden by --forbid-only
+[0-0]     at createForbiddenExclusivityError (/tmp/starter-faults-dgJZ7c/project/node_modules/.pnpm/mocha@11.8.0/node_modules/mocha/lib/errors.js:332:13)
+[0-0]     at Object.only (/tmp/starter-faults-dgJZ7c/project/node_modules/.pnpm/mocha@11.8.0/node_modules/mocha/lib/interfaces/common.js:182:17)
+[0-0]     at context.it.only (/tmp/starter-faults-dgJZ7c/project/node_modules/.pnpm/mocha@11.8.0/node_modules/mocha/lib/interfaces/bdd.js:102:26)
+[0-0]     at Suite.<anonymous> (/tmp/starter-faults-dgJZ7c/project/packages/desktop/test/native.e2e.ts:1:34)
+[0-0]     at Object.create (/tmp/starter-faults-dgJZ7c/project/node_modules/.pnpm/mocha@11.8.0/node_modules/mocha/lib/interfaces/common.js:153:19)
+[0-0]     at context.describe.context.context (/tmp/starter-faults-dgJZ7c/project/node_modules/.pnpm/mocha@11.8.0/node_modules/mocha/lib/interfaces/bdd.js:46:27)
+[0-0]     at <anonymous> (/tmp/starter-faults-dgJZ7c/project/packages/desktop/test/native.e2e.ts:1:1)
+[0-0]     at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+[0-0]     at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[0-0]     at async node:internal/modules/esm/loader:647:26
+[0-0] RUNNING in undefined - file:///test/native.e2e.ts
+[0-0] 2026-10-12T20:46:49.817Z INFO webdriver: Initiate new session using the WebDriver protocol
+[0-0] 2026-10-12T20:46:49.817Z INFO @wdio/utils: Connecting to existing driver at http://127.0.0.1:33471/
+[0-0] 2026-10-12T20:46:49.819Z INFO webdriver: [POST] http://127.0.0.1:33471/session
+[0-0] 2026-10-12T20:46:49.843Z INFO webdriver: COMMAND getWindowHandle()
+[0-0] 2026-10-12T20:46:49.844Z INFO webdriver: [GET] http://127.0.0.1:33471/session/cec958b4-5eb3-46f7-9c8f-2a4b8cd1924f/window
+[0-0] 2026-10-12T20:46:49.847Z INFO webdriver: RESULT main
+[0-0] 2026-10-12T20:46:49.847Z INFO tauri-service:service: before() start — mode=binary provider=embedded multiremote=undefined instances=n/a
+[0-0] 2026-10-12T20:46:49.848Z INFO tauri-service:service: Initializing standard browser
+[0-0] 2026-10-12T20:46:49.849Z INFO webdriver: COMMAND getWindowHandles()
+[0-0] 2026-10-12T20:46:49.849Z INFO webdriver: [GET] http://127.0.0.1:33471/session/cec958b4-5eb3-46f7-9c8f-2a4b8cd1924f/window/handles
+[0-0] 2026-10-12T20:46:49.851Z INFO webdriver: RESULT [ 'main' ]
+[0-0] 2026-10-12T20:46:49.851Z INFO tauri-service:service: Standard browser window available
+[0-0] 2026-10-12T20:46:49.851Z INFO tauri-service:service: Waiting for Tauri plugin initialization...
+[0-0] 2026-10-12T20:46:49.852Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T20:46:49.852Z INFO webdriver: [POST] http://127.0.0.1:33471/session/cec958b4-5eb3-46f7-9c8f-2a4b8cd1924f/execute/sync
+[0-0] 2026-10-12T20:46:49.853Z INFO webdriver: DATA { script: 'checkPluginInit(...) [875 bytes]', args: [] }
+[0-0] 2026-10-12T20:46:49.856Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T20:46:49.857Z INFO tauri-service:service: Tauri plugin initialization complete
+[0-0] 2026-10-12T20:46:49.857Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T20:46:49.857Z INFO webdriver: [POST] http://127.0.0.1:33471/session/cec958b4-5eb3-46f7-9c8f-2a4b8cd1924f/execute/sync
+[0-0] 2026-10-12T20:46:49.857Z INFO webdriver: DATA { script: 'clearStaleMocks(...) [698 bytes]', args: [] }
+[0-0] 2026-10-12T20:46:49.860Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T20:46:49.861Z INFO tauri-service:service: before() complete
+[0-0] 2026-10-12T20:46:49.868Z ERROR @wdio/runner: Error: Unable to load spec files quite likely because they rely on `browser` object that is not fully initialized.
+[0-0] `browser` object has only `capabilities` and some flags like `isMobile`.
+[0-0] Helper files that use other `browser` commands have to be moved to `before` hook.
+[0-0] Spec file(s): file:///tmp/starter-faults-dgJZ7c/project/packages/desktop/test/native.e2e.ts
+[0-0] Error: Error: `.only` forbidden by --forbid-only
+[0-0]     at createForbiddenExclusivityError (/tmp/starter-faults-dgJZ7c/project/node_modules/.pnpm/mocha@11.8.0/node_modules/mocha/lib/errors.js:332:13)
+[0-0]     at Object.only (/tmp/starter-faults-dgJZ7c/project/node_modules/.pnpm/mocha@11.8.0/node_modules/mocha/lib/interfaces/common.js:182:17)
+[0-0]     at context.it.only (/tmp/starter-faults-dgJZ7c/project/node_modules/.pnpm/mocha@11.8.0/node_modules/mocha/lib/interfaces/bdd.js:102:26)
+[0-0]     at Suite.<anonymous> (/tmp/starter-faults-dgJZ7c/project/packages/desktop/test/native.e2e.ts:1:34)
+[0-0]     at Object.create (/tmp/starter-faults-dgJZ7c/project/node_modules/.pnpm/mocha@11.8.0/node_modules/mocha/lib/interfaces/common.js:153:19)
+[0-0]     at context.describe.context.context (/tmp/starter-faults-dgJZ7c/project/node_modules/.pnpm/mocha@11.8.0/node_modules/mocha/lib/interfaces/bdd.js:46:27)
+[0-0]     at <anonymous> (/tmp/starter-faults-dgJZ7c/project/packages/desktop/test/native.e2e.ts:1:1)
+[0-0]     at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+[0-0]     at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[0-0]     at async node:internal/modules/esm/loader:647:26
+[0-0]     at MochaAdapter._loadFiles (/tmp/starter-faults-dgJZ7c/project/node_modules/.pnpm/@wdio+mocha-framework@9.32.0_supports-color@8.1.1/node_modules/@wdio/mocha-framework/build/index.js:225:29)
+[0-0]     at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[0-0]     at async MochaAdapter.init (/tmp/starter-faults-dgJZ7c/project/node_modules/.pnpm/@wdio+mocha-framework@9.32.0_supports-color@8.1.1/node_modules/@wdio/mocha-framework/build/index.js:206:5)
+[0-0]     at async Object.adapterFactory.init (/tmp/starter-faults-dgJZ7c/project/node_modules/.pnpm/@wdio+mocha-framework@9.32.0_supports-color@8.1.1/node_modules/@wdio/mocha-framework/build/index.js:345:20)
+[0-0]     at async #initFramework (file:///tmp/starter-faults-dgJZ7c/project/node_modules/.pnpm/@wdio+runner@9.32.0_expect-webdriverio@6.1.0_supports-color@8.1.1_webdriverio@9.32.0_supports-color@8.1.1_/node_modules/@wdio/runner/build/index.js:833:33)
+[0-0]     at async Runner.run (file:///tmp/starter-faults-dgJZ7c/project/node_modules/.pnpm/@wdio+runner@9.32.0_expect-webdriverio@6.1.0_supports-color@8.1.1_webdriverio@9.32.0_supports-color@8.1.1_/node_modules/@wdio/runner/build/index.js:744:23)
+[0-0]  Error:  Unable to load spec files quite likely because they rely on `browser` object that is not fully initialized.
+`browser` object has only `capabilities` and some flags like `isMobile`.
+Helper files that use other `browser` commands have to be moved to `before` hook.
+Spec file(s): file:///tmp/starter-faults-dgJZ7c/project/packages/desktop/test/native.e2e.ts
+Error: Error: `.only` forbidden by --forbid-only
+    at createForbiddenExclusivityError (/tmp/starter-faults-dgJZ7c/project/node_modules/.pnpm/mocha@11.8.0/node_modules/mocha/lib/errors.js:332:13)
+    at Object.only (/tmp/starter-faults-dgJZ7c/project/node_modules/.pnpm/mocha@11.8.0/node_modules/mocha/lib/interfaces/common.js:182:17)
+    at context.it.only (/tmp/starter-faults-dgJZ7c/project/node_modules/.pnpm/mocha@11.8.0/node_modules/mocha/lib/interfaces/bdd.js:102:26)
+    at Suite.<anonymous> (/tmp/starter-faults-dgJZ7c/project/packages/desktop/test/native.e2e.ts:1:34)
+    at Object.create (/tmp/starter-faults-dgJZ7c/project/node_modules/.pnpm/mocha@11.8.0/node_modules/mocha/lib/interfaces/common.js:153:19)
+    at context.describe.context.context (/tmp/starter-faults-dgJZ7c/project/node_modules/.pnpm/mocha@11.8.0/node_modules/mocha/lib/interfaces/bdd.js:46:27)
+    at <anonymous> (/tmp/starter-faults-dgJZ7c/project/packages/desktop/test/native.e2e.ts:1:1)
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async node:internal/modules/esm/loader:647:26
+[0-0] 2026-10-12T20:46:49.872Z INFO webdriver: COMMAND deleteSession()
+[0-0] 2026-10-12T20:46:49.872Z INFO webdriver: [DELETE] http://127.0.0.1:33471/session/cec958b4-5eb3-46f7-9c8f-2a4b8cd1924f
+[0-0] 2026-10-12T20:46:49.875Z INFO webdriver: RESULT null
+[0-0] FAILED in undefined - file:///test/native.e2e.ts
+2026-10-12T20:46:49.996Z INFO @wdio/cli:launcher: Run onWorkerEnd hook
+
+ "spec" Reporter:
+------------------------------------------------------------------
+[WebKitGTK 605.1.15 linux #0-0] Running: WebKitGTK (v605.1.15) on linux
+[WebKitGTK 605.1.15 linux #0-0] Session ID: cec958b4-5eb3-46f7-9c8f-2a4b8cd1924f
+[WebKitGTK 605.1.15 linux #0-0]
+[WebKitGTK 605.1.15 linux #0-0] » test/native.e2e.ts
+[WebKitGTK 605.1.15 linux #0-0] native focus
+[WebKitGTK 605.1.15 linux #0-0]    ✓ required case
+[WebKitGTK 605.1.15 linux #0-0]
+[WebKitGTK 605.1.15 linux #0-0]     native focus
+[WebKitGTK 605.1.15 linux #0-0]        ✓ required case
+[WebKitGTK 605.1.15 linux #0-0]
+[WebKitGTK 605.1.15 linux #0-0] 2 passing (15ms)
+
+
+Spec Files:	 0 passed, 1 failed, 1 total (100% completed) in 00:00:01  
+
+2026-10-12T20:46:49.996Z INFO @wdio/local-runner: Shutting down spawned worker
+2026-10-12T20:46:50.247Z INFO @wdio/local-runner: Waiting for 0 to shut down gracefully
+2026-10-12T20:46:50.248Z INFO @wdio/local-runner: shutting down
+2026-10-12T20:46:50.248Z INFO @wdio/cli:launcher: Run onComplete hook
+2026-10-12T20:46:50.248Z INFO tauri-service:launcher: Stopping 1 embedded driver process(es)...
+file:///tmp/starter-faults-dgJZ7c/project/tools/process.ts:293
+            new Error(
+            ^
+
+Error: /home/runner/.local/share/mise/installs/aqua-pnpm-pnpm/12.11.2/pnpm exec wdio run wdio.conf.ts: exit 1, signal null
+    at file:///tmp/starter-faults-dgJZ7c/project/tools/process.ts:293:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.21.0
+[ELIFECYCLE] Command failed with exit code 1.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in /tmp/starter-faults-dgJZ7c/project/
+  │ packages/desktop
+

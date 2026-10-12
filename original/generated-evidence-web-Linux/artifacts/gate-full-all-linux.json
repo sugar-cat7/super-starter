@@ -1,0 +1,509 @@
+{
+  "schema": 1,
+  "sha": "uncommitted",
+  "base": null,
+  "contentId": "a892e62bc32b64c3739fdd550265c9e3bc21457714c182ad88cae695ac0b173d",
+  "os": "linux/x64",
+  "node": "v24.21.0",
+  "tools": {
+    "node": "v24.21.0",
+    "pnpm": "12.11.2",
+    "@types/node": "24.19.1",
+    "knip": "6.41.0",
+    "oxc-parser": "0.153.0",
+    "typescript": "7.0.2",
+    "vite-plus": "1.1.0",
+    "vitest": "5.0.3",
+    "yaml": "2.9.1",
+    "zod": "4.6.5",
+    "@opentelemetry/api": "1.9.1",
+    "@opentelemetry/resources": "2.12.0",
+    "@opentelemetry/sdk-trace-base": "2.12.0",
+    "@rehearsal/contracts": "0.1.0",
+    "react": "19.3.0",
+    "@testing-library/react": "16.3.3",
+    "@testing-library/user-event": "14.6.7",
+    "@types/react": "19.3.0",
+    "jsdom": "30.1.2",
+    "react-dom": "19.3.0",
+    "@rehearsal/observability": "0.1.0",
+    "@rehearsal/ui": "0.1.0",
+    "@tanstack/react-router": "1.170.41",
+    "@tanstack/react-start": "1.168.60",
+    "@axe-core/playwright": "4.13.0",
+    "@cloudflare/build-output-utils": "0.9.0",
+    "@cloudflare/config": "0.24.1",
+    "@cloudflare/vite-plugin": "2.0.0-beta.sha-91c870c02",
+    "@playwright/test": "1.64.0",
+    "@tailwindcss/vite": "4.3.3",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.2",
+    "cf": "1.0.0-beta.14",
+    "lighthouse": "13.5.0",
+    "tailwindcss": "4.3.3",
+    "wrangler": "4.149.0"
+  },
+  "origin": {
+    "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+    "dirty": false,
+    "contentId": "150ec3755ea6c00687a4d164266cfb38445f4c62fa114b998e4b2811a9c97760"
+  },
+  "variant": "all",
+  "configuration": {
+    "name": "rehearsal-web",
+    "scope": "@rehearsal",
+    "identifier": "com.example.rehearsalweb",
+    "preset": "web",
+    "features": []
+  },
+  "workspace": [
+    {
+      "name": "@rehearsal/contracts",
+      "directory": "packages/contracts",
+      "runtime": "library",
+      "dependencies": [
+        "zod",
+        "typescript",
+        "vite-plus",
+        "vitest"
+      ],
+      "scripts": {
+        "check": "vp check .",
+        "test": "node ../../tools/quality/vitest.ts",
+        "build": "vp pack"
+      }
+    },
+    {
+      "name": "@rehearsal/observability",
+      "directory": "packages/observability",
+      "runtime": "library",
+      "dependencies": [
+        "@opentelemetry/api",
+        "@opentelemetry/resources",
+        "@opentelemetry/sdk-trace-base",
+        "@rehearsal/contracts",
+        "typescript",
+        "vite-plus",
+        "vitest"
+      ],
+      "scripts": {
+        "check": "vp check .",
+        "test": "node ../../tools/quality/vitest.ts",
+        "build": "vp pack"
+      }
+    },
+    {
+      "name": "@rehearsal/ui",
+      "directory": "packages/ui",
+      "runtime": "library",
+      "dependencies": [
+        "@rehearsal/contracts",
+        "react",
+        "@testing-library/react",
+        "@testing-library/user-event",
+        "@types/react",
+        "jsdom",
+        "react-dom",
+        "typescript",
+        "vite-plus",
+        "vitest"
+      ],
+      "scripts": {
+        "check": "vp check .",
+        "test": "node ../../tools/quality/vitest.ts",
+        "build": "vp pack"
+      }
+    },
+    {
+      "name": "@rehearsal/web",
+      "directory": "packages/web",
+      "runtime": "worker",
+      "dependencies": [
+        "@rehearsal/contracts",
+        "@rehearsal/observability",
+        "@rehearsal/ui",
+        "@tanstack/react-router",
+        "@tanstack/react-start",
+        "react",
+        "react-dom",
+        "zod",
+        "@axe-core/playwright",
+        "@cloudflare/build-output-utils",
+        "@cloudflare/config",
+        "@cloudflare/vite-plugin",
+        "@playwright/test",
+        "@tailwindcss/vite",
+        "@types/react",
+        "@types/react-dom",
+        "@vitejs/plugin-react",
+        "cf",
+        "lighthouse",
+        "tailwindcss",
+        "typescript",
+        "vite-plus",
+        "vitest",
+        "wrangler"
+      ],
+      "scripts": {
+        "cf": "cf",
+        "dev": "vp dev --mode offline",
+        "preview": "node preview.ts",
+        "check": "vp check .",
+        "test": "node ../../tools/quality/vitest.ts --config vitest.config.ts",
+        "test:runtime": "node ../../tools/cloudflare/runtime.ts",
+        "test:e2e": "node ../../tools/quality/browser.ts",
+        "test:e2e:production": "node ../../tools/quality/browser.ts --preview",
+        "test:lighthouse": "node ../../tools/quality/lighthouse.ts",
+        "build": "node ../../tools/cloudflare/build.ts",
+        "typegen": "cf workers types -m local"
+      }
+    }
+  ],
+  "cpus": 4,
+  "memoryBytes": 16766414848,
+  "selected": [
+    "@rehearsal/contracts",
+    "@rehearsal/observability",
+    "@rehearsal/ui",
+    "@rehearsal/web"
+  ],
+  "selectionReason": "Full selected configuration (unknown base or explicit full gate)",
+  "notRequired": [],
+  "checks": [
+    {
+      "id": "static",
+      "requirements": [
+        "layout",
+        "quality",
+        "boundaries",
+        "docs",
+        "secrets"
+      ],
+      "command": [
+        "check"
+      ],
+      "timeout": 180000,
+      "reason": "Repository-wide static checks are lightweight and run once",
+      "milliseconds": 4337,
+      "status": "passed"
+    },
+    {
+      "id": "tools-unit",
+      "requirements": [
+        "generator-safety",
+        "affected",
+        "failure-propagation"
+      ],
+      "command": [
+        "test:tools"
+      ],
+      "timeout": 180000,
+      "reason": "Shared tooling contracts",
+      "milliseconds": 39799,
+      "status": "passed"
+    },
+    {
+      "id": "@rehearsal/contracts/unit",
+      "requirements": [
+        "contracts",
+        "ui-states"
+      ],
+      "package": "@rehearsal/contracts",
+      "command": [
+        "--filter",
+        "@rehearsal/contracts",
+        "test"
+      ],
+      "timeout": 180000,
+      "reason": "Selected library @rehearsal/contracts; full phase",
+      "milliseconds": 752,
+      "status": "passed"
+    },
+    {
+      "id": "@rehearsal/contracts/build",
+      "requirements": [
+        "build"
+      ],
+      "package": "@rehearsal/contracts",
+      "command": [
+        "--filter",
+        "@rehearsal/contracts",
+        "build"
+      ],
+      "timeout": 180000,
+      "reason": "Selected library @rehearsal/contracts; full phase",
+      "milliseconds": 482,
+      "status": "passed"
+    },
+    {
+      "id": "@rehearsal/observability/unit",
+      "requirements": [
+        "contracts",
+        "ui-states"
+      ],
+      "package": "@rehearsal/observability",
+      "command": [
+        "--filter",
+        "@rehearsal/observability",
+        "test"
+      ],
+      "timeout": 180000,
+      "reason": "Selected library @rehearsal/observability; full phase",
+      "milliseconds": 649,
+      "status": "passed"
+    },
+    {
+      "id": "@rehearsal/observability/build",
+      "requirements": [
+        "build"
+      ],
+      "package": "@rehearsal/observability",
+      "command": [
+        "--filter",
+        "@rehearsal/observability",
+        "build"
+      ],
+      "timeout": 180000,
+      "reason": "Selected library @rehearsal/observability; full phase",
+      "milliseconds": 435,
+      "status": "passed"
+    },
+    {
+      "id": "@rehearsal/ui/unit",
+      "requirements": [
+        "contracts",
+        "ui-states"
+      ],
+      "package": "@rehearsal/ui",
+      "command": [
+        "--filter",
+        "@rehearsal/ui",
+        "test"
+      ],
+      "timeout": 180000,
+      "reason": "Selected library @rehearsal/ui; full phase",
+      "milliseconds": 1462,
+      "status": "passed"
+    },
+    {
+      "id": "@rehearsal/ui/build",
+      "requirements": [
+        "build"
+      ],
+      "package": "@rehearsal/ui",
+      "command": [
+        "--filter",
+        "@rehearsal/ui",
+        "build"
+      ],
+      "timeout": 180000,
+      "reason": "Selected library @rehearsal/ui; full phase",
+      "milliseconds": 495,
+      "status": "passed"
+    },
+    {
+      "id": "@rehearsal/web/unit",
+      "requirements": [
+        "contracts",
+        "ui-states"
+      ],
+      "package": "@rehearsal/web",
+      "command": [
+        "--filter",
+        "@rehearsal/web",
+        "test"
+      ],
+      "timeout": 180000,
+      "reason": "Selected worker @rehearsal/web; full phase",
+      "milliseconds": 680,
+      "status": "passed"
+    },
+    {
+      "id": "@rehearsal/web/build",
+      "requirements": [
+        "build"
+      ],
+      "package": "@rehearsal/web",
+      "command": [
+        "--filter",
+        "@rehearsal/web",
+        "build"
+      ],
+      "timeout": 180000,
+      "reason": "Selected worker @rehearsal/web; full phase",
+      "milliseconds": 1713,
+      "status": "passed"
+    },
+    {
+      "id": "@rehearsal/web/runtime",
+      "requirements": [
+        "worker",
+        "bindings",
+        "environments"
+      ],
+      "package": "@rehearsal/web",
+      "command": [
+        "--filter",
+        "@rehearsal/web",
+        "test:runtime"
+      ],
+      "timeout": 180000,
+      "reason": "Selected worker @rehearsal/web; full phase",
+      "milliseconds": 4273,
+      "status": "passed"
+    },
+    {
+      "id": "@rehearsal/web/browser",
+      "requirements": [
+        "web",
+        "browser",
+        "accessibility",
+        "vrt"
+      ],
+      "package": "@rehearsal/web",
+      "command": [
+        "--filter",
+        "@rehearsal/web",
+        "test:e2e"
+      ],
+      "timeout": 180000,
+      "reason": "Selected worker @rehearsal/web; full phase",
+      "milliseconds": 11642,
+      "status": "passed"
+    },
+    {
+      "id": "@rehearsal/web/browser-production",
+      "requirements": [
+        "web",
+        "browser",
+        "production-ui"
+      ],
+      "package": "@rehearsal/web",
+      "command": [
+        "--filter",
+        "@rehearsal/web",
+        "test:e2e:production"
+      ],
+      "timeout": 180000,
+      "reason": "Selected worker @rehearsal/web; full phase",
+      "milliseconds": 6639,
+      "status": "passed"
+    },
+    {
+      "id": "@rehearsal/web/lighthouse",
+      "requirements": [
+        "web",
+        "browser",
+        "lighthouse-all-100"
+      ],
+      "package": "@rehearsal/web",
+      "command": [
+        "--filter",
+        "@rehearsal/web",
+        "test:lighthouse"
+      ],
+      "timeout": 900000,
+      "reason": "Selected worker @rehearsal/web; full phase",
+      "milliseconds": 82828,
+      "status": "passed"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "packages/contracts/dist/index.d.mts",
+      "bytes": 5835,
+      "gzipBytes": 1448
+    },
+    {
+      "path": "packages/contracts/dist/index.mjs",
+      "bytes": 5153,
+      "gzipBytes": 1707
+    },
+    {
+      "path": "packages/observability/dist/index.d.mts",
+      "bytes": 1816,
+      "gzipBytes": 726
+    },
+    {
+      "path": "packages/observability/dist/index.mjs",
+      "bytes": 12741,
+      "gzipBytes": 4216
+    },
+    {
+      "path": "packages/ui/dist/index.d.mts",
+      "bytes": 565,
+      "gzipBytes": 302
+    },
+    {
+      "path": "packages/ui/dist/index.mjs",
+      "bytes": 5108,
+      "gzipBytes": 1650
+    },
+    {
+      "path": "packages/web/.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json",
+      "bytes": 3454,
+      "gzipBytes": 713
+    },
+    {
+      "path": "packages/web/.cloudflare/output/v0/workers/default/bundle/assets/Match-BAqK4OKj.js",
+      "bytes": 145227,
+      "gzipBytes": 36266
+    },
+    {
+      "path": "packages/web/.cloudflare/output/v0/workers/default/bundle/assets/_tanstack-start-manifest_v-CUOzww9-.js",
+      "bytes": 7706,
+      "gzipBytes": 2650
+    },
+    {
+      "path": "packages/web/.cloudflare/output/v0/workers/default/bundle/assets/about-NjiltK0E.js",
+      "bytes": 728,
+      "gzipBytes": 417
+    },
+    {
+      "path": "packages/web/.cloudflare/output/v0/workers/default/bundle/assets/empty-plugin-adapters-CVykojMw.js",
+      "bytes": 288,
+      "gzipBytes": 186
+    },
+    {
+      "path": "packages/web/.cloudflare/output/v0/workers/default/bundle/assets/jsx-runtime-BZtfA-4f.js",
+      "bytes": 2592,
+      "gzipBytes": 1107
+    },
+    {
+      "path": "packages/web/.cloudflare/output/v0/workers/default/bundle/assets/react-DOK9jBYa.js",
+      "bytes": 16573,
+      "gzipBytes": 4461
+    },
+    {
+      "path": "packages/web/.cloudflare/output/v0/workers/default/bundle/assets/router-BtjppatF.js",
+      "bytes": 40802,
+      "gzipBytes": 10524
+    },
+    {
+      "path": "packages/web/.cloudflare/output/v0/workers/default/bundle/assets/router-D17-EbZ6.css",
+      "bytes": 6687,
+      "gzipBytes": 2259
+    },
+    {
+      "path": "packages/web/.cloudflare/output/v0/workers/default/bundle/assets/routes-BUiN61XL.js",
+      "bytes": 9107,
+      "gzipBytes": 2735
+    },
+    {
+      "path": "packages/web/.cloudflare/output/v0/workers/default/bundle/assets/src-BawW6lkC.js",
+      "bytes": 222519,
+      "gzipBytes": 52057
+    },
+    {
+      "path": "packages/web/.cloudflare/output/v0/workers/default/bundle/assets/start-DWcS3WmS.js",
+      "bytes": 293,
+      "gzipBytes": 224
+    },
+    {
+      "path": "packages/web/.cloudflare/output/v0/workers/default/bundle/index.js",
+      "bytes": 800143,
+      "gzipBytes": 168321
+    }
+  ],
+  "status": "passed"
+}

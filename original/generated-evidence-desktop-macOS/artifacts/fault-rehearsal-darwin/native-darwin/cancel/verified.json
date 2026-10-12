@@ -1,0 +1,20 @@
+{
+  "scenario": "cancel",
+  "cases": 1,
+  "os": "darwin",
+  "binary": "/private/var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/starter-faults-DsiUtr/project/.state/desktop/target-e2e/release/rehearsal-desktop-desktop",
+  "runId": "native-darwin-cancel-local",
+  "sha": null,
+  "contentId": "914ecc11ffa587601b214d72a71489b6f88332492619caf96ac00084a71d80e2",
+  "telemetry": {
+    "traces": {
+      "records": 20
+    },
+    "logs": {
+      "records": 20
+    },
+    "metrics": {
+      "records": 20
+    }
+  }
+}

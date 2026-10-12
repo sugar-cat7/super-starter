@@ -1,0 +1,3241 @@
+{
+  "schema": 1,
+  "kind": "verified-original-source-evidence-transport",
+  "source": {
+    "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+    "contentId": "8a91208bf0be87ea59f830dd11d700618bfc46c75493dd9799b0c5c3815fff25",
+    "base": "63dc03962359d3164da0d34fbcdc1ccb2cec455f",
+    "ciFull": false
+  },
+  "collector": {
+    "carrierSha": "480001a3fcdd2475e9ee670fa120f9ed8faafa4b",
+    "runId": 38303540755,
+    "sourceGatesPassed": true,
+    "sourceOriginalJobs": 23,
+    "collectorPrepareJobId": 115014863104,
+    "exportJobs": [
+      115015156285,
+      115015156294,
+      115015156357,
+      115015156511
+    ],
+    "originalCanonicalQualityRun": 38298326712,
+    "originalCanonicalSecurityRun": 38298326538,
+    "scope": "Separate mechanical Source evidence run; canonical Quality is a distinct completed success run",
+    "reportPath": "original/collector/collector-report.json",
+    "reportSha256": "00f4cc3ced8e66021f2a9d2e15f53646ad4c479c454ee618d641dd184ac8927b"
+  },
+  "files": [
+    {
+      "path": "original/collector/parts-manifest.json",
+      "size": 856,
+      "sha256": "ff3016b2fecbb41a9bc3dd491bc655e14617fb9142e594f08da79cd53d8c5a31"
+    },
+    {
+      "path": "original/collector/collector-report.json",
+      "size": 856329,
+      "sha256": "00f4cc3ced8e66021f2a9d2e15f53646ad4c479c454ee618d641dd184ac8927b"
+    },
+    {
+      "path": "original/actual-native-evidence-Linux/artifacts/gate-ci-native-linux.json",
+      "size": 13054,
+      "sha256": "8a255f5047f418d4afac12a8b118809a69922170579bddf16721ebab6c68aa23"
+    },
+    {
+      "path": "original/actual-native-evidence-Linux/artifacts/native-linux/cancel/verified.json",
+      "size": 535,
+      "sha256": "c0281a29745a8647aa4e9b1406e33431f5b55fe3388fc5f0244ba0db0541d8b6"
+    },
+    {
+      "path": "original/actual-native-evidence-Linux/artifacts/native-linux/error/verified.json",
+      "size": 533,
+      "sha256": "e9b6e6a8916f9052600ae0240abb6f74e99922a56a0d04d13e11d6f54a713823"
+    },
+    {
+      "path": "original/actual-native-evidence-Linux/artifacts/native-linux/save/verified.json",
+      "size": 531,
+      "sha256": "441e22acaaa8958d43db7a9c7d02e444c3acc0c8b50cd7fbe1dc4c3cb49048e5"
+    },
+    {
+      "path": "original/actual-native-evidence-Windows/artifacts/gate-ci-native-win32.json",
+      "size": 13061,
+      "sha256": "ffcf9c8eb076c15bfbe3e95bd17df13bfad9101ae7fa6d089bb97ef51ebff12b"
+    },
+    {
+      "path": "original/actual-native-evidence-Windows/artifacts/native-win32/cancel/verified.json",
+      "size": 534,
+      "sha256": "350442739c321dbe0f7759fca338543eff8811dc45a685bd183bd14226c8f03a"
+    },
+    {
+      "path": "original/actual-native-evidence-Windows/artifacts/native-win32/error/verified.json",
+      "size": 532,
+      "sha256": "255d107edf6c15904edec6cae2601aec2bbedc5eda7d56a15dcb34d3407e69b0"
+    },
+    {
+      "path": "original/actual-native-evidence-Windows/artifacts/native-win32/save/verified.json",
+      "size": 530,
+      "sha256": "b37263617cb9526e74f7c60a171e14e76ab334c4d5b5032643a62da70dd0b2da"
+    },
+    {
+      "path": "original/actual-native-evidence-macOS/artifacts/gate-ci-native-darwin.json",
+      "size": 13055,
+      "sha256": "7defbb55c928344ac87d239f48f513b606374a1fdb2806237843158a1d513ee2"
+    },
+    {
+      "path": "original/actual-native-evidence-macOS/artifacts/native-darwin/cancel/verified.json",
+      "size": 538,
+      "sha256": "2c95c3c402f82ac4ac4c3a8213f60263e554d4d58019c27fa0b0d8b6d7694b51"
+    },
+    {
+      "path": "original/actual-native-evidence-macOS/artifacts/native-darwin/error/verified.json",
+      "size": 536,
+      "sha256": "60ceac1a0bfa703ae4e8457fde47c08a136b3f6a194625f19bcc0438e145e5d7"
+    },
+    {
+      "path": "original/actual-native-evidence-macOS/artifacts/native-darwin/save/verified.json",
+      "size": 534,
+      "sha256": "ae06e81de84b217a211e3de25377cf30aad6c8acf4290beb4104617eedb2deb0"
+    },
+    {
+      "path": "original/actual-worker-evidence-Windows/artifacts/gate-ci-worker-win32.json",
+      "size": 15960,
+      "sha256": "a3b3d1f29ebfdf88f3f984b86817c0f811970b25e1bdbb05a6ca50c060421239"
+    },
+    {
+      "path": "original/generated-evidence-api-Linux/artifacts/gate-full-all-linux.json",
+      "size": 7462,
+      "sha256": "4ec8020e103da8e4971b6e77e676c1c0937a6dab4298599547c070fc60624c9e"
+    },
+    {
+      "path": "original/generated-evidence-api-Linux/artifacts/generation.json",
+      "size": 543,
+      "sha256": "1016a661683ae724f0bef3c6316a38b302a5200f7291c125d399fa1a3c94c90f"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/boundary.log",
+      "size": 78,
+      "sha256": "e349a331cada150ceb1402c27ced0d545932a793e650ee9e8366be7001cad65f"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/contract.log",
+      "size": 2595,
+      "sha256": "eaec1332e2bd76e9b450584adf89ffe2bde26147bde092f61f077472f4da2ed0"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/deploy-environment.log",
+      "size": 462,
+      "sha256": "f646e0d870ffa018abb9ed544ada02f029436f411c89052832dda905535b2b0d"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/deploy-quality.log",
+      "size": 1459,
+      "sha256": "84f21dc46baa79541194034545fb7b69445ece7ebb058dcebc3387853f562a69"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/deploy-settings.log",
+      "size": 8623,
+      "sha256": "cf726d88c58f43d0db362389ab9d6bd8047633b40b07ffb995327fec1033777f"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/dev-preflight-to-local-d1.log",
+      "size": 6065,
+      "sha256": "7e5d74e5d0308a279ac4e0f6ef10131601e8c251ee33ba2996e32ec88d581411"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/error-catalog-drift.log",
+      "size": 650,
+      "sha256": "108bec05ada6a56b71f8206606e180325ff449405d52d355c3bb3b112eb873ea"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/format.log",
+      "size": 191,
+      "sha256": "da64bc478b80d8d8ffa1d01566ab699c279513abf5aa997712dc500fc1838d08"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/lint-exhaustiveness.log",
+      "size": 290,
+      "sha256": "573541ac2e5befe4797c1a7884e54d27b27fc60a86a45920ca0a556fdf83e0e2"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/lint-floating-void.log",
+      "size": 273,
+      "sha256": "9bbba4639796f6f4c3501ab1da3305bf4ad20c10748192f1296c580cb7e54217"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/lint-misused-promise.log",
+      "size": 310,
+      "sha256": "64ca1900d6427407a87cfea7ff2e418e966d0db4ee0fee0840cf5190ae70b42e"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/lint.log",
+      "size": 250,
+      "sha256": "896be5dd7c5e48ee8a5a2818887a2498cdc54a836724fe5d6fbd3662996f53ce"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/migration.log",
+      "size": 2481,
+      "sha256": "5f9d64be5d0b45dcbe5860129d4bbfa743c9e1ce8f93149558bf8ab84f04e4dd"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/result-discard.log",
+      "size": 112,
+      "sha256": "3f11eba0cb559262e64ec2e8570c335c92a77e95c0d948da3238364065737595"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/secret-contracts.log",
+      "size": 68,
+      "sha256": "32914c712b285b393eb37a073e2396566b8596b6925c62ccac8d628745197bab"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/secret-tools.log",
+      "size": 48,
+      "sha256": "4b9dd6c7429b6c0ab4052bde133d8849a3a75a5491903cfbd9b56fe826437a84"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/skill-metadata.log",
+      "size": 629,
+      "sha256": "302d02f80621a4eafe1113827c2436fbd3619a20afb3e09b9d76c2123fcd2dea"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/telemetry-owner.log",
+      "size": 116,
+      "sha256": "0cd903d385970a4b5bd57f33166b3ecb7b9b32964aea9f610dea18f5f8126e4c"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/type.log",
+      "size": 482,
+      "sha256": "696bedc73c0dfa022d308043ac4124a5c0cc6648b223b83235c70330cd14c446"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/unit-focused.log",
+      "size": 1706,
+      "sha256": "9ce98d9474bb27dca6194bcd93d4d47b276de4d12afc1cebfe84ed13827ada33"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/unit-skipped.log",
+      "size": 1197,
+      "sha256": "5e510c306100349e69de8b179991dcda9a439d4e518d469f284aba3a113d42e5"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/unit-timeout.log",
+      "size": 2853,
+      "sha256": "7f97dd8292412dac4ec2766b6de25ce0dc130fce775ddf574e8a06762ef715e8"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/unit-zero.log",
+      "size": 1602,
+      "sha256": "5e6304b45adb3b3b0ab2cc535a9c5b5f17329e58a1a6b7e8157f4f92e931c328"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/unit.log",
+      "size": 2033,
+      "sha256": "2b9c7f38e8d5dd2d0c4fb7f3fddeefc0200d5b574bcb5ff7b55e60a06c9d1d75"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/worker-behavior.log",
+      "size": 7227,
+      "sha256": "7a24a422838331a09a7f927035e084834eb9d24b3d1d2974bf9d90d7d75141cb"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/worker-zero.log",
+      "size": 5265,
+      "sha256": "4a4a740b8892d4d0011f82a3e2f4fb9f1fea8ee3d61da2142124480c3048cea7"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults.json",
+      "size": 9728,
+      "sha256": "2c4007ffa547a40bcdf9f3d8e9c296255ffc579fe07b7fe670fbaca1d8bb96bb"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/gate-full-all-linux.json",
+      "size": 8123,
+      "sha256": "280e69944b563df7bd9bafe7ff1c1a8f5fca6400965f4d68981f2fd983831902"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/generation.json",
+      "size": 600,
+      "sha256": "d4f42e9809b2eac2be5f47c38fa5cf551bc19a828f5ce1bda04ce0bff022349c"
+    },
+    {
+      "path": "original/generated-evidence-api-d1-Linux/artifacts/gate-full-all-linux.json",
+      "size": 8086,
+      "sha256": "35e38d1480f902baeb80def30255dd5efee543125038bc912bbc15e92f5467c7"
+    },
+    {
+      "path": "original/generated-evidence-api-d1-Linux/artifacts/generation.json",
+      "size": 564,
+      "sha256": "f493545a9060dc92b6fd5e0f14cf1771cae39b23ed1ac922ee960c070d1ef4ad"
+    },
+    {
+      "path": "original/generated-evidence-api-kv-Linux/artifacts/gate-full-all-linux.json",
+      "size": 7483,
+      "sha256": "6686638dc8655b650c0daecd209d4256eb65aa9bba5100f63127eef0590c8424"
+    },
+    {
+      "path": "original/generated-evidence-api-kv-Linux/artifacts/generation.json",
+      "size": 564,
+      "sha256": "b15fac8793e12f509008cb384b4c4ae1633690cd9a11864cf367ac40510107c5"
+    },
+    {
+      "path": "original/generated-evidence-api-r2-Linux/artifacts/gate-full-all-linux.json",
+      "size": 7483,
+      "sha256": "7255e9f852f55ccebcabf68d1bf20e45e7a3f22b54bb479cd7d7d3d8a9724fa7"
+    },
+    {
+      "path": "original/generated-evidence-api-r2-Linux/artifacts/generation.json",
+      "size": 564,
+      "sha256": "8b8eca6c464fd14b95646d306717b1f68eb322e3c9593713f3fc37ed8c1e1dde"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/boundary.log",
+      "size": 78,
+      "sha256": "e349a331cada150ceb1402c27ced0d545932a793e650ee9e8366be7001cad65f"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/contract.log",
+      "size": 2595,
+      "sha256": "049119f95feebced0cd07bd71c4591a44fcb3d20878a278208e8d518f1a13147"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/error-catalog-drift.log",
+      "size": 650,
+      "sha256": "74e93a2aab8b5cbf265ad1536b27d723c6a770d399065339dff48c2cd7045fe3"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/format.log",
+      "size": 191,
+      "sha256": "99e10d4c156097e2017b760b6d254b9854c5f067db3479ff8779a6f5057d6cc5"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/lint-exhaustiveness.log",
+      "size": 290,
+      "sha256": "fed55435e14374c77fcec5852fccb59e3cd32360810085c4e0e09ada8ba02236"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/lint-floating-void.log",
+      "size": 273,
+      "sha256": "86a0ac8fd45851912d59152f5e48ee2f0fb37dd8d1a45252daca92b80caa795d"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/lint-misused-promise.log",
+      "size": 310,
+      "sha256": "ac2b54510227bea3edcef91dd3cba2824e3a410708c4b919629d2533f8e5fb71"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/lint.log",
+      "size": 250,
+      "sha256": "30f6e36bb346b2aefeb803ae4fe745a98926e3c7658c9f05218ab99007b88cb5"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/native-behavior.log",
+      "size": 34755,
+      "sha256": "369925c6963f038583278da3b41fb34636feb630486dac200c2a55cff8db4033"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/native-focused.log",
+      "size": 12855,
+      "sha256": "dd88c843c03b36a2ba5e46714d1367d246b3640835c54e7f1c605580627bb1c7"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/native-skipped.log",
+      "size": 6748,
+      "sha256": "4c9d39f45e0b64a6d5705d846b8deec659bfefd04ce57a8064b221acd87af252"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/native-timeout.log",
+      "size": 8886,
+      "sha256": "02b90d4bda40dbd3de8756634e51db7045702bb1a9153bcccbb223a9161fc3f6"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/native-zero.log",
+      "size": 3767,
+      "sha256": "80d5cc2c06846bb32500d7756a153abb492a7557bbe1ce3678913e2f85f2fb33"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/result-discard.log",
+      "size": 112,
+      "sha256": "3f11eba0cb559262e64ec2e8570c335c92a77e95c0d948da3238364065737595"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/rust-behavior.log",
+      "size": 16228,
+      "sha256": "fc7c7f1beaba4f208fd83fd6de90a1d5285f7f6b2e3e2ed7d22c5ec7d337f9cd"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/rust-ignored.log",
+      "size": 1653,
+      "sha256": "6463db2119f28bfc05a1d1ac2131440ff310210ee33aa22f69cd50c465444e53"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/rust-timeout.log",
+      "size": 1315,
+      "sha256": "073e4b46e1a3f0d63849a216851d9b005477a934fbafd5bdce369eb477f6f71e"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/rust-zero.log",
+      "size": 1336,
+      "sha256": "ac74e56aeb3058a5f2b46c5ad2e4e896358618feddd2f00570fafe6c2668d161"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/secret-contracts.log",
+      "size": 68,
+      "sha256": "32914c712b285b393eb37a073e2396566b8596b6925c62ccac8d628745197bab"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/secret-tools.log",
+      "size": 48,
+      "sha256": "4b9dd6c7429b6c0ab4052bde133d8849a3a75a5491903cfbd9b56fe826437a84"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/skill-metadata.log",
+      "size": 629,
+      "sha256": "df7824f2212ace479e00c7ad13dd0034f49abded90429d612bd164745167ed37"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/telemetry-owner.log",
+      "size": 116,
+      "sha256": "0cd903d385970a4b5bd57f33166b3ecb7b9b32964aea9f610dea18f5f8126e4c"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/type.log",
+      "size": 482,
+      "sha256": "fb065613f066d15cec31f1dc60ae01c1cfe45ddb47b388a565ce3bf2abd41fc0"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/unit-focused.log",
+      "size": 1722,
+      "sha256": "8596f45259d87e403c8139e93c109864373d06b6834c7f5232aa8e850326a56b"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/unit-skipped.log",
+      "size": 1197,
+      "sha256": "76f20e0c7b3c2562e27da89264245a79a5262f00ea869c68ae7c4e9dc8214beb"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/unit-timeout.log",
+      "size": 2889,
+      "sha256": "7741833eebc1a287d4270b2e0ab83fbbe82a15b9bf9e3a0d699403bb90c1a21b"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/unit-zero.log",
+      "size": 1602,
+      "sha256": "7d90a97a6d31a9eee788b5c264cccb82cbbd1a43835110483d21712ae0d54fbf"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/unit.log",
+      "size": 2032,
+      "sha256": "5aa30c3c4cbeb18bd8efd23cafc22dfd295359a3bcbaaa3941a6f486e628f707"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults.json",
+      "size": 10868,
+      "sha256": "fdd04bf0a620cd137c8c7c9cd89e4902c8c6ecb6b2378a4b0d30ac0c630e7171"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/native-linux/cancel/verified.json",
+      "size": 455,
+      "sha256": "6cb773ebc7f6024bab881b0e8231e47db07ae588f2240627e27f87a1cee51b66"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/native-linux/error/verified.json",
+      "size": 453,
+      "sha256": "cae8cf8a9db230861bc4de4242c31595d580a1d436af8a7bad0f8deffc207a02"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/native-linux/save/verified.json",
+      "size": 451,
+      "sha256": "a9002781fdacaf7bbcb44e5d36ced1bd3e30a7e614f638df88518b5494b67e98"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/gate-full-all-linux.json",
+      "size": 11268,
+      "sha256": "ce7e3152fb0de79d05f19fbdc21002391ae8804f0d5850f0e097c9a69713db93"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/generation.json",
+      "size": 555,
+      "sha256": "1d76bd50b372ff279046f40fb7cddc9c8e30a2ebf8806f8ab32eb47767a5a008"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/native-linux/cancel/verified.json",
+      "size": 474,
+      "sha256": "e2e937c2901b23217fddd169ec9f793a724dc44a8b4bf122822b7d814e119623"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/native-linux/error/verified.json",
+      "size": 472,
+      "sha256": "e6397eee6e9973a98122544ee6781a7ebf85fb96881f674e39d79cf6a0ed26de"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/native-linux/save/verified.json",
+      "size": 470,
+      "sha256": "9759238fbd254ea5615b07480e647d81b0d9820cd818af2ebf2ed617420552ff"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/boundary.log",
+      "size": 78,
+      "sha256": "e349a331cada150ceb1402c27ced0d545932a793e650ee9e8366be7001cad65f"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/contract.log",
+      "size": 2835,
+      "sha256": "955b8d9455a5fc8d77d6ed9375dac16e8573fcbc170ea7c8d798b94036356881"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/error-catalog-drift.log",
+      "size": 731,
+      "sha256": "94b31cac03ddf3cd344d92b6656d18a8b386c2ddb9b7c549e9f27b17fd3e7881"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/format.log",
+      "size": 191,
+      "sha256": "afa1d3e80a0c6c005871b7cae8bb0924787448d1edab96d1d346e02fbee26d06"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/lint-exhaustiveness.log",
+      "size": 290,
+      "sha256": "25bedad4f94f251ead1656b4982b00c82034d33fc6c79d981498bb187bfd762a"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/lint-floating-void.log",
+      "size": 273,
+      "sha256": "a3e50d8068832beeadd40735155c7e9faceac8c7998e126776fdaf9af4d1d2c8"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/lint-misused-promise.log",
+      "size": 310,
+      "sha256": "44b47b263ecb6fc458f80a0b7568804a97238159fc318f40b1d31911f57ab98a"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/lint.log",
+      "size": 250,
+      "sha256": "e0a6610f9d4917dc3fbe793859665ea5a8088b786d22a216fef63327b2408872"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/native-behavior.log",
+      "size": 34197,
+      "sha256": "6e8048edd33a8b76c933baa91785bc57172f38cec3df18a473372221a44c4e44"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/native-focused.log",
+      "size": 14193,
+      "sha256": "50de2604ac1dd8fcc680192a2250f5386dafc5ae2d65a6d0ecd87345dbb5ef65"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/native-skipped.log",
+      "size": 7182,
+      "sha256": "147be6aa71a0b157af0ec5a9fd98fa4aec3cf49cb38224fc23707605995a0211"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/native-timeout.log",
+      "size": 9611,
+      "sha256": "593bad879da2b6ce733a9e514137bd3c9c7b85da09782d306b56fafb0407d8c0"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/native-zero.log",
+      "size": 4114,
+      "sha256": "5b93054c3314a09ee827b160ed1f045d7f1638eef6d9b32a1c212cb1c5127bc6"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/result-discard.log",
+      "size": 112,
+      "sha256": "3f11eba0cb559262e64ec2e8570c335c92a77e95c0d948da3238364065737595"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/rust-behavior.log",
+      "size": 14759,
+      "sha256": "9c343542c1a7f934b5ca017f852cfda638ac743daa2d131f042b58b9f12774e9"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/rust-ignored.log",
+      "size": 1922,
+      "sha256": "f7f079ec1c9c7ebcd5a7b6a522bda2f00835fd2c85e4a04af2e032b225025ae1"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/rust-timeout.log",
+      "size": 1547,
+      "sha256": "737dd6af11ae8ec56b1390e4184e36e4260a814696911b310284bb58a9fb22a8"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/rust-zero.log",
+      "size": 1605,
+      "sha256": "e9dec4cd2e937d2c1132ff0e1a394e5caad6c8918b9f91ae254ead5bf3d83da4"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/secret-contracts.log",
+      "size": 68,
+      "sha256": "32914c712b285b393eb37a073e2396566b8596b6925c62ccac8d628745197bab"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/secret-tools.log",
+      "size": 48,
+      "sha256": "4b9dd6c7429b6c0ab4052bde133d8849a3a75a5491903cfbd9b56fe826437a84"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/skill-metadata.log",
+      "size": 710,
+      "sha256": "003bc0d1950f01d8e0ba96f54fb293049a723f94c26fca509058c6034b091e22"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/telemetry-owner.log",
+      "size": 116,
+      "sha256": "0cd903d385970a4b5bd57f33166b3ecb7b9b32964aea9f610dea18f5f8126e4c"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/type.log",
+      "size": 482,
+      "sha256": "2ff061f481023e38239c1fd60de9faf172826bb7a31b84a9a755ec97f8c3a535"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/unit-focused.log",
+      "size": 1921,
+      "sha256": "113cb1c08a21a916a088a957c91d1f17fca0dd7a4082fedcbdaf05e76507a511"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/unit-skipped.log",
+      "size": 1401,
+      "sha256": "c3dd095368e6a36fa0f685845e24b1a7993764441a231403de1549ee9b889cec"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/unit-timeout.log",
+      "size": 2908,
+      "sha256": "1d9fc3b3d632e01a1d17aa146f8d185c464a1a1e8c9088aabb47238aa4a52e7e"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/unit-zero.log",
+      "size": 1836,
+      "sha256": "48a0abc2f76a00d0b6de1346633451f78dab0fd524847afd6cc1036a616ce3f4"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/unit.log",
+      "size": 2248,
+      "sha256": "e02106b8da5766802fccdc173dbe182358ecd1a19c8442884eb9cf86431543f4"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults.json",
+      "size": 10878,
+      "sha256": "0a2a0055fa8baf0d0b7f8f4a4dbdbbd0e3d09058bee6cf945fbe94735274eca3"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/native-win32/cancel/verified.json",
+      "size": 506,
+      "sha256": "2b958f0cfdd1e7d2c00c66e907821593ed7e3444c835b52423a5f926e024ae45"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/native-win32/error/verified.json",
+      "size": 504,
+      "sha256": "c60e7ac694e7e3a6e6896e3e363825262738214f1cc95ce2e89c167372e509e3"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/native-win32/save/verified.json",
+      "size": 502,
+      "sha256": "e2353bad9395dce8aad0b75e3bbd8265650752ba4069841a28ddef6471a499d8"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/gate-full-all-win32.json",
+      "size": 11281,
+      "sha256": "bd1cbeef08a85623ae2f8cf2716f48004356ca217350263b62d899ebd199863d"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/generation.json",
+      "size": 555,
+      "sha256": "f33f52fd1e8fb5da6beb47bc86beba3c2c20276d9ab7a67a3bfff21d4f5eff14"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/hooks.json",
+      "size": 662,
+      "sha256": "f8b15e08b6175ad04fc1cb2d70e874638c79374b6a130971fbf51e9a27fefbf5"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/native-win32/cancel/verified.json",
+      "size": 474,
+      "sha256": "b53ff05318c8af282ded5f4f4f88a2bdd8127e461a3795521d0795bb783d5352"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/native-win32/error/verified.json",
+      "size": 472,
+      "sha256": "11dc6d810c43deec2c94d94feffd3e7fdcc35720f2b4e0b3f9d19598c0c66d7d"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/native-win32/save/verified.json",
+      "size": 470,
+      "sha256": "50393eff6f81c5037cf9220772f07546789e06382edd9a4906e43d50d3a30d8c"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/boundary.log",
+      "size": 78,
+      "sha256": "e349a331cada150ceb1402c27ced0d545932a793e650ee9e8366be7001cad65f"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/contract.log",
+      "size": 2912,
+      "sha256": "883222f4c39eb8a8a0f31b8f08ef9402e63a71ebf107d46b24f868b91f561e89"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/error-catalog-drift.log",
+      "size": 755,
+      "sha256": "695eeaeee01971cca16e5cda6c1f1459ec06f1e695279db40c84f9cb98edca26"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/format.log",
+      "size": 191,
+      "sha256": "5ff85fc943915e10d6adbf4ae62c4b25cfdf377d75faaf68a3c7c82c7bf3b1da"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/lint-exhaustiveness.log",
+      "size": 290,
+      "sha256": "684a57637594db6d486f3ce9530353d3080e6f46fd8a431d07e84a11f56484b1"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/lint-floating-void.log",
+      "size": 273,
+      "sha256": "cd9dc1981a484803936247305c2e150106ebd8bbad243bfec7e1e823dcb23510"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/lint-misused-promise.log",
+      "size": 310,
+      "sha256": "6440b972a2016ddd8814805cedd37733cff71441de518456b0fef9eaee488672"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/lint.log",
+      "size": 250,
+      "sha256": "3c7c23c5c1d3f96418054500fa24bda73a498cc16477fc3f6f6c9cf01904b94f"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/native-behavior.log",
+      "size": 33326,
+      "sha256": "2cb7c97fb7960285d54bf58388c4ba98a2e8697612a72089c4e979c7cbb00c99"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/native-focused.log",
+      "size": 14622,
+      "sha256": "e9e746879be1d8a1c13fa3be8f7e623010d1041ec5b2fa26e843b51f9a5a7f93"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/native-skipped.log",
+      "size": 7066,
+      "sha256": "e5ed345bfab3a5557679a701b34c1f18bb6d4175696c9d47b8f858cb28d9ae6a"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/native-timeout.log",
+      "size": 9595,
+      "sha256": "dbee4e02eaa7346af233b3e0b7a957398c176ee1b53d21d750399a8fcbaf6035"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/native-zero.log",
+      "size": 4113,
+      "sha256": "93e9e65ef498199caf1aa2f511208fad9aa533028cd519116f32f57b1af545cb"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/result-discard.log",
+      "size": 112,
+      "sha256": "3f11eba0cb559262e64ec2e8570c335c92a77e95c0d948da3238364065737595"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/rust-behavior.log",
+      "size": 14458,
+      "sha256": "188cdce5304d8ab6c27f7941332a2331c14c7fe6f4ecacfbac8ae481533a6559"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/rust-ignored.log",
+      "size": 2024,
+      "sha256": "28570df09f1b6dfaa6090cd6e0f625a6e78dcd5329cfd58f739d87183f63b6c5"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/rust-timeout.log",
+      "size": 1645,
+      "sha256": "446a60714f60c694ef598885a87412b265791455fa2d5caec6506e940e7dfe7b"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/rust-zero.log",
+      "size": 1624,
+      "sha256": "edbcbd750f22b2c909e2d0ebb1ef7a3c40537bb9f91b4ea1e7ef9fc1c749c6b0"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/secret-contracts.log",
+      "size": 68,
+      "sha256": "32914c712b285b393eb37a073e2396566b8596b6925c62ccac8d628745197bab"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/secret-tools.log",
+      "size": 48,
+      "sha256": "4b9dd6c7429b6c0ab4052bde133d8849a3a75a5491903cfbd9b56fe826437a84"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/skill-metadata.log",
+      "size": 733,
+      "sha256": "4e5b0a17e447c46e62915c52aba2328bab28c53d1e1a8ad52b74d66c49461da0"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/telemetry-owner.log",
+      "size": 116,
+      "sha256": "0cd903d385970a4b5bd57f33166b3ecb7b9b32964aea9f610dea18f5f8126e4c"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/type.log",
+      "size": 482,
+      "sha256": "12b4c81f2849d90ab564171d839708c11e4ede8a050793aaf300d91c4e978dfb"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/unit-focused.log",
+      "size": 1967,
+      "sha256": "d5f5ce5505cd969b9be6685bfc7aff6e431b2b497b66aa9ae7f0d9f02f38bac6"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/unit-skipped.log",
+      "size": 1457,
+      "sha256": "cac1e1000489207400310f52dcd3b2fa24a6f49703c923f3a5502000e65323c1"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/unit-timeout.log",
+      "size": 3150,
+      "sha256": "8e9a6f0b6dbf7f2fdaf2ee775269b0bf601161666856f04019f01b60ad3a8517"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/unit-zero.log",
+      "size": 1899,
+      "sha256": "dedce3b3c23bbc81722ae4168a9efdfbcbec76990f662f915152e5290d566e16"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/unit.log",
+      "size": 2293,
+      "sha256": "713343b98f90c248cca52273eb8fa96571fb347a586fab7bc20a05af90396f36"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults.json",
+      "size": 10871,
+      "sha256": "cc04e03d5c1852e3b0624a3c6849963f059b917ade51d9a99c0c7db71677bbcd"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/native-darwin/cancel/verified.json",
+      "size": 509,
+      "sha256": "42c39db3bf6bb9c1715d8a8e2a7fd981d9f57916999ffe01d20be7e232f2c859"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/native-darwin/error/verified.json",
+      "size": 507,
+      "sha256": "6a79bdc3b752187042d95aea01b2c64ff8452864b7e3c3f60eac3d1f84d966f5"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/native-darwin/save/verified.json",
+      "size": 505,
+      "sha256": "4e37b97924f0e3268ad93186664b9d2abfbc0c5688db02252253068dd5359fde"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/gate-full-all-darwin.json",
+      "size": 11272,
+      "sha256": "2007f01182dcafe84a368fd478f02f167088eac2978240478edd4ab6415524e3"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/generation.json",
+      "size": 558,
+      "sha256": "ba7a12a0aa9f9b615be9ef098b658078eb859dbcb03f14dd4f7f80b8d6a32254"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/native-darwin/cancel/verified.json",
+      "size": 477,
+      "sha256": "b783a3dfea2eb7a802742978501a00592caf4436f3307890541b51c7b339c8ca"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/native-darwin/error/verified.json",
+      "size": 475,
+      "sha256": "2ea97dee1067f0a66c1cd71a482e2063375d8f87b16aa45d4ae1db39f49c6a8d"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/native-darwin/save/verified.json",
+      "size": 473,
+      "sha256": "3af2415de574eb33b06288e2e6262f41173b97ee905d77c637ad4a1626c7c090"
+    },
+    {
+      "path": "original/generated-evidence-fullstack-Linux/artifacts/gate-full-all-linux.json",
+      "size": 16150,
+      "sha256": "06e91a116f06896dc3c9921a71e25c0c0ad32940d1549c117362292baade9efc"
+    },
+    {
+      "path": "original/generated-evidence-fullstack-Linux/artifacts/generation.json",
+      "size": 619,
+      "sha256": "9209547fa30f0120a0524119212bec66f90c0c6e7e09de0921fa9847104d38fa"
+    },
+    {
+      "path": "original/generated-evidence-fullstack-Linux/artifacts/lighthouse/web/summary.json",
+      "size": 6622,
+      "sha256": "9cfa5a9decbc52374a073b1deefde31b964147ed6218f681075dc33d0095f2f3"
+    },
+    {
+      "path": "original/generated-evidence-fullstack-desktop-Linux/artifacts/gate-full-all-linux.json",
+      "size": 20653,
+      "sha256": "dcc2e7699ce0be74059054f1c25216c4d799e129ae6469dc64a47106b548aa0e"
+    },
+    {
+      "path": "original/generated-evidence-fullstack-desktop-Linux/artifacts/generation.json",
+      "size": 642,
+      "sha256": "7722189cb0aa69852c40cc839e4c916c8a3f7953d672467bbbab183812fd9e7b"
+    },
+    {
+      "path": "original/generated-evidence-fullstack-desktop-Linux/artifacts/lighthouse/web/summary.json",
+      "size": 6622,
+      "sha256": "8fb85e3a1604446fe0aba61e708708f75b58e624a6c5f2a31a11e5603e2ba9c5"
+    },
+    {
+      "path": "original/generated-evidence-fullstack-desktop-Linux/artifacts/native-linux/cancel/verified.json",
+      "size": 494,
+      "sha256": "24846c8d7c5d870f72db6b538350fb406b9458f8016973105fa51ab9a65e9a22"
+    },
+    {
+      "path": "original/generated-evidence-fullstack-desktop-Linux/artifacts/native-linux/error/verified.json",
+      "size": 492,
+      "sha256": "de4caa7f3a2c1b7ae2f5bc2660f3c8dbb9bd613745ffc76e6270121367050792"
+    },
+    {
+      "path": "original/generated-evidence-fullstack-desktop-Linux/artifacts/native-linux/save/verified.json",
+      "size": 490,
+      "sha256": "868b13acfaa2db80c7fec3f0d2f68aa11c2e5ca697950b94e8b7a796d6bdd5ee"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/boundary.log",
+      "size": 78,
+      "sha256": "e349a331cada150ceb1402c27ced0d545932a793e650ee9e8366be7001cad65f"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/browser-behavior.log",
+      "size": 2819,
+      "sha256": "85457e651e6ec8cb7121d34a2e675212fc018c0232b198e59afcd8cfafb1fcc8"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/browser-focused.log",
+      "size": 1406,
+      "sha256": "1037b0f4d90f132b19f4ef3a23c4ba31643add11ad1d652cc90e2f621f0522e9"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/browser-skipped.log",
+      "size": 1341,
+      "sha256": "58d997bf9b2c4120f8d71dcc2a65cab418139190b872319b540184b2e59c2ee4"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/browser-timeout.log",
+      "size": 2476,
+      "sha256": "fca172ac216c36d9d16b3e4edb0e8bc268a77b6dc60ebc16b3aa24559905264e"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/browser-zero.log",
+      "size": 1192,
+      "sha256": "b79aae47e932704494b8611ee9486ca7a8b93f597ec550aeb5f57d4eab26ae01"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/contract.log",
+      "size": 2593,
+      "sha256": "66eb7a39d32f4cb37d982b71f0df0f233fbbfd94cd9bdb3b4860f4f5f8db06e8"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/deploy-environment.log",
+      "size": 462,
+      "sha256": "9e0d9f32048ad1772266cfe0aa35168a64a47ab90d8ccf2f55db895a54f68c65"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/deploy-quality.log",
+      "size": 1459,
+      "sha256": "49ad369a7a3949e178730f3b948a093db7328a55ddc9ad7cf636a98eaec3827e"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/deploy-settings.log",
+      "size": 5452,
+      "sha256": "58044bf920adf917070e93368059754c4e0b0e49ce71e31c243ee6060cdc655b"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/error-catalog-drift.log",
+      "size": 650,
+      "sha256": "8633362978dab1b455a9fbb05560d91eae15452f6b8ad144e6f74aeaa0b72273"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/format.log",
+      "size": 191,
+      "sha256": "af2c457e34b3b3865cae64331d37340ffa89c8f9a404c86a5faaf036078c772e"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/lighthouse-score.log",
+      "size": 9731,
+      "sha256": "69722e74d26e07bb6ba713a67766e2dcb85b2b2adacd1037f8628dbbd3aad5f1"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/lint-exhaustiveness.log",
+      "size": 290,
+      "sha256": "21f3f05f97265b463e0ef5942cc40c3727317af444acc7fc08d4bfd2afc3d5f3"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/lint-floating-void.log",
+      "size": 273,
+      "sha256": "752ec1c003b397370ea2ec51130a24304cc6fd371511c53393353b68c27b3ef8"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/lint-misused-promise.log",
+      "size": 310,
+      "sha256": "50e5f47bb42d5c8377394522f0ba0de386177be393e7c674bec32e4412be972e"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/lint.log",
+      "size": 250,
+      "sha256": "c45977b3800426720ed9877fcab68f6ecd9bafb8fe5968abd29497340b32ac20"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/result-discard.log",
+      "size": 112,
+      "sha256": "3f11eba0cb559262e64ec2e8570c335c92a77e95c0d948da3238364065737595"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/secret-contracts.log",
+      "size": 68,
+      "sha256": "32914c712b285b393eb37a073e2396566b8596b6925c62ccac8d628745197bab"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/secret-tools.log",
+      "size": 48,
+      "sha256": "4b9dd6c7429b6c0ab4052bde133d8849a3a75a5491903cfbd9b56fe826437a84"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/skill-metadata.log",
+      "size": 629,
+      "sha256": "df1dc7a610ae9fb08888bc17ff6f7181350adac2b9bce5ef7d686d663e480267"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/telemetry-owner.log",
+      "size": 116,
+      "sha256": "0cd903d385970a4b5bd57f33166b3ecb7b9b32964aea9f610dea18f5f8126e4c"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/type.log",
+      "size": 482,
+      "sha256": "3d70c1ea959e827587436596b05934758c14db6d7b985bacaab42d47f1b17048"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/unit-focused.log",
+      "size": 1706,
+      "sha256": "f79457c5e7d087cdcb9fb8cec9546f2830dcda46479ea3b25c1844f887278b59"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/unit-skipped.log",
+      "size": 1197,
+      "sha256": "dc7a1c73b6d0d7e6ecb436ac574e00d58b7935acccb5ab6e70ec307439d005a7"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/unit-timeout.log",
+      "size": 2853,
+      "sha256": "611ce2d05046f6f246de1eb9590b3ca181459a4f360d928338488bc1267795a7"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/unit-zero.log",
+      "size": 1602,
+      "sha256": "95abd9810d3e6f8f88f3d4dfc8e957f6a5008a2738a867961e886dc70304c0a1"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/unit.log",
+      "size": 2032,
+      "sha256": "524d298f96d0816413f45b54ff32249d71bd6727f58b45385d94e3d1c2e2f017"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/visual-regression.log",
+      "size": 5954,
+      "sha256": "a9d0cff14fe2bdffc30002528361b5d5d0c45b397543c94b039f0bfa41df1cf8"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/worker-behavior.log",
+      "size": 7090,
+      "sha256": "a080277b00703b432daf5638a5cac4c4521a3d9dc3cd68a17a022693f54f6741"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/worker-zero.log",
+      "size": 2684,
+      "sha256": "0747fa445b07b42d4dc40d237ff9f63504ceab891eed3463db306272e2778f3e"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults.json",
+      "size": 12203,
+      "sha256": "15b47a4b391a5008975806bba65c75ba7b76d565a6aef4ee7c495f978a47e3bd"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/lighthouse/web/summary.json",
+      "size": 6622,
+      "sha256": "92e25eb2064608dda87b4b7b4851fa82627d36e82b2e3baf9956ed16390ced93"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/gate-full-all-linux.json",
+      "size": 13112,
+      "sha256": "6ee5a8230cd48f51fd44fbe52771a5e1249b86ad6d25374329afab90f4e05253"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/generation.json",
+      "size": 543,
+      "sha256": "7a07c022dd18bf4265514aea941e5ad80532aa3a6799fb37c8fff1791259b3b9"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/hooks.json",
+      "size": 662,
+      "sha256": "0fb6404bcf7df5a4d952358ffe0c17f9d092cc33a14934a01a6351bb1346606a"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/add-and-start/gate-full-all-linux.json",
+      "size": 9803,
+      "sha256": "7ba414dba38462720827c09849cd64cf0390f5fb1fcd4a6b5d72eca9ca80542e"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/add-and-start/generation.json",
+      "size": 3052,
+      "sha256": "784b11b78d99d846466ddf3241ba2fd3a8752de11a5c8a6ecd422f5888a32dd1"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/add-and-start/lighthouse/web/summary.json",
+      "size": 6621,
+      "sha256": "c5114c2096bc2cc468b56959b813e8035f65163851d1ce88abac3a5914df41b2"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/cache-cleared-gate/gate-full-all-linux.json",
+      "size": 13057,
+      "sha256": "41af361e4c4e8223eb5c09dd09018dfc76b66eb146d68868715cf575602eebc5"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/cache-cleared-gate/generation.json",
+      "size": 552,
+      "sha256": "f06bfbd0d0a44f767d97399ae489aa83c6e98971ad843eb0322a89989b697dac"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/cache-cleared-gate/lighthouse/web/summary.json",
+      "size": 6621,
+      "sha256": "c5114c2096bc2cc468b56959b813e8035f65163851d1ce88abac3a5914df41b2"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/cold-gate/gate-full-all-linux.json",
+      "size": 13057,
+      "sha256": "8adc763545f873947fad2ea75b22abfcb44363c59c8455ab4a0c7bf9861df21f"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/cold-gate/generation.json",
+      "size": 552,
+      "sha256": "f06bfbd0d0a44f767d97399ae489aa83c6e98971ad843eb0322a89989b697dac"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/cold-gate/lighthouse/web/summary.json",
+      "size": 6621,
+      "sha256": "c9c3d370cf58517bdcbd176e9f2904fe10fafec2c8e4990629199f15b35a2999"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/hmr/gate-full-all-linux.json",
+      "size": 13057,
+      "sha256": "8adc763545f873947fad2ea75b22abfcb44363c59c8455ab4a0c7bf9861df21f"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/hmr/generation.json",
+      "size": 552,
+      "sha256": "f06bfbd0d0a44f767d97399ae489aa83c6e98971ad843eb0322a89989b697dac"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/hmr/lighthouse/web/summary.json",
+      "size": 6621,
+      "sha256": "c9c3d370cf58517bdcbd176e9f2904fe10fafec2c8e4990629199f15b35a2999"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/interrupted-recovery/gate-full-all-linux.json",
+      "size": 6403,
+      "sha256": "e81609a91fb34bc204b140de98d958af766efa263469f3fb2e5b7f63bdea2654"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/interrupted-recovery/generation.json",
+      "size": 4174,
+      "sha256": "ef2fe6544bb7cc9fde24c4298bd8beb168a1ec0bbc00d2afa0fb27920c1b3863"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/interrupted-recovery/lighthouse/web/summary.json",
+      "size": 6621,
+      "sha256": "c5114c2096bc2cc468b56959b813e8035f65163851d1ce88abac3a5914df41b2"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/re-add-excluded-web/gate-full-all-linux.json",
+      "size": 23650,
+      "sha256": "65fbdd3536d8926b0096798a79a928d9b9f87374eabc870241d4a32d89fd6633"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/re-add-excluded-web/generation.json",
+      "size": 1094,
+      "sha256": "a0de5c2bbf89ad850fd3825cb77f585392fda8209fe465e4968bd451de3cad92"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/re-add-excluded-web/lighthouse/portal/summary.json",
+      "size": 6697,
+      "sha256": "bb548235b0c7620074fb8aa494f2d85306886d14ff50356d5b6f6f2f1fc6520f"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/re-add-excluded-web/lighthouse/web/summary.json",
+      "size": 6622,
+      "sha256": "64f78548191ed862256ed18206fdf0718ed34a73b135061f3443503a60c52e6c"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/rename-and-exclude/gate-full-all-linux.json",
+      "size": 7472,
+      "sha256": "f5cf879bc03a36688b28f7918015f0c6710015405b5832382a2c8906cc666012"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/rename-and-exclude/generation.json",
+      "size": 3052,
+      "sha256": "4ef138048f440baf0b9b6f61b633ba2a0fa485e255df75ecf98b07c629859b66"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/rename-and-exclude/lighthouse/web/summary.json",
+      "size": 6621,
+      "sha256": "c5114c2096bc2cc468b56959b813e8035f65163851d1ce88abac3a5914df41b2"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/sample-removal/gate-full-all-linux.json",
+      "size": 6403,
+      "sha256": "c9d24555348f417dae758d4a7c3eda27e04ce87c3056cd96fde9821ad342f750"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/sample-removal/generation.json",
+      "size": 4174,
+      "sha256": "ef2fe6544bb7cc9fde24c4298bd8beb168a1ec0bbc00d2afa0fb27920c1b3863"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/sample-removal/lighthouse/web/summary.json",
+      "size": 6621,
+      "sha256": "c5114c2096bc2cc468b56959b813e8035f65163851d1ce88abac3a5914df41b2"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/warm-gate/gate-full-all-linux.json",
+      "size": 13057,
+      "sha256": "e7a0ce0280e88802f6314afca4bef67de54c4d50bc560336453612870e3d99f8"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/warm-gate/generation.json",
+      "size": 552,
+      "sha256": "f06bfbd0d0a44f767d97399ae489aa83c6e98971ad843eb0322a89989b697dac"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/warm-gate/lighthouse/web/summary.json",
+      "size": 6621,
+      "sha256": "4075588135d0995e7ca8b9f82b378d5afc91b5d2931f70f4e9d44707dbc6d56e"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/warm-setup/gate-full-all-linux.json",
+      "size": 13057,
+      "sha256": "8adc763545f873947fad2ea75b22abfcb44363c59c8455ab4a0c7bf9861df21f"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/warm-setup/generation.json",
+      "size": 552,
+      "sha256": "f06bfbd0d0a44f767d97399ae489aa83c6e98971ad843eb0322a89989b697dac"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/warm-setup/lighthouse/web/summary.json",
+      "size": 6621,
+      "sha256": "c9c3d370cf58517bdcbd176e9f2904fe10fafec2c8e4990629199f15b35a2999"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle.json",
+      "size": 2938,
+      "sha256": "8326295e612e4a2aa72a05fe02117fa366764c08914348d030ab0cf0616e9d5d"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lighthouse/web/summary.json",
+      "size": 6622,
+      "sha256": "185cc54568457f1e64c5bc3ec81257e604cc3eca3b18bb6d1d613bd7916fce0d"
+    },
+    {
+      "path": "original/generated-evidence-web-bindings-Linux/artifacts/gate-full-all-linux.json",
+      "size": 13775,
+      "sha256": "c7ba2a3b3cddf45892192da2f18c9e38d83575f1a21f05f622f62fd2e14511c4"
+    },
+    {
+      "path": "original/generated-evidence-web-bindings-Linux/artifacts/generation.json",
+      "size": 600,
+      "sha256": "0841305963d6209e0c41209e5a71febe2bd27a007ceffa61bdd1636a04af16e4"
+    },
+    {
+      "path": "original/generated-evidence-web-bindings-Linux/artifacts/lighthouse/web/summary.json",
+      "size": 6622,
+      "sha256": "1a6c8a4fa3e1b843a93557bb07fdc6925d431ff05be016077b3a628010cdc516"
+    },
+    {
+      "path": "original/generated-evidence-web-d1-Linux/artifacts/gate-full-all-linux.json",
+      "size": 13739,
+      "sha256": "dfcf1acd4804bea006078cc0fe80b24e2abe9b52ad81709ca59fbabd4c61bae1"
+    },
+    {
+      "path": "original/generated-evidence-web-d1-Linux/artifacts/generation.json",
+      "size": 564,
+      "sha256": "33a7d8761eebde690794b6699e9c305bbc0020a35fb3f995aa6e44333102edff"
+    },
+    {
+      "path": "original/generated-evidence-web-d1-Linux/artifacts/lighthouse/web/summary.json",
+      "size": 6622,
+      "sha256": "1fe9459395295ada23b718d41dd56ec00e00e42a5bc5c1278b18ba12b40e8685"
+    },
+    {
+      "path": "original/generated-evidence-web-kv-Linux/artifacts/gate-full-all-linux.json",
+      "size": 13133,
+      "sha256": "5862833970df01e589c1e11369c9e5696ea6f3d42ee48ff98a521b59240aaa06"
+    },
+    {
+      "path": "original/generated-evidence-web-kv-Linux/artifacts/generation.json",
+      "size": 564,
+      "sha256": "241bc47407ec03f7860d7bf2944c507fec6c60cbccd0d55af6f79f42742f81b2"
+    },
+    {
+      "path": "original/generated-evidence-web-kv-Linux/artifacts/lighthouse/web/summary.json",
+      "size": 6622,
+      "sha256": "0fd57a719afc2d3990e5649832c879301ea45315851dabd7055d042ce8bb1ad9"
+    },
+    {
+      "path": "original/generated-evidence-web-r2-Linux/artifacts/gate-full-all-linux.json",
+      "size": 13133,
+      "sha256": "67180b620e6106a0595d7d0f4b17add6f26f22a260c800b18b850c2a58722c72"
+    },
+    {
+      "path": "original/generated-evidence-web-r2-Linux/artifacts/generation.json",
+      "size": 564,
+      "sha256": "ac782488cb491cab897c3a90f6163774c0ac0a77c25830752da59355fcfc6935"
+    },
+    {
+      "path": "original/generated-evidence-web-r2-Linux/artifacts/lighthouse/web/summary.json",
+      "size": 6622,
+      "sha256": "882f6cfa74b191c909ebecfb7dba24a1d0335bfe13947eeb1ddf09e5062c08bc"
+    },
+    {
+      "path": "original/observability-evidence/verified.json",
+      "size": 24187,
+      "sha256": "96afb5ccadcc9130ca9e2cf942f423dfb414a17d4c993314884bac015218482f"
+    },
+    {
+      "path": "original/security-identifiers/report.json",
+      "size": 11438,
+      "sha256": "2ede223b1651a9b62397baa4552f46507ba383816b24d4a12bb89bef95633e2d"
+    },
+    {
+      "path": "original/source-evidence/artifacts/ci-plan.json",
+      "size": 21132,
+      "sha256": "c0a1dcfcec00c0a641836c7e5f60beb063d2ebca6b8cecb86577e0351d368c40"
+    },
+    {
+      "path": "original/source-evidence/artifacts/gate-ci-javascript-linux.json",
+      "size": 21348,
+      "sha256": "e707ad0016400c94ffa560ccf158936f6e2cca465f8ff4008d75b52d23cf74e8"
+    },
+    {
+      "path": "original/source-evidence/artifacts/lighthouse/web/summary.json",
+      "size": 6489,
+      "sha256": "65305671e2518cc08740d01ffc604a9839bee82bf24dba4edcb48e3e2e3c9ab4"
+    },
+    {
+      "path": "original/source-evidence/artifacts/sanitization-support.json",
+      "size": 22455,
+      "sha256": "9bd0aa13337b1998dff632e278b034846bc1eb2168775c16c3c1391836bd4a29"
+    },
+    {
+      "path": "original/source-evidence/artifacts/sanitization.json",
+      "size": 1203,
+      "sha256": "9c325116a16e53942570696a219f3efa3ff47ecf055fc5372a9baee758702260"
+    },
+    {
+      "path": "original/controls/brand/repair-sanitization.json",
+      "size": 1203,
+      "sha256": "c1ef35e67ce542c0a9beefc7d0586a4fe865d16e1266fcad3b5f121ae3100d3f"
+    },
+    {
+      "path": "original/controls/brand/repair.stderr.log",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "original/controls/brand/repair.stdout.log",
+      "size": 91,
+      "sha256": "7fc231687402b438ee528a452e35c86a047ceac9daa2911bb65de0d7e37a5e89"
+    },
+    {
+      "path": "original/controls/brand/sanitization.json",
+      "size": 1289,
+      "sha256": "50bf7f091d5f5eae7779d61a8932bac8903d07182747dc1c1ef9c478d7188f60"
+    },
+    {
+      "path": "original/controls/brand/stderr.log",
+      "size": 340,
+      "sha256": "6a7870877dbba5ee814251293fe0260c06bc24ead5fb95a2769df85f79a12a59"
+    },
+    {
+      "path": "original/controls/brand/stdout.log",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "original/controls/final-source.stderr.log",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "original/controls/final-source.stdout.log",
+      "size": 91,
+      "sha256": "7fc231687402b438ee528a452e35c86a047ceac9daa2911bb65de0d7e37a5e89"
+    },
+    {
+      "path": "original/controls/layout/repair-sanitization.json",
+      "size": 1203,
+      "sha256": "d76bef9a377809691b0512a48120ff8754def11b0b9d71fd40e0e82a157c176d"
+    },
+    {
+      "path": "original/controls/layout/repair.stderr.log",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "original/controls/layout/repair.stdout.log",
+      "size": 91,
+      "sha256": "7fc231687402b438ee528a452e35c86a047ceac9daa2911bb65de0d7e37a5e89"
+    },
+    {
+      "path": "original/controls/layout/sanitization.json",
+      "size": 1294,
+      "sha256": "a2672eca3d58c9e9c7b142f540640878b637c873710e55e84b9f08d162a87efa"
+    },
+    {
+      "path": "original/controls/layout/stderr.log",
+      "size": 345,
+      "sha256": "0031de05829e1c8b9a26cfba76a73b5742bae9f8649c5ed4cfaf03facb696603"
+    },
+    {
+      "path": "original/controls/layout/stdout.log",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "original/controls/media/repair-sanitization.json",
+      "size": 1203,
+      "sha256": "21e873872d1762bbe6f495a6ab188423756861b49182a4f3cc9a10f7ab66cd10"
+    },
+    {
+      "path": "original/controls/media/repair.stderr.log",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "original/controls/media/repair.stdout.log",
+      "size": 91,
+      "sha256": "7fc231687402b438ee528a452e35c86a047ceac9daa2911bb65de0d7e37a5e89"
+    },
+    {
+      "path": "original/controls/media/sanitization.json",
+      "size": 1285,
+      "sha256": "3c58b20e6711a72956225994f47fe821d3fdaee060741caddfb05409934bb499"
+    },
+    {
+      "path": "original/controls/media/stderr.log",
+      "size": 336,
+      "sha256": "6dd03ea796e2f9c00f22608f893b199e7f376830c96a498bcb019490fb6b92a5"
+    },
+    {
+      "path": "original/controls/media/stdout.log",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "original/controls/runner/repair-sanitization.json",
+      "size": 1203,
+      "sha256": "93e70b7e92e5bd96e0b9c8afc4c72b122e10d75639f6a20e38528f951cf2ce3e"
+    },
+    {
+      "path": "original/controls/runner/repair.stderr.log",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "original/controls/runner/repair.stdout.log",
+      "size": 91,
+      "sha256": "7fc231687402b438ee528a452e35c86a047ceac9daa2911bb65de0d7e37a5e89"
+    },
+    {
+      "path": "original/controls/runner/sanitization.json",
+      "size": 1292,
+      "sha256": "481fe15eaff3b34c76730ab1b2d4e3a84695f96c9edb370cfe630d630827e180"
+    },
+    {
+      "path": "original/controls/runner/stderr.log",
+      "size": 343,
+      "sha256": "d718c02db23491dbfb08eb01aaa77bf53edcdbecd82c19442fd43d72d9437f90"
+    },
+    {
+      "path": "original/controls/runner/stdout.log",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "original/controls/scope/repair-sanitization.json",
+      "size": 1203,
+      "sha256": "551eb6779ae466efa1d5d56d6dbb5a5fe9e7fd46ad7e6aa1d09d0d28ee44d692"
+    },
+    {
+      "path": "original/controls/scope/repair.stderr.log",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "original/controls/scope/repair.stdout.log",
+      "size": 91,
+      "sha256": "7fc231687402b438ee528a452e35c86a047ceac9daa2911bb65de0d7e37a5e89"
+    },
+    {
+      "path": "original/controls/scope/sanitization.json",
+      "size": 1375,
+      "sha256": "a2046e5e6a70ff1914de36fd3db7f28352bd8892efac3bb9890d76e1dce685d3"
+    },
+    {
+      "path": "original/controls/scope/stderr.log",
+      "size": 381,
+      "sha256": "40f450f40dd05bd429af0779d5a8d13b16d2285c3936a6fd8d7a919d4080f683"
+    },
+    {
+      "path": "original/controls/scope/stdout.log",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "original/controls/summary.json",
+      "size": 22455,
+      "sha256": "9bd0aa13337b1998dff632e278b034846bc1eb2168775c16c3c1391836bd4a29"
+    },
+    {
+      "path": "original/controls/updater/repair-sanitization.json",
+      "size": 1203,
+      "sha256": "1393a9b5884a4bcddcb1c0bba0f55ec09e21b1276607b1cc95e553a320f46a35"
+    },
+    {
+      "path": "original/controls/updater/repair.stderr.log",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "original/controls/updater/repair.stdout.log",
+      "size": 91,
+      "sha256": "7fc231687402b438ee528a452e35c86a047ceac9daa2911bb65de0d7e37a5e89"
+    },
+    {
+      "path": "original/controls/updater/sanitization.json",
+      "size": 1292,
+      "sha256": "7f7d36b8d72d1c71f242bdae7902085768590d7bd41034a6e5957a9b6b5cd85d"
+    },
+    {
+      "path": "original/controls/updater/stderr.log",
+      "size": 343,
+      "sha256": "b9cb7a61ea113d29ce9dbdb12df630da7c4c15ca5454a6e79dafe4cb33fd5a93"
+    },
+    {
+      "path": "original/controls/updater/stdout.log",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "original/acceptance/command.log",
+      "size": 3651,
+      "sha256": "de1112ed33498a0b2be7bebc6155d68bed0380f87cc72921b0ab288f2fecc4a3"
+    },
+    {
+      "path": "original/acceptance/acceptance.json",
+      "size": 118833,
+      "sha256": "1f79e25fe8ec177275e30110c8038ccb8cf4057d62f1eefee656ff122ae7f4f9"
+    },
+    {
+      "path": "original/acceptance/acceptance.md",
+      "size": 2960,
+      "sha256": "9ad72f8b954a52e72b16030b1970047d354165951d73df18a83b9edaf120eb20"
+    }
+  ],
+  "acceptedFiles": [
+    {
+      "path": "original/actual-native-evidence-Linux/artifacts/gate-ci-native-linux.json",
+      "target": "actual-native-evidence-Linux/artifacts/gate-ci-native-linux.json",
+      "size": 13054,
+      "sha256": "8a255f5047f418d4afac12a8b118809a69922170579bddf16721ebab6c68aa23"
+    },
+    {
+      "path": "original/actual-native-evidence-Linux/artifacts/native-linux/cancel/verified.json",
+      "target": "actual-native-evidence-Linux/artifacts/native-linux/cancel/verified.json",
+      "size": 535,
+      "sha256": "c0281a29745a8647aa4e9b1406e33431f5b55fe3388fc5f0244ba0db0541d8b6"
+    },
+    {
+      "path": "original/actual-native-evidence-Linux/artifacts/native-linux/error/verified.json",
+      "target": "actual-native-evidence-Linux/artifacts/native-linux/error/verified.json",
+      "size": 533,
+      "sha256": "e9b6e6a8916f9052600ae0240abb6f74e99922a56a0d04d13e11d6f54a713823"
+    },
+    {
+      "path": "original/actual-native-evidence-Linux/artifacts/native-linux/save/verified.json",
+      "target": "actual-native-evidence-Linux/artifacts/native-linux/save/verified.json",
+      "size": 531,
+      "sha256": "441e22acaaa8958d43db7a9c7d02e444c3acc0c8b50cd7fbe1dc4c3cb49048e5"
+    },
+    {
+      "path": "original/actual-native-evidence-Windows/artifacts/gate-ci-native-win32.json",
+      "target": "actual-native-evidence-Windows/artifacts/gate-ci-native-win32.json",
+      "size": 13061,
+      "sha256": "ffcf9c8eb076c15bfbe3e95bd17df13bfad9101ae7fa6d089bb97ef51ebff12b"
+    },
+    {
+      "path": "original/actual-native-evidence-Windows/artifacts/native-win32/cancel/verified.json",
+      "target": "actual-native-evidence-Windows/artifacts/native-win32/cancel/verified.json",
+      "size": 534,
+      "sha256": "350442739c321dbe0f7759fca338543eff8811dc45a685bd183bd14226c8f03a"
+    },
+    {
+      "path": "original/actual-native-evidence-Windows/artifacts/native-win32/error/verified.json",
+      "target": "actual-native-evidence-Windows/artifacts/native-win32/error/verified.json",
+      "size": 532,
+      "sha256": "255d107edf6c15904edec6cae2601aec2bbedc5eda7d56a15dcb34d3407e69b0"
+    },
+    {
+      "path": "original/actual-native-evidence-Windows/artifacts/native-win32/save/verified.json",
+      "target": "actual-native-evidence-Windows/artifacts/native-win32/save/verified.json",
+      "size": 530,
+      "sha256": "b37263617cb9526e74f7c60a171e14e76ab334c4d5b5032643a62da70dd0b2da"
+    },
+    {
+      "path": "original/actual-native-evidence-macOS/artifacts/gate-ci-native-darwin.json",
+      "target": "actual-native-evidence-macOS/artifacts/gate-ci-native-darwin.json",
+      "size": 13055,
+      "sha256": "7defbb55c928344ac87d239f48f513b606374a1fdb2806237843158a1d513ee2"
+    },
+    {
+      "path": "original/actual-native-evidence-macOS/artifacts/native-darwin/cancel/verified.json",
+      "target": "actual-native-evidence-macOS/artifacts/native-darwin/cancel/verified.json",
+      "size": 538,
+      "sha256": "2c95c3c402f82ac4ac4c3a8213f60263e554d4d58019c27fa0b0d8b6d7694b51"
+    },
+    {
+      "path": "original/actual-native-evidence-macOS/artifacts/native-darwin/error/verified.json",
+      "target": "actual-native-evidence-macOS/artifacts/native-darwin/error/verified.json",
+      "size": 536,
+      "sha256": "60ceac1a0bfa703ae4e8457fde47c08a136b3f6a194625f19bcc0438e145e5d7"
+    },
+    {
+      "path": "original/actual-native-evidence-macOS/artifacts/native-darwin/save/verified.json",
+      "target": "actual-native-evidence-macOS/artifacts/native-darwin/save/verified.json",
+      "size": 534,
+      "sha256": "ae06e81de84b217a211e3de25377cf30aad6c8acf4290beb4104617eedb2deb0"
+    },
+    {
+      "path": "original/actual-worker-evidence-Windows/artifacts/gate-ci-worker-win32.json",
+      "target": "actual-worker-evidence-Windows/artifacts/gate-ci-worker-win32.json",
+      "size": 15960,
+      "sha256": "a3b3d1f29ebfdf88f3f984b86817c0f811970b25e1bdbb05a6ca50c060421239"
+    },
+    {
+      "path": "original/generated-evidence-api-Linux/artifacts/gate-full-all-linux.json",
+      "target": "generated-evidence-api-Linux/artifacts/gate-full-all-linux.json",
+      "size": 7462,
+      "sha256": "4ec8020e103da8e4971b6e77e676c1c0937a6dab4298599547c070fc60624c9e"
+    },
+    {
+      "path": "original/generated-evidence-api-Linux/artifacts/generation.json",
+      "target": "generated-evidence-api-Linux/artifacts/generation.json",
+      "size": 543,
+      "sha256": "1016a661683ae724f0bef3c6316a38b302a5200f7291c125d399fa1a3c94c90f"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/boundary.log",
+      "target": "generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/boundary.log",
+      "size": 78,
+      "sha256": "e349a331cada150ceb1402c27ced0d545932a793e650ee9e8366be7001cad65f"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/contract.log",
+      "target": "generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/contract.log",
+      "size": 2595,
+      "sha256": "eaec1332e2bd76e9b450584adf89ffe2bde26147bde092f61f077472f4da2ed0"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/deploy-environment.log",
+      "target": "generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/deploy-environment.log",
+      "size": 462,
+      "sha256": "f646e0d870ffa018abb9ed544ada02f029436f411c89052832dda905535b2b0d"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/deploy-quality.log",
+      "target": "generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/deploy-quality.log",
+      "size": 1459,
+      "sha256": "84f21dc46baa79541194034545fb7b69445ece7ebb058dcebc3387853f562a69"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/deploy-settings.log",
+      "target": "generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/deploy-settings.log",
+      "size": 8623,
+      "sha256": "cf726d88c58f43d0db362389ab9d6bd8047633b40b07ffb995327fec1033777f"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/dev-preflight-to-local-d1.log",
+      "target": "generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/dev-preflight-to-local-d1.log",
+      "size": 6065,
+      "sha256": "7e5d74e5d0308a279ac4e0f6ef10131601e8c251ee33ba2996e32ec88d581411"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/error-catalog-drift.log",
+      "target": "generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/error-catalog-drift.log",
+      "size": 650,
+      "sha256": "108bec05ada6a56b71f8206606e180325ff449405d52d355c3bb3b112eb873ea"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/format.log",
+      "target": "generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/format.log",
+      "size": 191,
+      "sha256": "da64bc478b80d8d8ffa1d01566ab699c279513abf5aa997712dc500fc1838d08"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/lint-exhaustiveness.log",
+      "target": "generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/lint-exhaustiveness.log",
+      "size": 290,
+      "sha256": "573541ac2e5befe4797c1a7884e54d27b27fc60a86a45920ca0a556fdf83e0e2"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/lint-floating-void.log",
+      "target": "generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/lint-floating-void.log",
+      "size": 273,
+      "sha256": "9bbba4639796f6f4c3501ab1da3305bf4ad20c10748192f1296c580cb7e54217"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/lint-misused-promise.log",
+      "target": "generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/lint-misused-promise.log",
+      "size": 310,
+      "sha256": "64ca1900d6427407a87cfea7ff2e418e966d0db4ee0fee0840cf5190ae70b42e"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/lint.log",
+      "target": "generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/lint.log",
+      "size": 250,
+      "sha256": "896be5dd7c5e48ee8a5a2818887a2498cdc54a836724fe5d6fbd3662996f53ce"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/migration.log",
+      "target": "generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/migration.log",
+      "size": 2481,
+      "sha256": "5f9d64be5d0b45dcbe5860129d4bbfa743c9e1ce8f93149558bf8ab84f04e4dd"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/result-discard.log",
+      "target": "generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/result-discard.log",
+      "size": 112,
+      "sha256": "3f11eba0cb559262e64ec2e8570c335c92a77e95c0d948da3238364065737595"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/secret-contracts.log",
+      "target": "generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/secret-contracts.log",
+      "size": 68,
+      "sha256": "32914c712b285b393eb37a073e2396566b8596b6925c62ccac8d628745197bab"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/secret-tools.log",
+      "target": "generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/secret-tools.log",
+      "size": 48,
+      "sha256": "4b9dd6c7429b6c0ab4052bde133d8849a3a75a5491903cfbd9b56fe826437a84"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/skill-metadata.log",
+      "target": "generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/skill-metadata.log",
+      "size": 629,
+      "sha256": "302d02f80621a4eafe1113827c2436fbd3619a20afb3e09b9d76c2123fcd2dea"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/telemetry-owner.log",
+      "target": "generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/telemetry-owner.log",
+      "size": 116,
+      "sha256": "0cd903d385970a4b5bd57f33166b3ecb7b9b32964aea9f610dea18f5f8126e4c"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/type.log",
+      "target": "generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/type.log",
+      "size": 482,
+      "sha256": "696bedc73c0dfa022d308043ac4124a5c0cc6648b223b83235c70330cd14c446"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/unit-focused.log",
+      "target": "generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/unit-focused.log",
+      "size": 1706,
+      "sha256": "9ce98d9474bb27dca6194bcd93d4d47b276de4d12afc1cebfe84ed13827ada33"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/unit-skipped.log",
+      "target": "generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/unit-skipped.log",
+      "size": 1197,
+      "sha256": "5e510c306100349e69de8b179991dcda9a439d4e518d469f284aba3a113d42e5"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/unit-timeout.log",
+      "target": "generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/unit-timeout.log",
+      "size": 2853,
+      "sha256": "7f97dd8292412dac4ec2766b6de25ce0dc130fce775ddf574e8a06762ef715e8"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/unit-zero.log",
+      "target": "generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/unit-zero.log",
+      "size": 1602,
+      "sha256": "5e6304b45adb3b3b0ab2cc535a9c5b5f17329e58a1a6b7e8157f4f92e931c328"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/unit.log",
+      "target": "generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/unit.log",
+      "size": 2033,
+      "sha256": "2b9c7f38e8d5dd2d0c4fb7f3fddeefc0200d5b574bcb5ff7b55e60a06c9d1d75"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/worker-behavior.log",
+      "target": "generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/worker-behavior.log",
+      "size": 7227,
+      "sha256": "7a24a422838331a09a7f927035e084834eb9d24b3d1d2974bf9d90d7d75141cb"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/worker-zero.log",
+      "target": "generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults/worker-zero.log",
+      "size": 5265,
+      "sha256": "4a4a740b8892d4d0011f82a3e2f4fb9f1fea8ee3d61da2142124480c3048cea7"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults.json",
+      "target": "generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults.json",
+      "size": 9728,
+      "sha256": "2c4007ffa547a40bcdf9f3d8e9c296255ffc579fe07b7fe670fbaca1d8bb96bb"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/gate-full-all-linux.json",
+      "target": "generated-evidence-api-bindings-Linux/artifacts/gate-full-all-linux.json",
+      "size": 8123,
+      "sha256": "280e69944b563df7bd9bafe7ff1c1a8f5fca6400965f4d68981f2fd983831902"
+    },
+    {
+      "path": "original/generated-evidence-api-bindings-Linux/artifacts/generation.json",
+      "target": "generated-evidence-api-bindings-Linux/artifacts/generation.json",
+      "size": 600,
+      "sha256": "d4f42e9809b2eac2be5f47c38fa5cf551bc19a828f5ce1bda04ce0bff022349c"
+    },
+    {
+      "path": "original/generated-evidence-api-d1-Linux/artifacts/gate-full-all-linux.json",
+      "target": "generated-evidence-api-d1-Linux/artifacts/gate-full-all-linux.json",
+      "size": 8086,
+      "sha256": "35e38d1480f902baeb80def30255dd5efee543125038bc912bbc15e92f5467c7"
+    },
+    {
+      "path": "original/generated-evidence-api-d1-Linux/artifacts/generation.json",
+      "target": "generated-evidence-api-d1-Linux/artifacts/generation.json",
+      "size": 564,
+      "sha256": "f493545a9060dc92b6fd5e0f14cf1771cae39b23ed1ac922ee960c070d1ef4ad"
+    },
+    {
+      "path": "original/generated-evidence-api-kv-Linux/artifacts/gate-full-all-linux.json",
+      "target": "generated-evidence-api-kv-Linux/artifacts/gate-full-all-linux.json",
+      "size": 7483,
+      "sha256": "6686638dc8655b650c0daecd209d4256eb65aa9bba5100f63127eef0590c8424"
+    },
+    {
+      "path": "original/generated-evidence-api-kv-Linux/artifacts/generation.json",
+      "target": "generated-evidence-api-kv-Linux/artifacts/generation.json",
+      "size": 564,
+      "sha256": "b15fac8793e12f509008cb384b4c4ae1633690cd9a11864cf367ac40510107c5"
+    },
+    {
+      "path": "original/generated-evidence-api-r2-Linux/artifacts/gate-full-all-linux.json",
+      "target": "generated-evidence-api-r2-Linux/artifacts/gate-full-all-linux.json",
+      "size": 7483,
+      "sha256": "7255e9f852f55ccebcabf68d1bf20e45e7a3f22b54bb479cd7d7d3d8a9724fa7"
+    },
+    {
+      "path": "original/generated-evidence-api-r2-Linux/artifacts/generation.json",
+      "target": "generated-evidence-api-r2-Linux/artifacts/generation.json",
+      "size": 564,
+      "sha256": "8b8eca6c464fd14b95646d306717b1f68eb322e3c9593713f3fc37ed8c1e1dde"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/boundary.log",
+      "target": "generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/boundary.log",
+      "size": 78,
+      "sha256": "e349a331cada150ceb1402c27ced0d545932a793e650ee9e8366be7001cad65f"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/contract.log",
+      "target": "generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/contract.log",
+      "size": 2595,
+      "sha256": "049119f95feebced0cd07bd71c4591a44fcb3d20878a278208e8d518f1a13147"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/error-catalog-drift.log",
+      "target": "generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/error-catalog-drift.log",
+      "size": 650,
+      "sha256": "74e93a2aab8b5cbf265ad1536b27d723c6a770d399065339dff48c2cd7045fe3"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/format.log",
+      "target": "generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/format.log",
+      "size": 191,
+      "sha256": "99e10d4c156097e2017b760b6d254b9854c5f067db3479ff8779a6f5057d6cc5"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/lint-exhaustiveness.log",
+      "target": "generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/lint-exhaustiveness.log",
+      "size": 290,
+      "sha256": "fed55435e14374c77fcec5852fccb59e3cd32360810085c4e0e09ada8ba02236"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/lint-floating-void.log",
+      "target": "generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/lint-floating-void.log",
+      "size": 273,
+      "sha256": "86a0ac8fd45851912d59152f5e48ee2f0fb37dd8d1a45252daca92b80caa795d"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/lint-misused-promise.log",
+      "target": "generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/lint-misused-promise.log",
+      "size": 310,
+      "sha256": "ac2b54510227bea3edcef91dd3cba2824e3a410708c4b919629d2533f8e5fb71"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/lint.log",
+      "target": "generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/lint.log",
+      "size": 250,
+      "sha256": "30f6e36bb346b2aefeb803ae4fe745a98926e3c7658c9f05218ab99007b88cb5"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/native-behavior.log",
+      "target": "generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/native-behavior.log",
+      "size": 34755,
+      "sha256": "369925c6963f038583278da3b41fb34636feb630486dac200c2a55cff8db4033"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/native-focused.log",
+      "target": "generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/native-focused.log",
+      "size": 12855,
+      "sha256": "dd88c843c03b36a2ba5e46714d1367d246b3640835c54e7f1c605580627bb1c7"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/native-skipped.log",
+      "target": "generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/native-skipped.log",
+      "size": 6748,
+      "sha256": "4c9d39f45e0b64a6d5705d846b8deec659bfefd04ce57a8064b221acd87af252"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/native-timeout.log",
+      "target": "generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/native-timeout.log",
+      "size": 8886,
+      "sha256": "02b90d4bda40dbd3de8756634e51db7045702bb1a9153bcccbb223a9161fc3f6"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/native-zero.log",
+      "target": "generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/native-zero.log",
+      "size": 3767,
+      "sha256": "80d5cc2c06846bb32500d7756a153abb492a7557bbe1ce3678913e2f85f2fb33"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/result-discard.log",
+      "target": "generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/result-discard.log",
+      "size": 112,
+      "sha256": "3f11eba0cb559262e64ec2e8570c335c92a77e95c0d948da3238364065737595"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/rust-behavior.log",
+      "target": "generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/rust-behavior.log",
+      "size": 16228,
+      "sha256": "fc7c7f1beaba4f208fd83fd6de90a1d5285f7f6b2e3e2ed7d22c5ec7d337f9cd"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/rust-ignored.log",
+      "target": "generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/rust-ignored.log",
+      "size": 1653,
+      "sha256": "6463db2119f28bfc05a1d1ac2131440ff310210ee33aa22f69cd50c465444e53"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/rust-timeout.log",
+      "target": "generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/rust-timeout.log",
+      "size": 1315,
+      "sha256": "073e4b46e1a3f0d63849a216851d9b005477a934fbafd5bdce369eb477f6f71e"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/rust-zero.log",
+      "target": "generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/rust-zero.log",
+      "size": 1336,
+      "sha256": "ac74e56aeb3058a5f2b46c5ad2e4e896358618feddd2f00570fafe6c2668d161"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/secret-contracts.log",
+      "target": "generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/secret-contracts.log",
+      "size": 68,
+      "sha256": "32914c712b285b393eb37a073e2396566b8596b6925c62ccac8d628745197bab"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/secret-tools.log",
+      "target": "generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/secret-tools.log",
+      "size": 48,
+      "sha256": "4b9dd6c7429b6c0ab4052bde133d8849a3a75a5491903cfbd9b56fe826437a84"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/skill-metadata.log",
+      "target": "generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/skill-metadata.log",
+      "size": 629,
+      "sha256": "df7824f2212ace479e00c7ad13dd0034f49abded90429d612bd164745167ed37"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/telemetry-owner.log",
+      "target": "generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/telemetry-owner.log",
+      "size": 116,
+      "sha256": "0cd903d385970a4b5bd57f33166b3ecb7b9b32964aea9f610dea18f5f8126e4c"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/type.log",
+      "target": "generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/type.log",
+      "size": 482,
+      "sha256": "fb065613f066d15cec31f1dc60ae01c1cfe45ddb47b388a565ce3bf2abd41fc0"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/unit-focused.log",
+      "target": "generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/unit-focused.log",
+      "size": 1722,
+      "sha256": "8596f45259d87e403c8139e93c109864373d06b6834c7f5232aa8e850326a56b"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/unit-skipped.log",
+      "target": "generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/unit-skipped.log",
+      "size": 1197,
+      "sha256": "76f20e0c7b3c2562e27da89264245a79a5262f00ea869c68ae7c4e9dc8214beb"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/unit-timeout.log",
+      "target": "generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/unit-timeout.log",
+      "size": 2889,
+      "sha256": "7741833eebc1a287d4270b2e0ab83fbbe82a15b9bf9e3a0d699403bb90c1a21b"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/unit-zero.log",
+      "target": "generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/unit-zero.log",
+      "size": 1602,
+      "sha256": "7d90a97a6d31a9eee788b5c264cccb82cbbd1a43835110483d21712ae0d54fbf"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/unit.log",
+      "target": "generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults/unit.log",
+      "size": 2032,
+      "sha256": "5aa30c3c4cbeb18bd8efd23cafc22dfd295359a3bcbaaa3941a6f486e628f707"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults.json",
+      "target": "generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults.json",
+      "size": 10868,
+      "sha256": "fdd04bf0a620cd137c8c7c9cd89e4902c8c6ecb6b2378a4b0d30ac0c630e7171"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/native-linux/cancel/verified.json",
+      "target": "generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/native-linux/cancel/verified.json",
+      "size": 455,
+      "sha256": "6cb773ebc7f6024bab881b0e8231e47db07ae588f2240627e27f87a1cee51b66"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/native-linux/error/verified.json",
+      "target": "generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/native-linux/error/verified.json",
+      "size": 453,
+      "sha256": "cae8cf8a9db230861bc4de4242c31595d580a1d436af8a7bad0f8deffc207a02"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/native-linux/save/verified.json",
+      "target": "generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/native-linux/save/verified.json",
+      "size": 451,
+      "sha256": "a9002781fdacaf7bbcb44e5d36ced1bd3e30a7e614f638df88518b5494b67e98"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/gate-full-all-linux.json",
+      "target": "generated-evidence-desktop-Linux/artifacts/gate-full-all-linux.json",
+      "size": 11268,
+      "sha256": "ce7e3152fb0de79d05f19fbdc21002391ae8804f0d5850f0e097c9a69713db93"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/generation.json",
+      "target": "generated-evidence-desktop-Linux/artifacts/generation.json",
+      "size": 555,
+      "sha256": "1d76bd50b372ff279046f40fb7cddc9c8e30a2ebf8806f8ab32eb47767a5a008"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/native-linux/cancel/verified.json",
+      "target": "generated-evidence-desktop-Linux/artifacts/native-linux/cancel/verified.json",
+      "size": 474,
+      "sha256": "e2e937c2901b23217fddd169ec9f793a724dc44a8b4bf122822b7d814e119623"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/native-linux/error/verified.json",
+      "target": "generated-evidence-desktop-Linux/artifacts/native-linux/error/verified.json",
+      "size": 472,
+      "sha256": "e6397eee6e9973a98122544ee6781a7ebf85fb96881f674e39d79cf6a0ed26de"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Linux/artifacts/native-linux/save/verified.json",
+      "target": "generated-evidence-desktop-Linux/artifacts/native-linux/save/verified.json",
+      "size": 470,
+      "sha256": "9759238fbd254ea5615b07480e647d81b0d9820cd818af2ebf2ed617420552ff"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/boundary.log",
+      "target": "generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/boundary.log",
+      "size": 78,
+      "sha256": "e349a331cada150ceb1402c27ced0d545932a793e650ee9e8366be7001cad65f"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/contract.log",
+      "target": "generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/contract.log",
+      "size": 2835,
+      "sha256": "955b8d9455a5fc8d77d6ed9375dac16e8573fcbc170ea7c8d798b94036356881"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/error-catalog-drift.log",
+      "target": "generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/error-catalog-drift.log",
+      "size": 731,
+      "sha256": "94b31cac03ddf3cd344d92b6656d18a8b386c2ddb9b7c549e9f27b17fd3e7881"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/format.log",
+      "target": "generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/format.log",
+      "size": 191,
+      "sha256": "afa1d3e80a0c6c005871b7cae8bb0924787448d1edab96d1d346e02fbee26d06"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/lint-exhaustiveness.log",
+      "target": "generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/lint-exhaustiveness.log",
+      "size": 290,
+      "sha256": "25bedad4f94f251ead1656b4982b00c82034d33fc6c79d981498bb187bfd762a"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/lint-floating-void.log",
+      "target": "generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/lint-floating-void.log",
+      "size": 273,
+      "sha256": "a3e50d8068832beeadd40735155c7e9faceac8c7998e126776fdaf9af4d1d2c8"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/lint-misused-promise.log",
+      "target": "generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/lint-misused-promise.log",
+      "size": 310,
+      "sha256": "44b47b263ecb6fc458f80a0b7568804a97238159fc318f40b1d31911f57ab98a"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/lint.log",
+      "target": "generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/lint.log",
+      "size": 250,
+      "sha256": "e0a6610f9d4917dc3fbe793859665ea5a8088b786d22a216fef63327b2408872"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/native-behavior.log",
+      "target": "generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/native-behavior.log",
+      "size": 34197,
+      "sha256": "6e8048edd33a8b76c933baa91785bc57172f38cec3df18a473372221a44c4e44"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/native-focused.log",
+      "target": "generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/native-focused.log",
+      "size": 14193,
+      "sha256": "50de2604ac1dd8fcc680192a2250f5386dafc5ae2d65a6d0ecd87345dbb5ef65"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/native-skipped.log",
+      "target": "generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/native-skipped.log",
+      "size": 7182,
+      "sha256": "147be6aa71a0b157af0ec5a9fd98fa4aec3cf49cb38224fc23707605995a0211"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/native-timeout.log",
+      "target": "generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/native-timeout.log",
+      "size": 9611,
+      "sha256": "593bad879da2b6ce733a9e514137bd3c9c7b85da09782d306b56fafb0407d8c0"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/native-zero.log",
+      "target": "generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/native-zero.log",
+      "size": 4114,
+      "sha256": "5b93054c3314a09ee827b160ed1f045d7f1638eef6d9b32a1c212cb1c5127bc6"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/result-discard.log",
+      "target": "generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/result-discard.log",
+      "size": 112,
+      "sha256": "3f11eba0cb559262e64ec2e8570c335c92a77e95c0d948da3238364065737595"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/rust-behavior.log",
+      "target": "generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/rust-behavior.log",
+      "size": 14759,
+      "sha256": "9c343542c1a7f934b5ca017f852cfda638ac743daa2d131f042b58b9f12774e9"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/rust-ignored.log",
+      "target": "generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/rust-ignored.log",
+      "size": 1922,
+      "sha256": "f7f079ec1c9c7ebcd5a7b6a522bda2f00835fd2c85e4a04af2e032b225025ae1"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/rust-timeout.log",
+      "target": "generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/rust-timeout.log",
+      "size": 1547,
+      "sha256": "737dd6af11ae8ec56b1390e4184e36e4260a814696911b310284bb58a9fb22a8"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/rust-zero.log",
+      "target": "generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/rust-zero.log",
+      "size": 1605,
+      "sha256": "e9dec4cd2e937d2c1132ff0e1a394e5caad6c8918b9f91ae254ead5bf3d83da4"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/secret-contracts.log",
+      "target": "generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/secret-contracts.log",
+      "size": 68,
+      "sha256": "32914c712b285b393eb37a073e2396566b8596b6925c62ccac8d628745197bab"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/secret-tools.log",
+      "target": "generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/secret-tools.log",
+      "size": 48,
+      "sha256": "4b9dd6c7429b6c0ab4052bde133d8849a3a75a5491903cfbd9b56fe826437a84"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/skill-metadata.log",
+      "target": "generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/skill-metadata.log",
+      "size": 710,
+      "sha256": "003bc0d1950f01d8e0ba96f54fb293049a723f94c26fca509058c6034b091e22"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/telemetry-owner.log",
+      "target": "generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/telemetry-owner.log",
+      "size": 116,
+      "sha256": "0cd903d385970a4b5bd57f33166b3ecb7b9b32964aea9f610dea18f5f8126e4c"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/type.log",
+      "target": "generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/type.log",
+      "size": 482,
+      "sha256": "2ff061f481023e38239c1fd60de9faf172826bb7a31b84a9a755ec97f8c3a535"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/unit-focused.log",
+      "target": "generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/unit-focused.log",
+      "size": 1921,
+      "sha256": "113cb1c08a21a916a088a957c91d1f17fca0dd7a4082fedcbdaf05e76507a511"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/unit-skipped.log",
+      "target": "generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/unit-skipped.log",
+      "size": 1401,
+      "sha256": "c3dd095368e6a36fa0f685845e24b1a7993764441a231403de1549ee9b889cec"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/unit-timeout.log",
+      "target": "generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/unit-timeout.log",
+      "size": 2908,
+      "sha256": "1d9fc3b3d632e01a1d17aa146f8d185c464a1a1e8c9088aabb47238aa4a52e7e"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/unit-zero.log",
+      "target": "generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/unit-zero.log",
+      "size": 1836,
+      "sha256": "48a0abc2f76a00d0b6de1346633451f78dab0fd524847afd6cc1036a616ce3f4"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/unit.log",
+      "target": "generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults/unit.log",
+      "size": 2248,
+      "sha256": "e02106b8da5766802fccdc173dbe182358ecd1a19c8442884eb9cf86431543f4"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults.json",
+      "target": "generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults.json",
+      "size": 10878,
+      "sha256": "0a2a0055fa8baf0d0b7f8f4a4dbdbbd0e3d09058bee6cf945fbe94735274eca3"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/native-win32/cancel/verified.json",
+      "target": "generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/native-win32/cancel/verified.json",
+      "size": 506,
+      "sha256": "2b958f0cfdd1e7d2c00c66e907821593ed7e3444c835b52423a5f926e024ae45"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/native-win32/error/verified.json",
+      "target": "generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/native-win32/error/verified.json",
+      "size": 504,
+      "sha256": "c60e7ac694e7e3a6e6896e3e363825262738214f1cc95ce2e89c167372e509e3"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/native-win32/save/verified.json",
+      "target": "generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/native-win32/save/verified.json",
+      "size": 502,
+      "sha256": "e2353bad9395dce8aad0b75e3bbd8265650752ba4069841a28ddef6471a499d8"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/gate-full-all-win32.json",
+      "target": "generated-evidence-desktop-Windows/artifacts/gate-full-all-win32.json",
+      "size": 11281,
+      "sha256": "bd1cbeef08a85623ae2f8cf2716f48004356ca217350263b62d899ebd199863d"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/generation.json",
+      "target": "generated-evidence-desktop-Windows/artifacts/generation.json",
+      "size": 555,
+      "sha256": "f33f52fd1e8fb5da6beb47bc86beba3c2c20276d9ab7a67a3bfff21d4f5eff14"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/hooks.json",
+      "target": "generated-evidence-desktop-Windows/artifacts/hooks.json",
+      "size": 662,
+      "sha256": "f8b15e08b6175ad04fc1cb2d70e874638c79374b6a130971fbf51e9a27fefbf5"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/native-win32/cancel/verified.json",
+      "target": "generated-evidence-desktop-Windows/artifacts/native-win32/cancel/verified.json",
+      "size": 474,
+      "sha256": "b53ff05318c8af282ded5f4f4f88a2bdd8127e461a3795521d0795bb783d5352"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/native-win32/error/verified.json",
+      "target": "generated-evidence-desktop-Windows/artifacts/native-win32/error/verified.json",
+      "size": 472,
+      "sha256": "11dc6d810c43deec2c94d94feffd3e7fdcc35720f2b4e0b3f9d19598c0c66d7d"
+    },
+    {
+      "path": "original/generated-evidence-desktop-Windows/artifacts/native-win32/save/verified.json",
+      "target": "generated-evidence-desktop-Windows/artifacts/native-win32/save/verified.json",
+      "size": 470,
+      "sha256": "50393eff6f81c5037cf9220772f07546789e06382edd9a4906e43d50d3a30d8c"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/boundary.log",
+      "target": "generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/boundary.log",
+      "size": 78,
+      "sha256": "e349a331cada150ceb1402c27ced0d545932a793e650ee9e8366be7001cad65f"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/contract.log",
+      "target": "generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/contract.log",
+      "size": 2912,
+      "sha256": "883222f4c39eb8a8a0f31b8f08ef9402e63a71ebf107d46b24f868b91f561e89"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/error-catalog-drift.log",
+      "target": "generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/error-catalog-drift.log",
+      "size": 755,
+      "sha256": "695eeaeee01971cca16e5cda6c1f1459ec06f1e695279db40c84f9cb98edca26"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/format.log",
+      "target": "generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/format.log",
+      "size": 191,
+      "sha256": "5ff85fc943915e10d6adbf4ae62c4b25cfdf377d75faaf68a3c7c82c7bf3b1da"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/lint-exhaustiveness.log",
+      "target": "generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/lint-exhaustiveness.log",
+      "size": 290,
+      "sha256": "684a57637594db6d486f3ce9530353d3080e6f46fd8a431d07e84a11f56484b1"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/lint-floating-void.log",
+      "target": "generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/lint-floating-void.log",
+      "size": 273,
+      "sha256": "cd9dc1981a484803936247305c2e150106ebd8bbad243bfec7e1e823dcb23510"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/lint-misused-promise.log",
+      "target": "generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/lint-misused-promise.log",
+      "size": 310,
+      "sha256": "6440b972a2016ddd8814805cedd37733cff71441de518456b0fef9eaee488672"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/lint.log",
+      "target": "generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/lint.log",
+      "size": 250,
+      "sha256": "3c7c23c5c1d3f96418054500fa24bda73a498cc16477fc3f6f6c9cf01904b94f"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/native-behavior.log",
+      "target": "generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/native-behavior.log",
+      "size": 33326,
+      "sha256": "2cb7c97fb7960285d54bf58388c4ba98a2e8697612a72089c4e979c7cbb00c99"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/native-focused.log",
+      "target": "generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/native-focused.log",
+      "size": 14622,
+      "sha256": "e9e746879be1d8a1c13fa3be8f7e623010d1041ec5b2fa26e843b51f9a5a7f93"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/native-skipped.log",
+      "target": "generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/native-skipped.log",
+      "size": 7066,
+      "sha256": "e5ed345bfab3a5557679a701b34c1f18bb6d4175696c9d47b8f858cb28d9ae6a"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/native-timeout.log",
+      "target": "generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/native-timeout.log",
+      "size": 9595,
+      "sha256": "dbee4e02eaa7346af233b3e0b7a957398c176ee1b53d21d750399a8fcbaf6035"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/native-zero.log",
+      "target": "generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/native-zero.log",
+      "size": 4113,
+      "sha256": "93e9e65ef498199caf1aa2f511208fad9aa533028cd519116f32f57b1af545cb"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/result-discard.log",
+      "target": "generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/result-discard.log",
+      "size": 112,
+      "sha256": "3f11eba0cb559262e64ec2e8570c335c92a77e95c0d948da3238364065737595"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/rust-behavior.log",
+      "target": "generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/rust-behavior.log",
+      "size": 14458,
+      "sha256": "188cdce5304d8ab6c27f7941332a2331c14c7fe6f4ecacfbac8ae481533a6559"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/rust-ignored.log",
+      "target": "generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/rust-ignored.log",
+      "size": 2024,
+      "sha256": "28570df09f1b6dfaa6090cd6e0f625a6e78dcd5329cfd58f739d87183f63b6c5"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/rust-timeout.log",
+      "target": "generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/rust-timeout.log",
+      "size": 1645,
+      "sha256": "446a60714f60c694ef598885a87412b265791455fa2d5caec6506e940e7dfe7b"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/rust-zero.log",
+      "target": "generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/rust-zero.log",
+      "size": 1624,
+      "sha256": "edbcbd750f22b2c909e2d0ebb1ef7a3c40537bb9f91b4ea1e7ef9fc1c749c6b0"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/secret-contracts.log",
+      "target": "generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/secret-contracts.log",
+      "size": 68,
+      "sha256": "32914c712b285b393eb37a073e2396566b8596b6925c62ccac8d628745197bab"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/secret-tools.log",
+      "target": "generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/secret-tools.log",
+      "size": 48,
+      "sha256": "4b9dd6c7429b6c0ab4052bde133d8849a3a75a5491903cfbd9b56fe826437a84"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/skill-metadata.log",
+      "target": "generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/skill-metadata.log",
+      "size": 733,
+      "sha256": "4e5b0a17e447c46e62915c52aba2328bab28c53d1e1a8ad52b74d66c49461da0"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/telemetry-owner.log",
+      "target": "generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/telemetry-owner.log",
+      "size": 116,
+      "sha256": "0cd903d385970a4b5bd57f33166b3ecb7b9b32964aea9f610dea18f5f8126e4c"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/type.log",
+      "target": "generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/type.log",
+      "size": 482,
+      "sha256": "12b4c81f2849d90ab564171d839708c11e4ede8a050793aaf300d91c4e978dfb"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/unit-focused.log",
+      "target": "generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/unit-focused.log",
+      "size": 1967,
+      "sha256": "d5f5ce5505cd969b9be6685bfc7aff6e431b2b497b66aa9ae7f0d9f02f38bac6"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/unit-skipped.log",
+      "target": "generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/unit-skipped.log",
+      "size": 1457,
+      "sha256": "cac1e1000489207400310f52dcd3b2fa24a6f49703c923f3a5502000e65323c1"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/unit-timeout.log",
+      "target": "generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/unit-timeout.log",
+      "size": 3150,
+      "sha256": "8e9a6f0b6dbf7f2fdaf2ee775269b0bf601161666856f04019f01b60ad3a8517"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/unit-zero.log",
+      "target": "generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/unit-zero.log",
+      "size": 1899,
+      "sha256": "dedce3b3c23bbc81722ae4168a9efdfbcbec76990f662f915152e5290d566e16"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/unit.log",
+      "target": "generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults/unit.log",
+      "size": 2293,
+      "sha256": "713343b98f90c248cca52273eb8fa96571fb347a586fab7bc20a05af90396f36"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults.json",
+      "target": "generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults.json",
+      "size": 10871,
+      "sha256": "cc04e03d5c1852e3b0624a3c6849963f059b917ade51d9a99c0c7db71677bbcd"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/native-darwin/cancel/verified.json",
+      "target": "generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/native-darwin/cancel/verified.json",
+      "size": 509,
+      "sha256": "42c39db3bf6bb9c1715d8a8e2a7fd981d9f57916999ffe01d20be7e232f2c859"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/native-darwin/error/verified.json",
+      "target": "generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/native-darwin/error/verified.json",
+      "size": 507,
+      "sha256": "6a79bdc3b752187042d95aea01b2c64ff8452864b7e3c3f60eac3d1f84d966f5"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/native-darwin/save/verified.json",
+      "target": "generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/native-darwin/save/verified.json",
+      "size": 505,
+      "sha256": "4e37b97924f0e3268ad93186664b9d2abfbc0c5688db02252253068dd5359fde"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/gate-full-all-darwin.json",
+      "target": "generated-evidence-desktop-macOS/artifacts/gate-full-all-darwin.json",
+      "size": 11272,
+      "sha256": "2007f01182dcafe84a368fd478f02f167088eac2978240478edd4ab6415524e3"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/generation.json",
+      "target": "generated-evidence-desktop-macOS/artifacts/generation.json",
+      "size": 558,
+      "sha256": "ba7a12a0aa9f9b615be9ef098b658078eb859dbcb03f14dd4f7f80b8d6a32254"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/native-darwin/cancel/verified.json",
+      "target": "generated-evidence-desktop-macOS/artifacts/native-darwin/cancel/verified.json",
+      "size": 477,
+      "sha256": "b783a3dfea2eb7a802742978501a00592caf4436f3307890541b51c7b339c8ca"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/native-darwin/error/verified.json",
+      "target": "generated-evidence-desktop-macOS/artifacts/native-darwin/error/verified.json",
+      "size": 475,
+      "sha256": "2ea97dee1067f0a66c1cd71a482e2063375d8f87b16aa45d4ae1db39f49c6a8d"
+    },
+    {
+      "path": "original/generated-evidence-desktop-macOS/artifacts/native-darwin/save/verified.json",
+      "target": "generated-evidence-desktop-macOS/artifacts/native-darwin/save/verified.json",
+      "size": 473,
+      "sha256": "3af2415de574eb33b06288e2e6262f41173b97ee905d77c637ad4a1626c7c090"
+    },
+    {
+      "path": "original/generated-evidence-fullstack-Linux/artifacts/gate-full-all-linux.json",
+      "target": "generated-evidence-fullstack-Linux/artifacts/gate-full-all-linux.json",
+      "size": 16150,
+      "sha256": "06e91a116f06896dc3c9921a71e25c0c0ad32940d1549c117362292baade9efc"
+    },
+    {
+      "path": "original/generated-evidence-fullstack-Linux/artifacts/generation.json",
+      "target": "generated-evidence-fullstack-Linux/artifacts/generation.json",
+      "size": 619,
+      "sha256": "9209547fa30f0120a0524119212bec66f90c0c6e7e09de0921fa9847104d38fa"
+    },
+    {
+      "path": "original/generated-evidence-fullstack-Linux/artifacts/lighthouse/web/summary.json",
+      "target": "generated-evidence-fullstack-Linux/artifacts/lighthouse/web/summary.json",
+      "size": 6622,
+      "sha256": "9cfa5a9decbc52374a073b1deefde31b964147ed6218f681075dc33d0095f2f3"
+    },
+    {
+      "path": "original/generated-evidence-fullstack-desktop-Linux/artifacts/gate-full-all-linux.json",
+      "target": "generated-evidence-fullstack-desktop-Linux/artifacts/gate-full-all-linux.json",
+      "size": 20653,
+      "sha256": "dcc2e7699ce0be74059054f1c25216c4d799e129ae6469dc64a47106b548aa0e"
+    },
+    {
+      "path": "original/generated-evidence-fullstack-desktop-Linux/artifacts/generation.json",
+      "target": "generated-evidence-fullstack-desktop-Linux/artifacts/generation.json",
+      "size": 642,
+      "sha256": "7722189cb0aa69852c40cc839e4c916c8a3f7953d672467bbbab183812fd9e7b"
+    },
+    {
+      "path": "original/generated-evidence-fullstack-desktop-Linux/artifacts/lighthouse/web/summary.json",
+      "target": "generated-evidence-fullstack-desktop-Linux/artifacts/lighthouse/web/summary.json",
+      "size": 6622,
+      "sha256": "8fb85e3a1604446fe0aba61e708708f75b58e624a6c5f2a31a11e5603e2ba9c5"
+    },
+    {
+      "path": "original/generated-evidence-fullstack-desktop-Linux/artifacts/native-linux/cancel/verified.json",
+      "target": "generated-evidence-fullstack-desktop-Linux/artifacts/native-linux/cancel/verified.json",
+      "size": 494,
+      "sha256": "24846c8d7c5d870f72db6b538350fb406b9458f8016973105fa51ab9a65e9a22"
+    },
+    {
+      "path": "original/generated-evidence-fullstack-desktop-Linux/artifacts/native-linux/error/verified.json",
+      "target": "generated-evidence-fullstack-desktop-Linux/artifacts/native-linux/error/verified.json",
+      "size": 492,
+      "sha256": "de4caa7f3a2c1b7ae2f5bc2660f3c8dbb9bd613745ffc76e6270121367050792"
+    },
+    {
+      "path": "original/generated-evidence-fullstack-desktop-Linux/artifacts/native-linux/save/verified.json",
+      "target": "generated-evidence-fullstack-desktop-Linux/artifacts/native-linux/save/verified.json",
+      "size": 490,
+      "sha256": "868b13acfaa2db80c7fec3f0d2f68aa11c2e5ca697950b94e8b7a796d6bdd5ee"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/boundary.log",
+      "target": "generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/boundary.log",
+      "size": 78,
+      "sha256": "e349a331cada150ceb1402c27ced0d545932a793e650ee9e8366be7001cad65f"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/browser-behavior.log",
+      "target": "generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/browser-behavior.log",
+      "size": 2819,
+      "sha256": "85457e651e6ec8cb7121d34a2e675212fc018c0232b198e59afcd8cfafb1fcc8"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/browser-focused.log",
+      "target": "generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/browser-focused.log",
+      "size": 1406,
+      "sha256": "1037b0f4d90f132b19f4ef3a23c4ba31643add11ad1d652cc90e2f621f0522e9"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/browser-skipped.log",
+      "target": "generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/browser-skipped.log",
+      "size": 1341,
+      "sha256": "58d997bf9b2c4120f8d71dcc2a65cab418139190b872319b540184b2e59c2ee4"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/browser-timeout.log",
+      "target": "generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/browser-timeout.log",
+      "size": 2476,
+      "sha256": "fca172ac216c36d9d16b3e4edb0e8bc268a77b6dc60ebc16b3aa24559905264e"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/browser-zero.log",
+      "target": "generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/browser-zero.log",
+      "size": 1192,
+      "sha256": "b79aae47e932704494b8611ee9486ca7a8b93f597ec550aeb5f57d4eab26ae01"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/contract.log",
+      "target": "generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/contract.log",
+      "size": 2593,
+      "sha256": "66eb7a39d32f4cb37d982b71f0df0f233fbbfd94cd9bdb3b4860f4f5f8db06e8"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/deploy-environment.log",
+      "target": "generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/deploy-environment.log",
+      "size": 462,
+      "sha256": "9e0d9f32048ad1772266cfe0aa35168a64a47ab90d8ccf2f55db895a54f68c65"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/deploy-quality.log",
+      "target": "generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/deploy-quality.log",
+      "size": 1459,
+      "sha256": "49ad369a7a3949e178730f3b948a093db7328a55ddc9ad7cf636a98eaec3827e"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/deploy-settings.log",
+      "target": "generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/deploy-settings.log",
+      "size": 5452,
+      "sha256": "58044bf920adf917070e93368059754c4e0b0e49ce71e31c243ee6060cdc655b"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/error-catalog-drift.log",
+      "target": "generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/error-catalog-drift.log",
+      "size": 650,
+      "sha256": "8633362978dab1b455a9fbb05560d91eae15452f6b8ad144e6f74aeaa0b72273"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/format.log",
+      "target": "generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/format.log",
+      "size": 191,
+      "sha256": "af2c457e34b3b3865cae64331d37340ffa89c8f9a404c86a5faaf036078c772e"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/lighthouse-score.log",
+      "target": "generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/lighthouse-score.log",
+      "size": 9731,
+      "sha256": "69722e74d26e07bb6ba713a67766e2dcb85b2b2adacd1037f8628dbbd3aad5f1"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/lint-exhaustiveness.log",
+      "target": "generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/lint-exhaustiveness.log",
+      "size": 290,
+      "sha256": "21f3f05f97265b463e0ef5942cc40c3727317af444acc7fc08d4bfd2afc3d5f3"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/lint-floating-void.log",
+      "target": "generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/lint-floating-void.log",
+      "size": 273,
+      "sha256": "752ec1c003b397370ea2ec51130a24304cc6fd371511c53393353b68c27b3ef8"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/lint-misused-promise.log",
+      "target": "generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/lint-misused-promise.log",
+      "size": 310,
+      "sha256": "50e5f47bb42d5c8377394522f0ba0de386177be393e7c674bec32e4412be972e"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/lint.log",
+      "target": "generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/lint.log",
+      "size": 250,
+      "sha256": "c45977b3800426720ed9877fcab68f6ecd9bafb8fe5968abd29497340b32ac20"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/result-discard.log",
+      "target": "generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/result-discard.log",
+      "size": 112,
+      "sha256": "3f11eba0cb559262e64ec2e8570c335c92a77e95c0d948da3238364065737595"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/secret-contracts.log",
+      "target": "generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/secret-contracts.log",
+      "size": 68,
+      "sha256": "32914c712b285b393eb37a073e2396566b8596b6925c62ccac8d628745197bab"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/secret-tools.log",
+      "target": "generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/secret-tools.log",
+      "size": 48,
+      "sha256": "4b9dd6c7429b6c0ab4052bde133d8849a3a75a5491903cfbd9b56fe826437a84"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/skill-metadata.log",
+      "target": "generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/skill-metadata.log",
+      "size": 629,
+      "sha256": "df1dc7a610ae9fb08888bc17ff6f7181350adac2b9bce5ef7d686d663e480267"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/telemetry-owner.log",
+      "target": "generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/telemetry-owner.log",
+      "size": 116,
+      "sha256": "0cd903d385970a4b5bd57f33166b3ecb7b9b32964aea9f610dea18f5f8126e4c"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/type.log",
+      "target": "generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/type.log",
+      "size": 482,
+      "sha256": "3d70c1ea959e827587436596b05934758c14db6d7b985bacaab42d47f1b17048"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/unit-focused.log",
+      "target": "generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/unit-focused.log",
+      "size": 1706,
+      "sha256": "f79457c5e7d087cdcb9fb8cec9546f2830dcda46479ea3b25c1844f887278b59"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/unit-skipped.log",
+      "target": "generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/unit-skipped.log",
+      "size": 1197,
+      "sha256": "dc7a1c73b6d0d7e6ecb436ac574e00d58b7935acccb5ab6e70ec307439d005a7"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/unit-timeout.log",
+      "target": "generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/unit-timeout.log",
+      "size": 2853,
+      "sha256": "611ce2d05046f6f246de1eb9590b3ca181459a4f360d928338488bc1267795a7"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/unit-zero.log",
+      "target": "generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/unit-zero.log",
+      "size": 1602,
+      "sha256": "95abd9810d3e6f8f88f3d4dfc8e957f6a5008a2738a867961e886dc70304c0a1"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/unit.log",
+      "target": "generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/unit.log",
+      "size": 2032,
+      "sha256": "524d298f96d0816413f45b54ff32249d71bd6727f58b45385d94e3d1c2e2f017"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/visual-regression.log",
+      "target": "generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/visual-regression.log",
+      "size": 5954,
+      "sha256": "a9d0cff14fe2bdffc30002528361b5d5d0c45b397543c94b039f0bfa41df1cf8"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/worker-behavior.log",
+      "target": "generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/worker-behavior.log",
+      "size": 7090,
+      "sha256": "a080277b00703b432daf5638a5cac4c4521a3d9dc3cd68a17a022693f54f6741"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/worker-zero.log",
+      "target": "generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults/worker-zero.log",
+      "size": 2684,
+      "sha256": "0747fa445b07b42d4dc40d237ff9f63504ceab891eed3463db306272e2778f3e"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults.json",
+      "target": "generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults.json",
+      "size": 12203,
+      "sha256": "15b47a4b391a5008975806bba65c75ba7b76d565a6aef4ee7c495f978a47e3bd"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/lighthouse/web/summary.json",
+      "target": "generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/lighthouse/web/summary.json",
+      "size": 6622,
+      "sha256": "92e25eb2064608dda87b4b7b4851fa82627d36e82b2e3baf9956ed16390ced93"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/gate-full-all-linux.json",
+      "target": "generated-evidence-web-Linux/artifacts/gate-full-all-linux.json",
+      "size": 13112,
+      "sha256": "6ee5a8230cd48f51fd44fbe52771a5e1249b86ad6d25374329afab90f4e05253"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/generation.json",
+      "target": "generated-evidence-web-Linux/artifacts/generation.json",
+      "size": 543,
+      "sha256": "7a07c022dd18bf4265514aea941e5ad80532aa3a6799fb37c8fff1791259b3b9"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/hooks.json",
+      "target": "generated-evidence-web-Linux/artifacts/hooks.json",
+      "size": 662,
+      "sha256": "0fb6404bcf7df5a4d952358ffe0c17f9d092cc33a14934a01a6351bb1346606a"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/add-and-start/gate-full-all-linux.json",
+      "target": "generated-evidence-web-Linux/artifacts/lifecycle-phases/add-and-start/gate-full-all-linux.json",
+      "size": 9803,
+      "sha256": "7ba414dba38462720827c09849cd64cf0390f5fb1fcd4a6b5d72eca9ca80542e"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/add-and-start/generation.json",
+      "target": "generated-evidence-web-Linux/artifacts/lifecycle-phases/add-and-start/generation.json",
+      "size": 3052,
+      "sha256": "784b11b78d99d846466ddf3241ba2fd3a8752de11a5c8a6ecd422f5888a32dd1"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/add-and-start/lighthouse/web/summary.json",
+      "target": "generated-evidence-web-Linux/artifacts/lifecycle-phases/add-and-start/lighthouse/web/summary.json",
+      "size": 6621,
+      "sha256": "c5114c2096bc2cc468b56959b813e8035f65163851d1ce88abac3a5914df41b2"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/cache-cleared-gate/gate-full-all-linux.json",
+      "target": "generated-evidence-web-Linux/artifacts/lifecycle-phases/cache-cleared-gate/gate-full-all-linux.json",
+      "size": 13057,
+      "sha256": "41af361e4c4e8223eb5c09dd09018dfc76b66eb146d68868715cf575602eebc5"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/cache-cleared-gate/generation.json",
+      "target": "generated-evidence-web-Linux/artifacts/lifecycle-phases/cache-cleared-gate/generation.json",
+      "size": 552,
+      "sha256": "f06bfbd0d0a44f767d97399ae489aa83c6e98971ad843eb0322a89989b697dac"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/cache-cleared-gate/lighthouse/web/summary.json",
+      "target": "generated-evidence-web-Linux/artifacts/lifecycle-phases/cache-cleared-gate/lighthouse/web/summary.json",
+      "size": 6621,
+      "sha256": "c5114c2096bc2cc468b56959b813e8035f65163851d1ce88abac3a5914df41b2"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/cold-gate/gate-full-all-linux.json",
+      "target": "generated-evidence-web-Linux/artifacts/lifecycle-phases/cold-gate/gate-full-all-linux.json",
+      "size": 13057,
+      "sha256": "8adc763545f873947fad2ea75b22abfcb44363c59c8455ab4a0c7bf9861df21f"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/cold-gate/generation.json",
+      "target": "generated-evidence-web-Linux/artifacts/lifecycle-phases/cold-gate/generation.json",
+      "size": 552,
+      "sha256": "f06bfbd0d0a44f767d97399ae489aa83c6e98971ad843eb0322a89989b697dac"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/cold-gate/lighthouse/web/summary.json",
+      "target": "generated-evidence-web-Linux/artifacts/lifecycle-phases/cold-gate/lighthouse/web/summary.json",
+      "size": 6621,
+      "sha256": "c9c3d370cf58517bdcbd176e9f2904fe10fafec2c8e4990629199f15b35a2999"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/hmr/gate-full-all-linux.json",
+      "target": "generated-evidence-web-Linux/artifacts/lifecycle-phases/hmr/gate-full-all-linux.json",
+      "size": 13057,
+      "sha256": "8adc763545f873947fad2ea75b22abfcb44363c59c8455ab4a0c7bf9861df21f"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/hmr/generation.json",
+      "target": "generated-evidence-web-Linux/artifacts/lifecycle-phases/hmr/generation.json",
+      "size": 552,
+      "sha256": "f06bfbd0d0a44f767d97399ae489aa83c6e98971ad843eb0322a89989b697dac"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/hmr/lighthouse/web/summary.json",
+      "target": "generated-evidence-web-Linux/artifacts/lifecycle-phases/hmr/lighthouse/web/summary.json",
+      "size": 6621,
+      "sha256": "c9c3d370cf58517bdcbd176e9f2904fe10fafec2c8e4990629199f15b35a2999"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/interrupted-recovery/gate-full-all-linux.json",
+      "target": "generated-evidence-web-Linux/artifacts/lifecycle-phases/interrupted-recovery/gate-full-all-linux.json",
+      "size": 6403,
+      "sha256": "e81609a91fb34bc204b140de98d958af766efa263469f3fb2e5b7f63bdea2654"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/interrupted-recovery/generation.json",
+      "target": "generated-evidence-web-Linux/artifacts/lifecycle-phases/interrupted-recovery/generation.json",
+      "size": 4174,
+      "sha256": "ef2fe6544bb7cc9fde24c4298bd8beb168a1ec0bbc00d2afa0fb27920c1b3863"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/interrupted-recovery/lighthouse/web/summary.json",
+      "target": "generated-evidence-web-Linux/artifacts/lifecycle-phases/interrupted-recovery/lighthouse/web/summary.json",
+      "size": 6621,
+      "sha256": "c5114c2096bc2cc468b56959b813e8035f65163851d1ce88abac3a5914df41b2"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/re-add-excluded-web/gate-full-all-linux.json",
+      "target": "generated-evidence-web-Linux/artifacts/lifecycle-phases/re-add-excluded-web/gate-full-all-linux.json",
+      "size": 23650,
+      "sha256": "65fbdd3536d8926b0096798a79a928d9b9f87374eabc870241d4a32d89fd6633"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/re-add-excluded-web/generation.json",
+      "target": "generated-evidence-web-Linux/artifacts/lifecycle-phases/re-add-excluded-web/generation.json",
+      "size": 1094,
+      "sha256": "a0de5c2bbf89ad850fd3825cb77f585392fda8209fe465e4968bd451de3cad92"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/re-add-excluded-web/lighthouse/portal/summary.json",
+      "target": "generated-evidence-web-Linux/artifacts/lifecycle-phases/re-add-excluded-web/lighthouse/portal/summary.json",
+      "size": 6697,
+      "sha256": "bb548235b0c7620074fb8aa494f2d85306886d14ff50356d5b6f6f2f1fc6520f"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/re-add-excluded-web/lighthouse/web/summary.json",
+      "target": "generated-evidence-web-Linux/artifacts/lifecycle-phases/re-add-excluded-web/lighthouse/web/summary.json",
+      "size": 6622,
+      "sha256": "64f78548191ed862256ed18206fdf0718ed34a73b135061f3443503a60c52e6c"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/rename-and-exclude/gate-full-all-linux.json",
+      "target": "generated-evidence-web-Linux/artifacts/lifecycle-phases/rename-and-exclude/gate-full-all-linux.json",
+      "size": 7472,
+      "sha256": "f5cf879bc03a36688b28f7918015f0c6710015405b5832382a2c8906cc666012"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/rename-and-exclude/generation.json",
+      "target": "generated-evidence-web-Linux/artifacts/lifecycle-phases/rename-and-exclude/generation.json",
+      "size": 3052,
+      "sha256": "4ef138048f440baf0b9b6f61b633ba2a0fa485e255df75ecf98b07c629859b66"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/rename-and-exclude/lighthouse/web/summary.json",
+      "target": "generated-evidence-web-Linux/artifacts/lifecycle-phases/rename-and-exclude/lighthouse/web/summary.json",
+      "size": 6621,
+      "sha256": "c5114c2096bc2cc468b56959b813e8035f65163851d1ce88abac3a5914df41b2"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/sample-removal/gate-full-all-linux.json",
+      "target": "generated-evidence-web-Linux/artifacts/lifecycle-phases/sample-removal/gate-full-all-linux.json",
+      "size": 6403,
+      "sha256": "c9d24555348f417dae758d4a7c3eda27e04ce87c3056cd96fde9821ad342f750"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/sample-removal/generation.json",
+      "target": "generated-evidence-web-Linux/artifacts/lifecycle-phases/sample-removal/generation.json",
+      "size": 4174,
+      "sha256": "ef2fe6544bb7cc9fde24c4298bd8beb168a1ec0bbc00d2afa0fb27920c1b3863"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/sample-removal/lighthouse/web/summary.json",
+      "target": "generated-evidence-web-Linux/artifacts/lifecycle-phases/sample-removal/lighthouse/web/summary.json",
+      "size": 6621,
+      "sha256": "c5114c2096bc2cc468b56959b813e8035f65163851d1ce88abac3a5914df41b2"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/warm-gate/gate-full-all-linux.json",
+      "target": "generated-evidence-web-Linux/artifacts/lifecycle-phases/warm-gate/gate-full-all-linux.json",
+      "size": 13057,
+      "sha256": "e7a0ce0280e88802f6314afca4bef67de54c4d50bc560336453612870e3d99f8"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/warm-gate/generation.json",
+      "target": "generated-evidence-web-Linux/artifacts/lifecycle-phases/warm-gate/generation.json",
+      "size": 552,
+      "sha256": "f06bfbd0d0a44f767d97399ae489aa83c6e98971ad843eb0322a89989b697dac"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/warm-gate/lighthouse/web/summary.json",
+      "target": "generated-evidence-web-Linux/artifacts/lifecycle-phases/warm-gate/lighthouse/web/summary.json",
+      "size": 6621,
+      "sha256": "4075588135d0995e7ca8b9f82b378d5afc91b5d2931f70f4e9d44707dbc6d56e"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/warm-setup/gate-full-all-linux.json",
+      "target": "generated-evidence-web-Linux/artifacts/lifecycle-phases/warm-setup/gate-full-all-linux.json",
+      "size": 13057,
+      "sha256": "8adc763545f873947fad2ea75b22abfcb44363c59c8455ab4a0c7bf9861df21f"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/warm-setup/generation.json",
+      "target": "generated-evidence-web-Linux/artifacts/lifecycle-phases/warm-setup/generation.json",
+      "size": 552,
+      "sha256": "f06bfbd0d0a44f767d97399ae489aa83c6e98971ad843eb0322a89989b697dac"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle-phases/warm-setup/lighthouse/web/summary.json",
+      "target": "generated-evidence-web-Linux/artifacts/lifecycle-phases/warm-setup/lighthouse/web/summary.json",
+      "size": 6621,
+      "sha256": "c9c3d370cf58517bdcbd176e9f2904fe10fafec2c8e4990629199f15b35a2999"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lifecycle.json",
+      "target": "generated-evidence-web-Linux/artifacts/lifecycle.json",
+      "size": 2938,
+      "sha256": "8326295e612e4a2aa72a05fe02117fa366764c08914348d030ab0cf0616e9d5d"
+    },
+    {
+      "path": "original/generated-evidence-web-Linux/artifacts/lighthouse/web/summary.json",
+      "target": "generated-evidence-web-Linux/artifacts/lighthouse/web/summary.json",
+      "size": 6622,
+      "sha256": "185cc54568457f1e64c5bc3ec81257e604cc3eca3b18bb6d1d613bd7916fce0d"
+    },
+    {
+      "path": "original/generated-evidence-web-bindings-Linux/artifacts/gate-full-all-linux.json",
+      "target": "generated-evidence-web-bindings-Linux/artifacts/gate-full-all-linux.json",
+      "size": 13775,
+      "sha256": "c7ba2a3b3cddf45892192da2f18c9e38d83575f1a21f05f622f62fd2e14511c4"
+    },
+    {
+      "path": "original/generated-evidence-web-bindings-Linux/artifacts/generation.json",
+      "target": "generated-evidence-web-bindings-Linux/artifacts/generation.json",
+      "size": 600,
+      "sha256": "0841305963d6209e0c41209e5a71febe2bd27a007ceffa61bdd1636a04af16e4"
+    },
+    {
+      "path": "original/generated-evidence-web-bindings-Linux/artifacts/lighthouse/web/summary.json",
+      "target": "generated-evidence-web-bindings-Linux/artifacts/lighthouse/web/summary.json",
+      "size": 6622,
+      "sha256": "1a6c8a4fa3e1b843a93557bb07fdc6925d431ff05be016077b3a628010cdc516"
+    },
+    {
+      "path": "original/generated-evidence-web-d1-Linux/artifacts/gate-full-all-linux.json",
+      "target": "generated-evidence-web-d1-Linux/artifacts/gate-full-all-linux.json",
+      "size": 13739,
+      "sha256": "dfcf1acd4804bea006078cc0fe80b24e2abe9b52ad81709ca59fbabd4c61bae1"
+    },
+    {
+      "path": "original/generated-evidence-web-d1-Linux/artifacts/generation.json",
+      "target": "generated-evidence-web-d1-Linux/artifacts/generation.json",
+      "size": 564,
+      "sha256": "33a7d8761eebde690794b6699e9c305bbc0020a35fb3f995aa6e44333102edff"
+    },
+    {
+      "path": "original/generated-evidence-web-d1-Linux/artifacts/lighthouse/web/summary.json",
+      "target": "generated-evidence-web-d1-Linux/artifacts/lighthouse/web/summary.json",
+      "size": 6622,
+      "sha256": "1fe9459395295ada23b718d41dd56ec00e00e42a5bc5c1278b18ba12b40e8685"
+    },
+    {
+      "path": "original/generated-evidence-web-kv-Linux/artifacts/gate-full-all-linux.json",
+      "target": "generated-evidence-web-kv-Linux/artifacts/gate-full-all-linux.json",
+      "size": 13133,
+      "sha256": "5862833970df01e589c1e11369c9e5696ea6f3d42ee48ff98a521b59240aaa06"
+    },
+    {
+      "path": "original/generated-evidence-web-kv-Linux/artifacts/generation.json",
+      "target": "generated-evidence-web-kv-Linux/artifacts/generation.json",
+      "size": 564,
+      "sha256": "241bc47407ec03f7860d7bf2944c507fec6c60cbccd0d55af6f79f42742f81b2"
+    },
+    {
+      "path": "original/generated-evidence-web-kv-Linux/artifacts/lighthouse/web/summary.json",
+      "target": "generated-evidence-web-kv-Linux/artifacts/lighthouse/web/summary.json",
+      "size": 6622,
+      "sha256": "0fd57a719afc2d3990e5649832c879301ea45315851dabd7055d042ce8bb1ad9"
+    },
+    {
+      "path": "original/generated-evidence-web-r2-Linux/artifacts/gate-full-all-linux.json",
+      "target": "generated-evidence-web-r2-Linux/artifacts/gate-full-all-linux.json",
+      "size": 13133,
+      "sha256": "67180b620e6106a0595d7d0f4b17add6f26f22a260c800b18b850c2a58722c72"
+    },
+    {
+      "path": "original/generated-evidence-web-r2-Linux/artifacts/generation.json",
+      "target": "generated-evidence-web-r2-Linux/artifacts/generation.json",
+      "size": 564,
+      "sha256": "ac782488cb491cab897c3a90f6163774c0ac0a77c25830752da59355fcfc6935"
+    },
+    {
+      "path": "original/generated-evidence-web-r2-Linux/artifacts/lighthouse/web/summary.json",
+      "target": "generated-evidence-web-r2-Linux/artifacts/lighthouse/web/summary.json",
+      "size": 6622,
+      "sha256": "882f6cfa74b191c909ebecfb7dba24a1d0335bfe13947eeb1ddf09e5062c08bc"
+    },
+    {
+      "path": "original/observability-evidence/verified.json",
+      "target": "observability-evidence/verified.json",
+      "size": 24187,
+      "sha256": "96afb5ccadcc9130ca9e2cf942f423dfb414a17d4c993314884bac015218482f"
+    },
+    {
+      "path": "original/security-identifiers/report.json",
+      "target": "security-identifiers/report.json",
+      "size": 11438,
+      "sha256": "2ede223b1651a9b62397baa4552f46507ba383816b24d4a12bb89bef95633e2d"
+    },
+    {
+      "path": "original/source-evidence/artifacts/ci-plan.json",
+      "target": "source-evidence/artifacts/ci-plan.json",
+      "size": 21132,
+      "sha256": "c0a1dcfcec00c0a641836c7e5f60beb063d2ebca6b8cecb86577e0351d368c40"
+    },
+    {
+      "path": "original/source-evidence/artifacts/gate-ci-javascript-linux.json",
+      "target": "source-evidence/artifacts/gate-ci-javascript-linux.json",
+      "size": 21348,
+      "sha256": "e707ad0016400c94ffa560ccf158936f6e2cca465f8ff4008d75b52d23cf74e8"
+    },
+    {
+      "path": "original/source-evidence/artifacts/lighthouse/web/summary.json",
+      "target": "source-evidence/artifacts/lighthouse/web/summary.json",
+      "size": 6489,
+      "sha256": "65305671e2518cc08740d01ffc604a9839bee82bf24dba4edcb48e3e2e3c9ab4"
+    },
+    {
+      "path": "original/source-evidence/artifacts/sanitization-support.json",
+      "target": "source-evidence/artifacts/sanitization-support.json",
+      "size": 22455,
+      "sha256": "9bd0aa13337b1998dff632e278b034846bc1eb2168775c16c3c1391836bd4a29"
+    },
+    {
+      "path": "original/source-evidence/artifacts/sanitization.json",
+      "target": "source-evidence/artifacts/sanitization.json",
+      "size": 1203,
+      "sha256": "9c325116a16e53942570696a219f3efa3ff47ecf055fc5372a9baee758702260"
+    }
+  ],
+  "originalBlockedAcceptance": {
+    "path": "original/acceptance/acceptance.json",
+    "sha256": "1f79e25fe8ec177275e30110c8038ccb8cf4057d62f1eefee656ff122ae7f4f9",
+    "status": "blocked",
+    "actualExit": 1,
+    "passedPresetOsRows": 15,
+    "passedSourceMechanisms": 11,
+    "missingAgentMechanisms": [
+      "agent-web-api",
+      "agent-desktop",
+      "agent-package-add"
+    ]
+  },
+  "sanitization": {
+    "profileSha256": "38f2cbe9f89f18109fe04fd7705a2385ca304937bb7d25ed7a7868ac553a5f04",
+    "controls": [
+      {
+        "name": "brand",
+        "negativeExit": 1,
+        "repairExit": 0,
+        "negativeReport": "50bf7f091d5f5eae7779d61a8932bac8903d07182747dc1c1ef9c478d7188f60",
+        "repairReport": "c1ef35e67ce542c0a9beefc7d0586a4fe865d16e1266fcad3b5f121ae3100d3f",
+        "sameInput": true
+      },
+      {
+        "name": "scope",
+        "negativeExit": 1,
+        "repairExit": 0,
+        "negativeReport": "a2046e5e6a70ff1914de36fd3db7f28352bd8892efac3bb9890d76e1dce685d3",
+        "repairReport": "551eb6779ae466efa1d5d56d6dbb5a5fe9e7fd46ad7e6aa1d09d0d28ee44d692",
+        "sameInput": true
+      },
+      {
+        "name": "layout",
+        "negativeExit": 1,
+        "repairExit": 0,
+        "negativeReport": "a2672eca3d58c9e9c7b142f540640878b637c873710e55e84b9f08d162a87efa",
+        "repairReport": "d76bef9a377809691b0512a48120ff8754def11b0b9d71fd40e0e82a157c176d",
+        "sameInput": true
+      },
+      {
+        "name": "media",
+        "negativeExit": 1,
+        "repairExit": 0,
+        "negativeReport": "3c58b20e6711a72956225994f47fe821d3fdaee060741caddfb05409934bb499",
+        "repairReport": "21e873872d1762bbe6f495a6ab188423756861b49182a4f3cc9a10f7ab66cd10",
+        "sameInput": true
+      },
+      {
+        "name": "runner",
+        "negativeExit": 1,
+        "repairExit": 0,
+        "negativeReport": "481fe15eaff3b34c76730ab1b2d4e3a84695f96c9edb370cfe630d630827e180",
+        "repairReport": "93e70b7e92e5bd96e0b9c8afc4c72b122e10d75639f6a20e38528f951cf2ce3e",
+        "sameInput": true
+      },
+      {
+        "name": "updater",
+        "negativeExit": 1,
+        "repairExit": 0,
+        "negativeReport": "7f7d36b8d72d1c71f242bdae7902085768590d7bd41034a6e5957a9b6b5cd85d",
+        "repairReport": "1393a9b5884a4bcddcb1c0bba0f55ec09e21b1276607b1cc95e553a320f46a35",
+        "sameInput": true
+      }
+    ],
+    "summaryPath": "original/controls/summary.json",
+    "summarySha256": "9bd0aa13337b1998dff632e278b034846bc1eb2168775c16c3c1391836bd4a29",
+    "finalSourcePath": "original/source-evidence/artifacts/sanitization.json",
+    "finalSourceSha256": "9c325116a16e53942570696a219f3efa3ff47ecf055fc5372a9baee758702260",
+    "builtPackages": 7,
+    "classification": "Six same-input actual fail/repair/pass control originals remain outside accepted evidence"
+  },
+  "lighthouse": {
+    "summaries": 20,
+    "officialSDKValidatedRawRuns": 240,
+    "version": "13.5.0",
+    "profiles": [
+      "mobile",
+      "desktop"
+    ],
+    "runsPerPage": 3,
+    "categoryScores": 1,
+    "rawDecodingByRoot": false,
+    "classification": "Reviewed exporter independently read/hash/profile/audit-validated actual raw LHR and invoked unchanged owning SDK validator on runner; Root decoded summaries/metadata only. All original large raw/HTML remain original same-run artifacts."
+  },
+  "historicalFailures": [
+    {
+      "runId": 38300642048,
+      "carrierSha": "cc3542a4c2d4dbe6681feefc1ba5c6a71a27a69e",
+      "scope": "Completed support-only build-output directory assumption failure before controls; original log/artifacts preserved"
+    },
+    {
+      "runId": 38302074157,
+      "carrierSha": "2edba9e9fc1c537e2da5102a7c1e0c19566ba8e1",
+      "scope": "Completed support-only require-condition SDK import failure before controls; original log/artifacts/fallback decoded failure preserved"
+    }
+  ],
+  "parts": [
+    {
+      "name": "part-000.json",
+      "encoding": "utf8+base64",
+      "size": 1561,
+      "sha256": "d69c6e5195e9f1a09e6934dbf738736db373425889bcbbc1012d9b2e7df0b113",
+      "chunks": 1,
+      "sourceSha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+      "carrierSha": "480001a3fcdd2475e9ee670fa120f9ed8faafa4b",
+      "runId": "38303540755"
+    },
+    {
+      "name": "part-003.json",
+      "encoding": "utf8+base64",
+      "size": 880709,
+      "sha256": "c7a5e7c60f7ee2dfc6de4ebaaaa35fcd8b0ace6bfe28034490762bb99a09e762",
+      "chunks": 196,
+      "sourceSha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+      "carrierSha": "480001a3fcdd2475e9ee670fa120f9ed8faafa4b",
+      "runId": "38303540755"
+    },
+    {
+      "name": "part-001.json",
+      "encoding": "utf8+base64",
+      "size": 1034923,
+      "sha256": "1443da3b347d41afd10cb2c1e973890f38c30a07d14515c77702297a72b5c0c0",
+      "chunks": 230,
+      "sourceSha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+      "carrierSha": "480001a3fcdd2475e9ee670fa120f9ed8faafa4b",
+      "runId": "38303540755"
+    },
+    {
+      "name": "part-002.json",
+      "encoding": "utf8+base64",
+      "size": 998688,
+      "sha256": "315ed596d3f0a28a88a1384d77e02e5abf085ce9ee9e64bef9b4ea50686cd283",
+      "chunks": 222,
+      "sourceSha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+      "carrierSha": "480001a3fcdd2475e9ee670fa120f9ed8faafa4b",
+      "runId": "38303540755"
+    }
+  ],
+  "classification": "API byte transport only; preserves all303 original current-source exported text files byte-for-byte. It is not feature authoring, normal Git-RPC proof or a final passed acceptance report."
+}

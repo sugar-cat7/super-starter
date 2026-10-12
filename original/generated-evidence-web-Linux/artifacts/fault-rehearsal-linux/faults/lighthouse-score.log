@@ -1,0 +1,116 @@
+$ node ../../tools/quality/lighthouse.ts
+$ node ../../tools/cloudflare/build.ts
+transforming...
+✓ 364 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/assets/assets/index-D17-EbZ6.css              6.68 kB │ gzip:  2.26 kB
+.cloudflare/output/v0/workers/default/assets/assets/about-CjEoILFc.js               0.42 kB │ gzip:  0.30 kB
+.cloudflare/output/v0/workers/default/assets/assets/rolldown-runtime-CbXtAM7H.js    0.58 kB │ gzip:  0.36 kB
+.cloudflare/output/v0/workers/default/assets/assets/react-BuqwL3YU.js               8.24 kB │ gzip:  3.11 kB
+.cloudflare/output/v0/workers/default/assets/assets/index-BIhzbZnL.js              24.94 kB │ gzip:  8.63 kB
+.cloudflare/output/v0/workers/default/assets/assets/routes-CJj_nzQb.js             45.27 kB │ gzip: 15.04 kB
+.cloudflare/output/v0/workers/default/assets/assets/client-DV6016mM.js            120.25 kB │ gzip: 40.99 kB
+.cloudflare/output/v0/workers/default/assets/assets/react-dom-uP1KSDv5.js         211.21 kB │ gzip: 65.86 kB
+
+[32m✓ built in 210ms[39m
+transforming...
+✓ 449 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json                              3.45 kB │ gzip:   0.71 kB
+.cloudflare/output/v0/workers/default/bundle/assets/router-D17-EbZ6.css                       6.68 kB │ gzip:   2.26 kB
+.cloudflare/output/v0/workers/default/bundle/assets/empty-plugin-adapters-CVykojMw.js         0.28 kB │ gzip:   0.18 kB
+.cloudflare/output/v0/workers/default/bundle/assets/start-DWcS3WmS.js                         0.29 kB │ gzip:   0.22 kB
+.cloudflare/output/v0/workers/default/bundle/assets/about-NjiltK0E.js                         0.72 kB │ gzip:   0.41 kB
+.cloudflare/output/v0/workers/default/bundle/assets/jsx-runtime-BZtfA-4f.js                   2.59 kB │ gzip:   1.11 kB
+.cloudflare/output/v0/workers/default/bundle/assets/_tanstack-start-manifest_v-BL_AsmeP.js    7.66 kB │ gzip:   2.65 kB
+.cloudflare/output/v0/workers/default/bundle/assets/routes-BUiN61XL.js                        9.10 kB │ gzip:   2.73 kB
+.cloudflare/output/v0/workers/default/bundle/assets/react-DOK9jBYa.js                        16.57 kB │ gzip:   4.47 kB
+.cloudflare/output/v0/workers/default/bundle/assets/router-hCL79LZm.js                       40.67 kB │ gzip:  10.52 kB
+.cloudflare/output/v0/workers/default/bundle/assets/Match-BAqK4OKj.js                       145.22 kB │ gzip:  36.43 kB
+.cloudflare/output/v0/workers/default/bundle/assets/src-BawW6lkC.js                         222.51 kB │ gzip:  52.39 kB
+.cloudflare/output/v0/workers/default/bundle/index.js                                       800.14 kB │ gzip: 169.11 kB
+
+[32m✓ built in 324ms[39m
+[@rehearsal/web] $ node preview.ts
+[@rehearsal/web] 
+ ⛅️ wrangler 4.149.0
+────────────────────
+[@rehearsal/web] Your Worker has access to the following bindings:
+[@rehearsal/web] Binding                                          Resource                  Mode
+[@rehearsal/web] env.ASSETS                                       Assets                    local
+[@rehearsal/web] env.OTEL_SERVICE_NAME ("rehearsal-web-web")      Environment Variable      local
+[@rehearsal/web] env.OTEL_INSTANCE ("rehearsal-web")              Environment Variable      local
+[@rehearsal/web] env.OTEL_RUN_ID ("local")                        Environment Variable      local
+[@rehearsal/web] env.OTEL_VERSION ("development")                 Environment Variable      local
+[@rehearsal/web] env.OTEL_ENDPOINT ("")                           Environment Variable      local
+[@rehearsal/web] env.WRITE_MODE ("allow")                         Environment Variable      local
+[@rehearsal/web] 
+[@rehearsal/web] Attaching additional modules:
+[@rehearsal/web] ┌───────────────────────────────────────────────┬──────┬────────────┐
+│ Name                                          │ Type │ Size       │
+├───────────────────────────────────────────────┼──────┼────────────┤
+│ assets/Match-BAqK4OKj.js                      │ esm  │ 141.82 KiB │
+├───────────────────────────────────────────────┼──────┼────────────┤
+│ assets/_tanstack-start-manifest_v-BL_AsmeP.js │ esm  │ 7.48 KiB   │
+├───────────────────────────────────────────────┼──────┼────────────┤
+│ assets/about-NjiltK0E.js                      │ esm  │ 0.71 KiB   │
+├───────────────────────────────────────────────┼──────┼────────────┤
+│ assets/empty-plugin-adapters-CVykojMw.js      │ esm  │ 0.28 KiB   │
+├───────────────────────────────────────────────┼──────┼────────────┤
+│ assets/jsx-runtime-BZtfA-4f.js                │ esm  │ 2.53 KiB   │
+├───────────────────────────────────────────────┼──────┼────────────┤
+│ assets/react-DOK9jBYa.js                      │ esm  │ 16.18 KiB  │
+├───────────────────────────────────────────────┼──────┼────────────┤
+│ assets/router-hCL79LZm.js                     │ esm  │ 39.72 KiB  │
+├───────────────────────────────────────────────┼──────┼────────────┤
+│ assets/routes-BUiN61XL.js                     │ esm  │ 8.89 KiB   │
+├───────────────────────────────────────────────┼──────┼────────────┤
+│ assets/src-BawW6lkC.js                        │ esm  │ 217.30 KiB │
+├───────────────────────────────────────────────┼──────┼────────────┤
+│ assets/start-DWcS3WmS.js                      │ esm  │ 0.29 KiB   │
+├───────────────────────────────────────────────┼──────┼────────────┤
+│ Total (10 modules)                            │      │ 435.22 KiB │
+└───────────────────────────────────────────────┴──────┴────────────┘
+[@rehearsal/web] ⎔ Starting local server...
+[@rehearsal/web] [wrangler:info] Ready on http://127.0.0.1:39527
+[@rehearsal/web] [wrangler:info] GET /health 200 OK (10ms)
+READY @rehearsal/web http://127.0.0.1:39527 1431ms; registry /tmp/starter-lighthouse-NEVNDk/registry/session-ySPCET
+[@rehearsal/web] [wrangler:info] GET / 200 OK (40ms)
+LIGHTHOUSE_BROWSER 33587 http://127.0.0.1:34063
+[@rehearsal/web] [wrangler:info] GET / 200 OK (7ms)
+[@rehearsal/web] [wrangler:info] GET /assets/index-BIhzbZnL.js 200 OK (136ms)
+[@rehearsal/web] [wrangler:info] GET /assets/routes-CJj_nzQb.js 200 OK (142ms)
+[wrangler:info] GET /assets/rolldown-runtime-CbXtAM7H.js 200 OK (144ms)
+[@rehearsal/web] [wrangler:info] GET /assets/react-BuqwL3YU.js 200 OK (144ms)
+[@rehearsal/web] [wrangler:info] GET /assets/react-dom-uP1KSDv5.js 200 OK (7ms)
+[@rehearsal/web] [wrangler:info] GET /assets/client-DV6016mM.js 200 OK (7ms)
+[@rehearsal/web] [wrangler:info] GET /assets/index-D17-EbZ6.css 200 OK (5ms)
+[@rehearsal/web] [wrangler:info] GET /api/notes 200 OK (137ms)
+[@rehearsal/web] [wrangler:info] GET /llms.txt 404 Not Found (5ms)
+[@rehearsal/web] [wrangler:info] GET /assets/index-D17-EbZ6.css 304 Not Modified (5ms)
+[@rehearsal/web] [wrangler:info] GET /robots.txt 404 Not Found (4ms)
+[@rehearsal/web] [wrangler:info] GET / 200 OK (5ms)
+[@rehearsal/web] [wrangler:info] GET /.well-known/ai-catalog.json 404 Not Found (3ms)
+[@rehearsal/web] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+[@rehearsal/web]   × "pnpm recursive run" failed in /tmp/starter-faults-6fzqJJ/project/
+  │ packages/web
+
+file:///tmp/starter-faults-6fzqJJ/project/tools/quality/test-results.ts:121
+    throw new Error(
+          ^
+
+Error: Lighthouse requires every category to score 100: seo=90
+    at lighthouseScores (file:///tmp/starter-faults-6fzqJJ/project/tools/quality/test-results.ts:121:11)
+    at audit (file:///tmp/starter-faults-6fzqJJ/project/tools/quality/lighthouse.ts:316:28)
+    at async file:///tmp/starter-faults-6fzqJJ/project/tools/quality/lighthouse.ts:377:31
+
+Node.js v24.21.0
+[ELIFECYCLE] Command failed with exit code 1.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in /tmp/starter-faults-6fzqJJ/project/
+  │ packages/web
+

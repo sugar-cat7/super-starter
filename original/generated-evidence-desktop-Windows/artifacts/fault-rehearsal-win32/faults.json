@@ -1,0 +1,466 @@
+{
+  "schema": 1,
+  "baselineDifferences": [],
+  "status": "passed",
+  "configuration": {
+    "name": "rehearsal-desktop",
+    "scope": "@rehearsal",
+    "identifier": "com.example.rehearsaldesktop",
+    "preset": "desktop",
+    "features": []
+  },
+  "workspace": [
+    {
+      "name": "@rehearsal/contracts",
+      "directory": "packages/contracts",
+      "runtime": "library",
+      "dependencies": [
+        "zod",
+        "typescript",
+        "vite-plus",
+        "vitest"
+      ],
+      "scripts": {
+        "check": "vp check .",
+        "test": "node ../../tools/quality/vitest.ts",
+        "build": "vp pack"
+      }
+    },
+    {
+      "name": "@rehearsal/desktop",
+      "directory": "packages/desktop",
+      "runtime": "desktop",
+      "dependencies": [
+        "@rehearsal/contracts",
+        "@rehearsal/observability",
+        "@rehearsal/ui",
+        "@tauri-apps/api",
+        "react",
+        "react-dom",
+        "@tailwindcss/vite",
+        "@tauri-apps/cli",
+        "@types/mocha",
+        "@types/react",
+        "@types/react-dom",
+        "@vitejs/plugin-react",
+        "@wdio/cli",
+        "@wdio/globals",
+        "@wdio/json-reporter",
+        "@wdio/local-runner",
+        "@wdio/mocha-framework",
+        "@wdio/spec-reporter",
+        "@wdio/tauri-plugin",
+        "@wdio/tauri-service",
+        "@wdio/types",
+        "tailwindcss",
+        "typescript",
+        "vite-plus",
+        "vitest",
+        "webdriverio"
+      ],
+      "scripts": {
+        "dev": "tauri dev",
+        "dev:renderer": "vp dev --host 127.0.0.1 --strictPort",
+        "build:renderer": "vp build",
+        "check": "vp check .",
+        "test": "node ../../tools/quality/vitest.ts --config vitest.config.ts",
+        "test:rust": "node ../../tools/quality/native.ts rust",
+        "test:native": "node ../../tools/quality/native.ts e2e",
+        "test:release": "node ../../tools/quality/native.ts release",
+        "build": "node ../../tools/quality/native.ts build",
+        "build:bundle": "tauri build"
+      }
+    },
+    {
+      "name": "@rehearsal/observability",
+      "directory": "packages/observability",
+      "runtime": "library",
+      "dependencies": [
+        "@opentelemetry/api",
+        "@opentelemetry/resources",
+        "@opentelemetry/sdk-trace-base",
+        "@rehearsal/contracts",
+        "typescript",
+        "vite-plus",
+        "vitest"
+      ],
+      "scripts": {
+        "check": "vp check .",
+        "test": "node ../../tools/quality/vitest.ts",
+        "build": "vp pack"
+      }
+    },
+    {
+      "name": "@rehearsal/ui",
+      "directory": "packages/ui",
+      "runtime": "library",
+      "dependencies": [
+        "@rehearsal/contracts",
+        "react",
+        "@testing-library/react",
+        "@testing-library/user-event",
+        "@types/react",
+        "jsdom",
+        "react-dom",
+        "typescript",
+        "vite-plus",
+        "vitest"
+      ],
+      "scripts": {
+        "check": "vp check .",
+        "test": "node ../../tools/quality/vitest.ts",
+        "build": "vp pack"
+      }
+    }
+  ],
+  "origin": {
+    "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+    "dirty": false,
+    "contentId": "674e626f3d371f45ec71b953addd90a97585701a6f590c197d667fd8f5a181bd"
+  },
+  "contentId": "914ecc11ffa587601b214d72a71489b6f88332492619caf96ac00084a71d80e2",
+  "os": "win32",
+  "reports": [
+    {
+      "id": "skill-metadata",
+      "command": [
+        "check"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 12502,
+      "log": "artifacts/faults/skill-metadata.log"
+    },
+    {
+      "id": "format",
+      "command": [
+        "exec",
+        "vp",
+        "fmt",
+        "--check",
+        "tools/fault-probe.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 8489,
+      "log": "artifacts/faults/format.log"
+    },
+    {
+      "id": "lint",
+      "command": [
+        "exec",
+        "vp",
+        "lint",
+        "tools/fault-probe.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 10163,
+      "log": "artifacts/faults/lint.log"
+    },
+    {
+      "id": "type",
+      "command": [
+        "exec",
+        "vp",
+        "check"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 12532,
+      "log": "artifacts/faults/type.log"
+    },
+    {
+      "id": "lint-floating-void",
+      "command": [
+        "exec",
+        "vp",
+        "lint",
+        "--type-aware",
+        "tools/fault-probe.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 8999,
+      "log": "artifacts/faults/lint-floating-void.log"
+    },
+    {
+      "id": "lint-misused-promise",
+      "command": [
+        "exec",
+        "vp",
+        "lint",
+        "--type-aware",
+        "tools/fault-probe.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 8960,
+      "log": "artifacts/faults/lint-misused-promise.log"
+    },
+    {
+      "id": "lint-exhaustiveness",
+      "command": [
+        "exec",
+        "vp",
+        "lint",
+        "--type-aware",
+        "tools/fault-probe.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 8904,
+      "log": "artifacts/faults/lint-exhaustiveness.log"
+    },
+    {
+      "id": "secret-tools",
+      "command": [
+        "exec",
+        "node",
+        "tools/quality/structure.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 8265,
+      "log": "artifacts/faults/secret-tools.log"
+    },
+    {
+      "id": "secret-contracts",
+      "command": [
+        "exec",
+        "node",
+        "tools/quality/structure.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 8218,
+      "log": "artifacts/faults/secret-contracts.log"
+    },
+    {
+      "id": "unit-focused",
+      "command": [
+        "test:tools",
+        "--",
+        "tools/quality/test-results.test.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 4543,
+      "log": "artifacts/faults/unit-focused.log"
+    },
+    {
+      "id": "unit",
+      "command": [
+        "test:tools",
+        "--",
+        "tools/quality/test-results.test.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 4544,
+      "log": "artifacts/faults/unit.log"
+    },
+    {
+      "id": "unit-zero",
+      "command": [
+        "test:tools",
+        "--",
+        "tools/quality/test-results.test.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 4558,
+      "log": "artifacts/faults/unit-zero.log"
+    },
+    {
+      "id": "unit-skipped",
+      "command": [
+        "test:tools",
+        "--",
+        "tools/quality/test-results.test.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 4565,
+      "log": "artifacts/faults/unit-skipped.log"
+    },
+    {
+      "id": "unit-timeout",
+      "command": [
+        "test:tools",
+        "--",
+        "tools/quality/test-results.test.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 4558,
+      "log": "artifacts/faults/unit-timeout.log"
+    },
+    {
+      "id": "boundary",
+      "command": [
+        "exec",
+        "node",
+        "tools/quality/structure.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 8773,
+      "log": "artifacts/faults/boundary.log"
+    },
+    {
+      "id": "result-discard",
+      "command": [
+        "exec",
+        "node",
+        "tools/quality/structure.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 8635,
+      "log": "artifacts/faults/result-discard.log"
+    },
+    {
+      "id": "telemetry-owner",
+      "command": [
+        "exec",
+        "node",
+        "tools/quality/structure.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 8676,
+      "log": "artifacts/faults/telemetry-owner.log"
+    },
+    {
+      "id": "error-catalog-drift",
+      "command": [
+        "check"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 13446,
+      "log": "artifacts/faults/error-catalog-drift.log"
+    },
+    {
+      "id": "contract",
+      "command": [
+        "--filter",
+        "@rehearsal/contracts",
+        "test"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 5475,
+      "log": "artifacts/faults/contract.log"
+    },
+    {
+      "id": "rust-behavior",
+      "command": [
+        "--filter",
+        "@rehearsal/desktop",
+        "test:rust"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 250295,
+      "log": "artifacts/faults/rust-behavior.log"
+    },
+    {
+      "id": "rust-zero",
+      "command": [
+        "--filter",
+        "@rehearsal/desktop",
+        "test:rust"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 19792,
+      "log": "artifacts/faults/rust-zero.log"
+    },
+    {
+      "id": "rust-ignored",
+      "command": [
+        "--filter",
+        "@rehearsal/desktop",
+        "test:rust"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 20544,
+      "log": "artifacts/faults/rust-ignored.log"
+    },
+    {
+      "id": "rust-timeout",
+      "command": [
+        "--filter",
+        "@rehearsal/desktop",
+        "test:rust"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 25027,
+      "log": "artifacts/faults/rust-timeout.log"
+    },
+    {
+      "id": "native-behavior",
+      "command": [
+        "--filter",
+        "@rehearsal/desktop",
+        "test:native"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 477692,
+      "log": "artifacts/faults/native-behavior.log"
+    },
+    {
+      "id": "native-focused",
+      "command": [
+        "--filter",
+        "@rehearsal/desktop",
+        "test:native"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 225763,
+      "log": "artifacts/faults/native-focused.log"
+    },
+    {
+      "id": "native-zero",
+      "command": [
+        "--filter",
+        "@rehearsal/desktop",
+        "test:native"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 212013,
+      "log": "artifacts/faults/native-zero.log"
+    },
+    {
+      "id": "native-skipped",
+      "command": [
+        "--filter",
+        "@rehearsal/desktop",
+        "test:native"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 208672,
+      "log": "artifacts/faults/native-skipped.log"
+    },
+    {
+      "id": "native-timeout",
+      "command": [
+        "--filter",
+        "@rehearsal/desktop",
+        "test:native"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 210582,
+      "log": "artifacts/faults/native-timeout.log"
+    }
+  ]
+}

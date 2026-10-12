@@ -1,0 +1,144 @@
+$ node tools/cloudflare/deploy.ts preflight -- --target @rehearsal/api --environment dev
+$ node tools/quality/check.ts
+pass: All 159 files are correctly formatted (191ms, 4 threads)
+pass: Found no warnings, lint errors, or type errors in 114 files (1.5s, 4 threads)
+Static quality, runtime boundaries and documentation passed
+$ node ../../tools/quality/vitest.ts --config vitest.config.ts
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/tmp/starter-faults-DbBr7a/project/packages/api[39m
+
+ [32m✓[39m test/unit.test.ts [2m([22m[2m14 tests[22m[2m)[22m[33m 3124[2mms[22m[39m
+   [32m✓[39m API validation and safe publication defaults [2m(14)[22m
+     [33m[2m✓[22m[39m bounds a stalled ingress even when its cancellation never settles[33m 3004[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m14 passed[39m[22m[90m (14)[39m
+[2m   Start at [22m 20:30:53
+[2m   Duration [22m 3.45s[2m (tests 94%, import 4%, transform 2%)[22m
+
+JSON report written to /tmp/starter-faults-DbBr7a/project/packages/api/artifacts/tests-vitest.config.ts.json
+Executed 14 required test cases
+$ node ../../tools/cloudflare/runtime.ts
+$ node ../../tools/cloudflare/build.ts
+No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+├  Build
+│  Delegating to Vite
+transforming...
+✓ 254 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json    0.15 kB │ gzip:  0.11 kB
+.cloudflare/output/v0/workers/default/bundle/index.js             291.24 kB │ gzip: 68.21 kB
+
+[32m✓ built in 74ms[39m
+◆  Build complete
+
+ ⛅️ wrangler 4.149.0
+────────────────────
+Resource location: local 
+
+Use --remote if you want to access the remote instance.
+
+Migrations to be applied:
+┌────────────────┐
+│ name           │
+├────────────────┤
+│ 0001_notes.sql │
+└────────────────┘
+? About to apply 1 migration(s)
+Your database may not be available to serve requests during the migration, continue?
+🤖 Using fallback value in non-interactive context: yes
+🌀 Executing on local database DATABASE (0bcbb546-fda6-4677-8530-c5869111108b) from ../../../../starter-runtime-iPswnh/api/v3/d1:
+🌀 To execute on your remote database, add a --remote flag to your wrangler command.
+🚣 2 commands executed successfully.
+┌────────────────┬────────┐
+│ name           │ status │
+├────────────────┼────────┤
+│ 0001_notes.sql │ ✅     │
+└────────────────┴────────┘
+
+ ⛅️ wrangler 4.149.0
+────────────────────
+Resource location: local 
+
+Use --remote if you want to access the remote instance.
+
+🌀 Executing on local database DATABASE (0bcbb546-fda6-4677-8530-c5869111108b) from ../../../../starter-runtime-iPswnh/api/v3/d1:
+🌀 To execute on your remote database, add a --remote flag to your wrangler command.
+🚣 1 command executed successfully.
+[
+  {
+    "results": [],
+    "success": true,
+    "meta": {
+      "duration": 1
+    }
+  }
+]
+[@rehearsal/api] $ cf dev --mode offline
+[@rehearsal/api] No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+[@rehearsal/api]   [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m39789[22m/[39m
+READY @rehearsal/api http://127.0.0.1:39789 2265ms; registry /tmp/starter-runtime-iPswnh/registry/session-Np8gmc
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/tmp/starter-faults-DbBr7a/project/packages/api[39m
+
+ [32m✓[39m test/runtime.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 342[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m4 passed[39m[22m[90m (4)[39m
+[2m   Start at [22m 20:31:04
+[2m   Duration [22m 551ms[2m (tests 76%, import 14%, transform 9%, worker 1%)[22m
+
+JSON report written to /tmp/starter-faults-DbBr7a/project/packages/api/artifacts/tests-vitest.runtime.config.ts.json
+Executed 4 required test cases
+[@rehearsal/api] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+[@rehearsal/api]   × "pnpm recursive run" failed in /tmp/starter-faults-DbBr7a/project/
+  │ packages/api
+
+$ node ../../tools/cloudflare/build.ts
+No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+├  Build
+│  Delegating to Vite
+file:///tmp/starter-faults-DbBr7a/project/packages/api/cloudflare.config.ts?cf-no-cache=12a9f9d6-7a30-4aab-b82a-5400c86fe617:11
+      throw new Error(
+            ^
+
+Error: D1_DATABASE_ID is required for dev; run deploy:preflight and configure the named environment
+    at required (file:///tmp/starter-faults-DbBr7a/project/packages/api/cloudflare.config.ts?cf-no-cache=12a9f9d6-7a30-4aab-b82a-5400c86fe617:11:13)
+    at file:///tmp/starter-faults-DbBr7a/project/packages/api/cloudflare.config.ts?cf-no-cache=12a9f9d6-7a30-4aab-b82a-5400c86fe617:38:17
+    at file:///tmp/starter-faults-DbBr7a/project/node_modules/.pnpm/@cloudflare+config@0.24.1/node_modules/@cloudflare/config/dist/index.mjs:1596:48
+    at file:///tmp/starter-faults-DbBr7a/project/node_modules/.pnpm/@cloudflare+config@0.24.1/node_modules/@cloudflare/config/dist/index.mjs:1597:5
+    at resolveAndParseConfig (file:///tmp/starter-faults-DbBr7a/project/node_modules/.pnpm/@cloudflare+config@0.24.1/node_modules/@cloudflare/config/dist/index.mjs:1742:25)
+    at loadAndParseConfig (file:///tmp/starter-faults-DbBr7a/project/node_modules/.pnpm/@cloudflare+config@0.24.1/node_modules/@cloudflare/config/dist/index.mjs:1773:17)
+    at async loadCloudflareConfig (file:///tmp/starter-faults-DbBr7a/project/node_modules/.pnpm/@cloudflare+vite-plugin@2.0.0-beta.sha-91c870c02_@types+node@24.19.1_@voidzero-dev+vite_cdfdca47ff2b3cca5ddd5cc46243f88d/node_modules/@cloudflare/vite-plugin/dist/index.mjs:85086:35)
+    at async resolvePluginConfig (file:///tmp/starter-faults-DbBr7a/project/node_modules/.pnpm/@cloudflare+vite-plugin@2.0.0-beta.sha-91c870c02_@types+node@24.19.1_@voidzero-dev+vite_cdfdca47ff2b3cca5ddd5cc46243f88d/node_modules/@cloudflare/vite-plugin/dist/index.mjs:84900:23)
+    at async BasicMinimalPluginContext.config (file:///tmp/starter-faults-DbBr7a/project/node_modules/.pnpm/@cloudflare+vite-plugin@2.0.0-beta.sha-91c870c02_@types+node@24.19.1_@voidzero-dev+vite_cdfdca47ff2b3cca5ddd5cc46243f88d/node_modules/@cloudflare/vite-plugin/dist/index.mjs:91167:33)
+    at async runConfigHook (file:///tmp/starter-faults-DbBr7a/project/node_modules/.pnpm/@voidzero-dev+vite-plus-core@1.1.0_@types+node@24.19.1_esbuild@0.28.2_jiti@2.7.0_typescript@7.0.2_yaml@2.9.1/node_modules/@voidzero-dev/vite-plus-core/dist/vite/node/chunks/node.js:43303:15)
+
+Node.js v24.21.0
+file:///tmp/starter-faults-DbBr7a/project/tools/process.ts:293
+            new Error(
+            ^
+
+Error: /home/runner/.local/share/mise/installs/aqua-pnpm-pnpm/12.11.2/pnpm exec cf build --mode dev: exit 1, signal null
+    at file:///tmp/starter-faults-DbBr7a/project/tools/process.ts:293:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.21.0
+[ELIFECYCLE] Command failed with exit code 1.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in /tmp/starter-faults-DbBr7a/project/
+  │ packages/api
+
+file:///tmp/starter-faults-DbBr7a/project/tools/process.ts:293
+            new Error(
+            ^
+
+Error: /home/runner/.local/share/mise/installs/aqua-pnpm-pnpm/12.11.2/pnpm --filter @rehearsal/api build: exit 1, signal null
+    at file:///tmp/starter-faults-DbBr7a/project/tools/process.ts:293:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.21.0
+[ELIFECYCLE] Command failed with exit code 1.

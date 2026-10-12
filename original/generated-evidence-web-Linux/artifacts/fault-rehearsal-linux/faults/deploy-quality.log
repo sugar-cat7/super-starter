@@ -1,0 +1,32 @@
+$ node tools/cloudflare/deploy.ts preflight -- --target @rehearsal/web --environment local
+$ node tools/quality/check.ts
+pass: All 174 files are correctly formatted (145ms, 4 threads)
+error: Lint or type issues found
+[38;2;225;80;80;1m×[0m [38;2;225;80;80;1meslint(no-debugger): `debugger` statement is not allowed[0m
+   ╭─[[38;2;92;157;255;1mtools/fault-probe.ts[0m:1:1]
+ [2m1[0m │ debugger;
+   · [38;2;246;87;248m─────────[0m
+   ╰────
+[38;2;106;159;181m  help: [0mRemove the debugger statement
+
+Found 1 error and 0 warnings in 127 files (1.3s, 4 threads)
+file:///tmp/starter-faults-6fzqJJ/project/tools/process.ts:293
+            new Error(
+            ^
+
+Error: /home/runner/.local/share/mise/installs/aqua-pnpm-pnpm/12.11.2/pnpm exec vp check: exit 1, signal null
+    at file:///tmp/starter-faults-6fzqJJ/project/tools/process.ts:293:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.21.0
+[ELIFECYCLE] Command failed with exit code 1.
+file:///tmp/starter-faults-6fzqJJ/project/tools/process.ts:293
+            new Error(
+            ^
+
+Error: /home/runner/.local/share/mise/installs/aqua-pnpm-pnpm/12.11.2/pnpm check: exit 1, signal null
+    at file:///tmp/starter-faults-6fzqJJ/project/tools/process.ts:293:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.21.0
+[ELIFECYCLE] Command failed with exit code 1.

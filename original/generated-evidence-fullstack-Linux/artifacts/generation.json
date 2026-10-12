@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "sha": "uncommitted",
+  "origin": {
+    "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+    "dirty": false,
+    "contentId": "63979c162efb8d9b9155795ff9d1c72ca2758b36b4f36222fb2cf3655cad7756"
+  },
+  "configuration": {
+    "name": "rehearsal-fullstack",
+    "scope": "@rehearsal",
+    "identifier": "com.example.rehearsalfullstack",
+    "preset": "fullstack",
+    "features": [
+      "d1",
+      "kv",
+      "r2",
+      "services"
+    ]
+  },
+  "contentId": "7e81b81cd58fb1e21b9847bf9106c4f8ab73824ce992efff1e89fffaffd0b79f",
+  "os": "linux/x64",
+  "status": "passed",
+  "baselineDifferences": []
+}

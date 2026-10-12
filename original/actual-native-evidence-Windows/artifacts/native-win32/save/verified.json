@@ -1,0 +1,20 @@
+{
+  "scenario": "save",
+  "cases": 1,
+  "os": "win32",
+  "binary": "D:\\a\\super-starter\\super-starter\\.state\\desktop\\target-e2e\\release\\super-starter-desktop.exe",
+  "runId": "native-win32-save-653abf13ae3a54b2434c422ab8dc6800822387c3",
+  "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+  "contentId": "8a91208bf0be87ea59f830dd11d700618bfc46c75493dd9799b0c5c3815fff25",
+  "telemetry": {
+    "traces": {
+      "records": 20
+    },
+    "logs": {
+      "records": 20
+    },
+    "metrics": {
+      "records": 20
+    }
+  }
+}

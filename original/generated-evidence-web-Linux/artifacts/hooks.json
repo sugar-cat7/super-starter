@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "baselineDifferences": [],
+  "phases": [
+    "install-repeat",
+    "valid-commit",
+    "ignored-temporary-index",
+    "partial-stage-valid",
+    "partial-stage-invalid",
+    "empty-diff-repair",
+    "valid-push",
+    "invalid-push",
+    "multi-ref-repair",
+    "linked-worktree",
+    "existing-hook-protection"
+  ],
+  "status": "passed",
+  "origin": {
+    "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+    "dirty": false,
+    "contentId": "150ec3755ea6c00687a4d164266cfb38445f4c62fa114b998e4b2811a9c97760"
+  },
+  "contentId": "a892e62bc32b64c3739fdd550265c9e3bc21457714c182ad88cae695ac0b173d",
+  "os": "linux",
+  "milliseconds": 118520
+}

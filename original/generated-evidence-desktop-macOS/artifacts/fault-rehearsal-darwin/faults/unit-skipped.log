@@ -1,0 +1,23 @@
+$ node tools/quality/vitest.ts -- tools/quality/test-results.test.ts
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/private/var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/starter-faults-DsiUtr/project[39m
+
+ [2m[90m↓[39m[22m tools/quality/test-results.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+
+[2m Test Files [22m [33m1 skipped[39m[90m (1)[39m
+[2m      Tests [22m [33m1 skipped[39m[90m (1)[39m
+[2m   Start at [22m 20:37:36
+[2m   Duration [22m 119ms[2m (import 45%, transform 45%, worker 10%)[22m
+
+JSON report written to /private/var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/starter-faults-DsiUtr/project/artifacts/tests-default.json
+file:///private/var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/starter-faults-DsiUtr/project/tools/quality/test-results.ts:53
+    throw new Error('Required test run must execute cases without failed, skipped or todo tests');
+          ^
+
+Error: Required test run must execute cases without failed, skipped or todo tests
+    at vitestCases (file:///private/var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/starter-faults-DsiUtr/project/tools/quality/test-results.ts:53:11)
+    at file:///private/var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/starter-faults-DsiUtr/project/tools/quality/vitest.ts:40:15
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.21.0
+[ELIFECYCLE] Command failed with exit code 1.

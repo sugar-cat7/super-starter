@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "sha": "uncommitted",
+  "origin": {
+    "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+    "dirty": false,
+    "contentId": "9c1b98aa89ec9d0663d2277677a4231faa153b67ba87110d1b9faa06c4e19103"
+  },
+  "configuration": {
+    "name": "rehearsal-api",
+    "scope": "@rehearsal",
+    "identifier": "com.example.rehearsalapi",
+    "preset": "api",
+    "features": []
+  },
+  "contentId": "ee4f05f388d67b4c2e9af190c74af9b5c95967b3fe18b5a663f86db4d1254b49",
+  "os": "linux/x64",
+  "status": "passed",
+  "baselineDifferences": []
+}

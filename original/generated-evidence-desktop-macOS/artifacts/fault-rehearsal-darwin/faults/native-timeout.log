@@ -1,0 +1,118 @@
+$ node ../../tools/quality/native.ts e2e
+        Info Looking up installed tauri packages to check mismatched versions...
+     Running beforeBuildCommand `pnpm build:renderer --mode e2e`
+$ vp build --mode e2e
+transforming...
+✓ 249 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                           0.48 kB │ gzip:  0.29 kB
+dist/assets/index-BvNagr1_.css            6.48 kB │ gzip:  2.21 kB
+dist/assets/core-B_7XDIRk.js              0.05 kB │ gzip:  0.07 kB
+dist/assets/core-B3IRXRGI.js              0.20 kB │ gzip:  0.16 kB
+dist/assets/event-C5LDQCVX.js             1.04 kB │ gzip:  0.54 kB
+dist/assets/preload-helper-DjzSQ1t3.js    1.38 kB │ gzip:  0.75 kB
+dist/assets/dist-js-Dj0aRydg.js          16.35 kB │ gzip:  4.55 kB
+dist/assets/index-DZtZ1ehn.js           287.15 kB │ gzip: 90.38 kB
+
+[32m✓ built in 292ms[39m
+   Compiling rehearsal-desktop-desktop v0.1.0 (/private/var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/starter-faults-DsiUtr/project/packages/desktop/src-tauri)
+    Finished `release` profile [optimized] target(s) in 37.00s
+       Built application at: /private/var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/starter-faults-DsiUtr/project/.state/desktop/target-e2e/release/rehearsal-desktop-desktop
+2026-10-12T20:52:44.513Z INFO @wdio/cli:launcher: Run onPrepare hook
+2026-10-12T20:52:44.515Z INFO tauri-service:launcher: Using embedded WebDriver provider (tauri-plugin-wdio-webdriver) - no external driver needed
+2026-10-12T20:52:44.515Z INFO tauri-service:launcher: Embedded provider mode - spawning Tauri app with embedded WebDriver server
+2026-10-12T20:52:44.517Z INFO tauri-service:launcher: Tauri app spawned (PID: 72902)
+2026-10-12T20:52:45.066Z INFO tauri-service:launcher: WebDriver server ready on port 49537
+
+Execution of 1 workers started at 2026-10-12T20:52:46.074Z
+
+2026-10-12T20:52:46.075Z INFO @wdio/cli:launcher: Run onWorkerStart hook
+2026-10-12T20:52:46.077Z INFO @wdio/xvfb: XvfbManager.init() called
+2026-10-12T20:52:46.077Z INFO @wdio/xvfb: Xvfb not needed on current platform
+2026-10-12T20:52:46.078Z INFO @wdio/local-runner: Start worker 0-0 with arg: run wdio.conf.ts
+2026-10-12T20:52:46.088Z INFO @wdio/xvfb:ProcessFactory: xvfb-run not found, falling back to regular fork
+2026-10-12T20:52:46.088Z INFO @wdio/xvfb:ProcessFactory: ProcessFactory: shouldRun=false, isAvailable=false
+2026-10-12T20:52:46.088Z INFO @wdio/xvfb:ProcessFactory: Creating worker process with regular fork
+[0-0] 2026-10-12T20:52:46.824Z INFO @wdio/local-runner: Run worker command: run
+[0-0] RUNNING in undefined - file:///test/native.e2e.ts
+[0-0] 2026-10-12T20:52:47.035Z INFO webdriver: Initiate new session using the WebDriver protocol
+[0-0] 2026-10-12T20:52:47.035Z INFO @wdio/utils: Connecting to existing driver at http://127.0.0.1:49537/
+[0-0] 2026-10-12T20:52:47.036Z INFO webdriver: [POST] http://127.0.0.1:49537/session
+[0-0] 2026-10-12T20:52:47.054Z INFO webdriver: COMMAND getWindowHandle()
+[0-0] 2026-10-12T20:52:47.055Z INFO webdriver: [GET] http://127.0.0.1:49537/session/9ac4f5c3-28ad-4378-9e2c-b42a601e2abf/window
+[0-0] 2026-10-12T20:52:47.057Z INFO webdriver: RESULT main
+[0-0] 2026-10-12T20:52:47.057Z INFO tauri-service:service: before() start — mode=binary provider=embedded multiremote=undefined instances=n/a
+[0-0] 2026-10-12T20:52:47.058Z INFO tauri-service:service: Initializing standard browser
+[0-0] 2026-10-12T20:52:47.058Z INFO webdriver: COMMAND getWindowHandles()
+[0-0] 2026-10-12T20:52:47.058Z INFO webdriver: [GET] http://127.0.0.1:49537/session/9ac4f5c3-28ad-4378-9e2c-b42a601e2abf/window/handles
+[0-0] 2026-10-12T20:52:47.060Z INFO webdriver: RESULT [ 'main' ]
+[0-0] 2026-10-12T20:52:47.060Z INFO tauri-service:service: Standard browser window available
+[0-0] 2026-10-12T20:52:47.060Z INFO tauri-service:service: Waiting for Tauri plugin initialization...
+[0-0] 2026-10-12T20:52:47.060Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T20:52:47.060Z INFO webdriver: [POST] http://127.0.0.1:49537/session/9ac4f5c3-28ad-4378-9e2c-b42a601e2abf/execute/sync
+[0-0] 2026-10-12T20:52:47.061Z INFO webdriver: DATA { script: 'checkPluginInit(...) [875 bytes]', args: [] }
+[0-0] 2026-10-12T20:52:47.064Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T20:52:47.064Z INFO tauri-service:service: Tauri plugin initialization complete
+[0-0] 2026-10-12T20:52:47.065Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T20:52:47.065Z INFO webdriver: [POST] http://127.0.0.1:49537/session/9ac4f5c3-28ad-4378-9e2c-b42a601e2abf/execute/sync
+[0-0] 2026-10-12T20:52:47.065Z INFO webdriver: DATA { script: 'clearStaleMocks(...) [698 bytes]', args: [] }
+[0-0] 2026-10-12T20:52:47.069Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T20:52:47.069Z INFO tauri-service:service: before() complete
+[0-0] Error in "native timeout.required case"
+Error: Timeout of 50ms exceeded. The execution in the test "native timeout required case" took too long. Try to reduce the run time or increase your timeout for test specs (https://webdriver.io/docs/timeouts). (/private/var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/starter-faults-DsiUtr/project/packages/desktop/test/native.e2e.ts)
+    at createTimeoutError (/private/var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/starter-faults-DsiUtr/project/node_modules/.pnpm/mocha@11.8.0/node_modules/mocha/lib/errors.js:386:15)
+    at Runnable._timeoutError (/private/var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/starter-faults-DsiUtr/project/node_modules/.pnpm/mocha@11.8.0/node_modules/mocha/lib/runnable.js:431:10)
+    at Timeout.<anonymous> (/private/var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/starter-faults-DsiUtr/project/node_modules/.pnpm/mocha@11.8.0/node_modules/mocha/lib/runnable.js:246:24)
+    at listOnTimeout (node:internal/timers:685:17)
+    at process.processTimers (node:internal/timers:618:7)
+[0-0] 2026-10-12T20:52:47.127Z INFO webdriver: COMMAND deleteSession()
+[0-0] 2026-10-12T20:52:47.127Z INFO webdriver: [DELETE] http://127.0.0.1:49537/session/9ac4f5c3-28ad-4378-9e2c-b42a601e2abf
+[0-0] 2026-10-12T20:52:47.128Z INFO webdriver: RESULT null
+[0-0] FAILED in undefined - file:///test/native.e2e.ts
+2026-10-12T20:52:47.239Z INFO @wdio/cli:launcher: Run onWorkerEnd hook
+
+ "spec" Reporter:
+------------------------------------------------------------------
+[webkit 605.1.15 macos #0-0] Running: webkit (v605.1.15) on macos
+[webkit 605.1.15 macos #0-0] Session ID: 9ac4f5c3-28ad-4378-9e2c-b42a601e2abf
+[webkit 605.1.15 macos #0-0]
+[webkit 605.1.15 macos #0-0] » test/native.e2e.ts
+[webkit 605.1.15 macos #0-0] native timeout
+[webkit 605.1.15 macos #0-0]    ✖ required case
+[webkit 605.1.15 macos #0-0]
+[webkit 605.1.15 macos #0-0] 1 failing (60ms)
+[webkit 605.1.15 macos #0-0]
+[webkit 605.1.15 macos #0-0] 1) native timeout required case
+[webkit 605.1.15 macos #0-0] Timeout of 50ms exceeded. The execution in the test "native timeout required case" took too long. Try to reduce the run time or increase your timeout for test specs (https://webdriver.io/docs/timeouts). (/private/var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/starter-faults-DsiUtr/project/packages/desktop/test/native.e2e.ts)
+[webkit 605.1.15 macos #0-0] Error: Timeout of 50ms exceeded. The execution in the test "native timeout required case" took too long. Try to reduce the run time or increase your timeout for test specs (https://webdriver.io/docs/timeouts). (/private/var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/starter-faults-DsiUtr/project/packages/desktop/test/native.e2e.ts)
+[webkit 605.1.15 macos #0-0]     at createTimeoutError (/private/var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/starter-faults-DsiUtr/project/node_modules/.pnpm/mocha@11.8.0/node_modules/mocha/lib/errors.js:386:15)
+[webkit 605.1.15 macos #0-0]     at Runnable._timeoutError (/private/var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/starter-faults-DsiUtr/project/node_modules/.pnpm/mocha@11.8.0/node_modules/mocha/lib/runnable.js:431:10)
+[webkit 605.1.15 macos #0-0]     at Timeout.<anonymous> (/private/var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/starter-faults-DsiUtr/project/node_modules/.pnpm/mocha@11.8.0/node_modules/mocha/lib/runnable.js:246:24)
+[webkit 605.1.15 macos #0-0]     at listOnTimeout (node:internal/timers:685:17)
+[webkit 605.1.15 macos #0-0]     at process.processTimers (node:internal/timers:618:7)
+
+
+Spec Files:	 0 passed, 1 failed, 1 total (100% completed) in 00:00:01  
+
+2026-10-12T20:52:47.239Z INFO @wdio/local-runner: Shutting down spawned worker
+2026-10-12T20:52:47.492Z INFO @wdio/local-runner: Waiting for 0 to shut down gracefully
+2026-10-12T20:52:47.492Z INFO @wdio/local-runner: shutting down
+2026-10-12T20:52:47.492Z INFO @wdio/cli:launcher: Run onComplete hook
+2026-10-12T20:52:47.492Z INFO tauri-service:launcher: Stopping 1 embedded driver process(es)...
+file:///private/var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/starter-faults-DsiUtr/project/tools/process.ts:293
+            new Error(
+            ^
+
+Error: /Users/runner/.local/share/mise/installs/aqua-pnpm-pnpm/12.11.2/pnpm exec wdio run wdio.conf.ts: exit 1, signal null
+    at file:///private/var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/starter-faults-DsiUtr/project/tools/process.ts:293:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.21.0
+[ELIFECYCLE] Command failed with exit code 1.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in /private/var/folders/nj/
+  │ vtw8zd2j31d1gdrtntc5y4600000gn/T/starter-faults-DsiUtr/project/packages/
+  │ desktop
+

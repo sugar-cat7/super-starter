@@ -1,0 +1,10 @@
+$ node tools/cloudflare/deploy.ts preflight -- --target @rehearsal/web --environment unknown
+file:///tmp/starter-faults-6fzqJJ/project/tools/cloudflare/deploy.ts:20
+  throw new Error('Explicit --environment local|dev|production is required');
+        ^
+
+Error: Explicit --environment local|dev|production is required
+    at file:///tmp/starter-faults-6fzqJJ/project/tools/cloudflare/deploy.ts:20:9
+
+Node.js v24.21.0
+[ELIFECYCLE] Command failed with exit code 1.

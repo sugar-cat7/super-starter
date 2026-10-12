@@ -1,0 +1,301 @@
+{
+  "schema": 1,
+  "sha": "uncommitted",
+  "base": null,
+  "contentId": "59abd912f5496afb965689c5d74daca73ca24209fd0ec3c8916017ad8315fb37",
+  "os": "linux/x64",
+  "node": "v24.21.0",
+  "tools": {
+    "node": "v24.21.0",
+    "pnpm": "12.11.2",
+    "@types/node": "24.19.1",
+    "knip": "6.41.0",
+    "oxc-parser": "0.153.0",
+    "typescript": "7.0.2",
+    "vite-plus": "1.1.0",
+    "vitest": "5.0.3",
+    "yaml": "2.9.1",
+    "@different/contracts": "0.1.0",
+    "@different/observability": "0.1.0",
+    "zod": "4.6.5",
+    "@cloudflare/build-output-utils": "0.9.0",
+    "@cloudflare/config": "0.24.1",
+    "@cloudflare/vite-plugin": "2.0.0-beta.sha-91c870c02",
+    "cf": "1.0.0-beta.14",
+    "wrangler": "4.149.0",
+    "@opentelemetry/api": "1.9.1",
+    "@opentelemetry/resources": "2.12.0",
+    "@opentelemetry/sdk-trace-base": "2.12.0"
+  },
+  "origin": {
+    "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+    "dirty": false,
+    "contentId": "8b4e476320b2eb5395cf28ef4ac62ca0cb6ab0a2b3da0823be45c3db9468e86b"
+  },
+  "variant": "all",
+  "configuration": {
+    "name": "different-identity",
+    "scope": "@different",
+    "identifier": "com.example.differentidentity",
+    "preset": "api",
+    "features": []
+  },
+  "workspace": [
+    {
+      "name": "@different/api",
+      "directory": "packages/api",
+      "runtime": "worker",
+      "dependencies": [
+        "@different/contracts",
+        "@different/observability",
+        "zod",
+        "@cloudflare/build-output-utils",
+        "@cloudflare/config",
+        "@cloudflare/vite-plugin",
+        "cf",
+        "typescript",
+        "vite-plus",
+        "vitest",
+        "wrangler"
+      ],
+      "scripts": {
+        "cf": "cf",
+        "dev": "cf dev --mode offline",
+        "preview": "node preview.ts",
+        "check": "vp check .",
+        "test": "node ../../tools/quality/vitest.ts --config vitest.config.ts",
+        "test:runtime": "node ../../tools/cloudflare/runtime.ts",
+        "build": "node ../../tools/cloudflare/build.ts",
+        "typegen": "cf workers types -m local"
+      }
+    },
+    {
+      "name": "@different/contracts",
+      "directory": "packages/contracts",
+      "runtime": "library",
+      "dependencies": [
+        "zod",
+        "typescript",
+        "vite-plus",
+        "vitest"
+      ],
+      "scripts": {
+        "check": "vp check .",
+        "test": "node ../../tools/quality/vitest.ts",
+        "build": "vp pack"
+      }
+    },
+    {
+      "name": "@different/observability",
+      "directory": "packages/observability",
+      "runtime": "library",
+      "dependencies": [
+        "@different/contracts",
+        "@opentelemetry/api",
+        "@opentelemetry/resources",
+        "@opentelemetry/sdk-trace-base",
+        "typescript",
+        "vite-plus",
+        "vitest"
+      ],
+      "scripts": {
+        "check": "vp check .",
+        "test": "node ../../tools/quality/vitest.ts",
+        "build": "vp pack"
+      }
+    }
+  ],
+  "cpus": 4,
+  "memoryBytes": 16766414848,
+  "selected": [
+    "@different/api",
+    "@different/contracts",
+    "@different/observability"
+  ],
+  "selectionReason": "Full selected configuration (unknown base or explicit full gate)",
+  "notRequired": [],
+  "checks": [
+    {
+      "id": "static",
+      "requirements": [
+        "layout",
+        "quality",
+        "boundaries",
+        "docs",
+        "secrets"
+      ],
+      "command": [
+        "check"
+      ],
+      "timeout": 180000,
+      "reason": "Repository-wide static checks are lightweight and run once",
+      "milliseconds": 3075,
+      "status": "passed"
+    },
+    {
+      "id": "tools-unit",
+      "requirements": [
+        "generator-safety",
+        "affected",
+        "failure-propagation"
+      ],
+      "command": [
+        "test:tools"
+      ],
+      "timeout": 180000,
+      "reason": "Shared tooling contracts",
+      "milliseconds": 34687,
+      "status": "passed"
+    },
+    {
+      "id": "@different/api/unit",
+      "requirements": [
+        "contracts",
+        "ui-states"
+      ],
+      "package": "@different/api",
+      "command": [
+        "--filter",
+        "@different/api",
+        "test"
+      ],
+      "timeout": 180000,
+      "reason": "Selected worker @different/api; full phase",
+      "milliseconds": 3748,
+      "status": "passed"
+    },
+    {
+      "id": "@different/api/build",
+      "requirements": [
+        "build"
+      ],
+      "package": "@different/api",
+      "command": [
+        "--filter",
+        "@different/api",
+        "build"
+      ],
+      "timeout": 180000,
+      "reason": "Selected worker @different/api; full phase",
+      "milliseconds": 1211,
+      "status": "passed"
+    },
+    {
+      "id": "@different/api/runtime",
+      "requirements": [
+        "worker",
+        "bindings",
+        "environments"
+      ],
+      "package": "@different/api",
+      "command": [
+        "--filter",
+        "@different/api",
+        "test:runtime"
+      ],
+      "timeout": 180000,
+      "reason": "Selected worker @different/api; full phase",
+      "milliseconds": 2931,
+      "status": "passed"
+    },
+    {
+      "id": "@different/contracts/unit",
+      "requirements": [
+        "contracts",
+        "ui-states"
+      ],
+      "package": "@different/contracts",
+      "command": [
+        "--filter",
+        "@different/contracts",
+        "test"
+      ],
+      "timeout": 180000,
+      "reason": "Selected library @different/contracts; full phase",
+      "milliseconds": 596,
+      "status": "passed"
+    },
+    {
+      "id": "@different/contracts/build",
+      "requirements": [
+        "build"
+      ],
+      "package": "@different/contracts",
+      "command": [
+        "--filter",
+        "@different/contracts",
+        "build"
+      ],
+      "timeout": 180000,
+      "reason": "Selected library @different/contracts; full phase",
+      "milliseconds": 401,
+      "status": "passed"
+    },
+    {
+      "id": "@different/observability/unit",
+      "requirements": [
+        "contracts",
+        "ui-states"
+      ],
+      "package": "@different/observability",
+      "command": [
+        "--filter",
+        "@different/observability",
+        "test"
+      ],
+      "timeout": 180000,
+      "reason": "Selected library @different/observability; full phase",
+      "milliseconds": 645,
+      "status": "passed"
+    },
+    {
+      "id": "@different/observability/build",
+      "requirements": [
+        "build"
+      ],
+      "package": "@different/observability",
+      "command": [
+        "--filter",
+        "@different/observability",
+        "build"
+      ],
+      "timeout": 180000,
+      "reason": "Selected library @different/observability; full phase",
+      "milliseconds": 398,
+      "status": "passed"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "packages/api/.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json",
+      "bytes": 157,
+      "gzipBytes": 114
+    },
+    {
+      "path": "packages/api/.cloudflare/output/v0/workers/default/bundle/index.js",
+      "bytes": 291243,
+      "gzipBytes": 67839
+    },
+    {
+      "path": "packages/contracts/dist/index.d.mts",
+      "bytes": 5835,
+      "gzipBytes": 1448
+    },
+    {
+      "path": "packages/contracts/dist/index.mjs",
+      "bytes": 5153,
+      "gzipBytes": 1707
+    },
+    {
+      "path": "packages/observability/dist/index.d.mts",
+      "bytes": 1816,
+      "gzipBytes": 725
+    },
+    {
+      "path": "packages/observability/dist/index.mjs",
+      "bytes": 12741,
+      "gzipBytes": 4215
+    }
+  ],
+  "status": "passed"
+}

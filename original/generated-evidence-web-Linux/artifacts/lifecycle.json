@@ -1,0 +1,91 @@
+{
+  "schema": 1,
+  "baselineDifferences": [],
+  "contentId": "a892e62bc32b64c3739fdd550265c9e3bc21457714c182ad88cae695ac0b173d",
+  "os": "linux",
+  "status": "passed",
+  "origin": {
+    "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+    "dirty": false,
+    "contentId": "150ec3755ea6c00687a4d164266cfb38445f4c62fa114b998e4b2811a9c97760"
+  },
+  "reports": [
+    {
+      "artifacts": null,
+      "id": "cold-setup",
+      "status": "passed",
+      "milliseconds": 7445,
+      "contentId": "69b980ebb9488eabe848135dd30dedb78aa2f3e90b1298e798ee552cc3b0ca89"
+    },
+    {
+      "artifacts": "lifecycle-phases/cold-gate",
+      "id": "cold-gate",
+      "status": "passed",
+      "milliseconds": 150196,
+      "contentId": "69b980ebb9488eabe848135dd30dedb78aa2f3e90b1298e798ee552cc3b0ca89"
+    },
+    {
+      "artifacts": "lifecycle-phases/hmr",
+      "id": "hmr",
+      "status": "passed",
+      "milliseconds": 5674,
+      "contentId": "69b980ebb9488eabe848135dd30dedb78aa2f3e90b1298e798ee552cc3b0ca89"
+    },
+    {
+      "artifacts": "lifecycle-phases/warm-setup",
+      "id": "warm-setup",
+      "status": "passed",
+      "milliseconds": 3074,
+      "contentId": "69b980ebb9488eabe848135dd30dedb78aa2f3e90b1298e798ee552cc3b0ca89"
+    },
+    {
+      "artifacts": "lifecycle-phases/warm-gate",
+      "id": "warm-gate",
+      "status": "passed",
+      "milliseconds": 148246,
+      "contentId": "69b980ebb9488eabe848135dd30dedb78aa2f3e90b1298e798ee552cc3b0ca89"
+    },
+    {
+      "artifacts": "lifecycle-phases/cache-cleared-gate",
+      "id": "cache-cleared-gate",
+      "status": "passed",
+      "milliseconds": 149498,
+      "contentId": "69b980ebb9488eabe848135dd30dedb78aa2f3e90b1298e798ee552cc3b0ca89"
+    },
+    {
+      "artifacts": "lifecycle-phases/rename-and-exclude",
+      "id": "rename-and-exclude",
+      "status": "passed",
+      "milliseconds": 54365,
+      "contentId": "59abd912f5496afb965689c5d74daca73ca24209fd0ec3c8916017ad8315fb37"
+    },
+    {
+      "artifacts": "lifecycle-phases/add-and-start",
+      "id": "add-and-start",
+      "status": "passed",
+      "milliseconds": 65181,
+      "contentId": "6df38995d837196dbb3367f5c46cacfacc92649a9c897fbfff3bbf0eadf6bc73"
+    },
+    {
+      "artifacts": "lifecycle-phases/sample-removal",
+      "id": "sample-removal",
+      "status": "passed",
+      "milliseconds": 51314,
+      "contentId": "7ff44535c4c47202c380d1853c89842802e228265ae80004486d509cacd60306"
+    },
+    {
+      "artifacts": "lifecycle-phases/interrupted-recovery",
+      "id": "interrupted-recovery",
+      "status": "passed",
+      "milliseconds": 46073,
+      "contentId": "7ff44535c4c47202c380d1853c89842802e228265ae80004486d509cacd60306"
+    },
+    {
+      "artifacts": "lifecycle-phases/re-add-excluded-web",
+      "id": "re-add-excluded-web",
+      "status": "passed",
+      "milliseconds": 281088,
+      "contentId": "517310ab4110006334e624add1ddfa6e65034dd2014e01e3bfb3e6653affc0bc"
+    }
+  ]
+}

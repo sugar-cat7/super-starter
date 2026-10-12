@@ -1,0 +1,52 @@
+$ node ../../tools/cloudflare/database.ts migrate
+$ node ../../tools/cloudflare/build.ts
+No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+├  Build
+│  Delegating to Vite
+transforming...
+✓ 254 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json    0.15 kB │ gzip:  0.11 kB
+.cloudflare/output/v0/workers/default/bundle/index.js             291.24 kB │ gzip: 68.21 kB
+
+[32m✓ built in 77ms[39m
+◆  Build complete
+
+ ⛅️ wrangler 4.149.0
+────────────────────
+Resource location: local 
+
+Use --remote if you want to access the remote instance.
+
+Migrations to be applied:
+┌────────────────┐
+│ name           │
+├────────────────┤
+│ 0002_fault.sql │
+└────────────────┘
+? About to apply 1 migration(s)
+Your database may not be available to serve requests during the migration, continue?
+🤖 Using fallback value in non-interactive context: yes
+🌀 Executing on local database DATABASE (0bcbb546-fda6-4677-8530-c5869111108b) from ../../.state/api/v3/d1:
+🌀 To execute on your remote database, add a --remote flag to your wrangler command.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mnear "THIS": syntax error at offset 0: SQLITE_ERROR[0m
+
+
+🪵  Logs were written to "/home/runner/.config/.wrangler/logs/wrangler-2026-10-12_20-31-53_556.log"
+file:///tmp/starter-faults-DbBr7a/project/tools/process.ts:293
+            new Error(
+            ^
+
+Error: /home/runner/.local/share/mise/installs/aqua-pnpm-pnpm/12.11.2/pnpm exec wrangler d1 migrations apply DATABASE --config /tmp/starter-faults-DbBr7a/project/packages/api/.cloudflare/migration.wrangler.json --local --persist-to /tmp/starter-faults-DbBr7a/project/.state/api: exit 1, signal null
+    at file:///tmp/starter-faults-DbBr7a/project/tools/process.ts:293:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.21.0
+[ELIFECYCLE] Command failed with exit code 1.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in /tmp/starter-faults-DbBr7a/project/
+  │ packages/api
+

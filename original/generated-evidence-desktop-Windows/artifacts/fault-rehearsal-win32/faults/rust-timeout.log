@@ -1,0 +1,27 @@
+$ node ../../tools/quality/native.ts rust
+    Checking rehearsal-desktop-desktop v0.1.0 (C:\Users\runneradmin\AppData\Local\Temp\starter-faults-8SDVp1\project\packages\desktop\src-tauri)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.65s
+   Compiling rehearsal-desktop-desktop v0.1.0 (C:\Users\runneradmin\AppData\Local\Temp\starter-faults-8SDVp1\project\packages\desktop\src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.54s
+     Running unittests src\main.rs (C:\Users\runneradmin\AppData\Local\Temp\starter-faults-8SDVp1\project\.state\desktop\target-release\debug\deps\rehearsal_desktop_desktop-a7d82a7a5debdac4.exe)
+
+running 4 tests
+test telemetry::tests::refuses_invalid_parent_and_reports_the_file_boundary ... ok
+test tests::saves_json_and_reports_an_unwritable_destination ... ok
+test telemetry::tests::propagates_native_parent_and_keeps_raw_failure_out_of_wire ... ok
+file:///C:/Users/runneradmin/AppData/Local/Temp/starter-faults-8SDVp1/project/tools/process.ts:293
+            new Error(
+            ^
+
+Error: cargo test --locked: timeout
+    at file:///C:/Users/runneradmin/AppData/Local/Temp/starter-faults-8SDVp1/project/tools/process.ts:293:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.21.0
+[ELIFECYCLE] Command failed with exit code 1.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in C:
+  │ \Users\runneradmin\AppData\Local\Temp\starter-faults-
+  │ 8SDVp1\project\packages\desktop
+

@@ -1,0 +1,235 @@
+{
+  "schema": 1,
+  "package": "@rehearsal/web",
+  "sha": "uncommitted",
+  "contentId": "bd82dd2ff003dbc770940887e98baf984f3988bd627e8d12c325ec0f96bc2b0f",
+  "templateOrigin": {
+    "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+    "dirty": false,
+    "contentId": "b810276c163380f1414b0cf9741ff92974ba1a4249b629711347a59d8081b194"
+  },
+  "os": "linux/x64",
+  "node": "v24.21.0",
+  "lighthouse": "13.5.0",
+  "chromium": "Google Chrome for Testing 156.0.8078.4",
+  "browserFlags": [
+    "--disable-features=Translate,OptimizationHints,MediaRouter,DialMediaRouteProvider,CalculateNativeWinOcclusion,InterestFeedContentSuggestions,CertificateTransparencyComponentUpdater,AutofillServerCommunication,PrivacySandboxSettings4,RenderDocument",
+    "--disable-extensions",
+    "--disable-component-extensions-with-background-pages",
+    "--disable-background-networking",
+    "--disable-component-update",
+    "--disable-client-side-phishing-detection",
+    "--disable-sync",
+    "--metrics-recording-only",
+    "--disable-default-apps",
+    "--mute-audio",
+    "--no-default-browser-check",
+    "--no-first-run",
+    "--disable-backgrounding-occluded-windows",
+    "--disable-renderer-backgrounding",
+    "--disable-background-timer-throttling",
+    "--disable-ipc-flooding-protection",
+    "--password-store=basic",
+    "--use-mock-keychain",
+    "--force-fieldtrials=*BackgroundTracing/default/",
+    "--disable-hang-monitor",
+    "--disable-prompt-on-repost",
+    "--disable-domain-reliability",
+    "--propagate-iph-for-testing",
+    "--enable-features=DevToolsWebMCPSupport"
+  ],
+  "profiles": [
+    "mobile",
+    "desktop"
+  ],
+  "runsPerPage": 3,
+  "origin": "http://127.0.0.1:37235",
+  "routes": [
+    "/",
+    "/about"
+  ],
+  "status": "passed",
+  "runs": [
+    {
+      "route": "/",
+      "profile": "mobile",
+      "run": 1,
+      "status": "passed",
+      "json": "artifacts/lighthouse/web/page-0-mobile-1.report.json",
+      "html": "artifacts/lighthouse/web/page-0-mobile-1.report.html",
+      "scores": {
+        "performance": 1,
+        "accessibility": 1,
+        "best-practices": 1,
+        "seo": 1,
+        "agentic-browsing": 1
+      }
+    },
+    {
+      "route": "/",
+      "profile": "mobile",
+      "run": 2,
+      "status": "passed",
+      "json": "artifacts/lighthouse/web/page-0-mobile-2.report.json",
+      "html": "artifacts/lighthouse/web/page-0-mobile-2.report.html",
+      "scores": {
+        "performance": 1,
+        "accessibility": 1,
+        "best-practices": 1,
+        "seo": 1,
+        "agentic-browsing": 1
+      }
+    },
+    {
+      "route": "/",
+      "profile": "mobile",
+      "run": 3,
+      "status": "passed",
+      "json": "artifacts/lighthouse/web/page-0-mobile-3.report.json",
+      "html": "artifacts/lighthouse/web/page-0-mobile-3.report.html",
+      "scores": {
+        "performance": 1,
+        "accessibility": 1,
+        "best-practices": 1,
+        "seo": 1,
+        "agentic-browsing": 1
+      }
+    },
+    {
+      "route": "/",
+      "profile": "desktop",
+      "run": 1,
+      "status": "passed",
+      "json": "artifacts/lighthouse/web/page-0-desktop-1.report.json",
+      "html": "artifacts/lighthouse/web/page-0-desktop-1.report.html",
+      "scores": {
+        "performance": 1,
+        "accessibility": 1,
+        "best-practices": 1,
+        "seo": 1,
+        "agentic-browsing": 1
+      }
+    },
+    {
+      "route": "/",
+      "profile": "desktop",
+      "run": 2,
+      "status": "passed",
+      "json": "artifacts/lighthouse/web/page-0-desktop-2.report.json",
+      "html": "artifacts/lighthouse/web/page-0-desktop-2.report.html",
+      "scores": {
+        "performance": 1,
+        "accessibility": 1,
+        "best-practices": 1,
+        "seo": 1,
+        "agentic-browsing": 1
+      }
+    },
+    {
+      "route": "/",
+      "profile": "desktop",
+      "run": 3,
+      "status": "passed",
+      "json": "artifacts/lighthouse/web/page-0-desktop-3.report.json",
+      "html": "artifacts/lighthouse/web/page-0-desktop-3.report.html",
+      "scores": {
+        "performance": 1,
+        "accessibility": 1,
+        "best-practices": 1,
+        "seo": 1,
+        "agentic-browsing": 1
+      }
+    },
+    {
+      "route": "/about",
+      "profile": "mobile",
+      "run": 1,
+      "status": "passed",
+      "json": "artifacts/lighthouse/web/page-1-mobile-1.report.json",
+      "html": "artifacts/lighthouse/web/page-1-mobile-1.report.html",
+      "scores": {
+        "performance": 1,
+        "accessibility": 1,
+        "best-practices": 1,
+        "seo": 1,
+        "agentic-browsing": 1
+      }
+    },
+    {
+      "route": "/about",
+      "profile": "mobile",
+      "run": 2,
+      "status": "passed",
+      "json": "artifacts/lighthouse/web/page-1-mobile-2.report.json",
+      "html": "artifacts/lighthouse/web/page-1-mobile-2.report.html",
+      "scores": {
+        "performance": 1,
+        "accessibility": 1,
+        "best-practices": 1,
+        "seo": 1,
+        "agentic-browsing": 1
+      }
+    },
+    {
+      "route": "/about",
+      "profile": "mobile",
+      "run": 3,
+      "status": "passed",
+      "json": "artifacts/lighthouse/web/page-1-mobile-3.report.json",
+      "html": "artifacts/lighthouse/web/page-1-mobile-3.report.html",
+      "scores": {
+        "performance": 1,
+        "accessibility": 1,
+        "best-practices": 1,
+        "seo": 1,
+        "agentic-browsing": 1
+      }
+    },
+    {
+      "route": "/about",
+      "profile": "desktop",
+      "run": 1,
+      "status": "passed",
+      "json": "artifacts/lighthouse/web/page-1-desktop-1.report.json",
+      "html": "artifacts/lighthouse/web/page-1-desktop-1.report.html",
+      "scores": {
+        "performance": 1,
+        "accessibility": 1,
+        "best-practices": 1,
+        "seo": 1,
+        "agentic-browsing": 1
+      }
+    },
+    {
+      "route": "/about",
+      "profile": "desktop",
+      "run": 2,
+      "status": "passed",
+      "json": "artifacts/lighthouse/web/page-1-desktop-2.report.json",
+      "html": "artifacts/lighthouse/web/page-1-desktop-2.report.html",
+      "scores": {
+        "performance": 1,
+        "accessibility": 1,
+        "best-practices": 1,
+        "seo": 1,
+        "agentic-browsing": 1
+      }
+    },
+    {
+      "route": "/about",
+      "profile": "desktop",
+      "run": 3,
+      "status": "passed",
+      "json": "artifacts/lighthouse/web/page-1-desktop-3.report.json",
+      "html": "artifacts/lighthouse/web/page-1-desktop-3.report.html",
+      "scores": {
+        "performance": 1,
+        "accessibility": 1,
+        "best-practices": 1,
+        "seo": 1,
+        "agentic-browsing": 1
+      }
+    }
+  ],
+  "error": null
+}

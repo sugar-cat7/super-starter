@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "sha": "uncommitted",
+  "origin": {
+    "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+    "dirty": false,
+    "contentId": "674e626f3d371f45ec71b953addd90a97585701a6f590c197d667fd8f5a181bd"
+  },
+  "configuration": {
+    "name": "rehearsal-desktop",
+    "scope": "@rehearsal",
+    "identifier": "com.example.rehearsaldesktop",
+    "preset": "desktop",
+    "features": []
+  },
+  "contentId": "914ecc11ffa587601b214d72a71489b6f88332492619caf96ac00084a71d80e2",
+  "os": "linux/x64",
+  "status": "passed",
+  "baselineDifferences": []
+}

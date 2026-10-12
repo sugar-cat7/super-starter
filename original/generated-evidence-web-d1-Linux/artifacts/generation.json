@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "sha": "uncommitted",
+  "origin": {
+    "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+    "dirty": false,
+    "contentId": "b810276c163380f1414b0cf9741ff92974ba1a4249b629711347a59d8081b194"
+  },
+  "configuration": {
+    "name": "rehearsal-web-d1",
+    "scope": "@rehearsal",
+    "identifier": "com.example.rehearsalwebd1",
+    "preset": "web",
+    "features": [
+      "d1"
+    ]
+  },
+  "contentId": "bd82dd2ff003dbc770940887e98baf984f3988bd627e8d12c325ec0f96bc2b0f",
+  "os": "linux/x64",
+  "status": "passed",
+  "baselineDifferences": []
+}

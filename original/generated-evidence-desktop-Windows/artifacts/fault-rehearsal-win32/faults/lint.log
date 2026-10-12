@@ -1,0 +1,4 @@
+::error file=tools/fault-probe.ts,line=1,endLine=1,col=1,endColumn=10,title=eslint(no-debugger)::tools/fault-probe.ts:1:1: `debugger` statement is not allowed
+
+Found 0 warnings and 1 error.
+Finished in 721ms on 1 file with 182 rules using 4 threads.

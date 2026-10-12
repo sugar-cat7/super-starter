@@ -1,0 +1,54 @@
+$ node ../../tools/cloudflare/runtime.ts
+[@rehearsal/web] $ vp dev --mode offline
+[@rehearsal/web] 
+  [34m[1mVITE+[22m v1.1.0[39m  [42m [1moffline[22m [49m  
+
+[@rehearsal/web]   [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m41225[22m/[39m
+READY @rehearsal/web http://127.0.0.1:41225 3253ms; registry /tmp/starter-runtime-kDlsDQ/registry/session-iu3coJ
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/tmp/starter-faults-6fzqJJ/project/packages/web[39m
+
+ [31m❯[39m test/runtime.test.ts [2m([22m[2m0 test[22m[2m)[22m
+
+[31m⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Suites 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m test/runtime.test.ts[2m [ test/runtime.test.ts ][22m
+[31m[1mError[22m: No test suite found in file /tmp/starter-faults-6fzqJJ/project/packages/web/test/runtime.test.ts[39m
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [2mno tests[22m
+[2m   Start at [22m 20:31:26
+[2m   Duration [22m 102ms[2m (transform 55%, import 27%, worker 17%, environment 1%)[22m
+
+JSON report written to /tmp/starter-faults-6fzqJJ/project/packages/web/artifacts/tests-vitest.runtime.config.ts.json
+file:///tmp/starter-faults-6fzqJJ/project/tools/process.ts:293
+            new Error(
+            ^
+
+Error: /home/runner/.local/share/mise/installs/aqua-pnpm-pnpm/12.11.2/pnpm exec vp test run --config vitest.runtime.config.ts --allowOnly=false --reporter default --reporter json --outputFile /tmp/starter-faults-6fzqJJ/project/packages/web/artifacts/tests-vitest.runtime.config.ts.json: exit 1, signal null
+    at file:///tmp/starter-faults-6fzqJJ/project/tools/process.ts:293:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.21.0
+[@rehearsal/web] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+[@rehearsal/web]   × "pnpm recursive run" failed in /tmp/starter-faults-6fzqJJ/project/
+  │ packages/web
+
+file:///tmp/starter-faults-6fzqJJ/project/tools/process.ts:293
+            new Error(
+            ^
+
+Error: /home/runner/.local/share/mise/installs/aqua-pnpm-pnpm/12.11.2/pnpm exec node ../../tools/quality/vitest.ts --config vitest.runtime.config.ts: exit 1, signal null
+    at file:///tmp/starter-faults-6fzqJJ/project/tools/process.ts:293:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.21.0
+[ELIFECYCLE] Command failed with exit code 1.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in /tmp/starter-faults-6fzqJJ/project/
+  │ packages/web
+

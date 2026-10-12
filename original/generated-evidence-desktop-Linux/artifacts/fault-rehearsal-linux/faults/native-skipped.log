@@ -1,0 +1,102 @@
+$ node ../../tools/quality/native.ts e2e
+        Info Looking up installed tauri packages to check mismatched versions...
+     Running beforeBuildCommand `pnpm build:renderer --mode e2e`
+$ vp build --mode e2e
+transforming...
+✓ 249 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                           0.48 kB │ gzip:  0.29 kB
+dist/assets/index-BvNagr1_.css            6.48 kB │ gzip:  2.21 kB
+dist/assets/core-B_7XDIRk.js              0.05 kB │ gzip:  0.07 kB
+dist/assets/core-B3IRXRGI.js              0.20 kB │ gzip:  0.16 kB
+dist/assets/event-C5LDQCVX.js             1.04 kB │ gzip:  0.54 kB
+dist/assets/preload-helper-DjzSQ1t3.js    1.38 kB │ gzip:  0.75 kB
+dist/assets/dist-js-Dj0aRydg.js          16.35 kB │ gzip:  4.55 kB
+dist/assets/index-DZtZ1ehn.js           287.15 kB │ gzip: 90.38 kB
+
+[32m✓ built in 205ms[39m
+   Compiling rehearsal-desktop-desktop v0.1.0 (/tmp/starter-faults-dgJZ7c/project/packages/desktop/src-tauri)
+    Finished `release` profile [optimized] target(s) in 37.13s
+       Built application at: /tmp/starter-faults-dgJZ7c/project/.state/desktop/target-e2e/release/rehearsal-desktop-desktop
+2026-10-12T20:49:53.520Z INFO @wdio/cli:launcher: Run onPrepare hook
+2026-10-12T20:49:53.522Z INFO tauri-service:launcher: Using embedded WebDriver provider (tauri-plugin-wdio-webdriver) - no external driver needed
+2026-10-12T20:49:53.522Z INFO tauri-service:launcher: Embedded provider mode - spawning Tauri app with embedded WebDriver server
+2026-10-12T20:49:53.527Z INFO tauri-service:launcher: Tauri app spawned (PID: 67672)
+2026-10-12T20:49:54.047Z INFO tauri-service:launcher: WebDriver server ready on port 39947
+
+Execution of 1 workers started at 2026-10-12T20:49:55.055Z
+
+2026-10-12T20:49:55.056Z INFO @wdio/cli:launcher: Run onWorkerStart hook
+2026-10-12T20:49:55.059Z INFO @wdio/xvfb: XvfbManager.init() called
+2026-10-12T20:49:55.059Z INFO @wdio/xvfb: Xvfb not needed on current platform
+2026-10-12T20:49:55.060Z INFO @wdio/local-runner: Start worker 0-0 with arg: run wdio.conf.ts
+2026-10-12T20:49:55.064Z INFO @wdio/xvfb:ProcessFactory: xvfb-run found in PATH
+2026-10-12T20:49:55.064Z INFO @wdio/xvfb:ProcessFactory: ProcessFactory: shouldRun=false, isAvailable=true
+2026-10-12T20:49:55.064Z INFO @wdio/xvfb:ProcessFactory: Creating worker process with regular fork
+[0-0] 2026-10-12T20:49:55.802Z INFO @wdio/local-runner: Run worker command: run
+[0-0] RUNNING in undefined - file:///test/native.e2e.ts
+[0-0] 2026-10-12T20:49:56.070Z INFO webdriver: Initiate new session using the WebDriver protocol
+[0-0] 2026-10-12T20:49:56.070Z INFO @wdio/utils: Connecting to existing driver at http://127.0.0.1:39947/
+[0-0] 2026-10-12T20:49:56.072Z INFO webdriver: [POST] http://127.0.0.1:39947/session
+[0-0] 2026-10-12T20:49:56.095Z INFO webdriver: COMMAND getWindowHandle()
+[0-0] 2026-10-12T20:49:56.096Z INFO webdriver: [GET] http://127.0.0.1:39947/session/d56be205-9d49-4868-9688-30872fb6750c/window
+[0-0] 2026-10-12T20:49:56.099Z INFO webdriver: RESULT main
+[0-0] 2026-10-12T20:49:56.099Z INFO tauri-service:service: before() start — mode=binary provider=embedded multiremote=undefined instances=n/a
+[0-0] 2026-10-12T20:49:56.099Z INFO tauri-service:service: Initializing standard browser
+[0-0] 2026-10-12T20:49:56.101Z INFO webdriver: COMMAND getWindowHandles()
+[0-0] 2026-10-12T20:49:56.101Z INFO webdriver: [GET] http://127.0.0.1:39947/session/d56be205-9d49-4868-9688-30872fb6750c/window/handles
+[0-0] 2026-10-12T20:49:56.103Z INFO webdriver: RESULT [ 'main' ]
+[0-0] 2026-10-12T20:49:56.103Z INFO tauri-service:service: Standard browser window available
+[0-0] 2026-10-12T20:49:56.103Z INFO tauri-service:service: Waiting for Tauri plugin initialization...
+[0-0] 2026-10-12T20:49:56.104Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T20:49:56.104Z INFO webdriver: [POST] http://127.0.0.1:39947/session/d56be205-9d49-4868-9688-30872fb6750c/execute/sync
+[0-0] 2026-10-12T20:49:56.104Z INFO webdriver: DATA { script: 'checkPluginInit(...) [875 bytes]', args: [] }
+[0-0] 2026-10-12T20:49:56.109Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T20:49:56.109Z INFO tauri-service:service: Tauri plugin initialization complete
+[0-0] 2026-10-12T20:49:56.109Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-10-12T20:49:56.109Z INFO webdriver: [POST] http://127.0.0.1:39947/session/d56be205-9d49-4868-9688-30872fb6750c/execute/sync
+[0-0] 2026-10-12T20:49:56.109Z INFO webdriver: DATA { script: 'clearStaleMocks(...) [698 bytes]', args: [] }
+[0-0] 2026-10-12T20:49:56.113Z INFO webdriver: RESULT null
+[0-0] 2026-10-12T20:49:56.113Z INFO tauri-service:service: before() complete
+[0-0] 2026-10-12T20:49:56.119Z INFO webdriver: COMMAND deleteSession()
+[0-0] 2026-10-12T20:49:56.119Z INFO webdriver: [DELETE] http://127.0.0.1:39947/session/d56be205-9d49-4868-9688-30872fb6750c
+[0-0] 2026-10-12T20:49:56.122Z INFO webdriver: RESULT null
+[0-0] PASSED in undefined - file:///test/native.e2e.ts
+2026-10-12T20:49:56.244Z INFO @wdio/cli:launcher: Run onWorkerEnd hook
+
+ "spec" Reporter:
+------------------------------------------------------------------
+[WebKitGTK 605.1.15 linux #0-0] Running: WebKitGTK (v605.1.15) on linux
+[WebKitGTK 605.1.15 linux #0-0] Session ID: d56be205-9d49-4868-9688-30872fb6750c
+[WebKitGTK 605.1.15 linux #0-0]
+[WebKitGTK 605.1.15 linux #0-0] » test/native.e2e.ts
+[WebKitGTK 605.1.15 linux #0-0] native skip
+[WebKitGTK 605.1.15 linux #0-0]    - required case
+[WebKitGTK 605.1.15 linux #0-0]
+[WebKitGTK 605.1.15 linux #0-0] 1 skipped (10ms)
+
+
+Spec Files:	 1 passed, 1 total (100% completed) in 00:00:01  
+
+2026-10-12T20:49:56.245Z INFO @wdio/local-runner: Shutting down spawned worker
+2026-10-12T20:49:56.496Z INFO @wdio/local-runner: Waiting for 0 to shut down gracefully
+2026-10-12T20:49:56.496Z INFO @wdio/local-runner: shutting down
+2026-10-12T20:49:56.496Z INFO @wdio/cli:launcher: Run onComplete hook
+2026-10-12T20:49:56.496Z INFO tauri-service:launcher: Stopping 1 embedded driver process(es)...
+file:///tmp/starter-faults-dgJZ7c/project/tools/quality/test-results.ts:31
+      throw new Error('Required native tests contain failed, skipped or pending cases');
+            ^
+
+Error: Required native tests contain failed, skipped or pending cases
+    at nativeCases (file:///tmp/starter-faults-dgJZ7c/project/tools/quality/test-results.ts:31:13)
+    at file:///tmp/starter-faults-dgJZ7c/project/tools/quality/native.ts:107:19
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.21.0
+[ELIFECYCLE] Command failed with exit code 1.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in /tmp/starter-faults-dgJZ7c/project/
+  │ packages/desktop
+

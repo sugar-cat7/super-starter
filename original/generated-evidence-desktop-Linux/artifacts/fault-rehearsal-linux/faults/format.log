@@ -1,0 +1,6 @@
+Checking formatting...
+
+[38;2;244;191;117;1mtools/fault-probe.ts[0m (0ms)
+
+Format issues found in above 1 files. Run without `--check` to fix.
+Finished in 170ms on 1 files using 4 threads.

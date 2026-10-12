@@ -1,0 +1,527 @@
+{
+  "schema": 1,
+  "baselineDifferences": [],
+  "status": "passed",
+  "configuration": {
+    "name": "rehearsal-web",
+    "scope": "@rehearsal",
+    "identifier": "com.example.rehearsalweb",
+    "preset": "web",
+    "features": []
+  },
+  "workspace": [
+    {
+      "name": "@rehearsal/contracts",
+      "directory": "packages/contracts",
+      "runtime": "library",
+      "dependencies": [
+        "zod",
+        "typescript",
+        "vite-plus",
+        "vitest"
+      ],
+      "scripts": {
+        "check": "vp check .",
+        "test": "node ../../tools/quality/vitest.ts",
+        "build": "vp pack"
+      }
+    },
+    {
+      "name": "@rehearsal/observability",
+      "directory": "packages/observability",
+      "runtime": "library",
+      "dependencies": [
+        "@opentelemetry/api",
+        "@opentelemetry/resources",
+        "@opentelemetry/sdk-trace-base",
+        "@rehearsal/contracts",
+        "typescript",
+        "vite-plus",
+        "vitest"
+      ],
+      "scripts": {
+        "check": "vp check .",
+        "test": "node ../../tools/quality/vitest.ts",
+        "build": "vp pack"
+      }
+    },
+    {
+      "name": "@rehearsal/ui",
+      "directory": "packages/ui",
+      "runtime": "library",
+      "dependencies": [
+        "@rehearsal/contracts",
+        "react",
+        "@testing-library/react",
+        "@testing-library/user-event",
+        "@types/react",
+        "jsdom",
+        "react-dom",
+        "typescript",
+        "vite-plus",
+        "vitest"
+      ],
+      "scripts": {
+        "check": "vp check .",
+        "test": "node ../../tools/quality/vitest.ts",
+        "build": "vp pack"
+      }
+    },
+    {
+      "name": "@rehearsal/web",
+      "directory": "packages/web",
+      "runtime": "worker",
+      "dependencies": [
+        "@rehearsal/contracts",
+        "@rehearsal/observability",
+        "@rehearsal/ui",
+        "@tanstack/react-router",
+        "@tanstack/react-start",
+        "react",
+        "react-dom",
+        "zod",
+        "@axe-core/playwright",
+        "@cloudflare/build-output-utils",
+        "@cloudflare/config",
+        "@cloudflare/vite-plugin",
+        "@playwright/test",
+        "@tailwindcss/vite",
+        "@types/react",
+        "@types/react-dom",
+        "@vitejs/plugin-react",
+        "cf",
+        "lighthouse",
+        "tailwindcss",
+        "typescript",
+        "vite-plus",
+        "vitest",
+        "wrangler"
+      ],
+      "scripts": {
+        "cf": "cf",
+        "dev": "vp dev --mode offline",
+        "preview": "node preview.ts",
+        "check": "vp check .",
+        "test": "node ../../tools/quality/vitest.ts --config vitest.config.ts",
+        "test:runtime": "node ../../tools/cloudflare/runtime.ts",
+        "test:e2e": "node ../../tools/quality/browser.ts",
+        "test:e2e:production": "node ../../tools/quality/browser.ts --preview",
+        "test:lighthouse": "node ../../tools/quality/lighthouse.ts",
+        "build": "node ../../tools/cloudflare/build.ts",
+        "typegen": "cf workers types -m local"
+      }
+    }
+  ],
+  "origin": {
+    "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+    "dirty": false,
+    "contentId": "150ec3755ea6c00687a4d164266cfb38445f4c62fa114b998e4b2811a9c97760"
+  },
+  "contentId": "a892e62bc32b64c3739fdd550265c9e3bc21457714c182ad88cae695ac0b173d",
+  "os": "linux",
+  "reports": [
+    {
+      "id": "skill-metadata",
+      "command": [
+        "check"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 6112,
+      "log": "artifacts/faults/skill-metadata.log"
+    },
+    {
+      "id": "format",
+      "command": [
+        "exec",
+        "vp",
+        "fmt",
+        "--check",
+        "tools/fault-probe.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 4079,
+      "log": "artifacts/faults/format.log"
+    },
+    {
+      "id": "lint",
+      "command": [
+        "exec",
+        "vp",
+        "lint",
+        "tools/fault-probe.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 4191,
+      "log": "artifacts/faults/lint.log"
+    },
+    {
+      "id": "type",
+      "command": [
+        "exec",
+        "vp",
+        "check"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 5429,
+      "log": "artifacts/faults/type.log"
+    },
+    {
+      "id": "lint-floating-void",
+      "command": [
+        "exec",
+        "vp",
+        "lint",
+        "--type-aware",
+        "tools/fault-probe.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 4231,
+      "log": "artifacts/faults/lint-floating-void.log"
+    },
+    {
+      "id": "lint-misused-promise",
+      "command": [
+        "exec",
+        "vp",
+        "lint",
+        "--type-aware",
+        "tools/fault-probe.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 4152,
+      "log": "artifacts/faults/lint-misused-promise.log"
+    },
+    {
+      "id": "lint-exhaustiveness",
+      "command": [
+        "exec",
+        "vp",
+        "lint",
+        "--type-aware",
+        "tools/fault-probe.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 4093,
+      "log": "artifacts/faults/lint-exhaustiveness.log"
+    },
+    {
+      "id": "secret-tools",
+      "command": [
+        "exec",
+        "node",
+        "tools/quality/structure.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 3961,
+      "log": "artifacts/faults/secret-tools.log"
+    },
+    {
+      "id": "secret-contracts",
+      "command": [
+        "exec",
+        "node",
+        "tools/quality/structure.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 3991,
+      "log": "artifacts/faults/secret-contracts.log"
+    },
+    {
+      "id": "unit-focused",
+      "command": [
+        "test:tools",
+        "--",
+        "tools/quality/test-results.test.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 1051,
+      "log": "artifacts/faults/unit-focused.log"
+    },
+    {
+      "id": "unit",
+      "command": [
+        "test:tools",
+        "--",
+        "tools/quality/test-results.test.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 1044,
+      "log": "artifacts/faults/unit.log"
+    },
+    {
+      "id": "unit-zero",
+      "command": [
+        "test:tools",
+        "--",
+        "tools/quality/test-results.test.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 1050,
+      "log": "artifacts/faults/unit-zero.log"
+    },
+    {
+      "id": "unit-skipped",
+      "command": [
+        "test:tools",
+        "--",
+        "tools/quality/test-results.test.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 1048,
+      "log": "artifacts/faults/unit-skipped.log"
+    },
+    {
+      "id": "unit-timeout",
+      "command": [
+        "test:tools",
+        "--",
+        "tools/quality/test-results.test.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 1045,
+      "log": "artifacts/faults/unit-timeout.log"
+    },
+    {
+      "id": "boundary",
+      "command": [
+        "exec",
+        "node",
+        "tools/quality/structure.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 3843,
+      "log": "artifacts/faults/boundary.log"
+    },
+    {
+      "id": "result-discard",
+      "command": [
+        "exec",
+        "node",
+        "tools/quality/structure.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 3931,
+      "log": "artifacts/faults/result-discard.log"
+    },
+    {
+      "id": "telemetry-owner",
+      "command": [
+        "exec",
+        "node",
+        "tools/quality/structure.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 3976,
+      "log": "artifacts/faults/telemetry-owner.log"
+    },
+    {
+      "id": "error-catalog-drift",
+      "command": [
+        "check"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 6058,
+      "log": "artifacts/faults/error-catalog-drift.log"
+    },
+    {
+      "id": "contract",
+      "command": [
+        "--filter",
+        "@rehearsal/contracts",
+        "test"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 1235,
+      "log": "artifacts/faults/contract.log"
+    },
+    {
+      "id": "worker-behavior",
+      "command": [
+        "--filter",
+        "@rehearsal/web",
+        "test:runtime"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 8538,
+      "log": "artifacts/faults/worker-behavior.log"
+    },
+    {
+      "id": "worker-zero",
+      "command": [
+        "--filter",
+        "@rehearsal/web",
+        "test:runtime"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 8383,
+      "log": "artifacts/faults/worker-zero.log"
+    },
+    {
+      "id": "deploy-quality",
+      "command": [
+        "deploy:preflight",
+        "--",
+        "--target",
+        "@rehearsal/web",
+        "--environment",
+        "local"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 5587,
+      "log": "artifacts/faults/deploy-quality.log"
+    },
+    {
+      "id": "deploy-environment",
+      "command": [
+        "deploy:preflight",
+        "--",
+        "--target",
+        "@rehearsal/web",
+        "--environment",
+        "unknown"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 10976,
+      "log": "artifacts/faults/deploy-environment.log"
+    },
+    {
+      "id": "deploy-settings",
+      "command": [
+        "deploy:preflight",
+        "--",
+        "--target",
+        "@rehearsal/web",
+        "--environment",
+        "dev"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 21028,
+      "log": "artifacts/faults/deploy-settings.log"
+    },
+    {
+      "id": "lighthouse-score",
+      "command": [
+        "--filter",
+        "@rehearsal/web",
+        "test:lighthouse"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 92770,
+      "log": "artifacts/faults/lighthouse-score.log"
+    },
+    {
+      "id": "browser-behavior",
+      "command": [
+        "--filter",
+        "@rehearsal/web",
+        "test:e2e",
+        "--",
+        "--grep",
+        "injected browser fault"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 16343,
+      "log": "artifacts/faults/browser-behavior.log"
+    },
+    {
+      "id": "browser-focused",
+      "command": [
+        "--filter",
+        "@rehearsal/web",
+        "test:e2e"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 15163,
+      "log": "artifacts/faults/browser-focused.log"
+    },
+    {
+      "id": "browser-zero",
+      "command": [
+        "--filter",
+        "@rehearsal/web",
+        "test:e2e",
+        "--",
+        "--grep",
+        "zero-cases-no-match"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 14806,
+      "log": "artifacts/faults/browser-zero.log"
+    },
+    {
+      "id": "browser-skipped",
+      "command": [
+        "--filter",
+        "@rehearsal/web",
+        "test:e2e",
+        "--",
+        "--grep",
+        "injected browser skip"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 16081,
+      "log": "artifacts/faults/browser-skipped.log"
+    },
+    {
+      "id": "browser-timeout",
+      "command": [
+        "--filter",
+        "@rehearsal/web",
+        "test:e2e",
+        "--",
+        "--grep",
+        "injected browser timeout",
+        "--timeout",
+        "50"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 15365,
+      "log": "artifacts/faults/browser-timeout.log"
+    },
+    {
+      "id": "visual-regression",
+      "command": [
+        "--filter",
+        "@rehearsal/web",
+        "test:e2e",
+        "--",
+        "--grep",
+        "reviewed visual baselines"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 17202,
+      "log": "artifacts/faults/visual-regression.log"
+    }
+  ]
+}

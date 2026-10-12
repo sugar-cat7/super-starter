@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "sha": "uncommitted",
+  "origin": {
+    "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+    "dirty": false,
+    "contentId": "b5f35f20bb700af147035d97350899d1b44e4459bac5d81b6f3645fe681b0f05"
+  },
+  "configuration": {
+    "name": "separate-workspace",
+    "scope": "@separate",
+    "identifier": "com.example.separateworkspace",
+    "preset": "web",
+    "features": []
+  },
+  "contentId": "69b980ebb9488eabe848135dd30dedb78aa2f3e90b1298e798ee552cc3b0ca89",
+  "os": "linux/x64",
+  "status": "passed",
+  "baselineDifferences": []
+}

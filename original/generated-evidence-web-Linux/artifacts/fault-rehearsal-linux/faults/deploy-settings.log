@@ -1,0 +1,87 @@
+$ node tools/cloudflare/deploy.ts preflight -- --target @rehearsal/web --environment dev
+$ node tools/quality/check.ts
+pass: All 173 files are correctly formatted (145ms, 4 threads)
+pass: Found no warnings, lint errors, or type errors in 126 files (1.3s, 4 threads)
+Static quality, runtime boundaries and documentation passed
+$ node ../../tools/quality/vitest.ts --config vitest.config.ts
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/tmp/starter-faults-6fzqJJ/project/packages/web[39m
+
+ [32m✓[39m test/assets.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 52[2mms[22m[39m
+ [32m✓[39m test/unit.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 21[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[32m5 passed[39m[22m[90m (5)[39m
+[2m   Start at [22m 20:31:51
+[2m   Duration [22m 289ms[2m (import 38%, transform 35%, tests 25%, worker 2%)[22m
+
+JSON report written to /tmp/starter-faults-6fzqJJ/project/packages/web/artifacts/tests-vitest.config.ts.json
+Executed 5 required test cases
+$ node ../../tools/cloudflare/runtime.ts
+[@rehearsal/web] $ vp dev --mode offline
+[@rehearsal/web] 
+  [34m[1mVITE+[22m v1.1.0[39m  [42m [1moffline[22m [49m  
+
+[@rehearsal/web]   [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m33251[22m/[39m
+READY @rehearsal/web http://127.0.0.1:33251 3056ms; registry /tmp/starter-runtime-9e9Lcb/registry/session-COTlEJ
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/tmp/starter-faults-6fzqJJ/project/packages/web[39m
+
+ [32m✓[39m test/runtime.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 275[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m   Start at [22m 20:31:55
+[2m   Duration [22m 436ms[2m (tests 78%, import 13%, transform 8%, worker 1%)[22m
+
+JSON report written to /tmp/starter-faults-6fzqJJ/project/packages/web/artifacts/tests-vitest.runtime.config.ts.json
+Executed 2 required test cases
+[@rehearsal/web] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+[@rehearsal/web]   × "pnpm recursive run" failed in /tmp/starter-faults-6fzqJJ/project/
+  │ packages/web
+
+$ node ../../tools/cloudflare/build.ts
+transforming...
+✓ 364 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/assets/assets/index-D17-EbZ6.css              6.68 kB │ gzip:  2.26 kB
+.cloudflare/output/v0/workers/default/assets/assets/about-CjEoILFc.js               0.42 kB │ gzip:  0.30 kB
+.cloudflare/output/v0/workers/default/assets/assets/rolldown-runtime-CbXtAM7H.js    0.58 kB │ gzip:  0.36 kB
+.cloudflare/output/v0/workers/default/assets/assets/react-BuqwL3YU.js               8.24 kB │ gzip:  3.11 kB
+.cloudflare/output/v0/workers/default/assets/assets/index-D6gkSaL9.js              24.94 kB │ gzip:  8.63 kB
+.cloudflare/output/v0/workers/default/assets/assets/routes-C3ASwPge.js             45.27 kB │ gzip: 15.04 kB
+.cloudflare/output/v0/workers/default/assets/assets/client-CkdVDnH0.js            120.35 kB │ gzip: 41.05 kB
+.cloudflare/output/v0/workers/default/assets/assets/react-dom-uP1KSDv5.js         211.21 kB │ gzip: 65.86 kB
+
+[32m✓ built in 216ms[39m
+transforming...
+✓ 449 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json                              3.45 kB │ gzip:   0.71 kB
+.cloudflare/output/v0/workers/default/bundle/assets/router-D17-EbZ6.css                       6.68 kB │ gzip:   2.26 kB
+.cloudflare/output/v0/workers/default/bundle/assets/empty-plugin-adapters-CVykojMw.js         0.28 kB │ gzip:   0.18 kB
+.cloudflare/output/v0/workers/default/bundle/assets/start-DWcS3WmS.js                         0.29 kB │ gzip:   0.22 kB
+.cloudflare/output/v0/workers/default/bundle/assets/about-NjiltK0E.js                         0.72 kB │ gzip:   0.41 kB
+.cloudflare/output/v0/workers/default/bundle/assets/jsx-runtime-BZtfA-4f.js                   2.59 kB │ gzip:   1.11 kB
+.cloudflare/output/v0/workers/default/bundle/assets/_tanstack-start-manifest_v-Cy8DKUWP.js    7.66 kB │ gzip:   2.65 kB
+.cloudflare/output/v0/workers/default/bundle/assets/routes-BUiN61XL.js                        9.10 kB │ gzip:   2.73 kB
+.cloudflare/output/v0/workers/default/bundle/assets/react-DOK9jBYa.js                        16.57 kB │ gzip:   4.47 kB
+.cloudflare/output/v0/workers/default/bundle/assets/router-BtjppatF.js                       40.80 kB │ gzip:  10.58 kB
+.cloudflare/output/v0/workers/default/bundle/assets/Match-BAqK4OKj.js                       145.22 kB │ gzip:  36.43 kB
+.cloudflare/output/v0/workers/default/bundle/assets/src-BawW6lkC.js                         222.51 kB │ gzip:  52.39 kB
+.cloudflare/output/v0/workers/default/bundle/index.js                                       800.14 kB │ gzip: 169.11 kB
+
+[32m✓ built in 325ms[39m
+file:///tmp/starter-faults-6fzqJJ/project/tools/cloudflare/deploy.ts:70
+  throw new Error(
+        ^
+
+Error: CLOUDFLARE_ACCOUNT_ID is missing. Configure a named approved dev account and resource IDs; see docs/cloudflare.md. No deployment occurred.
+    at file:///tmp/starter-faults-6fzqJJ/project/tools/cloudflare/deploy.ts:70:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.21.0
+[ELIFECYCLE] Command failed with exit code 1.

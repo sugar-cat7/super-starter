@@ -1,0 +1,256 @@
+{
+  "schema": 1,
+  "sha": "uncommitted",
+  "base": null,
+  "contentId": "7ff44535c4c47202c380d1853c89842802e228265ae80004486d509cacd60306",
+  "os": "linux/x64",
+  "node": "v24.21.0",
+  "tools": {
+    "node": "v24.21.0",
+    "pnpm": "12.11.2",
+    "@types/node": "24.19.1",
+    "knip": "6.41.0",
+    "oxc-parser": "0.153.0",
+    "typescript": "7.0.2",
+    "vite-plus": "1.1.0",
+    "vitest": "5.0.3",
+    "yaml": "2.9.1",
+    "@cloudflare/build-output-utils": "0.9.0",
+    "@cloudflare/config": "0.24.1",
+    "@cloudflare/vite-plugin": "2.0.0-beta.sha-91c870c02",
+    "cf": "1.0.0-beta.14",
+    "wrangler": "4.149.0"
+  },
+  "origin": {
+    "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+    "dirty": false,
+    "contentId": "8b4e476320b2eb5395cf28ef4ac62ca0cb6ab0a2b3da0823be45c3db9468e86b"
+  },
+  "variant": "all",
+  "configuration": {
+    "name": "different-identity",
+    "scope": "@different",
+    "identifier": "com.example.differentidentity",
+    "preset": "api",
+    "features": []
+  },
+  "workspace": [
+    {
+      "name": "@different/api",
+      "directory": "packages/api",
+      "runtime": "worker",
+      "dependencies": [
+        "@cloudflare/build-output-utils",
+        "@cloudflare/config",
+        "@cloudflare/vite-plugin",
+        "cf",
+        "typescript",
+        "vite-plus",
+        "vitest",
+        "wrangler"
+      ],
+      "scripts": {
+        "cf": "cf",
+        "dev": "cf dev --mode offline",
+        "preview": "node preview.ts",
+        "check": "vp check .",
+        "test": "node ../../tools/quality/vitest.ts --config vitest.config.ts",
+        "test:runtime": "node ../../tools/cloudflare/runtime.ts",
+        "build": "node ../../tools/cloudflare/build.ts",
+        "typegen": "cf workers types -m local"
+      }
+    },
+    {
+      "name": "@different/jobs",
+      "directory": "packages/jobs",
+      "runtime": "worker",
+      "dependencies": [
+        "@cloudflare/build-output-utils",
+        "@cloudflare/config",
+        "@cloudflare/vite-plugin",
+        "cf",
+        "typescript",
+        "vite-plus",
+        "vitest",
+        "wrangler"
+      ],
+      "scripts": {
+        "cf": "cf",
+        "dev": "cf dev --mode offline",
+        "preview": "node preview.ts",
+        "check": "vp check .",
+        "test": "node ../../tools/quality/vitest.ts --config vitest.config.ts",
+        "test:runtime": "node ../../tools/cloudflare/runtime.ts",
+        "build": "node ../../tools/cloudflare/build.ts",
+        "typegen": "cf workers types -m local"
+      }
+    }
+  ],
+  "cpus": 4,
+  "memoryBytes": 16766414848,
+  "selected": [
+    "@different/api",
+    "@different/jobs"
+  ],
+  "selectionReason": "Full selected configuration (unknown base or explicit full gate)",
+  "notRequired": [],
+  "checks": [
+    {
+      "id": "static",
+      "requirements": [
+        "layout",
+        "quality",
+        "boundaries",
+        "docs",
+        "secrets"
+      ],
+      "command": [
+        "check"
+      ],
+      "timeout": 180000,
+      "reason": "Repository-wide static checks are lightweight and run once",
+      "milliseconds": 2763,
+      "status": "passed"
+    },
+    {
+      "id": "tools-unit",
+      "requirements": [
+        "generator-safety",
+        "affected",
+        "failure-propagation"
+      ],
+      "command": [
+        "test:tools"
+      ],
+      "timeout": 180000,
+      "reason": "Shared tooling contracts",
+      "milliseconds": 34263,
+      "status": "passed"
+    },
+    {
+      "id": "@different/api/unit",
+      "requirements": [
+        "contracts",
+        "ui-states"
+      ],
+      "package": "@different/api",
+      "command": [
+        "--filter",
+        "@different/api",
+        "test"
+      ],
+      "timeout": 180000,
+      "reason": "Selected worker @different/api; full phase",
+      "milliseconds": 535,
+      "status": "passed"
+    },
+    {
+      "id": "@different/api/build",
+      "requirements": [
+        "build"
+      ],
+      "package": "@different/api",
+      "command": [
+        "--filter",
+        "@different/api",
+        "build"
+      ],
+      "timeout": 180000,
+      "reason": "Selected worker @different/api; full phase",
+      "milliseconds": 1183,
+      "status": "passed"
+    },
+    {
+      "id": "@different/api/runtime",
+      "requirements": [
+        "worker",
+        "bindings",
+        "environments"
+      ],
+      "package": "@different/api",
+      "command": [
+        "--filter",
+        "@different/api",
+        "test:runtime"
+      ],
+      "timeout": 180000,
+      "reason": "Selected worker @different/api; full phase",
+      "milliseconds": 2185,
+      "status": "passed"
+    },
+    {
+      "id": "@different/jobs/unit",
+      "requirements": [
+        "contracts",
+        "ui-states"
+      ],
+      "package": "@different/jobs",
+      "command": [
+        "--filter",
+        "@different/jobs",
+        "test"
+      ],
+      "timeout": 180000,
+      "reason": "Selected worker @different/jobs; full phase",
+      "milliseconds": 526,
+      "status": "passed"
+    },
+    {
+      "id": "@different/jobs/build",
+      "requirements": [
+        "build"
+      ],
+      "package": "@different/jobs",
+      "command": [
+        "--filter",
+        "@different/jobs",
+        "build"
+      ],
+      "timeout": 180000,
+      "reason": "Selected worker @different/jobs; full phase",
+      "milliseconds": 1187,
+      "status": "passed"
+    },
+    {
+      "id": "@different/jobs/runtime",
+      "requirements": [
+        "worker",
+        "bindings",
+        "environments"
+      ],
+      "package": "@different/jobs",
+      "command": [
+        "--filter",
+        "@different/jobs",
+        "test:runtime"
+      ],
+      "timeout": 180000,
+      "reason": "Selected worker @different/jobs; full phase",
+      "milliseconds": 2193,
+      "status": "passed"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "packages/api/.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json",
+      "bytes": 157,
+      "gzipBytes": 114
+    },
+    {
+      "path": "packages/api/.cloudflare/output/v0/workers/default/bundle/index.js",
+      "bytes": 277,
+      "gzipBytes": 213
+    },
+    {
+      "path": "packages/jobs/.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json",
+      "bytes": 157,
+      "gzipBytes": 114
+    },
+    {
+      "path": "packages/jobs/.cloudflare/output/v0/workers/default/bundle/index.js",
+      "bytes": 277,
+      "gzipBytes": 213
+    }
+  ],
+  "status": "passed"
+}

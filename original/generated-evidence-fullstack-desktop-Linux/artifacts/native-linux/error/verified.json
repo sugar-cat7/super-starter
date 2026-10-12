@@ -1,0 +1,20 @@
+{
+  "scenario": "error",
+  "cases": 1,
+  "os": "linux",
+  "binary": "/home/runner/work/super-starter/super-starter/fullstack-desktop/.state/desktop/target-e2e/release/rehearsal-fullstack-desktop-desktop",
+  "runId": "native-linux-error-local",
+  "sha": null,
+  "contentId": "0585b811cc8fd85171147c526c985b7d3452579c4d1e5a24054ff84423bb6764",
+  "telemetry": {
+    "traces": {
+      "records": 20
+    },
+    "logs": {
+      "records": 20
+    },
+    "metrics": {
+      "records": 20
+    }
+  }
+}

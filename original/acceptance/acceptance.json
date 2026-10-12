@@ -1,0 +1,4115 @@
+{
+  "schema": 1,
+  "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+  "status": "blocked",
+  "rows": [
+    {
+      "preset": "web",
+      "os": "linux",
+      "status": "passed",
+      "reason": "All canonical checks ran successfully for this exact generation source",
+      "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+      "contentId": "a892e62bc32b64c3739fdd550265c9e3bc21457714c182ad88cae695ac0b173d",
+      "tools": {
+        "node": "v24.21.0",
+        "pnpm": "12.11.2",
+        "@types/node": "24.19.1",
+        "knip": "6.41.0",
+        "oxc-parser": "0.153.0",
+        "typescript": "7.0.2",
+        "vite-plus": "1.1.0",
+        "vitest": "5.0.3",
+        "yaml": "2.9.1",
+        "zod": "4.6.5",
+        "@opentelemetry/api": "1.9.1",
+        "@opentelemetry/resources": "2.12.0",
+        "@opentelemetry/sdk-trace-base": "2.12.0",
+        "@rehearsal/contracts": "0.1.0",
+        "react": "19.3.0",
+        "@testing-library/react": "16.3.3",
+        "@testing-library/user-event": "14.6.7",
+        "@types/react": "19.3.0",
+        "jsdom": "30.1.2",
+        "react-dom": "19.3.0",
+        "@rehearsal/observability": "0.1.0",
+        "@rehearsal/ui": "0.1.0",
+        "@tanstack/react-router": "1.170.41",
+        "@tanstack/react-start": "1.168.60",
+        "@axe-core/playwright": "4.13.0",
+        "@cloudflare/build-output-utils": "0.9.0",
+        "@cloudflare/config": "0.24.1",
+        "@cloudflare/vite-plugin": "2.0.0-beta.sha-91c870c02",
+        "@playwright/test": "1.64.0",
+        "@tailwindcss/vite": "4.3.3",
+        "@types/react-dom": "19.3.0",
+        "@vitejs/plugin-react": "6.1.2",
+        "cf": "1.0.0-beta.14",
+        "lighthouse": "13.5.0",
+        "tailwindcss": "4.3.3",
+        "wrangler": "4.149.0"
+      },
+      "evidence": "generated-evidence-web-Linux/artifacts/gate-full-all-linux.json",
+      "checks": [
+        {
+          "id": "static",
+          "requirements": [
+            "layout",
+            "quality",
+            "boundaries",
+            "docs",
+            "secrets"
+          ],
+          "command": [
+            "check"
+          ],
+          "timeout": 180000,
+          "reason": "Repository-wide static checks are lightweight and run once",
+          "status": "passed",
+          "milliseconds": 4337
+        },
+        {
+          "id": "tools-unit",
+          "requirements": [
+            "generator-safety",
+            "affected",
+            "failure-propagation"
+          ],
+          "command": [
+            "test:tools"
+          ],
+          "timeout": 180000,
+          "reason": "Shared tooling contracts",
+          "status": "passed",
+          "milliseconds": 39799
+        },
+        {
+          "id": "@rehearsal/contracts/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/contracts",
+          "command": [
+            "--filter",
+            "@rehearsal/contracts",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/contracts; full phase",
+          "status": "passed",
+          "milliseconds": 752
+        },
+        {
+          "id": "@rehearsal/contracts/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/contracts",
+          "command": [
+            "--filter",
+            "@rehearsal/contracts",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/contracts; full phase",
+          "status": "passed",
+          "milliseconds": 482
+        },
+        {
+          "id": "@rehearsal/observability/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/observability",
+          "command": [
+            "--filter",
+            "@rehearsal/observability",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/observability; full phase",
+          "status": "passed",
+          "milliseconds": 649
+        },
+        {
+          "id": "@rehearsal/observability/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/observability",
+          "command": [
+            "--filter",
+            "@rehearsal/observability",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/observability; full phase",
+          "status": "passed",
+          "milliseconds": 435
+        },
+        {
+          "id": "@rehearsal/ui/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/ui",
+          "command": [
+            "--filter",
+            "@rehearsal/ui",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/ui; full phase",
+          "status": "passed",
+          "milliseconds": 1462
+        },
+        {
+          "id": "@rehearsal/ui/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/ui",
+          "command": [
+            "--filter",
+            "@rehearsal/ui",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/ui; full phase",
+          "status": "passed",
+          "milliseconds": 495
+        },
+        {
+          "id": "@rehearsal/web/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 680
+        },
+        {
+          "id": "@rehearsal/web/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 1713
+        },
+        {
+          "id": "@rehearsal/web/runtime",
+          "requirements": [
+            "worker",
+            "bindings",
+            "environments"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "test:runtime"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 4273
+        },
+        {
+          "id": "@rehearsal/web/browser",
+          "requirements": [
+            "web",
+            "browser",
+            "accessibility",
+            "vrt"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "test:e2e"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 11642
+        },
+        {
+          "id": "@rehearsal/web/browser-production",
+          "requirements": [
+            "web",
+            "browser",
+            "production-ui"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "test:e2e:production"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 6639
+        },
+        {
+          "id": "@rehearsal/web/lighthouse",
+          "requirements": [
+            "web",
+            "browser",
+            "lighthouse-all-100"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "test:lighthouse"
+          ],
+          "timeout": 900000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 82828
+        }
+      ]
+    },
+    {
+      "preset": "api",
+      "os": "linux",
+      "status": "passed",
+      "reason": "All canonical checks ran successfully for this exact generation source",
+      "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+      "contentId": "ee4f05f388d67b4c2e9af190c74af9b5c95967b3fe18b5a663f86db4d1254b49",
+      "tools": {
+        "node": "v24.21.0",
+        "pnpm": "12.11.2",
+        "@types/node": "24.19.1",
+        "knip": "6.41.0",
+        "oxc-parser": "0.153.0",
+        "typescript": "7.0.2",
+        "vite-plus": "1.1.0",
+        "vitest": "5.0.3",
+        "yaml": "2.9.1",
+        "@rehearsal/contracts": "0.1.0",
+        "@rehearsal/observability": "0.1.0",
+        "zod": "4.6.5",
+        "@cloudflare/build-output-utils": "0.9.0",
+        "@cloudflare/config": "0.24.1",
+        "@cloudflare/vite-plugin": "2.0.0-beta.sha-91c870c02",
+        "cf": "1.0.0-beta.14",
+        "wrangler": "4.149.0",
+        "@opentelemetry/api": "1.9.1",
+        "@opentelemetry/resources": "2.12.0",
+        "@opentelemetry/sdk-trace-base": "2.12.0"
+      },
+      "evidence": "generated-evidence-api-Linux/artifacts/gate-full-all-linux.json",
+      "checks": [
+        {
+          "id": "static",
+          "requirements": [
+            "layout",
+            "quality",
+            "boundaries",
+            "docs",
+            "secrets"
+          ],
+          "command": [
+            "check"
+          ],
+          "timeout": 180000,
+          "reason": "Repository-wide static checks are lightweight and run once",
+          "status": "passed",
+          "milliseconds": 4170
+        },
+        {
+          "id": "tools-unit",
+          "requirements": [
+            "generator-safety",
+            "affected",
+            "failure-propagation"
+          ],
+          "command": [
+            "test:tools"
+          ],
+          "timeout": 180000,
+          "reason": "Shared tooling contracts",
+          "status": "passed",
+          "milliseconds": 40466
+        },
+        {
+          "id": "@rehearsal/contracts/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/contracts",
+          "command": [
+            "--filter",
+            "@rehearsal/contracts",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/contracts; full phase",
+          "status": "passed",
+          "milliseconds": 719
+        },
+        {
+          "id": "@rehearsal/contracts/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/contracts",
+          "command": [
+            "--filter",
+            "@rehearsal/contracts",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/contracts; full phase",
+          "status": "passed",
+          "milliseconds": 522
+        },
+        {
+          "id": "@rehearsal/observability/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/observability",
+          "command": [
+            "--filter",
+            "@rehearsal/observability",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/observability; full phase",
+          "status": "passed",
+          "milliseconds": 789
+        },
+        {
+          "id": "@rehearsal/observability/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/observability",
+          "command": [
+            "--filter",
+            "@rehearsal/observability",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/observability; full phase",
+          "status": "passed",
+          "milliseconds": 506
+        },
+        {
+          "id": "@rehearsal/api/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/api",
+          "command": [
+            "--filter",
+            "@rehearsal/api",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/api; full phase",
+          "status": "passed",
+          "milliseconds": 3904
+        },
+        {
+          "id": "@rehearsal/api/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/api",
+          "command": [
+            "--filter",
+            "@rehearsal/api",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/api; full phase",
+          "status": "passed",
+          "milliseconds": 1478
+        },
+        {
+          "id": "@rehearsal/api/runtime",
+          "requirements": [
+            "worker",
+            "bindings",
+            "environments"
+          ],
+          "package": "@rehearsal/api",
+          "command": [
+            "--filter",
+            "@rehearsal/api",
+            "test:runtime"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/api; full phase",
+          "status": "passed",
+          "milliseconds": 3540
+        }
+      ]
+    },
+    {
+      "preset": "desktop",
+      "os": "linux",
+      "status": "passed",
+      "reason": "All canonical checks ran successfully for this exact generation source",
+      "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+      "contentId": "914ecc11ffa587601b214d72a71489b6f88332492619caf96ac00084a71d80e2",
+      "tools": {
+        "node": "v24.21.0",
+        "pnpm": "12.11.2",
+        "@types/node": "24.19.1",
+        "knip": "6.41.0",
+        "oxc-parser": "0.153.0",
+        "typescript": "7.0.2",
+        "vite-plus": "1.1.0",
+        "vitest": "5.0.3",
+        "yaml": "2.9.1",
+        "zod": "4.6.5",
+        "@rehearsal/contracts": "0.1.0",
+        "@rehearsal/observability": "0.1.0",
+        "@rehearsal/ui": "0.1.0",
+        "@tauri-apps/api": "2.12.2",
+        "react": "19.3.0",
+        "react-dom": "19.3.0",
+        "@tailwindcss/vite": "4.3.3",
+        "@tauri-apps/cli": "2.12.1",
+        "@types/mocha": "10.0.10",
+        "@types/react": "19.3.0",
+        "@types/react-dom": "19.3.0",
+        "@vitejs/plugin-react": "6.1.2",
+        "@wdio/cli": "9.32.0",
+        "@wdio/globals": "9.31.3",
+        "@wdio/json-reporter": "9.32.0",
+        "@wdio/local-runner": "9.32.0",
+        "@wdio/mocha-framework": "9.32.0",
+        "@wdio/spec-reporter": "9.32.0",
+        "@wdio/tauri-plugin": "1.5.0",
+        "@wdio/tauri-service": "1.5.0",
+        "@wdio/types": "9.32.0",
+        "tailwindcss": "4.3.3",
+        "webdriverio": "9.32.0",
+        "@opentelemetry/api": "1.9.1",
+        "@opentelemetry/resources": "2.12.0",
+        "@opentelemetry/sdk-trace-base": "2.12.0",
+        "@testing-library/react": "16.3.3",
+        "@testing-library/user-event": "14.6.7",
+        "jsdom": "30.1.2"
+      },
+      "evidence": "generated-evidence-desktop-Linux/artifacts/gate-full-all-linux.json",
+      "checks": [
+        {
+          "id": "static",
+          "requirements": [
+            "layout",
+            "quality",
+            "boundaries",
+            "docs",
+            "secrets"
+          ],
+          "command": [
+            "check"
+          ],
+          "timeout": 180000,
+          "reason": "Repository-wide static checks are lightweight and run once",
+          "status": "passed",
+          "milliseconds": 4168
+        },
+        {
+          "id": "tools-unit",
+          "requirements": [
+            "generator-safety",
+            "affected",
+            "failure-propagation"
+          ],
+          "command": [
+            "test:tools"
+          ],
+          "timeout": 180000,
+          "reason": "Shared tooling contracts",
+          "status": "passed",
+          "milliseconds": 42780
+        },
+        {
+          "id": "@rehearsal/contracts/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/contracts",
+          "command": [
+            "--filter",
+            "@rehearsal/contracts",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/contracts; full phase",
+          "status": "passed",
+          "milliseconds": 753
+        },
+        {
+          "id": "@rehearsal/contracts/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/contracts",
+          "command": [
+            "--filter",
+            "@rehearsal/contracts",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/contracts; full phase",
+          "status": "passed",
+          "milliseconds": 549
+        },
+        {
+          "id": "@rehearsal/observability/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/observability",
+          "command": [
+            "--filter",
+            "@rehearsal/observability",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/observability; full phase",
+          "status": "passed",
+          "milliseconds": 852
+        },
+        {
+          "id": "@rehearsal/observability/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/observability",
+          "command": [
+            "--filter",
+            "@rehearsal/observability",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/observability; full phase",
+          "status": "passed",
+          "milliseconds": 522
+        },
+        {
+          "id": "@rehearsal/ui/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/ui",
+          "command": [
+            "--filter",
+            "@rehearsal/ui",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/ui; full phase",
+          "status": "passed",
+          "milliseconds": 1892
+        },
+        {
+          "id": "@rehearsal/ui/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/ui",
+          "command": [
+            "--filter",
+            "@rehearsal/ui",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/ui; full phase",
+          "status": "passed",
+          "milliseconds": 536
+        },
+        {
+          "id": "@rehearsal/desktop/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/desktop",
+          "command": [
+            "--filter",
+            "@rehearsal/desktop",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected desktop @rehearsal/desktop; full phase",
+          "status": "passed",
+          "milliseconds": 845
+        },
+        {
+          "id": "@rehearsal/desktop/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/desktop",
+          "command": [
+            "--filter",
+            "@rehearsal/desktop",
+            "build"
+          ],
+          "timeout": 1800000,
+          "reason": "Selected desktop @rehearsal/desktop; full phase",
+          "status": "passed",
+          "milliseconds": 156386
+        },
+        {
+          "id": "@rehearsal/desktop/rust",
+          "requirements": [
+            "rust",
+            "ipc",
+            "export"
+          ],
+          "package": "@rehearsal/desktop",
+          "command": [
+            "--filter",
+            "@rehearsal/desktop",
+            "test:rust"
+          ],
+          "timeout": 1800000,
+          "reason": "Selected desktop @rehearsal/desktop; full phase",
+          "status": "passed",
+          "milliseconds": 135322
+        },
+        {
+          "id": "@rehearsal/desktop/native",
+          "requirements": [
+            "native-three-os",
+            "ipc"
+          ],
+          "package": "@rehearsal/desktop",
+          "command": [
+            "--filter",
+            "@rehearsal/desktop",
+            "test:native"
+          ],
+          "timeout": 1800000,
+          "reason": "Selected desktop @rehearsal/desktop; full phase",
+          "status": "passed",
+          "milliseconds": 212553
+        },
+        {
+          "id": "@rehearsal/desktop/release",
+          "requirements": [
+            "release-isolation"
+          ],
+          "package": "@rehearsal/desktop",
+          "command": [
+            "--filter",
+            "@rehearsal/desktop",
+            "test:release"
+          ],
+          "timeout": 1800000,
+          "reason": "Selected desktop @rehearsal/desktop; full phase",
+          "status": "passed",
+          "milliseconds": 32393
+        }
+      ]
+    },
+    {
+      "preset": "desktop",
+      "os": "darwin",
+      "status": "passed",
+      "reason": "All canonical checks ran successfully for this exact generation source",
+      "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+      "contentId": "914ecc11ffa587601b214d72a71489b6f88332492619caf96ac00084a71d80e2",
+      "tools": {
+        "node": "v24.21.0",
+        "pnpm": "12.11.2",
+        "@types/node": "24.19.1",
+        "knip": "6.41.0",
+        "oxc-parser": "0.153.0",
+        "typescript": "7.0.2",
+        "vite-plus": "1.1.0",
+        "vitest": "5.0.3",
+        "yaml": "2.9.1",
+        "zod": "4.6.5",
+        "@rehearsal/contracts": "0.1.0",
+        "@rehearsal/observability": "0.1.0",
+        "@rehearsal/ui": "0.1.0",
+        "@tauri-apps/api": "2.12.2",
+        "react": "19.3.0",
+        "react-dom": "19.3.0",
+        "@tailwindcss/vite": "4.3.3",
+        "@tauri-apps/cli": "2.12.1",
+        "@types/mocha": "10.0.10",
+        "@types/react": "19.3.0",
+        "@types/react-dom": "19.3.0",
+        "@vitejs/plugin-react": "6.1.2",
+        "@wdio/cli": "9.32.0",
+        "@wdio/globals": "9.31.3",
+        "@wdio/json-reporter": "9.32.0",
+        "@wdio/local-runner": "9.32.0",
+        "@wdio/mocha-framework": "9.32.0",
+        "@wdio/spec-reporter": "9.32.0",
+        "@wdio/tauri-plugin": "1.5.0",
+        "@wdio/tauri-service": "1.5.0",
+        "@wdio/types": "9.32.0",
+        "tailwindcss": "4.3.3",
+        "webdriverio": "9.32.0",
+        "@opentelemetry/api": "1.9.1",
+        "@opentelemetry/resources": "2.12.0",
+        "@opentelemetry/sdk-trace-base": "2.12.0",
+        "@testing-library/react": "16.3.3",
+        "@testing-library/user-event": "14.6.7",
+        "jsdom": "30.1.2"
+      },
+      "evidence": "generated-evidence-desktop-macOS/artifacts/gate-full-all-darwin.json",
+      "checks": [
+        {
+          "id": "static",
+          "requirements": [
+            "layout",
+            "quality",
+            "boundaries",
+            "docs",
+            "secrets"
+          ],
+          "command": [
+            "check"
+          ],
+          "timeout": 180000,
+          "reason": "Repository-wide static checks are lightweight and run once",
+          "status": "passed",
+          "milliseconds": 4735
+        },
+        {
+          "id": "tools-unit",
+          "requirements": [
+            "generator-safety",
+            "affected",
+            "failure-propagation"
+          ],
+          "command": [
+            "test:tools"
+          ],
+          "timeout": 180000,
+          "reason": "Shared tooling contracts",
+          "status": "passed",
+          "milliseconds": 45589
+        },
+        {
+          "id": "@rehearsal/contracts/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/contracts",
+          "command": [
+            "--filter",
+            "@rehearsal/contracts",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/contracts; full phase",
+          "status": "passed",
+          "milliseconds": 872
+        },
+        {
+          "id": "@rehearsal/contracts/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/contracts",
+          "command": [
+            "--filter",
+            "@rehearsal/contracts",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/contracts; full phase",
+          "status": "passed",
+          "milliseconds": 924
+        },
+        {
+          "id": "@rehearsal/observability/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/observability",
+          "command": [
+            "--filter",
+            "@rehearsal/observability",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/observability; full phase",
+          "status": "passed",
+          "milliseconds": 1080
+        },
+        {
+          "id": "@rehearsal/observability/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/observability",
+          "command": [
+            "--filter",
+            "@rehearsal/observability",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/observability; full phase",
+          "status": "passed",
+          "milliseconds": 730
+        },
+        {
+          "id": "@rehearsal/ui/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/ui",
+          "command": [
+            "--filter",
+            "@rehearsal/ui",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/ui; full phase",
+          "status": "passed",
+          "milliseconds": 2690
+        },
+        {
+          "id": "@rehearsal/ui/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/ui",
+          "command": [
+            "--filter",
+            "@rehearsal/ui",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/ui; full phase",
+          "status": "passed",
+          "milliseconds": 669
+        },
+        {
+          "id": "@rehearsal/desktop/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/desktop",
+          "command": [
+            "--filter",
+            "@rehearsal/desktop",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected desktop @rehearsal/desktop; full phase",
+          "status": "passed",
+          "milliseconds": 1003
+        },
+        {
+          "id": "@rehearsal/desktop/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/desktop",
+          "command": [
+            "--filter",
+            "@rehearsal/desktop",
+            "build"
+          ],
+          "timeout": 1800000,
+          "reason": "Selected desktop @rehearsal/desktop; full phase",
+          "status": "passed",
+          "milliseconds": 169843
+        },
+        {
+          "id": "@rehearsal/desktop/rust",
+          "requirements": [
+            "rust",
+            "ipc",
+            "export"
+          ],
+          "package": "@rehearsal/desktop",
+          "command": [
+            "--filter",
+            "@rehearsal/desktop",
+            "test:rust"
+          ],
+          "timeout": 1800000,
+          "reason": "Selected desktop @rehearsal/desktop; full phase",
+          "status": "passed",
+          "milliseconds": 122193
+        },
+        {
+          "id": "@rehearsal/desktop/native",
+          "requirements": [
+            "native-three-os",
+            "ipc"
+          ],
+          "package": "@rehearsal/desktop",
+          "command": [
+            "--filter",
+            "@rehearsal/desktop",
+            "test:native"
+          ],
+          "timeout": 1800000,
+          "reason": "Selected desktop @rehearsal/desktop; full phase",
+          "status": "passed",
+          "milliseconds": 211394
+        },
+        {
+          "id": "@rehearsal/desktop/release",
+          "requirements": [
+            "release-isolation"
+          ],
+          "package": "@rehearsal/desktop",
+          "command": [
+            "--filter",
+            "@rehearsal/desktop",
+            "test:release"
+          ],
+          "timeout": 1800000,
+          "reason": "Selected desktop @rehearsal/desktop; full phase",
+          "status": "passed",
+          "milliseconds": 45105
+        }
+      ]
+    },
+    {
+      "preset": "desktop",
+      "os": "win32",
+      "status": "passed",
+      "reason": "All canonical checks ran successfully for this exact generation source",
+      "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+      "contentId": "914ecc11ffa587601b214d72a71489b6f88332492619caf96ac00084a71d80e2",
+      "tools": {
+        "node": "v24.21.0",
+        "pnpm": "12.11.2",
+        "@types/node": "24.19.1",
+        "knip": "6.41.0",
+        "oxc-parser": "0.153.0",
+        "typescript": "7.0.2",
+        "vite-plus": "1.1.0",
+        "vitest": "5.0.3",
+        "yaml": "2.9.1",
+        "zod": "4.6.5",
+        "@rehearsal/contracts": "0.1.0",
+        "@rehearsal/observability": "0.1.0",
+        "@rehearsal/ui": "0.1.0",
+        "@tauri-apps/api": "2.12.2",
+        "react": "19.3.0",
+        "react-dom": "19.3.0",
+        "@tailwindcss/vite": "4.3.3",
+        "@tauri-apps/cli": "2.12.1",
+        "@types/mocha": "10.0.10",
+        "@types/react": "19.3.0",
+        "@types/react-dom": "19.3.0",
+        "@vitejs/plugin-react": "6.1.2",
+        "@wdio/cli": "9.32.0",
+        "@wdio/globals": "9.31.3",
+        "@wdio/json-reporter": "9.32.0",
+        "@wdio/local-runner": "9.32.0",
+        "@wdio/mocha-framework": "9.32.0",
+        "@wdio/spec-reporter": "9.32.0",
+        "@wdio/tauri-plugin": "1.5.0",
+        "@wdio/tauri-service": "1.5.0",
+        "@wdio/types": "9.32.0",
+        "tailwindcss": "4.3.3",
+        "webdriverio": "9.32.0",
+        "@opentelemetry/api": "1.9.1",
+        "@opentelemetry/resources": "2.12.0",
+        "@opentelemetry/sdk-trace-base": "2.12.0",
+        "@testing-library/react": "16.3.3",
+        "@testing-library/user-event": "14.6.7",
+        "jsdom": "30.1.2"
+      },
+      "evidence": "generated-evidence-desktop-Windows/artifacts/gate-full-all-win32.json",
+      "checks": [
+        {
+          "id": "static",
+          "requirements": [
+            "layout",
+            "quality",
+            "boundaries",
+            "docs",
+            "secrets"
+          ],
+          "command": [
+            "check"
+          ],
+          "timeout": 180000,
+          "reason": "Repository-wide static checks are lightweight and run once",
+          "status": "passed",
+          "milliseconds": 7520
+        },
+        {
+          "id": "tools-unit",
+          "requirements": [
+            "generator-safety",
+            "affected",
+            "failure-propagation"
+          ],
+          "command": [
+            "test:tools"
+          ],
+          "timeout": 180000,
+          "reason": "Shared tooling contracts",
+          "status": "passed",
+          "milliseconds": 98739
+        },
+        {
+          "id": "@rehearsal/contracts/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/contracts",
+          "command": [
+            "--filter",
+            "@rehearsal/contracts",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/contracts; full phase",
+          "status": "passed",
+          "milliseconds": 2417
+        },
+        {
+          "id": "@rehearsal/contracts/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/contracts",
+          "command": [
+            "--filter",
+            "@rehearsal/contracts",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/contracts; full phase",
+          "status": "passed",
+          "milliseconds": 1548
+        },
+        {
+          "id": "@rehearsal/observability/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/observability",
+          "command": [
+            "--filter",
+            "@rehearsal/observability",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/observability; full phase",
+          "status": "passed",
+          "milliseconds": 2381
+        },
+        {
+          "id": "@rehearsal/observability/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/observability",
+          "command": [
+            "--filter",
+            "@rehearsal/observability",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/observability; full phase",
+          "status": "passed",
+          "milliseconds": 1349
+        },
+        {
+          "id": "@rehearsal/ui/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/ui",
+          "command": [
+            "--filter",
+            "@rehearsal/ui",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/ui; full phase",
+          "status": "passed",
+          "milliseconds": 4263
+        },
+        {
+          "id": "@rehearsal/ui/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/ui",
+          "command": [
+            "--filter",
+            "@rehearsal/ui",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/ui; full phase",
+          "status": "passed",
+          "milliseconds": 1375
+        },
+        {
+          "id": "@rehearsal/desktop/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/desktop",
+          "command": [
+            "--filter",
+            "@rehearsal/desktop",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected desktop @rehearsal/desktop; full phase",
+          "status": "passed",
+          "milliseconds": 2507
+        },
+        {
+          "id": "@rehearsal/desktop/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/desktop",
+          "command": [
+            "--filter",
+            "@rehearsal/desktop",
+            "build"
+          ],
+          "timeout": 1800000,
+          "reason": "Selected desktop @rehearsal/desktop; full phase",
+          "status": "passed",
+          "milliseconds": 277022
+        },
+        {
+          "id": "@rehearsal/desktop/rust",
+          "requirements": [
+            "rust",
+            "ipc",
+            "export"
+          ],
+          "package": "@rehearsal/desktop",
+          "command": [
+            "--filter",
+            "@rehearsal/desktop",
+            "test:rust"
+          ],
+          "timeout": 1800000,
+          "reason": "Selected desktop @rehearsal/desktop; full phase",
+          "status": "passed",
+          "milliseconds": 229530
+        },
+        {
+          "id": "@rehearsal/desktop/native",
+          "requirements": [
+            "native-three-os",
+            "ipc"
+          ],
+          "package": "@rehearsal/desktop",
+          "command": [
+            "--filter",
+            "@rehearsal/desktop",
+            "test:native"
+          ],
+          "timeout": 1800000,
+          "reason": "Selected desktop @rehearsal/desktop; full phase",
+          "status": "passed",
+          "milliseconds": 354470
+        },
+        {
+          "id": "@rehearsal/desktop/release",
+          "requirements": [
+            "release-isolation"
+          ],
+          "package": "@rehearsal/desktop",
+          "command": [
+            "--filter",
+            "@rehearsal/desktop",
+            "test:release"
+          ],
+          "timeout": 1800000,
+          "reason": "Selected desktop @rehearsal/desktop; full phase",
+          "status": "passed",
+          "milliseconds": 71029
+        }
+      ]
+    },
+    {
+      "preset": "fullstack",
+      "os": "linux",
+      "status": "passed",
+      "reason": "All canonical checks ran successfully for this exact generation source",
+      "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+      "contentId": "7e81b81cd58fb1e21b9847bf9106c4f8ab73824ce992efff1e89fffaffd0b79f",
+      "tools": {
+        "node": "v24.21.0",
+        "pnpm": "12.11.2",
+        "@types/node": "24.19.1",
+        "knip": "6.41.0",
+        "oxc-parser": "0.153.0",
+        "typescript": "7.0.2",
+        "vite-plus": "1.1.0",
+        "vitest": "5.0.3",
+        "yaml": "2.9.1",
+        "@rehearsal/contracts": "0.1.0",
+        "@rehearsal/observability": "0.1.0",
+        "zod": "4.6.5",
+        "@cloudflare/build-output-utils": "0.9.0",
+        "@cloudflare/config": "0.24.1",
+        "@cloudflare/vite-plugin": "2.0.0-beta.sha-91c870c02",
+        "cf": "1.0.0-beta.14",
+        "wrangler": "4.149.0",
+        "@opentelemetry/api": "1.9.1",
+        "@opentelemetry/resources": "2.12.0",
+        "@opentelemetry/sdk-trace-base": "2.12.0",
+        "react": "19.3.0",
+        "@testing-library/react": "16.3.3",
+        "@testing-library/user-event": "14.6.7",
+        "@types/react": "19.3.0",
+        "jsdom": "30.1.2",
+        "react-dom": "19.3.0",
+        "@rehearsal/ui": "0.1.0",
+        "@tanstack/react-router": "1.170.41",
+        "@tanstack/react-start": "1.168.60",
+        "@axe-core/playwright": "4.13.0",
+        "@playwright/test": "1.64.0",
+        "@rehearsal/api": "0.1.0",
+        "@tailwindcss/vite": "4.3.3",
+        "@types/react-dom": "19.3.0",
+        "@vitejs/plugin-react": "6.1.2",
+        "lighthouse": "13.5.0",
+        "tailwindcss": "4.3.3"
+      },
+      "evidence": "generated-evidence-fullstack-Linux/artifacts/gate-full-all-linux.json",
+      "checks": [
+        {
+          "id": "static",
+          "requirements": [
+            "layout",
+            "quality",
+            "boundaries",
+            "docs",
+            "secrets"
+          ],
+          "command": [
+            "check"
+          ],
+          "timeout": 180000,
+          "reason": "Repository-wide static checks are lightweight and run once",
+          "status": "passed",
+          "milliseconds": 6380
+        },
+        {
+          "id": "tools-unit",
+          "requirements": [
+            "generator-safety",
+            "affected",
+            "failure-propagation"
+          ],
+          "command": [
+            "test:tools"
+          ],
+          "timeout": 180000,
+          "reason": "Shared tooling contracts",
+          "status": "passed",
+          "milliseconds": 44984
+        },
+        {
+          "id": "@rehearsal/contracts/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/contracts",
+          "command": [
+            "--filter",
+            "@rehearsal/contracts",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/contracts; full phase",
+          "status": "passed",
+          "milliseconds": 779
+        },
+        {
+          "id": "@rehearsal/contracts/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/contracts",
+          "command": [
+            "--filter",
+            "@rehearsal/contracts",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/contracts; full phase",
+          "status": "passed",
+          "milliseconds": 566
+        },
+        {
+          "id": "@rehearsal/observability/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/observability",
+          "command": [
+            "--filter",
+            "@rehearsal/observability",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/observability; full phase",
+          "status": "passed",
+          "milliseconds": 895
+        },
+        {
+          "id": "@rehearsal/observability/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/observability",
+          "command": [
+            "--filter",
+            "@rehearsal/observability",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/observability; full phase",
+          "status": "passed",
+          "milliseconds": 553
+        },
+        {
+          "id": "@rehearsal/ui/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/ui",
+          "command": [
+            "--filter",
+            "@rehearsal/ui",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/ui; full phase",
+          "status": "passed",
+          "milliseconds": 1980
+        },
+        {
+          "id": "@rehearsal/ui/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/ui",
+          "command": [
+            "--filter",
+            "@rehearsal/ui",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/ui; full phase",
+          "status": "passed",
+          "milliseconds": 563
+        },
+        {
+          "id": "@rehearsal/api/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/api",
+          "command": [
+            "--filter",
+            "@rehearsal/api",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/api; full phase",
+          "status": "passed",
+          "milliseconds": 3990
+        },
+        {
+          "id": "@rehearsal/api/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/api",
+          "command": [
+            "--filter",
+            "@rehearsal/api",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/api; full phase",
+          "status": "passed",
+          "milliseconds": 1637
+        },
+        {
+          "id": "@rehearsal/api/runtime",
+          "requirements": [
+            "worker",
+            "bindings",
+            "environments"
+          ],
+          "package": "@rehearsal/api",
+          "command": [
+            "--filter",
+            "@rehearsal/api",
+            "test:runtime"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/api; full phase",
+          "status": "passed",
+          "milliseconds": 8756
+        },
+        {
+          "id": "@rehearsal/api/restart",
+          "requirements": [
+            "migration",
+            "seed",
+            "persistence"
+          ],
+          "package": "@rehearsal/api",
+          "command": [
+            "--filter",
+            "@rehearsal/api",
+            "test:restart"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/api; full phase",
+          "status": "passed",
+          "milliseconds": 13584
+        },
+        {
+          "id": "@rehearsal/web/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 926
+        },
+        {
+          "id": "@rehearsal/web/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 2375
+        },
+        {
+          "id": "@rehearsal/web/runtime",
+          "requirements": [
+            "worker",
+            "bindings",
+            "environments"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "test:runtime"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 12997
+        },
+        {
+          "id": "@rehearsal/web/browser",
+          "requirements": [
+            "web",
+            "browser",
+            "accessibility",
+            "vrt"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "test:e2e"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 23022
+        },
+        {
+          "id": "@rehearsal/web/browser-production",
+          "requirements": [
+            "web",
+            "browser",
+            "production-ui"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "test:e2e:production"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 14213
+        },
+        {
+          "id": "@rehearsal/web/lighthouse",
+          "requirements": [
+            "web",
+            "browser",
+            "lighthouse-all-100"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "test:lighthouse"
+          ],
+          "timeout": 900000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 96473
+        }
+      ]
+    },
+    {
+      "preset": "fullstack-desktop",
+      "os": "linux",
+      "status": "passed",
+      "reason": "All canonical checks ran successfully for this exact generation source",
+      "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+      "contentId": "0585b811cc8fd85171147c526c985b7d3452579c4d1e5a24054ff84423bb6764",
+      "tools": {
+        "node": "v24.21.0",
+        "pnpm": "12.11.2",
+        "@types/node": "24.19.1",
+        "knip": "6.41.0",
+        "oxc-parser": "0.153.0",
+        "typescript": "7.0.2",
+        "vite-plus": "1.1.0",
+        "vitest": "5.0.3",
+        "yaml": "2.9.1",
+        "@rehearsal/contracts": "0.1.0",
+        "@rehearsal/observability": "0.1.0",
+        "zod": "4.6.5",
+        "@cloudflare/build-output-utils": "0.9.0",
+        "@cloudflare/config": "0.24.1",
+        "@cloudflare/vite-plugin": "2.0.0-beta.sha-91c870c02",
+        "cf": "1.0.0-beta.14",
+        "wrangler": "4.149.0",
+        "@rehearsal/ui": "0.1.0",
+        "@tauri-apps/api": "2.12.2",
+        "react": "19.3.0",
+        "react-dom": "19.3.0",
+        "@tailwindcss/vite": "4.3.3",
+        "@tauri-apps/cli": "2.12.1",
+        "@types/mocha": "10.0.10",
+        "@types/react": "19.3.0",
+        "@types/react-dom": "19.3.0",
+        "@vitejs/plugin-react": "6.1.2",
+        "@wdio/cli": "9.32.0",
+        "@wdio/globals": "9.31.3",
+        "@wdio/json-reporter": "9.32.0",
+        "@wdio/local-runner": "9.32.0",
+        "@wdio/mocha-framework": "9.32.0",
+        "@wdio/spec-reporter": "9.32.0",
+        "@wdio/tauri-plugin": "1.5.0",
+        "@wdio/tauri-service": "1.5.0",
+        "@wdio/types": "9.32.0",
+        "tailwindcss": "4.3.3",
+        "webdriverio": "9.32.0",
+        "@opentelemetry/api": "1.9.1",
+        "@opentelemetry/resources": "2.12.0",
+        "@opentelemetry/sdk-trace-base": "2.12.0",
+        "@testing-library/react": "16.3.3",
+        "@testing-library/user-event": "14.6.7",
+        "jsdom": "30.1.2",
+        "@tanstack/react-router": "1.170.41",
+        "@tanstack/react-start": "1.168.60",
+        "@axe-core/playwright": "4.13.0",
+        "@playwright/test": "1.64.0",
+        "@rehearsal/api": "0.1.0",
+        "lighthouse": "13.5.0"
+      },
+      "evidence": "generated-evidence-fullstack-desktop-Linux/artifacts/gate-full-all-linux.json",
+      "checks": [
+        {
+          "id": "static",
+          "requirements": [
+            "layout",
+            "quality",
+            "boundaries",
+            "docs",
+            "secrets"
+          ],
+          "command": [
+            "check"
+          ],
+          "timeout": 180000,
+          "reason": "Repository-wide static checks are lightweight and run once",
+          "status": "passed",
+          "milliseconds": 3915
+        },
+        {
+          "id": "tools-unit",
+          "requirements": [
+            "generator-safety",
+            "affected",
+            "failure-propagation"
+          ],
+          "command": [
+            "test:tools"
+          ],
+          "timeout": 180000,
+          "reason": "Shared tooling contracts",
+          "status": "passed",
+          "milliseconds": 32626
+        },
+        {
+          "id": "@rehearsal/contracts/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/contracts",
+          "command": [
+            "--filter",
+            "@rehearsal/contracts",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/contracts; full phase",
+          "status": "passed",
+          "milliseconds": 506
+        },
+        {
+          "id": "@rehearsal/contracts/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/contracts",
+          "command": [
+            "--filter",
+            "@rehearsal/contracts",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/contracts; full phase",
+          "status": "passed",
+          "milliseconds": 360
+        },
+        {
+          "id": "@rehearsal/observability/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/observability",
+          "command": [
+            "--filter",
+            "@rehearsal/observability",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/observability; full phase",
+          "status": "passed",
+          "milliseconds": 510
+        },
+        {
+          "id": "@rehearsal/observability/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/observability",
+          "command": [
+            "--filter",
+            "@rehearsal/observability",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/observability; full phase",
+          "status": "passed",
+          "milliseconds": 321
+        },
+        {
+          "id": "@rehearsal/ui/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/ui",
+          "command": [
+            "--filter",
+            "@rehearsal/ui",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/ui; full phase",
+          "status": "passed",
+          "milliseconds": 1096
+        },
+        {
+          "id": "@rehearsal/ui/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/ui",
+          "command": [
+            "--filter",
+            "@rehearsal/ui",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/ui; full phase",
+          "status": "passed",
+          "milliseconds": 316
+        },
+        {
+          "id": "@rehearsal/api/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/api",
+          "command": [
+            "--filter",
+            "@rehearsal/api",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/api; full phase",
+          "status": "passed",
+          "milliseconds": 3666
+        },
+        {
+          "id": "@rehearsal/api/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/api",
+          "command": [
+            "--filter",
+            "@rehearsal/api",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/api; full phase",
+          "status": "passed",
+          "milliseconds": 1048
+        },
+        {
+          "id": "@rehearsal/api/runtime",
+          "requirements": [
+            "worker",
+            "bindings",
+            "environments"
+          ],
+          "package": "@rehearsal/api",
+          "command": [
+            "--filter",
+            "@rehearsal/api",
+            "test:runtime"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/api; full phase",
+          "status": "passed",
+          "milliseconds": 5809
+        },
+        {
+          "id": "@rehearsal/api/restart",
+          "requirements": [
+            "migration",
+            "seed",
+            "persistence"
+          ],
+          "package": "@rehearsal/api",
+          "command": [
+            "--filter",
+            "@rehearsal/api",
+            "test:restart"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/api; full phase",
+          "status": "passed",
+          "milliseconds": 8773
+        },
+        {
+          "id": "@rehearsal/web/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 531
+        },
+        {
+          "id": "@rehearsal/web/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 1312
+        },
+        {
+          "id": "@rehearsal/web/runtime",
+          "requirements": [
+            "worker",
+            "bindings",
+            "environments"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "test:runtime"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 7622
+        },
+        {
+          "id": "@rehearsal/web/browser",
+          "requirements": [
+            "web",
+            "browser",
+            "accessibility",
+            "vrt"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "test:e2e"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 13343
+        },
+        {
+          "id": "@rehearsal/web/browser-production",
+          "requirements": [
+            "web",
+            "browser",
+            "production-ui"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "test:e2e:production"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 9949
+        },
+        {
+          "id": "@rehearsal/web/lighthouse",
+          "requirements": [
+            "web",
+            "browser",
+            "lighthouse-all-100"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "test:lighthouse"
+          ],
+          "timeout": 900000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 82921
+        },
+        {
+          "id": "@rehearsal/desktop/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/desktop",
+          "command": [
+            "--filter",
+            "@rehearsal/desktop",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected desktop @rehearsal/desktop; full phase",
+          "status": "passed",
+          "milliseconds": 563
+        },
+        {
+          "id": "@rehearsal/desktop/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/desktop",
+          "command": [
+            "--filter",
+            "@rehearsal/desktop",
+            "build"
+          ],
+          "timeout": 1800000,
+          "reason": "Selected desktop @rehearsal/desktop; full phase",
+          "status": "passed",
+          "milliseconds": 106506
+        },
+        {
+          "id": "@rehearsal/desktop/rust",
+          "requirements": [
+            "rust",
+            "ipc",
+            "export"
+          ],
+          "package": "@rehearsal/desktop",
+          "command": [
+            "--filter",
+            "@rehearsal/desktop",
+            "test:rust"
+          ],
+          "timeout": 1800000,
+          "reason": "Selected desktop @rehearsal/desktop; full phase",
+          "status": "passed",
+          "milliseconds": 87374
+        },
+        {
+          "id": "@rehearsal/desktop/native",
+          "requirements": [
+            "native-three-os",
+            "ipc"
+          ],
+          "package": "@rehearsal/desktop",
+          "command": [
+            "--filter",
+            "@rehearsal/desktop",
+            "test:native"
+          ],
+          "timeout": 1800000,
+          "reason": "Selected desktop @rehearsal/desktop; full phase",
+          "status": "passed",
+          "milliseconds": 133608
+        },
+        {
+          "id": "@rehearsal/desktop/release",
+          "requirements": [
+            "release-isolation"
+          ],
+          "package": "@rehearsal/desktop",
+          "command": [
+            "--filter",
+            "@rehearsal/desktop",
+            "test:release"
+          ],
+          "timeout": 1800000,
+          "reason": "Selected desktop @rehearsal/desktop; full phase",
+          "status": "passed",
+          "milliseconds": 20736
+        }
+      ]
+    },
+    {
+      "preset": "web-bindings",
+      "os": "linux",
+      "status": "passed",
+      "reason": "All canonical checks ran successfully for this exact generation source",
+      "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+      "contentId": "b01891b4fe1f53cd8fe780f9f88e4843e82bf3487e8395e35f0089c2b9d03fcc",
+      "tools": {
+        "node": "v24.21.0",
+        "pnpm": "12.11.2",
+        "@types/node": "24.19.1",
+        "knip": "6.41.0",
+        "oxc-parser": "0.153.0",
+        "typescript": "7.0.2",
+        "vite-plus": "1.1.0",
+        "vitest": "5.0.3",
+        "yaml": "2.9.1",
+        "zod": "4.6.5",
+        "@opentelemetry/api": "1.9.1",
+        "@opentelemetry/resources": "2.12.0",
+        "@opentelemetry/sdk-trace-base": "2.12.0",
+        "@rehearsal/contracts": "0.1.0",
+        "react": "19.3.0",
+        "@testing-library/react": "16.3.3",
+        "@testing-library/user-event": "14.6.7",
+        "@types/react": "19.3.0",
+        "jsdom": "30.1.2",
+        "react-dom": "19.3.0",
+        "@rehearsal/observability": "0.1.0",
+        "@rehearsal/ui": "0.1.0",
+        "@tanstack/react-router": "1.170.41",
+        "@tanstack/react-start": "1.168.60",
+        "@axe-core/playwright": "4.13.0",
+        "@cloudflare/build-output-utils": "0.9.0",
+        "@cloudflare/config": "0.24.1",
+        "@cloudflare/vite-plugin": "2.0.0-beta.sha-91c870c02",
+        "@playwright/test": "1.64.0",
+        "@tailwindcss/vite": "4.3.3",
+        "@types/react-dom": "19.3.0",
+        "@vitejs/plugin-react": "6.1.2",
+        "cf": "1.0.0-beta.14",
+        "lighthouse": "13.5.0",
+        "tailwindcss": "4.3.3",
+        "wrangler": "4.149.0"
+      },
+      "evidence": "generated-evidence-web-bindings-Linux/artifacts/gate-full-all-linux.json",
+      "checks": [
+        {
+          "id": "static",
+          "requirements": [
+            "layout",
+            "quality",
+            "boundaries",
+            "docs",
+            "secrets"
+          ],
+          "command": [
+            "check"
+          ],
+          "timeout": 180000,
+          "reason": "Repository-wide static checks are lightweight and run once",
+          "status": "passed",
+          "milliseconds": 5333
+        },
+        {
+          "id": "tools-unit",
+          "requirements": [
+            "generator-safety",
+            "affected",
+            "failure-propagation"
+          ],
+          "command": [
+            "test:tools"
+          ],
+          "timeout": 180000,
+          "reason": "Shared tooling contracts",
+          "status": "passed",
+          "milliseconds": 43147
+        },
+        {
+          "id": "@rehearsal/contracts/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/contracts",
+          "command": [
+            "--filter",
+            "@rehearsal/contracts",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/contracts; full phase",
+          "status": "passed",
+          "milliseconds": 742
+        },
+        {
+          "id": "@rehearsal/contracts/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/contracts",
+          "command": [
+            "--filter",
+            "@rehearsal/contracts",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/contracts; full phase",
+          "status": "passed",
+          "milliseconds": 542
+        },
+        {
+          "id": "@rehearsal/observability/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/observability",
+          "command": [
+            "--filter",
+            "@rehearsal/observability",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/observability; full phase",
+          "status": "passed",
+          "milliseconds": 825
+        },
+        {
+          "id": "@rehearsal/observability/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/observability",
+          "command": [
+            "--filter",
+            "@rehearsal/observability",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/observability; full phase",
+          "status": "passed",
+          "milliseconds": 526
+        },
+        {
+          "id": "@rehearsal/ui/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/ui",
+          "command": [
+            "--filter",
+            "@rehearsal/ui",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/ui; full phase",
+          "status": "passed",
+          "milliseconds": 1884
+        },
+        {
+          "id": "@rehearsal/ui/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/ui",
+          "command": [
+            "--filter",
+            "@rehearsal/ui",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/ui; full phase",
+          "status": "passed",
+          "milliseconds": 526
+        },
+        {
+          "id": "@rehearsal/web/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 852
+        },
+        {
+          "id": "@rehearsal/web/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 2256
+        },
+        {
+          "id": "@rehearsal/web/runtime",
+          "requirements": [
+            "worker",
+            "bindings",
+            "environments"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "test:runtime"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 10679
+        },
+        {
+          "id": "@rehearsal/web/restart",
+          "requirements": [
+            "migration",
+            "seed",
+            "persistence"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "test:restart"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 17519
+        },
+        {
+          "id": "@rehearsal/web/browser",
+          "requirements": [
+            "web",
+            "browser",
+            "accessibility",
+            "vrt"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "test:e2e"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 19598
+        },
+        {
+          "id": "@rehearsal/web/browser-production",
+          "requirements": [
+            "web",
+            "browser",
+            "production-ui"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "test:e2e:production"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 12703
+        },
+        {
+          "id": "@rehearsal/web/lighthouse",
+          "requirements": [
+            "web",
+            "browser",
+            "lighthouse-all-100"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "test:lighthouse"
+          ],
+          "timeout": 900000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 93091
+        }
+      ]
+    },
+    {
+      "preset": "api-bindings",
+      "os": "linux",
+      "status": "passed",
+      "reason": "All canonical checks ran successfully for this exact generation source",
+      "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+      "contentId": "3ef2187e80b1f53c88316c8709f3044ba5381d713c198afa6887366c1b9d1c1f",
+      "tools": {
+        "node": "v24.21.0",
+        "pnpm": "12.11.2",
+        "@types/node": "24.19.1",
+        "knip": "6.41.0",
+        "oxc-parser": "0.153.0",
+        "typescript": "7.0.2",
+        "vite-plus": "1.1.0",
+        "vitest": "5.0.3",
+        "yaml": "2.9.1",
+        "@rehearsal/contracts": "0.1.0",
+        "@rehearsal/observability": "0.1.0",
+        "zod": "4.6.5",
+        "@cloudflare/build-output-utils": "0.9.0",
+        "@cloudflare/config": "0.24.1",
+        "@cloudflare/vite-plugin": "2.0.0-beta.sha-91c870c02",
+        "cf": "1.0.0-beta.14",
+        "wrangler": "4.149.0",
+        "@opentelemetry/api": "1.9.1",
+        "@opentelemetry/resources": "2.12.0",
+        "@opentelemetry/sdk-trace-base": "2.12.0"
+      },
+      "evidence": "generated-evidence-api-bindings-Linux/artifacts/gate-full-all-linux.json",
+      "checks": [
+        {
+          "id": "static",
+          "requirements": [
+            "layout",
+            "quality",
+            "boundaries",
+            "docs",
+            "secrets"
+          ],
+          "command": [
+            "check"
+          ],
+          "timeout": 180000,
+          "reason": "Repository-wide static checks are lightweight and run once",
+          "status": "passed",
+          "milliseconds": 4589
+        },
+        {
+          "id": "tools-unit",
+          "requirements": [
+            "generator-safety",
+            "affected",
+            "failure-propagation"
+          ],
+          "command": [
+            "test:tools"
+          ],
+          "timeout": 180000,
+          "reason": "Shared tooling contracts",
+          "status": "passed",
+          "milliseconds": 42299
+        },
+        {
+          "id": "@rehearsal/contracts/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/contracts",
+          "command": [
+            "--filter",
+            "@rehearsal/contracts",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/contracts; full phase",
+          "status": "passed",
+          "milliseconds": 736
+        },
+        {
+          "id": "@rehearsal/contracts/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/contracts",
+          "command": [
+            "--filter",
+            "@rehearsal/contracts",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/contracts; full phase",
+          "status": "passed",
+          "milliseconds": 517
+        },
+        {
+          "id": "@rehearsal/observability/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/observability",
+          "command": [
+            "--filter",
+            "@rehearsal/observability",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/observability; full phase",
+          "status": "passed",
+          "milliseconds": 826
+        },
+        {
+          "id": "@rehearsal/observability/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/observability",
+          "command": [
+            "--filter",
+            "@rehearsal/observability",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/observability; full phase",
+          "status": "passed",
+          "milliseconds": 513
+        },
+        {
+          "id": "@rehearsal/api/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/api",
+          "command": [
+            "--filter",
+            "@rehearsal/api",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/api; full phase",
+          "status": "passed",
+          "milliseconds": 3948
+        },
+        {
+          "id": "@rehearsal/api/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/api",
+          "command": [
+            "--filter",
+            "@rehearsal/api",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/api; full phase",
+          "status": "passed",
+          "milliseconds": 1600
+        },
+        {
+          "id": "@rehearsal/api/runtime",
+          "requirements": [
+            "worker",
+            "bindings",
+            "environments"
+          ],
+          "package": "@rehearsal/api",
+          "command": [
+            "--filter",
+            "@rehearsal/api",
+            "test:runtime"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/api; full phase",
+          "status": "passed",
+          "milliseconds": 8396
+        },
+        {
+          "id": "@rehearsal/api/restart",
+          "requirements": [
+            "migration",
+            "seed",
+            "persistence"
+          ],
+          "package": "@rehearsal/api",
+          "command": [
+            "--filter",
+            "@rehearsal/api",
+            "test:restart"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/api; full phase",
+          "status": "passed",
+          "milliseconds": 13024
+        }
+      ]
+    },
+    {
+      "preset": "web-d1",
+      "os": "linux",
+      "status": "passed",
+      "reason": "All canonical checks ran successfully for this exact generation source",
+      "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+      "contentId": "bd82dd2ff003dbc770940887e98baf984f3988bd627e8d12c325ec0f96bc2b0f",
+      "tools": {
+        "node": "v24.21.0",
+        "pnpm": "12.11.2",
+        "@types/node": "24.19.1",
+        "knip": "6.41.0",
+        "oxc-parser": "0.153.0",
+        "typescript": "7.0.2",
+        "vite-plus": "1.1.0",
+        "vitest": "5.0.3",
+        "yaml": "2.9.1",
+        "zod": "4.6.5",
+        "@opentelemetry/api": "1.9.1",
+        "@opentelemetry/resources": "2.12.0",
+        "@opentelemetry/sdk-trace-base": "2.12.0",
+        "@rehearsal/contracts": "0.1.0",
+        "react": "19.3.0",
+        "@testing-library/react": "16.3.3",
+        "@testing-library/user-event": "14.6.7",
+        "@types/react": "19.3.0",
+        "jsdom": "30.1.2",
+        "react-dom": "19.3.0",
+        "@rehearsal/observability": "0.1.0",
+        "@rehearsal/ui": "0.1.0",
+        "@tanstack/react-router": "1.170.41",
+        "@tanstack/react-start": "1.168.60",
+        "@axe-core/playwright": "4.13.0",
+        "@cloudflare/build-output-utils": "0.9.0",
+        "@cloudflare/config": "0.24.1",
+        "@cloudflare/vite-plugin": "2.0.0-beta.sha-91c870c02",
+        "@playwright/test": "1.64.0",
+        "@tailwindcss/vite": "4.3.3",
+        "@types/react-dom": "19.3.0",
+        "@vitejs/plugin-react": "6.1.2",
+        "cf": "1.0.0-beta.14",
+        "lighthouse": "13.5.0",
+        "tailwindcss": "4.3.3",
+        "wrangler": "4.149.0"
+      },
+      "evidence": "generated-evidence-web-d1-Linux/artifacts/gate-full-all-linux.json",
+      "checks": [
+        {
+          "id": "static",
+          "requirements": [
+            "layout",
+            "quality",
+            "boundaries",
+            "docs",
+            "secrets"
+          ],
+          "command": [
+            "check"
+          ],
+          "timeout": 180000,
+          "reason": "Repository-wide static checks are lightweight and run once",
+          "status": "passed",
+          "milliseconds": 5372
+        },
+        {
+          "id": "tools-unit",
+          "requirements": [
+            "generator-safety",
+            "affected",
+            "failure-propagation"
+          ],
+          "command": [
+            "test:tools"
+          ],
+          "timeout": 180000,
+          "reason": "Shared tooling contracts",
+          "status": "passed",
+          "milliseconds": 42112
+        },
+        {
+          "id": "@rehearsal/contracts/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/contracts",
+          "command": [
+            "--filter",
+            "@rehearsal/contracts",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/contracts; full phase",
+          "status": "passed",
+          "milliseconds": 736
+        },
+        {
+          "id": "@rehearsal/contracts/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/contracts",
+          "command": [
+            "--filter",
+            "@rehearsal/contracts",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/contracts; full phase",
+          "status": "passed",
+          "milliseconds": 530
+        },
+        {
+          "id": "@rehearsal/observability/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/observability",
+          "command": [
+            "--filter",
+            "@rehearsal/observability",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/observability; full phase",
+          "status": "passed",
+          "milliseconds": 846
+        },
+        {
+          "id": "@rehearsal/observability/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/observability",
+          "command": [
+            "--filter",
+            "@rehearsal/observability",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/observability; full phase",
+          "status": "passed",
+          "milliseconds": 518
+        },
+        {
+          "id": "@rehearsal/ui/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/ui",
+          "command": [
+            "--filter",
+            "@rehearsal/ui",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/ui; full phase",
+          "status": "passed",
+          "milliseconds": 1902
+        },
+        {
+          "id": "@rehearsal/ui/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/ui",
+          "command": [
+            "--filter",
+            "@rehearsal/ui",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/ui; full phase",
+          "status": "passed",
+          "milliseconds": 529
+        },
+        {
+          "id": "@rehearsal/web/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 857
+        },
+        {
+          "id": "@rehearsal/web/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 2285
+        },
+        {
+          "id": "@rehearsal/web/runtime",
+          "requirements": [
+            "worker",
+            "bindings",
+            "environments"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "test:runtime"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 10753
+        },
+        {
+          "id": "@rehearsal/web/restart",
+          "requirements": [
+            "migration",
+            "seed",
+            "persistence"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "test:restart"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 17582
+        },
+        {
+          "id": "@rehearsal/web/browser",
+          "requirements": [
+            "web",
+            "browser",
+            "accessibility",
+            "vrt"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "test:e2e"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 19704
+        },
+        {
+          "id": "@rehearsal/web/browser-production",
+          "requirements": [
+            "web",
+            "browser",
+            "production-ui"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "test:e2e:production"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 12781
+        },
+        {
+          "id": "@rehearsal/web/lighthouse",
+          "requirements": [
+            "web",
+            "browser",
+            "lighthouse-all-100"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "test:lighthouse"
+          ],
+          "timeout": 900000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 93474
+        }
+      ]
+    },
+    {
+      "preset": "web-kv",
+      "os": "linux",
+      "status": "passed",
+      "reason": "All canonical checks ran successfully for this exact generation source",
+      "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+      "contentId": "a3cbe9605a587bce97ed594b6b7775ce7134cbece45784d707bfe33d9a4ef8c4",
+      "tools": {
+        "node": "v24.21.0",
+        "pnpm": "12.11.2",
+        "@types/node": "24.19.1",
+        "knip": "6.41.0",
+        "oxc-parser": "0.153.0",
+        "typescript": "7.0.2",
+        "vite-plus": "1.1.0",
+        "vitest": "5.0.3",
+        "yaml": "2.9.1",
+        "zod": "4.6.5",
+        "@opentelemetry/api": "1.9.1",
+        "@opentelemetry/resources": "2.12.0",
+        "@opentelemetry/sdk-trace-base": "2.12.0",
+        "@rehearsal/contracts": "0.1.0",
+        "react": "19.3.0",
+        "@testing-library/react": "16.3.3",
+        "@testing-library/user-event": "14.6.7",
+        "@types/react": "19.3.0",
+        "jsdom": "30.1.2",
+        "react-dom": "19.3.0",
+        "@rehearsal/observability": "0.1.0",
+        "@rehearsal/ui": "0.1.0",
+        "@tanstack/react-router": "1.170.41",
+        "@tanstack/react-start": "1.168.60",
+        "@axe-core/playwright": "4.13.0",
+        "@cloudflare/build-output-utils": "0.9.0",
+        "@cloudflare/config": "0.24.1",
+        "@cloudflare/vite-plugin": "2.0.0-beta.sha-91c870c02",
+        "@playwright/test": "1.64.0",
+        "@tailwindcss/vite": "4.3.3",
+        "@types/react-dom": "19.3.0",
+        "@vitejs/plugin-react": "6.1.2",
+        "cf": "1.0.0-beta.14",
+        "lighthouse": "13.5.0",
+        "tailwindcss": "4.3.3",
+        "wrangler": "4.149.0"
+      },
+      "evidence": "generated-evidence-web-kv-Linux/artifacts/gate-full-all-linux.json",
+      "checks": [
+        {
+          "id": "static",
+          "requirements": [
+            "layout",
+            "quality",
+            "boundaries",
+            "docs",
+            "secrets"
+          ],
+          "command": [
+            "check"
+          ],
+          "timeout": 180000,
+          "reason": "Repository-wide static checks are lightweight and run once",
+          "status": "passed",
+          "milliseconds": 5443
+        },
+        {
+          "id": "tools-unit",
+          "requirements": [
+            "generator-safety",
+            "affected",
+            "failure-propagation"
+          ],
+          "command": [
+            "test:tools"
+          ],
+          "timeout": 180000,
+          "reason": "Shared tooling contracts",
+          "status": "passed",
+          "milliseconds": 43327
+        },
+        {
+          "id": "@rehearsal/contracts/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/contracts",
+          "command": [
+            "--filter",
+            "@rehearsal/contracts",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/contracts; full phase",
+          "status": "passed",
+          "milliseconds": 748
+        },
+        {
+          "id": "@rehearsal/contracts/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/contracts",
+          "command": [
+            "--filter",
+            "@rehearsal/contracts",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/contracts; full phase",
+          "status": "passed",
+          "milliseconds": 542
+        },
+        {
+          "id": "@rehearsal/observability/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/observability",
+          "command": [
+            "--filter",
+            "@rehearsal/observability",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/observability; full phase",
+          "status": "passed",
+          "milliseconds": 867
+        },
+        {
+          "id": "@rehearsal/observability/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/observability",
+          "command": [
+            "--filter",
+            "@rehearsal/observability",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/observability; full phase",
+          "status": "passed",
+          "milliseconds": 525
+        },
+        {
+          "id": "@rehearsal/ui/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/ui",
+          "command": [
+            "--filter",
+            "@rehearsal/ui",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/ui; full phase",
+          "status": "passed",
+          "milliseconds": 1873
+        },
+        {
+          "id": "@rehearsal/ui/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/ui",
+          "command": [
+            "--filter",
+            "@rehearsal/ui",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/ui; full phase",
+          "status": "passed",
+          "milliseconds": 530
+        },
+        {
+          "id": "@rehearsal/web/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 869
+        },
+        {
+          "id": "@rehearsal/web/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 2328
+        },
+        {
+          "id": "@rehearsal/web/runtime",
+          "requirements": [
+            "worker",
+            "bindings",
+            "environments"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "test:runtime"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 5428
+        },
+        {
+          "id": "@rehearsal/web/browser",
+          "requirements": [
+            "web",
+            "browser",
+            "accessibility",
+            "vrt"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "test:e2e"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 15814
+        },
+        {
+          "id": "@rehearsal/web/browser-production",
+          "requirements": [
+            "web",
+            "browser",
+            "production-ui"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "test:e2e:production"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 8084
+        },
+        {
+          "id": "@rehearsal/web/lighthouse",
+          "requirements": [
+            "web",
+            "browser",
+            "lighthouse-all-100"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "test:lighthouse"
+          ],
+          "timeout": 900000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 88485
+        }
+      ]
+    },
+    {
+      "preset": "web-r2",
+      "os": "linux",
+      "status": "passed",
+      "reason": "All canonical checks ran successfully for this exact generation source",
+      "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+      "contentId": "ae167207c500340e7622f301d2a387961637b50f0fc5f166029a9d325147ecd4",
+      "tools": {
+        "node": "v24.21.0",
+        "pnpm": "12.11.2",
+        "@types/node": "24.19.1",
+        "knip": "6.41.0",
+        "oxc-parser": "0.153.0",
+        "typescript": "7.0.2",
+        "vite-plus": "1.1.0",
+        "vitest": "5.0.3",
+        "yaml": "2.9.1",
+        "zod": "4.6.5",
+        "@opentelemetry/api": "1.9.1",
+        "@opentelemetry/resources": "2.12.0",
+        "@opentelemetry/sdk-trace-base": "2.12.0",
+        "@rehearsal/contracts": "0.1.0",
+        "react": "19.3.0",
+        "@testing-library/react": "16.3.3",
+        "@testing-library/user-event": "14.6.7",
+        "@types/react": "19.3.0",
+        "jsdom": "30.1.2",
+        "react-dom": "19.3.0",
+        "@rehearsal/observability": "0.1.0",
+        "@rehearsal/ui": "0.1.0",
+        "@tanstack/react-router": "1.170.41",
+        "@tanstack/react-start": "1.168.60",
+        "@axe-core/playwright": "4.13.0",
+        "@cloudflare/build-output-utils": "0.9.0",
+        "@cloudflare/config": "0.24.1",
+        "@cloudflare/vite-plugin": "2.0.0-beta.sha-91c870c02",
+        "@playwright/test": "1.64.0",
+        "@tailwindcss/vite": "4.3.3",
+        "@types/react-dom": "19.3.0",
+        "@vitejs/plugin-react": "6.1.2",
+        "cf": "1.0.0-beta.14",
+        "lighthouse": "13.5.0",
+        "tailwindcss": "4.3.3",
+        "wrangler": "4.149.0"
+      },
+      "evidence": "generated-evidence-web-r2-Linux/artifacts/gate-full-all-linux.json",
+      "checks": [
+        {
+          "id": "static",
+          "requirements": [
+            "layout",
+            "quality",
+            "boundaries",
+            "docs",
+            "secrets"
+          ],
+          "command": [
+            "check"
+          ],
+          "timeout": 180000,
+          "reason": "Repository-wide static checks are lightweight and run once",
+          "status": "passed",
+          "milliseconds": 5346
+        },
+        {
+          "id": "tools-unit",
+          "requirements": [
+            "generator-safety",
+            "affected",
+            "failure-propagation"
+          ],
+          "command": [
+            "test:tools"
+          ],
+          "timeout": 180000,
+          "reason": "Shared tooling contracts",
+          "status": "passed",
+          "milliseconds": 42453
+        },
+        {
+          "id": "@rehearsal/contracts/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/contracts",
+          "command": [
+            "--filter",
+            "@rehearsal/contracts",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/contracts; full phase",
+          "status": "passed",
+          "milliseconds": 745
+        },
+        {
+          "id": "@rehearsal/contracts/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/contracts",
+          "command": [
+            "--filter",
+            "@rehearsal/contracts",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/contracts; full phase",
+          "status": "passed",
+          "milliseconds": 540
+        },
+        {
+          "id": "@rehearsal/observability/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/observability",
+          "command": [
+            "--filter",
+            "@rehearsal/observability",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/observability; full phase",
+          "status": "passed",
+          "milliseconds": 842
+        },
+        {
+          "id": "@rehearsal/observability/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/observability",
+          "command": [
+            "--filter",
+            "@rehearsal/observability",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/observability; full phase",
+          "status": "passed",
+          "milliseconds": 505
+        },
+        {
+          "id": "@rehearsal/ui/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/ui",
+          "command": [
+            "--filter",
+            "@rehearsal/ui",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/ui; full phase",
+          "status": "passed",
+          "milliseconds": 1876
+        },
+        {
+          "id": "@rehearsal/ui/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/ui",
+          "command": [
+            "--filter",
+            "@rehearsal/ui",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/ui; full phase",
+          "status": "passed",
+          "milliseconds": 528
+        },
+        {
+          "id": "@rehearsal/web/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 856
+        },
+        {
+          "id": "@rehearsal/web/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 2270
+        },
+        {
+          "id": "@rehearsal/web/runtime",
+          "requirements": [
+            "worker",
+            "bindings",
+            "environments"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "test:runtime"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 5290
+        },
+        {
+          "id": "@rehearsal/web/browser",
+          "requirements": [
+            "web",
+            "browser",
+            "accessibility",
+            "vrt"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "test:e2e"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 13938
+        },
+        {
+          "id": "@rehearsal/web/browser-production",
+          "requirements": [
+            "web",
+            "browser",
+            "production-ui"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "test:e2e:production"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 7732
+        },
+        {
+          "id": "@rehearsal/web/lighthouse",
+          "requirements": [
+            "web",
+            "browser",
+            "lighthouse-all-100"
+          ],
+          "package": "@rehearsal/web",
+          "command": [
+            "--filter",
+            "@rehearsal/web",
+            "test:lighthouse"
+          ],
+          "timeout": 900000,
+          "reason": "Selected worker @rehearsal/web; full phase",
+          "status": "passed",
+          "milliseconds": 88067
+        }
+      ]
+    },
+    {
+      "preset": "api-d1",
+      "os": "linux",
+      "status": "passed",
+      "reason": "All canonical checks ran successfully for this exact generation source",
+      "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+      "contentId": "0091bc24fa1b0eb9baddddd47f4d59d9c7056105102c0ec45cc89c63eb83ca23",
+      "tools": {
+        "node": "v24.21.0",
+        "pnpm": "12.11.2",
+        "@types/node": "24.19.1",
+        "knip": "6.41.0",
+        "oxc-parser": "0.153.0",
+        "typescript": "7.0.2",
+        "vite-plus": "1.1.0",
+        "vitest": "5.0.3",
+        "yaml": "2.9.1",
+        "@rehearsal/contracts": "0.1.0",
+        "@rehearsal/observability": "0.1.0",
+        "zod": "4.6.5",
+        "@cloudflare/build-output-utils": "0.9.0",
+        "@cloudflare/config": "0.24.1",
+        "@cloudflare/vite-plugin": "2.0.0-beta.sha-91c870c02",
+        "cf": "1.0.0-beta.14",
+        "wrangler": "4.149.0",
+        "@opentelemetry/api": "1.9.1",
+        "@opentelemetry/resources": "2.12.0",
+        "@opentelemetry/sdk-trace-base": "2.12.0"
+      },
+      "evidence": "generated-evidence-api-d1-Linux/artifacts/gate-full-all-linux.json",
+      "checks": [
+        {
+          "id": "static",
+          "requirements": [
+            "layout",
+            "quality",
+            "boundaries",
+            "docs",
+            "secrets"
+          ],
+          "command": [
+            "check"
+          ],
+          "timeout": 180000,
+          "reason": "Repository-wide static checks are lightweight and run once",
+          "status": "passed",
+          "milliseconds": 3222
+        },
+        {
+          "id": "tools-unit",
+          "requirements": [
+            "generator-safety",
+            "affected",
+            "failure-propagation"
+          ],
+          "command": [
+            "test:tools"
+          ],
+          "timeout": 180000,
+          "reason": "Shared tooling contracts",
+          "status": "passed",
+          "milliseconds": 33838
+        },
+        {
+          "id": "@rehearsal/contracts/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/contracts",
+          "command": [
+            "--filter",
+            "@rehearsal/contracts",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/contracts; full phase",
+          "status": "passed",
+          "milliseconds": 593
+        },
+        {
+          "id": "@rehearsal/contracts/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/contracts",
+          "command": [
+            "--filter",
+            "@rehearsal/contracts",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/contracts; full phase",
+          "status": "passed",
+          "milliseconds": 395
+        },
+        {
+          "id": "@rehearsal/observability/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/observability",
+          "command": [
+            "--filter",
+            "@rehearsal/observability",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/observability; full phase",
+          "status": "passed",
+          "milliseconds": 609
+        },
+        {
+          "id": "@rehearsal/observability/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/observability",
+          "command": [
+            "--filter",
+            "@rehearsal/observability",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/observability; full phase",
+          "status": "passed",
+          "milliseconds": 386
+        },
+        {
+          "id": "@rehearsal/api/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/api",
+          "command": [
+            "--filter",
+            "@rehearsal/api",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/api; full phase",
+          "status": "passed",
+          "milliseconds": 3708
+        },
+        {
+          "id": "@rehearsal/api/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/api",
+          "command": [
+            "--filter",
+            "@rehearsal/api",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/api; full phase",
+          "status": "passed",
+          "milliseconds": 1143
+        },
+        {
+          "id": "@rehearsal/api/runtime",
+          "requirements": [
+            "worker",
+            "bindings",
+            "environments"
+          ],
+          "package": "@rehearsal/api",
+          "command": [
+            "--filter",
+            "@rehearsal/api",
+            "test:runtime"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/api; full phase",
+          "status": "passed",
+          "milliseconds": 6042
+        },
+        {
+          "id": "@rehearsal/api/restart",
+          "requirements": [
+            "migration",
+            "seed",
+            "persistence"
+          ],
+          "package": "@rehearsal/api",
+          "command": [
+            "--filter",
+            "@rehearsal/api",
+            "test:restart"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/api; full phase",
+          "status": "passed",
+          "milliseconds": 9401
+        }
+      ]
+    },
+    {
+      "preset": "api-kv",
+      "os": "linux",
+      "status": "passed",
+      "reason": "All canonical checks ran successfully for this exact generation source",
+      "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+      "contentId": "64e57d5d053be12be2e1dfd0f9830ad3f084acaf97d674f9fd634f1a48e609cf",
+      "tools": {
+        "node": "v24.21.0",
+        "pnpm": "12.11.2",
+        "@types/node": "24.19.1",
+        "knip": "6.41.0",
+        "oxc-parser": "0.153.0",
+        "typescript": "7.0.2",
+        "vite-plus": "1.1.0",
+        "vitest": "5.0.3",
+        "yaml": "2.9.1",
+        "@rehearsal/contracts": "0.1.0",
+        "@rehearsal/observability": "0.1.0",
+        "zod": "4.6.5",
+        "@cloudflare/build-output-utils": "0.9.0",
+        "@cloudflare/config": "0.24.1",
+        "@cloudflare/vite-plugin": "2.0.0-beta.sha-91c870c02",
+        "cf": "1.0.0-beta.14",
+        "wrangler": "4.149.0",
+        "@opentelemetry/api": "1.9.1",
+        "@opentelemetry/resources": "2.12.0",
+        "@opentelemetry/sdk-trace-base": "2.12.0"
+      },
+      "evidence": "generated-evidence-api-kv-Linux/artifacts/gate-full-all-linux.json",
+      "checks": [
+        {
+          "id": "static",
+          "requirements": [
+            "layout",
+            "quality",
+            "boundaries",
+            "docs",
+            "secrets"
+          ],
+          "command": [
+            "check"
+          ],
+          "timeout": 180000,
+          "reason": "Repository-wide static checks are lightweight and run once",
+          "status": "passed",
+          "milliseconds": 4951
+        },
+        {
+          "id": "tools-unit",
+          "requirements": [
+            "generator-safety",
+            "affected",
+            "failure-propagation"
+          ],
+          "command": [
+            "test:tools"
+          ],
+          "timeout": 180000,
+          "reason": "Shared tooling contracts",
+          "status": "passed",
+          "milliseconds": 42942
+        },
+        {
+          "id": "@rehearsal/contracts/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/contracts",
+          "command": [
+            "--filter",
+            "@rehearsal/contracts",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/contracts; full phase",
+          "status": "passed",
+          "milliseconds": 796
+        },
+        {
+          "id": "@rehearsal/contracts/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/contracts",
+          "command": [
+            "--filter",
+            "@rehearsal/contracts",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/contracts; full phase",
+          "status": "passed",
+          "milliseconds": 612
+        },
+        {
+          "id": "@rehearsal/observability/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/observability",
+          "command": [
+            "--filter",
+            "@rehearsal/observability",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/observability; full phase",
+          "status": "passed",
+          "milliseconds": 877
+        },
+        {
+          "id": "@rehearsal/observability/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/observability",
+          "command": [
+            "--filter",
+            "@rehearsal/observability",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/observability; full phase",
+          "status": "passed",
+          "milliseconds": 524
+        },
+        {
+          "id": "@rehearsal/api/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/api",
+          "command": [
+            "--filter",
+            "@rehearsal/api",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/api; full phase",
+          "status": "passed",
+          "milliseconds": 3956
+        },
+        {
+          "id": "@rehearsal/api/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/api",
+          "command": [
+            "--filter",
+            "@rehearsal/api",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/api; full phase",
+          "status": "passed",
+          "milliseconds": 1586
+        },
+        {
+          "id": "@rehearsal/api/runtime",
+          "requirements": [
+            "worker",
+            "bindings",
+            "environments"
+          ],
+          "package": "@rehearsal/api",
+          "command": [
+            "--filter",
+            "@rehearsal/api",
+            "test:runtime"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/api; full phase",
+          "status": "passed",
+          "milliseconds": 3851
+        }
+      ]
+    },
+    {
+      "preset": "api-r2",
+      "os": "linux",
+      "status": "passed",
+      "reason": "All canonical checks ran successfully for this exact generation source",
+      "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+      "contentId": "914d5b2163db9d4ac519c5065a57a5bec0baf63a3c813d18479950bcce7d84a3",
+      "tools": {
+        "node": "v24.21.0",
+        "pnpm": "12.11.2",
+        "@types/node": "24.19.1",
+        "knip": "6.41.0",
+        "oxc-parser": "0.153.0",
+        "typescript": "7.0.2",
+        "vite-plus": "1.1.0",
+        "vitest": "5.0.3",
+        "yaml": "2.9.1",
+        "@rehearsal/contracts": "0.1.0",
+        "@rehearsal/observability": "0.1.0",
+        "zod": "4.6.5",
+        "@cloudflare/build-output-utils": "0.9.0",
+        "@cloudflare/config": "0.24.1",
+        "@cloudflare/vite-plugin": "2.0.0-beta.sha-91c870c02",
+        "cf": "1.0.0-beta.14",
+        "wrangler": "4.149.0",
+        "@opentelemetry/api": "1.9.1",
+        "@opentelemetry/resources": "2.12.0",
+        "@opentelemetry/sdk-trace-base": "2.12.0"
+      },
+      "evidence": "generated-evidence-api-r2-Linux/artifacts/gate-full-all-linux.json",
+      "checks": [
+        {
+          "id": "static",
+          "requirements": [
+            "layout",
+            "quality",
+            "boundaries",
+            "docs",
+            "secrets"
+          ],
+          "command": [
+            "check"
+          ],
+          "timeout": 180000,
+          "reason": "Repository-wide static checks are lightweight and run once",
+          "status": "passed",
+          "milliseconds": 4441
+        },
+        {
+          "id": "tools-unit",
+          "requirements": [
+            "generator-safety",
+            "affected",
+            "failure-propagation"
+          ],
+          "command": [
+            "test:tools"
+          ],
+          "timeout": 180000,
+          "reason": "Shared tooling contracts",
+          "status": "passed",
+          "milliseconds": 42260
+        },
+        {
+          "id": "@rehearsal/contracts/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/contracts",
+          "command": [
+            "--filter",
+            "@rehearsal/contracts",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/contracts; full phase",
+          "status": "passed",
+          "milliseconds": 750
+        },
+        {
+          "id": "@rehearsal/contracts/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/contracts",
+          "command": [
+            "--filter",
+            "@rehearsal/contracts",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/contracts; full phase",
+          "status": "passed",
+          "milliseconds": 525
+        },
+        {
+          "id": "@rehearsal/observability/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/observability",
+          "command": [
+            "--filter",
+            "@rehearsal/observability",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/observability; full phase",
+          "status": "passed",
+          "milliseconds": 846
+        },
+        {
+          "id": "@rehearsal/observability/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/observability",
+          "command": [
+            "--filter",
+            "@rehearsal/observability",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected library @rehearsal/observability; full phase",
+          "status": "passed",
+          "milliseconds": 501
+        },
+        {
+          "id": "@rehearsal/api/unit",
+          "requirements": [
+            "contracts",
+            "ui-states"
+          ],
+          "package": "@rehearsal/api",
+          "command": [
+            "--filter",
+            "@rehearsal/api",
+            "test"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/api; full phase",
+          "status": "passed",
+          "milliseconds": 3966
+        },
+        {
+          "id": "@rehearsal/api/build",
+          "requirements": [
+            "build"
+          ],
+          "package": "@rehearsal/api",
+          "command": [
+            "--filter",
+            "@rehearsal/api",
+            "build"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/api; full phase",
+          "status": "passed",
+          "milliseconds": 1585
+        },
+        {
+          "id": "@rehearsal/api/runtime",
+          "requirements": [
+            "worker",
+            "bindings",
+            "environments"
+          ],
+          "package": "@rehearsal/api",
+          "command": [
+            "--filter",
+            "@rehearsal/api",
+            "test:runtime"
+          ],
+          "timeout": 180000,
+          "reason": "Selected worker @rehearsal/api; full phase",
+          "status": "passed",
+          "milliseconds": 3649
+        }
+      ]
+    }
+  ],
+  "mechanisms": [
+    {
+      "id": "faults-web-linux",
+      "status": "passed",
+      "evidence": "generated-evidence-web-Linux/artifacts/fault-rehearsal-linux/faults.json",
+      "reason": "Exact-source complete execution report"
+    },
+    {
+      "id": "faults-api-bindings-linux",
+      "status": "passed",
+      "evidence": "generated-evidence-api-bindings-Linux/artifacts/fault-rehearsal-linux/faults.json",
+      "reason": "Exact-source complete execution report"
+    },
+    {
+      "id": "faults-desktop-linux",
+      "status": "passed",
+      "evidence": "generated-evidence-desktop-Linux/artifacts/fault-rehearsal-linux/faults.json",
+      "reason": "Exact-source complete execution report"
+    },
+    {
+      "id": "faults-desktop-darwin",
+      "status": "passed",
+      "evidence": "generated-evidence-desktop-macOS/artifacts/fault-rehearsal-darwin/faults.json",
+      "reason": "Exact-source complete execution report"
+    },
+    {
+      "id": "faults-desktop-win32",
+      "status": "passed",
+      "evidence": "generated-evidence-desktop-Windows/artifacts/fault-rehearsal-win32/faults.json",
+      "reason": "Exact-source complete execution report"
+    },
+    {
+      "id": "worker-win32",
+      "status": "passed",
+      "evidence": "actual-worker-evidence-Windows/artifacts/gate-ci-worker-win32.json",
+      "reason": "Exact-source complete execution report"
+    },
+    {
+      "id": "hooks-linux",
+      "status": "passed",
+      "evidence": "generated-evidence-web-Linux/artifacts/hooks.json",
+      "reason": "Exact-source complete execution report"
+    },
+    {
+      "id": "hooks-win32",
+      "status": "passed",
+      "evidence": "generated-evidence-desktop-Windows/artifacts/hooks.json",
+      "reason": "Exact-source complete execution report"
+    },
+    {
+      "id": "lifecycle",
+      "status": "passed",
+      "evidence": "generated-evidence-web-Linux/artifacts/lifecycle.json",
+      "reason": "Exact-source complete execution report"
+    },
+    {
+      "id": "sanitization",
+      "status": "passed",
+      "evidence": "source-evidence/artifacts/sanitization.json",
+      "reason": "Exact-source complete execution report"
+    },
+    {
+      "id": "real-signals-mcp",
+      "status": "passed",
+      "evidence": "observability-evidence/verified.json",
+      "reason": "Exact-source complete execution report"
+    },
+    {
+      "id": "agent-web-api",
+      "status": "blocked",
+      "evidence": null,
+      "reason": "Required actual execution report missing, incomplete, failed or stale"
+    },
+    {
+      "id": "agent-desktop",
+      "status": "blocked",
+      "evidence": null,
+      "reason": "Required actual execution report missing, incomplete, failed or stale"
+    },
+    {
+      "id": "agent-package-add",
+      "status": "blocked",
+      "evidence": null,
+      "reason": "Required actual execution report missing, incomplete, failed or stale"
+    }
+  ]
+}

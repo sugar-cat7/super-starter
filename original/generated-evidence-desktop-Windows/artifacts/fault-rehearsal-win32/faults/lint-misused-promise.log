@@ -1,0 +1,4 @@
+::error file=tools/fault-probe.ts,line=1,endLine=1,col=46,endColumn=48,title=typescript(no-misused-promises)::tools/fault-probe.ts:1:46: Promise-returning function provided to variable where a void return was expected.
+
+Found 0 warnings and 1 error.
+Finished in 596ms on 1 file with 182 rules using 4 threads.

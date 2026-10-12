@@ -1,0 +1,9 @@
+pass: All 168 files are correctly formatted (309ms, 3 threads)
+error: Lint or type issues found
+[38;2;225;80;80;1m×[0m [38;2;225;80;80;1mtypescript(TS2322): Type 'string' is not assignable to type 'number'.[0m
+   ╭─[[38;2;92;157;255;1mtools/fault-probe.ts[0m:1:14]
+ [2m1[0m │ export const typeFault: number = 'wrong';
+   · [38;2;246;87;248m             ─────────[0m
+   ╰────
+
+Found 1 error and 0 warnings in 115 files (1.2s, 3 threads)

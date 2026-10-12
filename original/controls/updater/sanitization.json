@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "sha": "c60cc27bad6b54cfe03b4900e4a61b3f7ed1fad0",
+  "contentId": "d5b199fc4e57ad0ed0a38e975829ca52c9f3449bc312012abd109c5b042ece3e",
+  "rules": [
+    {
+      "id": "source-product-brand",
+      "pattern": "(?<![A-Za-z0-9])[Cc][Uu][Tt][Tt](?![A-Za-z0-9])"
+    },
+    {
+      "id": "source-workspace-scope",
+      "pattern": "@[Cc][Uu][Tt][Tt]/"
+    },
+    {
+      "id": "source-layout-and-harness",
+      "pattern": "(?:apps/desktop-shell|services/web-public|harness/gates|tools/agent-harness)(?:/|(?=$|[\\s'\"`),;]))"
+    },
+    {
+      "id": "source-media-sdk",
+      "pattern": "@remotion/|(?<![A-Za-z0-9_-])(?:ffmpeg-static|fluent-ffmpeg)(?![A-Za-z0-9_-])"
+    },
+    {
+      "id": "private-runner-coupling",
+      "pattern": "runs-on\\s*:\\s*(?:\\[[^\\]\\r\\n]*\\bself-hosted\\b|['\"]?self-hosted\\b|\\$\\{\\{[^}\\r\\n]*\\bvars\\.)|runs-on\\s*:\\s*\\r?\\n(?:[ \\t]+[^\\r\\n]*\\r?\\n){0,6}[ \\t]*-[ \\t]*['\"]?self-hosted\\b"
+    },
+    {
+      "id": "native-updater-coupling",
+      "pattern": "tauri-plugin-updater|\"createUpdaterArtifacts\"\\s*:\\s*true|\"updater\"\\s*:\\s*\\{[^}]*\"endpoints\"\\s*:\\s*\\[[^\\]]*https?://"
+    }
+  ],
+  "failures": [
+    {
+      "file": "docs/witness.txt",
+      "rule": "native-updater-coupling"
+    }
+  ],
+  "status": "failed"
+}

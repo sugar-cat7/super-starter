@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "sha": "uncommitted",
+  "origin": {
+    "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+    "dirty": false,
+    "contentId": "5ee91c0c2e93b0f4f48dcfac9ed6269a5d35d82dd5b6e6282bce6c107ed0f61f"
+  },
+  "configuration": {
+    "name": "rehearsal-api-bindings",
+    "scope": "@rehearsal",
+    "identifier": "com.example.rehearsalapibindings",
+    "preset": "api",
+    "features": [
+      "d1",
+      "kv",
+      "r2"
+    ]
+  },
+  "contentId": "3ef2187e80b1f53c88316c8709f3044ba5381d713c198afa6887366c1b9d1c1f",
+  "os": "linux/x64",
+  "status": "passed",
+  "baselineDifferences": []
+}

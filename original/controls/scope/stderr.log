@@ -1,0 +1,9 @@
+file:///home/runner/work/super-starter/super-starter/tools/quality/sanitize.ts:67
+    throw new Error(failures.map((entry) => `${entry.file}: ${entry.rule}`).join('\n'));
+          ^
+
+Error: docs/witness.txt: source-product-brand
+docs/witness.txt: source-workspace-scope
+    at file:///home/runner/work/super-starter/super-starter/tools/quality/sanitize.ts:67:11
+
+Node.js v24.21.0

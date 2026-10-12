@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "sha": "uncommitted",
+  "origin": {
+    "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+    "dirty": false,
+    "contentId": "15c9b4d0f6d40792a56d62a03814d03bc4a17e8ca416521afda3c4be28a7fbba"
+  },
+  "configuration": {
+    "name": "rehearsal-api-kv",
+    "scope": "@rehearsal",
+    "identifier": "com.example.rehearsalapikv",
+    "preset": "api",
+    "features": [
+      "kv"
+    ]
+  },
+  "contentId": "64e57d5d053be12be2e1dfd0f9830ad3f084acaf97d674f9fd634f1a48e609cf",
+  "os": "linux/x64",
+  "status": "passed",
+  "baselineDifferences": []
+}

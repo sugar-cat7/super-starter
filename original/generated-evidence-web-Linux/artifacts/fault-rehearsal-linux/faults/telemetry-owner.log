@@ -1,0 +1,1 @@
+packages/contracts/src/failure-probe.ts:1: OTel SDK and logger initialization belong to the observability workspace

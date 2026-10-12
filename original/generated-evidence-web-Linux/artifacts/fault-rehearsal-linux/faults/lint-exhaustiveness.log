@@ -1,0 +1,4 @@
+::error file=tools/fault-probe.ts,line=2,endLine=2,col=11,endColumn=15,title=typescript(switch-exhaustiveness-check)::tools/fault-probe.ts:2:11: Switch is not exhaustive. Cases not matched: "second"
+
+Found 0 warnings and 1 error.
+Finished in 277ms on 1 file with 182 rules using 4 threads.

@@ -1,0 +1,97 @@
+$ node ../../tools/cloudflare/runtime.ts
+[@rehearsal/web] $ vp dev --mode offline
+[@rehearsal/web] 
+  [34m[1mVITE+[22m v1.1.0[39m  [42m [1moffline[22m [49m  
+
+[@rehearsal/web]   [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m38099[22m/[39m
+READY @rehearsal/web http://127.0.0.1:38099 3176ms; registry /tmp/starter-runtime-n1dq1B/registry/session-Hih2Co
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/tmp/starter-faults-6fzqJJ/project/packages/web[39m
+
+[90mstderr[2m | test/runtime.test.ts[2m > [22m[2mWeb Worker and same-origin API[2m > [22m[2mreturns server-rendered HTML and communicates through the selected transport
+[22m[39mUnexpected same-origin POST 202: {"id":"fd5d83e3-f15b-4269-b103-3066c6eb9b7a","text":"Same-origin note","createdAt":1791837078114}
+
+[90mstderr[2m | test/runtime.test.ts[2m > [22m[2mWeb Worker and same-origin API[2m > [22m[2mpreserves the UTF-16 note limit through its same-origin transport
+[22m[39mUnexpected same-origin POST 202: {"id":"cdbf2b1b-6e58-4f11-b4c3-b1d4120bedbb","text":"😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀","createdAt":1791837078134}
+
+ [31m❯[39m test/runtime.test.ts [2m([22m[2m2 tests[22m[2m | [22m[31m2 failed[39m[2m)[22m[32m 228[2mms[22m[39m
+   [31m❯[39m Web Worker and same-origin API [2m(2)[22m
+[31m     [31m×[31m returns server-rendered HTML and communicates through the selected transport[39m[32m 212[2mms[22m[39m
+[31m     [31m×[31m preserves the UTF-16 note limit through its same-origin transport[39m[32m 14[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 2 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m test/runtime.test.ts[2m > [22mWeb Worker and same-origin API[2m > [22mreturns server-rendered HTML and communicates through the selected transport
+[31m[1mAssertionError[22m: expected 202 to be 201 // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 201[39m
+[31m+ 202[39m
+
+[36m [2m❯[22m test/runtime.test.ts:[2m19:26[22m[39m
+    [90m 17|[39m     if (added.status !== 201)
+    [90m 18|[39m       console.error(`Unexpected same-origin POST ${added.status}: ${bo…
+    [90m 19|[39m     expect(added.status).toBe(201);
+    [90m   |[39m                          [31m^[39m
+    [90m 20|[39m     const note = noteSchema.parse(JSON.parse(body));
+    [90m 21|[39m     expect(
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m test/runtime.test.ts[2m > [22mWeb Worker and same-origin API[2m > [22mpreserves the UTF-16 note limit through its same-origin transport
+[31m[1mAssertionError[22m: expected 202 to be 201 // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 201[39m
+[31m+ 202[39m
+
+[36m [2m❯[22m test/runtime.test.ts:[2m37:26[22m[39m
+    [90m 35|[39m     if (added.status !== 201)
+    [90m 36|[39m       console.error(`Unexpected same-origin POST ${added.status}: ${bo…
+    [90m 37|[39m     expect(added.status).toBe(201);
+    [90m   |[39m                          [31m^[39m
+    [90m 38|[39m     const note = noteSchema.parse(JSON.parse(body));
+    [90m 39|[39m     expect(note.text).toBe(text);
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m2 failed[39m[22m[90m (2)[39m
+[2m   Start at [22m 20:31:17
+[2m   Duration [22m 393ms[2m (tests 74%, import 15%, transform 10%, worker 1%)[22m
+
+JSON report written to /tmp/starter-faults-6fzqJJ/project/packages/web/artifacts/tests-vitest.runtime.config.ts.json
+file:///tmp/starter-faults-6fzqJJ/project/tools/process.ts:293
+            new Error(
+            ^
+
+Error: /home/runner/.local/share/mise/installs/aqua-pnpm-pnpm/12.11.2/pnpm exec vp test run --config vitest.runtime.config.ts --allowOnly=false --reporter default --reporter json --outputFile /tmp/starter-faults-6fzqJJ/project/packages/web/artifacts/tests-vitest.runtime.config.ts.json: exit 1, signal null
+    at file:///tmp/starter-faults-6fzqJJ/project/tools/process.ts:293:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.21.0
+[@rehearsal/web] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+[@rehearsal/web]   × "pnpm recursive run" failed in /tmp/starter-faults-6fzqJJ/project/
+  │ packages/web
+
+file:///tmp/starter-faults-6fzqJJ/project/tools/process.ts:293
+            new Error(
+            ^
+
+Error: /home/runner/.local/share/mise/installs/aqua-pnpm-pnpm/12.11.2/pnpm exec node ../../tools/quality/vitest.ts --config vitest.runtime.config.ts: exit 1, signal null
+    at file:///tmp/starter-faults-6fzqJJ/project/tools/process.ts:293:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.21.0
+[ELIFECYCLE] Command failed with exit code 1.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in /tmp/starter-faults-6fzqJJ/project/
+  │ packages/web
+

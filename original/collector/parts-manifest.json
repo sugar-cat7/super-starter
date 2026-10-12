@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "carrierSha": "480001a3fcdd2475e9ee670fa120f9ed8faafa4b",
+  "source": {
+    "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+    "contentId": "8a91208bf0be87ea59f830dd11d700618bfc46c75493dd9799b0c5c3815fff25",
+    "base": "63dc03962359d3164da0d34fbcdc1ccb2cec455f",
+    "ciFull": false
+  },
+  "runId": "38303540755",
+  "reportStatus": "blocked",
+  "acceptanceExit": 1,
+  "parts": [
+    {
+      "name": "part-001.json",
+      "size": 1034923,
+      "sha256": "1443da3b347d41afd10cb2c1e973890f38c30a07d14515c77702297a72b5c0c0"
+    },
+    {
+      "name": "part-002.json",
+      "size": 998688,
+      "sha256": "315ed596d3f0a28a88a1384d77e02e5abf085ce9ee9e64bef9b4ea50686cd283"
+    },
+    {
+      "name": "part-003.json",
+      "size": 880709,
+      "sha256": "c7a5e7c60f7ee2dfc6de4ebaaaa35fcd8b0ace6bfe28034490762bb99a09e762"
+    }
+  ]
+}

@@ -1,0 +1,449 @@
+{
+  "schema": 1,
+  "sha": "uncommitted",
+  "base": null,
+  "contentId": "914ecc11ffa587601b214d72a71489b6f88332492619caf96ac00084a71d80e2",
+  "os": "darwin/arm64",
+  "node": "v24.21.0",
+  "tools": {
+    "node": "v24.21.0",
+    "pnpm": "12.11.2",
+    "@types/node": "24.19.1",
+    "knip": "6.41.0",
+    "oxc-parser": "0.153.0",
+    "typescript": "7.0.2",
+    "vite-plus": "1.1.0",
+    "vitest": "5.0.3",
+    "yaml": "2.9.1",
+    "zod": "4.6.5",
+    "@rehearsal/contracts": "0.1.0",
+    "@rehearsal/observability": "0.1.0",
+    "@rehearsal/ui": "0.1.0",
+    "@tauri-apps/api": "2.12.2",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "@tailwindcss/vite": "4.3.3",
+    "@tauri-apps/cli": "2.12.1",
+    "@types/mocha": "10.0.10",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.2",
+    "@wdio/cli": "9.32.0",
+    "@wdio/globals": "9.31.3",
+    "@wdio/json-reporter": "9.32.0",
+    "@wdio/local-runner": "9.32.0",
+    "@wdio/mocha-framework": "9.32.0",
+    "@wdio/spec-reporter": "9.32.0",
+    "@wdio/tauri-plugin": "1.5.0",
+    "@wdio/tauri-service": "1.5.0",
+    "@wdio/types": "9.32.0",
+    "tailwindcss": "4.3.3",
+    "webdriverio": "9.32.0",
+    "@opentelemetry/api": "1.9.1",
+    "@opentelemetry/resources": "2.12.0",
+    "@opentelemetry/sdk-trace-base": "2.12.0",
+    "@testing-library/react": "16.3.3",
+    "@testing-library/user-event": "14.6.7",
+    "jsdom": "30.1.2"
+  },
+  "origin": {
+    "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+    "dirty": false,
+    "contentId": "674e626f3d371f45ec71b953addd90a97585701a6f590c197d667fd8f5a181bd"
+  },
+  "variant": "all",
+  "configuration": {
+    "name": "rehearsal-desktop",
+    "scope": "@rehearsal",
+    "identifier": "com.example.rehearsaldesktop",
+    "preset": "desktop",
+    "features": []
+  },
+  "workspace": [
+    {
+      "name": "@rehearsal/contracts",
+      "directory": "packages/contracts",
+      "runtime": "library",
+      "dependencies": [
+        "zod",
+        "typescript",
+        "vite-plus",
+        "vitest"
+      ],
+      "scripts": {
+        "check": "vp check .",
+        "test": "node ../../tools/quality/vitest.ts",
+        "build": "vp pack"
+      }
+    },
+    {
+      "name": "@rehearsal/desktop",
+      "directory": "packages/desktop",
+      "runtime": "desktop",
+      "dependencies": [
+        "@rehearsal/contracts",
+        "@rehearsal/observability",
+        "@rehearsal/ui",
+        "@tauri-apps/api",
+        "react",
+        "react-dom",
+        "@tailwindcss/vite",
+        "@tauri-apps/cli",
+        "@types/mocha",
+        "@types/react",
+        "@types/react-dom",
+        "@vitejs/plugin-react",
+        "@wdio/cli",
+        "@wdio/globals",
+        "@wdio/json-reporter",
+        "@wdio/local-runner",
+        "@wdio/mocha-framework",
+        "@wdio/spec-reporter",
+        "@wdio/tauri-plugin",
+        "@wdio/tauri-service",
+        "@wdio/types",
+        "tailwindcss",
+        "typescript",
+        "vite-plus",
+        "vitest",
+        "webdriverio"
+      ],
+      "scripts": {
+        "dev": "tauri dev",
+        "dev:renderer": "vp dev --host 127.0.0.1 --strictPort",
+        "build:renderer": "vp build",
+        "check": "vp check .",
+        "test": "node ../../tools/quality/vitest.ts --config vitest.config.ts",
+        "test:rust": "node ../../tools/quality/native.ts rust",
+        "test:native": "node ../../tools/quality/native.ts e2e",
+        "test:release": "node ../../tools/quality/native.ts release",
+        "build": "node ../../tools/quality/native.ts build",
+        "build:bundle": "tauri build"
+      }
+    },
+    {
+      "name": "@rehearsal/observability",
+      "directory": "packages/observability",
+      "runtime": "library",
+      "dependencies": [
+        "@opentelemetry/api",
+        "@opentelemetry/resources",
+        "@opentelemetry/sdk-trace-base",
+        "@rehearsal/contracts",
+        "typescript",
+        "vite-plus",
+        "vitest"
+      ],
+      "scripts": {
+        "check": "vp check .",
+        "test": "node ../../tools/quality/vitest.ts",
+        "build": "vp pack"
+      }
+    },
+    {
+      "name": "@rehearsal/ui",
+      "directory": "packages/ui",
+      "runtime": "library",
+      "dependencies": [
+        "@rehearsal/contracts",
+        "react",
+        "@testing-library/react",
+        "@testing-library/user-event",
+        "@types/react",
+        "jsdom",
+        "react-dom",
+        "typescript",
+        "vite-plus",
+        "vitest"
+      ],
+      "scripts": {
+        "check": "vp check .",
+        "test": "node ../../tools/quality/vitest.ts",
+        "build": "vp pack"
+      }
+    }
+  ],
+  "cpus": 3,
+  "memoryBytes": 7516192768,
+  "selected": [
+    "@rehearsal/contracts",
+    "@rehearsal/desktop",
+    "@rehearsal/observability",
+    "@rehearsal/ui"
+  ],
+  "selectionReason": "Full selected configuration (unknown base or explicit full gate)",
+  "notRequired": [],
+  "checks": [
+    {
+      "id": "static",
+      "requirements": [
+        "layout",
+        "quality",
+        "boundaries",
+        "docs",
+        "secrets"
+      ],
+      "command": [
+        "check"
+      ],
+      "timeout": 180000,
+      "reason": "Repository-wide static checks are lightweight and run once",
+      "milliseconds": 4735,
+      "status": "passed"
+    },
+    {
+      "id": "tools-unit",
+      "requirements": [
+        "generator-safety",
+        "affected",
+        "failure-propagation"
+      ],
+      "command": [
+        "test:tools"
+      ],
+      "timeout": 180000,
+      "reason": "Shared tooling contracts",
+      "milliseconds": 45589,
+      "status": "passed"
+    },
+    {
+      "id": "@rehearsal/contracts/unit",
+      "requirements": [
+        "contracts",
+        "ui-states"
+      ],
+      "package": "@rehearsal/contracts",
+      "command": [
+        "--filter",
+        "@rehearsal/contracts",
+        "test"
+      ],
+      "timeout": 180000,
+      "reason": "Selected library @rehearsal/contracts; full phase",
+      "milliseconds": 872,
+      "status": "passed"
+    },
+    {
+      "id": "@rehearsal/contracts/build",
+      "requirements": [
+        "build"
+      ],
+      "package": "@rehearsal/contracts",
+      "command": [
+        "--filter",
+        "@rehearsal/contracts",
+        "build"
+      ],
+      "timeout": 180000,
+      "reason": "Selected library @rehearsal/contracts; full phase",
+      "milliseconds": 924,
+      "status": "passed"
+    },
+    {
+      "id": "@rehearsal/desktop/unit",
+      "requirements": [
+        "contracts",
+        "ui-states"
+      ],
+      "package": "@rehearsal/desktop",
+      "command": [
+        "--filter",
+        "@rehearsal/desktop",
+        "test"
+      ],
+      "timeout": 180000,
+      "reason": "Selected desktop @rehearsal/desktop; full phase",
+      "milliseconds": 1003,
+      "status": "passed"
+    },
+    {
+      "id": "@rehearsal/desktop/build",
+      "requirements": [
+        "build"
+      ],
+      "package": "@rehearsal/desktop",
+      "command": [
+        "--filter",
+        "@rehearsal/desktop",
+        "build"
+      ],
+      "timeout": 1800000,
+      "reason": "Selected desktop @rehearsal/desktop; full phase",
+      "milliseconds": 169843,
+      "status": "passed"
+    },
+    {
+      "id": "@rehearsal/desktop/rust",
+      "requirements": [
+        "rust",
+        "ipc",
+        "export"
+      ],
+      "package": "@rehearsal/desktop",
+      "command": [
+        "--filter",
+        "@rehearsal/desktop",
+        "test:rust"
+      ],
+      "timeout": 1800000,
+      "reason": "Selected desktop @rehearsal/desktop; full phase",
+      "milliseconds": 122193,
+      "status": "passed"
+    },
+    {
+      "id": "@rehearsal/desktop/native",
+      "requirements": [
+        "native-three-os",
+        "ipc"
+      ],
+      "package": "@rehearsal/desktop",
+      "command": [
+        "--filter",
+        "@rehearsal/desktop",
+        "test:native"
+      ],
+      "timeout": 1800000,
+      "reason": "Selected desktop @rehearsal/desktop; full phase",
+      "milliseconds": 211394,
+      "status": "passed"
+    },
+    {
+      "id": "@rehearsal/desktop/release",
+      "requirements": [
+        "release-isolation"
+      ],
+      "package": "@rehearsal/desktop",
+      "command": [
+        "--filter",
+        "@rehearsal/desktop",
+        "test:release"
+      ],
+      "timeout": 1800000,
+      "reason": "Selected desktop @rehearsal/desktop; full phase",
+      "milliseconds": 45105,
+      "status": "passed"
+    },
+    {
+      "id": "@rehearsal/observability/unit",
+      "requirements": [
+        "contracts",
+        "ui-states"
+      ],
+      "package": "@rehearsal/observability",
+      "command": [
+        "--filter",
+        "@rehearsal/observability",
+        "test"
+      ],
+      "timeout": 180000,
+      "reason": "Selected library @rehearsal/observability; full phase",
+      "milliseconds": 1080,
+      "status": "passed"
+    },
+    {
+      "id": "@rehearsal/observability/build",
+      "requirements": [
+        "build"
+      ],
+      "package": "@rehearsal/observability",
+      "command": [
+        "--filter",
+        "@rehearsal/observability",
+        "build"
+      ],
+      "timeout": 180000,
+      "reason": "Selected library @rehearsal/observability; full phase",
+      "milliseconds": 730,
+      "status": "passed"
+    },
+    {
+      "id": "@rehearsal/ui/unit",
+      "requirements": [
+        "contracts",
+        "ui-states"
+      ],
+      "package": "@rehearsal/ui",
+      "command": [
+        "--filter",
+        "@rehearsal/ui",
+        "test"
+      ],
+      "timeout": 180000,
+      "reason": "Selected library @rehearsal/ui; full phase",
+      "milliseconds": 2690,
+      "status": "passed"
+    },
+    {
+      "id": "@rehearsal/ui/build",
+      "requirements": [
+        "build"
+      ],
+      "package": "@rehearsal/ui",
+      "command": [
+        "--filter",
+        "@rehearsal/ui",
+        "build"
+      ],
+      "timeout": 180000,
+      "reason": "Selected library @rehearsal/ui; full phase",
+      "milliseconds": 669,
+      "status": "passed"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "packages/contracts/dist/index.d.mts",
+      "bytes": 5835,
+      "gzipBytes": 1448
+    },
+    {
+      "path": "packages/contracts/dist/index.mjs",
+      "bytes": 5153,
+      "gzipBytes": 1707
+    },
+    {
+      "path": "packages/desktop/dist/assets/index-BvNagr1_.css",
+      "bytes": 6489,
+      "gzipBytes": 2207
+    },
+    {
+      "path": "packages/desktop/dist/assets/index-Coqjsc-G.js",
+      "bytes": 286887,
+      "gzipBytes": 89290
+    },
+    {
+      "path": "packages/desktop/dist/index.html",
+      "bytes": 402,
+      "gzipBytes": 266
+    },
+    {
+      "path": ".state/desktop/target-release/release/rehearsal-desktop-desktop",
+      "bytes": 11967808
+    },
+    {
+      "path": ".state/desktop/target-e2e/release/rehearsal-desktop-desktop",
+      "bytes": 15056960
+    },
+    {
+      "path": "packages/observability/dist/index.d.mts",
+      "bytes": 1816,
+      "gzipBytes": 726
+    },
+    {
+      "path": "packages/observability/dist/index.mjs",
+      "bytes": 12741,
+      "gzipBytes": 4216
+    },
+    {
+      "path": "packages/ui/dist/index.d.mts",
+      "bytes": 565,
+      "gzipBytes": 302
+    },
+    {
+      "path": "packages/ui/dist/index.mjs",
+      "bytes": 5108,
+      "gzipBytes": 1650
+    }
+  ],
+  "status": "passed"
+}

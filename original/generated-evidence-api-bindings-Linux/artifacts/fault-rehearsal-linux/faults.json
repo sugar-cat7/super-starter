@@ -1,0 +1,422 @@
+{
+  "schema": 1,
+  "baselineDifferences": [],
+  "status": "passed",
+  "configuration": {
+    "name": "rehearsal-api-bindings",
+    "scope": "@rehearsal",
+    "identifier": "com.example.rehearsalapibindings",
+    "preset": "api",
+    "features": [
+      "d1",
+      "kv",
+      "r2"
+    ]
+  },
+  "workspace": [
+    {
+      "name": "@rehearsal/api",
+      "directory": "packages/api",
+      "runtime": "worker",
+      "dependencies": [
+        "@rehearsal/contracts",
+        "@rehearsal/observability",
+        "zod",
+        "@cloudflare/build-output-utils",
+        "@cloudflare/config",
+        "@cloudflare/vite-plugin",
+        "cf",
+        "typescript",
+        "vite-plus",
+        "vitest",
+        "wrangler"
+      ],
+      "scripts": {
+        "cf": "cf",
+        "dev": "cf dev --mode offline",
+        "preview": "node preview.ts",
+        "check": "vp check .",
+        "test": "node ../../tools/quality/vitest.ts --config vitest.config.ts",
+        "test:runtime": "node ../../tools/cloudflare/runtime.ts",
+        "build": "node ../../tools/cloudflare/build.ts",
+        "typegen": "cf workers types -m local",
+        "db:migrate": "node ../../tools/cloudflare/database.ts migrate",
+        "db:seed": "node ../../tools/cloudflare/database.ts seed",
+        "test:restart": "node test/restart.ts"
+      }
+    },
+    {
+      "name": "@rehearsal/contracts",
+      "directory": "packages/contracts",
+      "runtime": "library",
+      "dependencies": [
+        "zod",
+        "typescript",
+        "vite-plus",
+        "vitest"
+      ],
+      "scripts": {
+        "check": "vp check .",
+        "test": "node ../../tools/quality/vitest.ts",
+        "build": "vp pack"
+      }
+    },
+    {
+      "name": "@rehearsal/observability",
+      "directory": "packages/observability",
+      "runtime": "library",
+      "dependencies": [
+        "@opentelemetry/api",
+        "@opentelemetry/resources",
+        "@opentelemetry/sdk-trace-base",
+        "@rehearsal/contracts",
+        "typescript",
+        "vite-plus",
+        "vitest"
+      ],
+      "scripts": {
+        "check": "vp check .",
+        "test": "node ../../tools/quality/vitest.ts",
+        "build": "vp pack"
+      }
+    }
+  ],
+  "origin": {
+    "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+    "dirty": false,
+    "contentId": "5ee91c0c2e93b0f4f48dcfac9ed6269a5d35d82dd5b6e6282bce6c107ed0f61f"
+  },
+  "contentId": "3ef2187e80b1f53c88316c8709f3044ba5381d713c198afa6887366c1b9d1c1f",
+  "os": "linux",
+  "reports": [
+    {
+      "id": "skill-metadata",
+      "command": [
+        "check"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 6507,
+      "log": "artifacts/faults/skill-metadata.log"
+    },
+    {
+      "id": "format",
+      "command": [
+        "exec",
+        "vp",
+        "fmt",
+        "--check",
+        "tools/fault-probe.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 4131,
+      "log": "artifacts/faults/format.log"
+    },
+    {
+      "id": "lint",
+      "command": [
+        "exec",
+        "vp",
+        "lint",
+        "tools/fault-probe.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 4571,
+      "log": "artifacts/faults/lint.log"
+    },
+    {
+      "id": "type",
+      "command": [
+        "exec",
+        "vp",
+        "check"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 5898,
+      "log": "artifacts/faults/type.log"
+    },
+    {
+      "id": "lint-floating-void",
+      "command": [
+        "exec",
+        "vp",
+        "lint",
+        "--type-aware",
+        "tools/fault-probe.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 4376,
+      "log": "artifacts/faults/lint-floating-void.log"
+    },
+    {
+      "id": "lint-misused-promise",
+      "command": [
+        "exec",
+        "vp",
+        "lint",
+        "--type-aware",
+        "tools/fault-probe.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 4439,
+      "log": "artifacts/faults/lint-misused-promise.log"
+    },
+    {
+      "id": "lint-exhaustiveness",
+      "command": [
+        "exec",
+        "vp",
+        "lint",
+        "--type-aware",
+        "tools/fault-probe.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 4278,
+      "log": "artifacts/faults/lint-exhaustiveness.log"
+    },
+    {
+      "id": "secret-tools",
+      "command": [
+        "exec",
+        "node",
+        "tools/quality/structure.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 4078,
+      "log": "artifacts/faults/secret-tools.log"
+    },
+    {
+      "id": "secret-contracts",
+      "command": [
+        "exec",
+        "node",
+        "tools/quality/structure.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 4076,
+      "log": "artifacts/faults/secret-contracts.log"
+    },
+    {
+      "id": "unit-focused",
+      "command": [
+        "test:tools",
+        "--",
+        "tools/quality/test-results.test.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 1296,
+      "log": "artifacts/faults/unit-focused.log"
+    },
+    {
+      "id": "unit",
+      "command": [
+        "test:tools",
+        "--",
+        "tools/quality/test-results.test.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 1298,
+      "log": "artifacts/faults/unit.log"
+    },
+    {
+      "id": "unit-zero",
+      "command": [
+        "test:tools",
+        "--",
+        "tools/quality/test-results.test.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 1288,
+      "log": "artifacts/faults/unit-zero.log"
+    },
+    {
+      "id": "unit-skipped",
+      "command": [
+        "test:tools",
+        "--",
+        "tools/quality/test-results.test.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 1306,
+      "log": "artifacts/faults/unit-skipped.log"
+    },
+    {
+      "id": "unit-timeout",
+      "command": [
+        "test:tools",
+        "--",
+        "tools/quality/test-results.test.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 1297,
+      "log": "artifacts/faults/unit-timeout.log"
+    },
+    {
+      "id": "boundary",
+      "command": [
+        "exec",
+        "node",
+        "tools/quality/structure.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 4115,
+      "log": "artifacts/faults/boundary.log"
+    },
+    {
+      "id": "result-discard",
+      "command": [
+        "exec",
+        "node",
+        "tools/quality/structure.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 4186,
+      "log": "artifacts/faults/result-discard.log"
+    },
+    {
+      "id": "telemetry-owner",
+      "command": [
+        "exec",
+        "node",
+        "tools/quality/structure.ts"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 4165,
+      "log": "artifacts/faults/telemetry-owner.log"
+    },
+    {
+      "id": "error-catalog-drift",
+      "command": [
+        "check"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 6394,
+      "log": "artifacts/faults/error-catalog-drift.log"
+    },
+    {
+      "id": "contract",
+      "command": [
+        "--filter",
+        "@rehearsal/contracts",
+        "test"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 1522,
+      "log": "artifacts/faults/contract.log"
+    },
+    {
+      "id": "worker-behavior",
+      "command": [
+        "--filter",
+        "@rehearsal/api",
+        "test:runtime"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 16419,
+      "log": "artifacts/faults/worker-behavior.log"
+    },
+    {
+      "id": "worker-zero",
+      "command": [
+        "--filter",
+        "@rehearsal/api",
+        "test:runtime"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 16130,
+      "log": "artifacts/faults/worker-zero.log"
+    },
+    {
+      "id": "deploy-quality",
+      "command": [
+        "deploy:preflight",
+        "--",
+        "--target",
+        "@rehearsal/api",
+        "--environment",
+        "local"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 6071,
+      "log": "artifacts/faults/deploy-quality.log"
+    },
+    {
+      "id": "deploy-environment",
+      "command": [
+        "deploy:preflight",
+        "--",
+        "--target",
+        "@rehearsal/api",
+        "--environment",
+        "unknown"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 18181,
+      "log": "artifacts/faults/deploy-environment.log"
+    },
+    {
+      "id": "deploy-settings",
+      "command": [
+        "deploy:preflight",
+        "--",
+        "--target",
+        "@rehearsal/api",
+        "--environment",
+        "dev"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 35745,
+      "log": "artifacts/faults/deploy-settings.log"
+    },
+    {
+      "id": "dev-preflight-to-local-d1",
+      "command": [
+        "deploy:preflight",
+        "--",
+        "--target",
+        "@rehearsal/api",
+        "--environment",
+        "dev"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 26644,
+      "log": "artifacts/faults/dev-preflight-to-local-d1.log"
+    },
+    {
+      "id": "migration",
+      "command": [
+        "--filter",
+        "@rehearsal/api",
+        "db:migrate"
+      ],
+      "status": "passed",
+      "repaired": true,
+      "milliseconds": 6803,
+      "log": "artifacts/faults/migration.log"
+    }
+  ]
+}

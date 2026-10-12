@@ -1,0 +1,31 @@
+$ node ../../tools/quality/native.ts rust
+    Checking rehearsal-desktop-desktop v0.1.0 (/tmp/starter-faults-dgJZ7c/project/packages/desktop/src-tauri)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.83s
+   Compiling rehearsal-desktop-desktop v0.1.0 (/tmp/starter-faults-dgJZ7c/project/packages/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.33s
+     Running unittests src/main.rs (/tmp/starter-faults-dgJZ7c/project/.state/desktop/target-release/debug/deps/rehearsal_desktop_desktop-e79c89d243d5ce94)
+
+running 4 tests
+test tests::saves_json_and_reports_an_unwritable_destination ... ignored
+test tests::validates_text_and_serializes_portable_contract ... ignored
+test telemetry::tests::refuses_invalid_parent_and_reports_the_file_boundary ... ok
+test telemetry::tests::propagates_native_parent_and_keeps_raw_failure_out_of_wire ... ok
+
+test result: ok. 2 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+file:///tmp/starter-faults-dgJZ7c/project/tools/quality/test-results.ts:12
+    throw new Error(
+          ^
+
+Error: Required Rust tests must execute cases without failures, ignored or filtered tests
+    at rustCases (file:///tmp/starter-faults-dgJZ7c/project/tools/quality/test-results.ts:12:11)
+    at file:///tmp/starter-faults-dgJZ7c/project/tools/quality/native.ts:58:27
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.21.0
+[ELIFECYCLE] Command failed with exit code 1.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in /tmp/starter-faults-dgJZ7c/project/
+  │ packages/desktop
+

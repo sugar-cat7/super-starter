@@ -1,0 +1,1 @@
+packages/contracts/src/failure-probe.ts:2: Result is discarded; inspect ok and propagate or present the failure
