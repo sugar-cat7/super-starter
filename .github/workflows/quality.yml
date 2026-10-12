@@ -5,6 +5,12 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      agent_web:
+        type: boolean
+        default: false
+        required: false
+        description: Run only the isolated immutable Web feature support job
 
 permissions:
   contents: read
@@ -15,6 +21,7 @@ concurrency:
 
 jobs:
   source:
+    if: github.event_name != 'workflow_dispatch' || inputs.agent_web != true || github.ref != 'refs/heads/codex/agent-web-983'
     outputs:
       fixtures: ${{ steps.plan.outputs.fixtures }}
       native: ${{ steps.plan.outputs.native }}
@@ -293,7 +300,7 @@ jobs:
           path: fullstack/artifacts/o11y
           if-no-files-found: error
   required:
-    if: always()
+    if: always() && (github.event_name != 'workflow_dispatch' || inputs.agent_web != true || github.ref != 'refs/heads/codex/agent-web-983')
     needs: [source, generated, native, worker-windows, observability]
     runs-on: ubuntu-24.04
     timeout-minutes: 5
@@ -307,3 +314,86 @@ jobs:
           OBSERVABILITY: ${{ needs.source.outputs.observability }}
         run: >-
           node -e 'const jobs=JSON.parse(process.env.RESULTS); const plan={source:"true",generated:process.env.FIXTURES,native:process.env.NATIVE,"worker-windows":process.env.WORKERS,observability:process.env.OBSERVABILITY}; for(const [name,required] of Object.entries(plan)) { if(!["true","false"].includes(required)) throw new Error(`Missing plan for ${name}`); const result=jobs[name]?.result; if(required==="true" && result!=="success") throw new Error(`${name} ${result}; planned checks must succeed`); if(required==="false" && result!=="skipped") throw new Error(`${name} unexpected result ${result}`); }'
+  agent-web-support:
+    if: github.event_name == 'workflow_dispatch' && inputs.agent_web == true && github.ref == 'refs/heads/codex/agent-web-983'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    defaults:
+      run:
+        shell: bash
+        working-directory: feature
+    env:
+      CI_BASE_SHA: 39b76985292b4a43e68706c30e0bbb7d1cbeec45
+      CI_HEAD_SHA: acec75eef778b83a4f9f414ababc63e698506591
+      CI_FULL: 'false'
+    steps:
+      - name: Reviewed mechanical support checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          path: support
+          persist-credentials: false
+      - name: Reconstruct hash-verified independently authored Git history
+        working-directory: .
+        run: |
+          base64 --decode support/payload/feature.bundle.b64 > support/payload/feature.bundle
+          echo "3ab18a4b56dd0262a30e9698563fe0c4db17e7797e15f5d78a3559a3c0ad859c  support/payload/feature.bundle" | sha256sum --check --strict
+          git -C support bundle verify payload/feature.bundle
+          git clone --branch feat/notes-count support/payload/feature.bundle feature
+      - uses: jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca # v5.1.1
+        with:
+          version: 2026.10.7
+          working_directory: feature
+          cache: false
+          persist_github_token: false
+      - name: Project-owned ignored support and temporary output
+        run: |
+          mkdir -p artifacts/agent-web-api/hosted-helpers artifacts/agent-web-api/wrangler-logs .state/agent-tmp
+          cp ../support/.github/scripts/web-agent-*.mjs artifacts/agent-web-api/hosted-helpers/
+          echo "TMPDIR=$GITHUB_WORKSPACE/feature/.state/agent-tmp" >> "$GITHUB_ENV"
+          echo "TMP=$GITHUB_WORKSPACE/feature/.state/agent-tmp" >> "$GITHUB_ENV"
+          echo "TEMP=$GITHUB_WORKSPACE/feature/.state/agent-tmp" >> "$GITHUB_ENV"
+          echo "WRANGLER_LOG_PATH=$GITHUB_WORKSPACE/feature/artifacts/agent-web-api/wrangler-logs" >> "$GITHUB_ENV"
+      - name: Exact clean generated input before setup
+        run: node artifacts/agent-web-api/hosted-helpers/web-agent-input.mjs before-setup
+      - name: Standard setup
+        run: node artifacts/agent-web-api/hosted-helpers/web-agent-run.mjs setup pnpm env:setup
+      - name: Canonical exact input after setup
+        run: node artifacts/agent-web-api/hosted-helpers/web-agent-input.mjs after-setup
+      - name: Standard doctor
+        run: node artifacts/agent-web-api/hosted-helpers/web-agent-run.mjs doctor pnpm env:doctor
+      - name: Existing official browser prerequisites
+        run: node artifacts/agent-web-api/hosted-helpers/web-agent-run.mjs browser-prerequisites pnpm --filter @independent-web/web exec playwright install --with-deps chromium
+      - name: Standard development and real count CRUD/SSR smoke
+        run: node artifacts/agent-web-api/hosted-helpers/web-agent-dev.mjs
+      - name: API count normal and failure regressions
+        run: node artifacts/agent-web-api/hosted-helpers/web-agent-run.mjs targeted-test pnpm --filter @independent-web/api test
+      - name: Web count response regressions
+        run: node artifacts/agent-web-api/hosted-helpers/web-agent-run.mjs targeted-test pnpm --filter @independent-web/web test
+      - name: Standard affected pre-PR with original browser and all-100 Lighthouse requirements
+        run: node artifacts/agent-web-api/hosted-helpers/web-agent-run.mjs pre-pr pnpm gate:pre-pr -- --base 39b76985292b4a43e68706c30e0bbb7d1cbeec45
+      - name: Complete selected full configuration
+        run: node artifacts/agent-web-api/hosted-helpers/web-agent-run.mjs full pnpm gate:full
+      - name: Same actual source CI entry
+        run: node artifacts/agent-web-api/hosted-helpers/web-agent-run.mjs ci pnpm gate:ci -- --base 39b76985292b4a43e68706c30e0bbb7d1cbeec45 --checks javascript
+      - name: Standard complete build
+        run: node artifacts/agent-web-api/hosted-helpers/web-agent-run.mjs build pnpm build
+      - name: Local API deployment preflight
+        run: node artifacts/agent-web-api/hosted-helpers/web-agent-run.mjs preflight pnpm deploy:preflight -- --target api --environment local
+      - name: Local Web deployment preflight
+        run: node artifacts/agent-web-api/hosted-helpers/web-agent-run.mjs preflight pnpm deploy:preflight -- --target web --environment local
+      - name: Canonical final exact input
+        if: always()
+        run: node artifacts/agent-web-api/hosted-helpers/web-agent-input.mjs after-execution
+      - name: Mechanical supporting report only
+        if: always()
+        run: node artifacts/agent-web-api/hosted-helpers/web-agent-report.mjs
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: independent-web-api-983
+          path: |
+            feature/artifacts
+            feature/packages/*/artifacts
+            feature/packages/*/test-results
+          if-no-files-found: error
