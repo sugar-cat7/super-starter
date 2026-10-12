@@ -1,0 +1,5 @@
+argv: ["git","switch","-c","feat/status"]
+cwd: /home/runner/work/super-starter/super-starter/.state/hosted-status-feature
+Switched to a new branch 'feat/status'
+
+result: {"argv":["git","switch","-c","feat/status"],"cwd":"/home/runner/work/super-starter/super-starter/.state/hosted-status-feature","exit":0,"signal":null,"started":"2026-10-12T16:52:37.552Z","ended":"2026-10-12T16:52:37.555Z","durationMs":3,"log":"logs/aux-004.log"}

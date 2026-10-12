@@ -1,0 +1,5 @@
+argv: ["git","rev-parse","HEAD"]
+cwd: /home/runner/work/super-starter/super-starter/.state/generation-source
+460ad19c970adaab7231795f3438943d9158b135
+
+result: {"argv":["git","rev-parse","HEAD"],"cwd":"/home/runner/work/super-starter/super-starter/.state/generation-source","started":"2026-10-12T16:52:31.532Z","ended":"2026-10-12T16:52:31.535Z","durationMs":3,"exit":0,"signal":null,"log":"preparation/command-source-head-after-setup.log","execution":"hosted-tools","kind":"generation-preparation"}

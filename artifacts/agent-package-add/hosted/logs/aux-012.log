@@ -1,0 +1,21 @@
+argv: ["git","status","--porcelain=v1","--untracked-files=all"]
+cwd: /home/runner/work/super-starter/super-starter/.state/hosted-status-feature
+M  .template.json
+M  package.json
+A  packages/status/README.md
+A  packages/status/cloudflare.config.ts
+A  packages/status/package.json
+A  packages/status/preview.ts
+A  packages/status/src/index.ts
+A  packages/status/src/notes.ts
+A  packages/status/test/runtime.test.ts
+A  packages/status/test/status.runtime.test.ts
+A  packages/status/test/status.test.ts
+A  packages/status/test/unit.test.ts
+A  packages/status/tsconfig.json
+A  packages/status/vite.config.ts
+A  packages/status/vitest.config.ts
+A  packages/status/vitest.runtime.config.ts
+A  pnpm-lock.yaml
+
+result: {"argv":["git","status","--porcelain=v1","--untracked-files=all"],"cwd":"/home/runner/work/super-starter/super-starter/.state/hosted-status-feature","exit":0,"signal":null,"started":"2026-10-12T16:52:37.709Z","ended":"2026-10-12T16:52:37.726Z","durationMs":17,"log":"logs/aux-012.log"}

@@ -1,0 +1,159 @@
+[
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/runner/work/super-starter/super-starter",
+    "started": "2026-10-12T16:52:09.077Z",
+    "ended": "2026-10-12T16:52:09.080Z",
+    "durationMs": 3,
+    "exit": 0,
+    "signal": null,
+    "log": "preparation/command-carrier-head-source-generation.log",
+    "execution": "hosted-tools",
+    "kind": "generation-preparation"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/runner/work/super-starter/super-starter/.state/generation-source",
+    "started": "2026-10-12T16:52:09.082Z",
+    "ended": "2026-10-12T16:52:09.084Z",
+    "durationMs": 2,
+    "exit": 0,
+    "signal": null,
+    "log": "preparation/command-source-head-before.log",
+    "execution": "hosted-tools",
+    "kind": "generation-preparation"
+  },
+  {
+    "argv": [
+      "git",
+      "status",
+      "--porcelain=v1",
+      "--untracked-files=all"
+    ],
+    "cwd": "/home/runner/work/super-starter/super-starter/.state/generation-source",
+    "started": "2026-10-12T16:52:09.084Z",
+    "ended": "2026-10-12T16:52:09.106Z",
+    "durationMs": 22,
+    "exit": 0,
+    "signal": null,
+    "log": "preparation/command-source-clean-before.log",
+    "execution": "hosted-tools",
+    "kind": "generation-preparation"
+  },
+  {
+    "argv": [
+      "pnpm",
+      "env:setup",
+      "--",
+      "--javascript"
+    ],
+    "cwd": "/home/runner/work/super-starter/super-starter/.state/generation-source",
+    "started": "2026-10-12T16:52:09.188Z",
+    "ended": "2026-10-12T16:52:31.531Z",
+    "durationMs": 22343,
+    "exit": 0,
+    "signal": null,
+    "log": "preparation/command-source-javascript-setup.log",
+    "execution": "hosted-tools",
+    "kind": "generation-preparation"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/runner/work/super-starter/super-starter/.state/generation-source",
+    "started": "2026-10-12T16:52:31.532Z",
+    "ended": "2026-10-12T16:52:31.535Z",
+    "durationMs": 3,
+    "exit": 0,
+    "signal": null,
+    "log": "preparation/command-source-head-after-setup.log",
+    "execution": "hosted-tools",
+    "kind": "generation-preparation"
+  },
+  {
+    "argv": [
+      "git",
+      "status",
+      "--porcelain=v1",
+      "--untracked-files=all"
+    ],
+    "cwd": "/home/runner/work/super-starter/super-starter/.state/generation-source",
+    "started": "2026-10-12T16:52:31.535Z",
+    "ended": "2026-10-12T16:52:31.541Z",
+    "durationMs": 6,
+    "exit": 0,
+    "signal": null,
+    "log": "preparation/command-source-clean-after-setup.log",
+    "execution": "hosted-tools",
+    "kind": "generation-preparation"
+  },
+  {
+    "argv": [
+      "node",
+      "tools/generators/cli.ts",
+      "init",
+      "--target",
+      "/home/runner/work/super-starter/super-starter/.state/generated-status-project",
+      "--name",
+      "independent-status-api",
+      "--scope",
+      "@independent-service",
+      "--preset",
+      "api",
+      "--no-install"
+    ],
+    "cwd": "/home/runner/work/super-starter/super-starter/.state/generation-source",
+    "started": "2026-10-12T16:52:31.549Z",
+    "ended": "2026-10-12T16:52:35.071Z",
+    "durationMs": 3522,
+    "exit": 0,
+    "signal": null,
+    "log": "preparation/command-actual-source-cli-init.log",
+    "execution": "hosted-tools",
+    "kind": "generation-preparation"
+  },
+  {
+    "argv": [
+      "git",
+      "status",
+      "--porcelain=v1",
+      "--untracked-files=all"
+    ],
+    "cwd": "/home/runner/work/super-starter/super-starter/.state/generation-source",
+    "started": "2026-10-12T16:52:35.089Z",
+    "ended": "2026-10-12T16:52:35.094Z",
+    "durationMs": 5,
+    "exit": 0,
+    "signal": null,
+    "log": "preparation/command-source-clean-after-init.log",
+    "execution": "hosted-tools",
+    "kind": "generation-preparation"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/runner/work/super-starter/super-starter/.state/generation-source",
+    "started": "2026-10-12T16:52:35.101Z",
+    "ended": "2026-10-12T16:52:35.104Z",
+    "durationMs": 3,
+    "exit": 0,
+    "signal": null,
+    "log": "preparation/command-source-head-before-remove.log",
+    "execution": "hosted-tools",
+    "kind": "generation-preparation"
+  }
+]

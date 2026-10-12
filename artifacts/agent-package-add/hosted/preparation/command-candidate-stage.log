@@ -1,0 +1,4 @@
+argv: ["git","add",".template.json","package.json","pnpm-lock.yaml","packages/status"]
+cwd: /home/runner/work/super-starter/super-starter/.state/generated-status-project
+
+result: {"argv":["git","add",".template.json","package.json","pnpm-lock.yaml","packages/status"],"cwd":"/home/runner/work/super-starter/super-starter/.state/generated-status-project","started":"2026-10-12T16:52:37.397Z","ended":"2026-10-12T16:52:37.404Z","durationMs":7,"exit":0,"signal":null,"log":"preparation/command-candidate-stage.log","execution":"hosted-tools","kind":"generation-preparation"}

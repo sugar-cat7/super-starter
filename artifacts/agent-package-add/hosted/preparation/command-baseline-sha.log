@@ -1,0 +1,5 @@
+argv: ["git","rev-parse","HEAD"]
+cwd: /home/runner/work/super-starter/super-starter/.state/generated-status-project
+64f83ebcb2bf8dd2523779e63b7e114eae5d5741
+
+result: {"argv":["git","rev-parse","HEAD"],"cwd":"/home/runner/work/super-starter/super-starter/.state/generated-status-project","started":"2026-10-12T16:52:36.002Z","ended":"2026-10-12T16:52:36.007Z","durationMs":5,"exit":0,"signal":null,"log":"preparation/command-baseline-sha.log","execution":"hosted-tools","kind":"generation-preparation"}

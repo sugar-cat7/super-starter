@@ -1,0 +1,5 @@
+argv: ["git","config","--get","core.hooksPath"]
+cwd: /home/runner/work/super-starter/super-starter/.state/hosted-status-feature
+tools/quality/git-hooks
+
+result: {"argv":["git","config","--get","core.hooksPath"],"cwd":"/home/runner/work/super-starter/super-starter/.state/hosted-status-feature","exit":0,"signal":null,"started":"2026-10-12T16:54:17.929Z","ended":"2026-10-12T16:54:17.932Z","durationMs":3,"log":"logs/aux-060.log"}

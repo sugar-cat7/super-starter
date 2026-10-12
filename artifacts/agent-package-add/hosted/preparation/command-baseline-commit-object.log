@@ -1,0 +1,9 @@
+argv: ["git","cat-file","commit","HEAD"]
+cwd: /home/runner/work/super-starter/super-starter/.state/generated-status-project
+tree ca96ea0ea42bd64a102ab18c006700e13ca7ce4f
+author Independent Agent <independent-agent@example.invalid> 1791823955 +0000
+committer Independent Agent <independent-agent@example.invalid> 1791823955 +0000
+
+Generated pristine API bootstrap before feature hooks
+
+result: {"argv":["git","cat-file","commit","HEAD"],"cwd":"/home/runner/work/super-starter/super-starter/.state/generated-status-project","started":"2026-10-12T16:52:36.049Z","ended":"2026-10-12T16:52:36.053Z","durationMs":4,"exit":0,"signal":null,"log":"preparation/command-baseline-commit-object.log","execution":"hosted-tools","kind":"generation-preparation"}

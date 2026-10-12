@@ -1,0 +1,5 @@
+argv: ["git","rev-parse","HEAD"]
+cwd: /home/runner/work/super-starter/super-starter
+4daddb6e6bf4530036d5c8c0cdcc7cb7f3ff50f3
+
+result: {"argv":["git","rev-parse","HEAD"],"cwd":"/home/runner/work/super-starter/super-starter","exit":0,"signal":null,"started":"2026-10-12T16:52:37.501Z","ended":"2026-10-12T16:52:37.504Z","durationMs":3,"log":"logs/aux-001.log"}

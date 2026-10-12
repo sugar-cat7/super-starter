@@ -1,0 +1,4 @@
+argv: ["git","config","--local","user.email","independent-agent@example.invalid"]
+cwd: /home/runner/work/super-starter/super-starter/.state/generated-status-project
+
+result: {"argv":["git","config","--local","user.email","independent-agent@example.invalid"],"cwd":"/home/runner/work/super-starter/super-starter/.state/generated-status-project","started":"2026-10-12T16:52:35.885Z","ended":"2026-10-12T16:52:35.887Z","durationMs":2,"exit":0,"signal":null,"log":"preparation/command-baseline-git-email.log","execution":"hosted-tools","kind":"generation-preparation"}

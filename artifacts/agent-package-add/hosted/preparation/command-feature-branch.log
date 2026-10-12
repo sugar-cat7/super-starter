@@ -1,0 +1,5 @@
+argv: ["git","switch","-c","feat/status"]
+cwd: /home/runner/work/super-starter/super-starter/.state/generated-status-project
+Switched to a new branch 'feat/status'
+
+result: {"argv":["git","switch","-c","feat/status"],"cwd":"/home/runner/work/super-starter/super-starter/.state/generated-status-project","started":"2026-10-12T16:52:36.068Z","ended":"2026-10-12T16:52:36.073Z","durationMs":5,"exit":0,"signal":null,"log":"preparation/command-feature-branch.log","execution":"hosted-tools","kind":"generation-preparation"}

@@ -1,0 +1,4 @@
+argv: ["git","bundle","create","/home/runner/work/super-starter/super-starter/.state/status-feature-input/status-source.bundle","main"]
+cwd: /home/runner/work/super-starter/super-starter/.state/generated-status-project
+
+result: {"argv":["git","bundle","create","/home/runner/work/super-starter/super-starter/.state/status-feature-input/status-source.bundle","main"],"cwd":"/home/runner/work/super-starter/super-starter/.state/generated-status-project","started":"2026-10-12T16:52:37.412Z","ended":"2026-10-12T16:52:37.420Z","durationMs":8,"exit":0,"signal":null,"log":"preparation/command-pristine-baseline-bundle.log","execution":"hosted-tools","kind":"generation-preparation"}

@@ -1,0 +1,11 @@
+argv: ["pnpm","app:new","--","--kind","api","--name","status","--no-install"]
+cwd: /home/runner/work/super-starter/super-starter/.state/generated-status-project
+{
+  "root": "/home/runner/work/super-starter/super-starter/.state/generated-status-project",
+  "writes": 14,
+  "remove": [],
+  "dryRun": false
+}
+$ node tools/generators/cli.ts add -- --kind api --name status --no-install
+
+result: {"argv":["pnpm","app:new","--","--kind","api","--name","status","--no-install"],"cwd":"/home/runner/work/super-starter/super-starter/.state/generated-status-project","started":"2026-10-12T16:52:36.073Z","ended":"2026-10-12T16:52:37.370Z","durationMs":1297,"exit":0,"signal":null,"log":"preparation/command-own-cold-status-generator.log","execution":"hosted-tools","kind":"generation-preparation"}

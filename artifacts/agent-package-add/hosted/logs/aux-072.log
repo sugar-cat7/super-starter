@@ -1,0 +1,4 @@
+argv: ["git","remote","add","rehearsal","/home/runner/work/super-starter/super-starter/.state/hosted-status-feature/.state/status-remote.git"]
+cwd: /home/runner/work/super-starter/super-starter/.state/hosted-status-feature
+
+result: {"argv":["git","remote","add","rehearsal","/home/runner/work/super-starter/super-starter/.state/hosted-status-feature/.state/status-remote.git"],"cwd":"/home/runner/work/super-starter/super-starter/.state/hosted-status-feature","exit":0,"signal":null,"started":"2026-10-12T16:54:19.138Z","ended":"2026-10-12T16:54:19.140Z","durationMs":2,"log":"logs/aux-072.log"}

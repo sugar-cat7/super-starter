@@ -1,0 +1,73 @@
+argv: ["pnpm","deploy:preflight","--","--target","status","--environment","dev"]
+cwd: /home/runner/work/super-starter/super-starter/.state/hosted-status-feature
+started: 2026-10-12T16:57:46.478Z
+before: {"head":"4bf59dc95784811c4df11980018afa8a607eb618","contentId":"be98e684e28316efbb59a728968bbce7f7be560029eebc0a0a8f798407ebd5e4","origin":{"sha":"460ad19c970adaab7231795f3438943d9158b135","dirty":false,"contentId":"616f2588e05d627c3c7b130da5fc30a469a51d81668e864270b8b2c6eae459b7"},"status":""}
+$ node tools/cloudflare/deploy.ts preflight -- --target status --environment dev
+$ node tools/quality/check.ts
+pass: All 172 files are correctly formatted (191ms, 4 threads)
+pass: Found no warnings, lint errors, or type errors in 124 files (1.7s, 4 threads)
+Static quality, runtime boundaries and documentation passed
+$ node ../../tools/quality/vitest.ts --config vitest.config.ts
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/home/runner/work/super-starter/super-starter/.state/hosted-status-feature/packages/status[39m
+
+ [32m✓[39m test/status.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 42[2mms[22m[39m
+ [32m✓[39m test/unit.test.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 3123[2mms[22m[39m
+   [32m✓[39m API validation and safe publication defaults [2m(10)[22m
+     [33m[2m✓[22m[39m bounds a stalled ingress even when its cancellation never settles[33m 3004[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[32m13 passed[39m[22m[90m (13)[39m
+[2m   Start at [22m 16:57:51
+[2m   Duration [22m 3.48s[2m (tests 87%, import 9%, transform 4%)[22m
+
+JSON report written to /home/runner/work/super-starter/super-starter/.state/hosted-status-feature/packages/status/artifacts/tests-vitest.config.ts.json
+Executed 13 required test cases
+$ node ../../tools/cloudflare/runtime.ts
+[@independent-service/status] $ cf dev --mode offline
+[@independent-service/status] No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+[@independent-service/status]   [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m40365[22m/[39m
+READY @independent-service/status http://127.0.0.1:40365 2265ms; registry /home/runner/work/super-starter/super-starter/.state/hosted-status-feature/.state/tmp/starter-runtime-BaG5Lb/registry/session-jQQNf6
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/home/runner/work/super-starter/super-starter/.state/hosted-status-feature/packages/status[39m
+
+ [32m✓[39m test/status.runtime.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 125[2mms[22m[39m
+ [32m✓[39m test/runtime.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 299[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[32m5 passed[39m[22m[90m (5)[39m
+[2m   Start at [22m 16:57:57
+[2m   Duration [22m 555ms[2m (tests 70%, import 16%, transform 13%, worker 2%)[22m
+
+JSON report written to /home/runner/work/super-starter/super-starter/.state/hosted-status-feature/packages/status/artifacts/tests-vitest.runtime.config.ts.json
+Executed 5 required test cases
+[@independent-service/status] Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+[@independent-service/status]   × "pnpm recursive run" failed in /home/runner/work/super-starter/super-
+  │ starter/.state/hosted-status-feature/packages/status
+
+$ node ../../tools/cloudflare/build.ts
+No lock file has been detected in the current working directory. This might indicate that the project is part of a workspace. Auto-configuration of projects inside workspaces is limited. See https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/#workspaces
+├  Build
+│  Delegating to Vite
+transforming...
+✓ 254 modules transformed.
+rendering chunks...
+computing gzip size...
+.cloudflare/output/v0/workers/default/bundle/.vite/manifest.json    0.15 kB │ gzip:  0.11 kB
+.cloudflare/output/v0/workers/default/bundle/index.js             291.41 kB │ gzip: 68.27 kB
+
+[32m✓ built in 78ms[39m
+◆  Build complete
+file:///home/runner/work/super-starter/super-starter/.state/hosted-status-feature/tools/cloudflare/deploy.ts:70
+  throw new Error(
+        ^
+
+Error: CLOUDFLARE_ACCOUNT_ID is missing. Configure a named approved dev account and resource IDs; see docs/cloudflare.md. No deployment occurred.
+    at file:///home/runner/work/super-starter/super-starter/.state/hosted-status-feature/tools/cloudflare/deploy.ts:70:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.21.0
+[ELIFECYCLE] Command failed with exit code 1.
+
+result: {"phase":"dev-preflight","argv":["pnpm","deploy:preflight","--","--target","status","--environment","dev"],"exit":1,"signal":null,"started":"2026-10-12T16:57:46.478Z","ended":"2026-10-12T16:57:59.970Z","durationMs":13492,"log":"logs/12-dev-preflight.log","before":{"head":"4bf59dc95784811c4df11980018afa8a607eb618","contentId":"be98e684e28316efbb59a728968bbce7f7be560029eebc0a0a8f798407ebd5e4","origin":{"sha":"460ad19c970adaab7231795f3438943d9158b135","dirty":false,"contentId":"616f2588e05d627c3c7b130da5fc30a469a51d81668e864270b8b2c6eae459b7"},"status":""},"after":{"head":"4bf59dc95784811c4df11980018afa8a607eb618","contentId":"be98e684e28316efbb59a728968bbce7f7be560029eebc0a0a8f798407ebd5e4","origin":{"sha":"460ad19c970adaab7231795f3438943d9158b135","dirty":false,"contentId":"616f2588e05d627c3c7b130da5fc30a469a51d81668e864270b8b2c6eae459b7"},"status":""},"execution":"hosted-tools"}
