@@ -1,7 +1,6 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
-import { createRequire } from 'node:module';
 import { existsSync, lstatSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, realpathSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -62,9 +61,13 @@ async function builtOutputs() {
     let declared;
     if (pkg.runtime === 'worker') {
       // Resolve the same public owning SDK export used by this package's preview.
-      const resolve = createRequire(path.join(packageRoot, 'package.json'));
-      const { readBuildOutput } = await import(pathToFileURL(resolve.resolve('@cloudflare/build-output-utils')));
-      const build = await readBuildOutput(packageRoot);
+      // The SDK exports an ESM-only entry. The evaluation module belongs to the
+      // owning package's cwd, exactly as its existing preview imports the SDK.
+      const inspected = command([process.execPath, '--input-type=module', '--eval',
+        "import { readBuildOutput } from '@cloudflare/build-output-utils'; const build = await readBuildOutput(process.cwd()); process.stdout.write(JSON.stringify(build));"],
+        packageRoot);
+      assert.equal(inspected.exit, 0, 'Owning public ESM build-output resolver must succeed: ' + inspected.stderr.toString());
+      const build = JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(inspected.stdout));
       assert.equal(build.rootConfig.buildContext.mode, 'offline');
       const worker = build.workers.default;
       assert.ok(worker?.bundleDir && worker.config.manifest, 'Actual official Worker bundle/manifest is required');
