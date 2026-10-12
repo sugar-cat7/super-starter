@@ -1,14 +1,18 @@
 {
   "schema": 1,
   "kind": "lightweight-unchanged-source-acceptance",
-  "ready": false,
+  "ready": true,
   "ownRef": "refs/heads/codex/final-acceptance-653",
   "source": {
     "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
     "contentId": "8a91208bf0be87ea59f830dd11d700618bfc46c75493dd9799b0c5c3815fff25",
     "acceptanceCliSha256": "4e1be884282ba22f316a499cb24bb5c8e66f635f5bf397a14a7a991fe73046e4"
   },
-  "sourcePayload": null,
+  "sourcePayload": {
+    "commit": "6430a66ef26947971330030e285b7fb53e21cb44",
+    "manifestPath": ".github/payload/source-evidence-transport.json",
+    "manifestSha256": "dfac3d22e022b886d14391b525b5aca743e2cc2730c25acc69bc0723133f40e3"
+  },
   "agents": {
     "web-api": {
       "commit": "c5e1b48150a5521faf3a481762b93fbc3d9757be",
@@ -281,7 +285,7 @@
     "maxFiles": 20000,
     "maxPlainBytes": 524288
   },
-  "classification": "Untriggered draft. Source evidence payload, Web and Desktop immutable genuine inputs remain unresolved. No accepted evidence or successful acceptance execution is claimed.",
+  "classification": "Untriggered mechanical validator draft. Immutable current Source653 original evidence and all three genuine independent Agent receipt/log payloads are pinned and byte-verified. This transport does not claim a successful final acceptance execution; the unchanged Source CLI must produce that result in the owning run.",
   "history": {
     "failedCollectors": [
       38300642048,
@@ -289,5 +293,5 @@
     ],
     "historicalSource460Collector": 38284023733
   },
-  "instructions": "Review and pin actual current Source payload manifest/files plus genuine Web/Desktop report/log files before setting ready:true. Immutable original blocked collector report stays separate from accepted evidence. Never relabel canonical Quality or Agent origins."
+  "instructions": "After Root review of the immutable Source payload and this exact input-only delta, publish and run the lightweight owning validator. Preserve the original collector acceptance exit1/report with only three missing Agents as historical evidence, outside the accepted Source files. Materialize byte-identical Source and genuine Agent receipt/log files, invoke the unchanged exact Source653 acceptance CLI, preserve its actual status/stdout/stderr/report, and fail on any guard or CLI failure. Never relabel canonical Quality, Agent origins, API transport, historical failures, or raw-LHR decoding scope."
 }
