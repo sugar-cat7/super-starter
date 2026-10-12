@@ -135,6 +135,7 @@ export const lifecyclePhases = [
 export const hookPhases = [
   'install-repeat',
   'valid-commit',
+  'ignored-temporary-index',
   'partial-stage-valid',
   'partial-stage-invalid',
   'empty-diff-repair',

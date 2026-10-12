@@ -15,6 +15,7 @@ import path from 'node:path';
 import { mkdtempSync } from 'node:fs';
 import { pnpm, runSync, run } from '../process.ts';
 import { workspacePackages } from './graph.ts';
+import { initializeVerificationGit } from './fixture.ts';
 
 const hookPath = 'tools/quality/git-hooks';
 export function foreignGitEnvironment(root: string): NodeJS.ProcessEnv {
@@ -105,6 +106,7 @@ function linkDependencies(
 }
 
 export async function indexCheck(root: string): Promise<void> {
+  const environment = foreignGitEnvironment(root);
   const snapshot = mkdtempSync(path.join(os.tmpdir(), 'starter-index-'));
   try {
     runSync(
@@ -112,6 +114,10 @@ export async function indexCheck(root: string): Promise<void> {
       ['checkout-index', '--all', `--prefix=${snapshot.split(path.sep).join('/')}/`],
       root,
     );
+    // TMPDIR may be inside this repository's ignored .state directory. Give
+    // the exact index its own Git boundary so tools cannot inherit the parent
+    // ignore rules or Git's exported routing to the user's original index.
+    initializeVerificationGit(snapshot, environment);
     linkDependencies(
       path.join(root, 'node_modules'),
       path.join(snapshot, 'node_modules'),
@@ -128,15 +134,20 @@ export async function indexCheck(root: string): Promise<void> {
     // pnpm 12 can prepare dependencies implicitly in a copied index tree. The
     // index must stay immutable, so invoke the already-installed local CLI.
     const vp = path.join(snapshot, 'node_modules/vite-plus/bin/vp');
-    await run(process.execPath, [vp, 'fmt', '--check'], { cwd: snapshot, timeout: 120_000 });
+    await run(process.execPath, [vp, 'fmt', '--check'], {
+      cwd: snapshot,
+      env: environment,
+      timeout: 120_000,
+    });
     // Staged checks intentionally use lint rather than worktree typegen/runtime.
     await run(process.execPath, [vp, 'lint'], {
       cwd: snapshot,
-      env: { ...process.env, STARTER_CHECK_PHASE: 'index' },
+      env: { ...environment, STARTER_CHECK_PHASE: 'index' },
       timeout: 120_000,
     });
     await run(process.execPath, ['tools/quality/structure.ts'], {
       cwd: snapshot,
+      env: environment,
       timeout: 120_000,
     });
   } finally {

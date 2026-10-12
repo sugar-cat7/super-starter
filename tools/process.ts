@@ -236,8 +236,13 @@ export function pnpmCommand(args: string[]): { command: string; args: string[] }
   return { command: executable ?? (process.platform === 'win32' ? 'pnpm.exe' : 'pnpm'), args };
 }
 
-export function runSync(command: string, args: string[], cwd: string): string {
-  const result = spawnSync(command, args, { cwd, encoding: 'utf8', timeout: 60_000 });
+export function runSync(
+  command: string,
+  args: string[],
+  cwd: string,
+  env: NodeJS.ProcessEnv = process.env,
+): string {
+  const result = spawnSync(command, args, { cwd, env, encoding: 'utf8', timeout: 60_000 });
   if (result.error || result.status !== 0)
     throw new Error(`${command} failed: ${result.error?.message ?? result.stderr}`);
   return result.stdout.trim();

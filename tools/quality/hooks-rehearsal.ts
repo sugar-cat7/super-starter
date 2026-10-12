@@ -17,13 +17,14 @@ export async function hookRehearsal(project: string): Promise<void> {
   const owned = mkdtempSync(path.join(os.tmpdir(), 'starter-hooks-'));
   const root = path.join(owned, 'project');
   const remote = path.join(owned, 'remote.git');
+  const temporary = path.join(root, '.state', 'hook-tmp');
   const git = (args: string[], expected = true, cwd = root, input?: string): string => {
     const result = spawnSync('git', args, {
       cwd,
       input,
       encoding: 'utf8',
       timeout: 10 * 60_000,
-      env: { ...process.env, TMPDIR: owned, TMP: owned, TEMP: owned },
+      env: { ...process.env, TMPDIR: temporary, TMP: temporary, TEMP: temporary },
     });
     const output = `${result.stdout ?? ''}${result.stderr ?? ''}`;
     if (expected) assert.equal(result.status, 0, output);
@@ -37,14 +38,29 @@ export async function hookRehearsal(project: string): Promise<void> {
   const bad = "debugger;\nexport const hookProbe = 'invalid';\n";
   try {
     copyProjectFixture(project, root);
+    mkdirSync(temporary, { recursive: true });
     await pnpm(['env:setup'], { cwd: root, timeout: 10 * 60_000 });
     git(['init', '-q']);
     git(['config', 'user.name', 'Template rehearsal']);
     git(['config', 'user.email', 'template-rehearsal@example.invalid']);
     installHooks(root);
     installHooks(root);
+    const configuration = readFileSync(path.join(root, '.git/config'));
+    const assertIndexCleanup = () => {
+      assert.equal(
+        readdirSync(temporary).some((name) => name.startsWith('starter-index-')),
+        false,
+        'Index checks must remove snapshots inside ignored TMPDIR, including rejected commits',
+      );
+      assert.deepEqual(
+        readFileSync(path.join(root, '.git/config')),
+        configuration,
+        'Index checks must preserve user Git configuration',
+      );
+    };
     git(['add', '.']);
     git(['commit', '-m', 'Valid initial generated project']);
+    assertIndexCleanup();
     const probe = path.join(root, 'tools/hook-probe.ts');
     writeFileSync(probe, good);
     git(['add', 'tools/hook-probe.ts']);
@@ -56,6 +72,7 @@ export async function hookRehearsal(project: string): Promise<void> {
     );
     assert.equal(readFileSync(probe, 'utf8'), bad, 'Hook must preserve unstaged content');
     assert.equal(git(['show', 'HEAD:tools/hook-probe.ts']).trim(), good.trim());
+    assertIndexCleanup();
     git(['add', 'tools/hook-probe.ts']);
     writeFileSync(probe, good);
     const head = git(['rev-parse', 'HEAD']);
@@ -63,8 +80,10 @@ export async function hookRehearsal(project: string): Promise<void> {
     assert.equal(git(['rev-parse', 'HEAD']), head, 'Rejected commit must not advance HEAD');
     assert.equal(readFileSync(probe, 'utf8'), good, 'Hook must preserve unstaged correction');
     assert.equal(git(['show', ':tools/hook-probe.ts']).trim(), bad.trim(), 'Hook must not restage');
+    assertIndexCleanup();
     git(['add', 'tools/hook-probe.ts']);
     git(['commit', '--allow-empty', '-m', 'Repaired index and empty-diff hook']);
+    assertIndexCleanup();
     git(['init', '--bare', '-q', remote]);
     const originalWorktrees = git(['worktree', 'list', '--porcelain']);
     const assertPushCleanup = () => {
@@ -74,7 +93,7 @@ export async function hookRehearsal(project: string): Promise<void> {
         'Push checks must remove their registered worktrees',
       );
       assert.equal(
-        readdirSync(owned).some((name) => name.startsWith('starter-push-')),
+        readdirSync(temporary).some((name) => name.startsWith('starter-push-')),
         false,
         'Push checks must remove their physical snapshots even after a rejected gate',
       );
@@ -117,6 +136,7 @@ export async function hookRehearsal(project: string): Promise<void> {
       writeFileSync(path.join(linked, 'tools/linked-probe.ts'), good);
       git(['add', '.'], true, linked);
       git(['commit', '-m', 'Linked worktree hook'], true, path.join(linked, 'packages'));
+      assertIndexCleanup();
       assert.equal(
         git(['diff', '--name-only']),
         '',
@@ -131,7 +151,7 @@ export async function hookRehearsal(project: string): Promise<void> {
     assert.throws(() => installHooks(root), /Existing core.hooksPath/u);
     assert.equal(readFileSync(path.join(root, 'user-hooks/pre-commit'), 'utf8'), 'owned');
     console.log(
-      'Real Git index/partial-stage, subdirectory, push-ref, linked-worktree and existing-hook protection passed',
+      'Real Git ignored-TMPDIR index/partial-stage, subdirectory, push-ref, linked-worktree and existing-hook protection passed',
     );
     status = 'passed';
   } finally {
