@@ -1,0 +1,64 @@
+{
+  "schema": 1,
+  "source": {
+    "sha": "460ad19c970adaab7231795f3438943d9158b135",
+    "contentId": "d674216f6fd7d5a03b3b0f2bbf3b54f0ee83f75779542f6b7d0a8eab62499337",
+    "dirty": false
+  },
+  "origin": {
+    "sha": "460ad19c970adaab7231795f3438943d9158b135",
+    "dirty": false,
+    "contentId": "616f2588e05d627c3c7b130da5fc30a469a51d81668e864270b8b2c6eae459b7"
+  },
+  "renderedContentId": "616f2588e05d627c3c7b130da5fc30a469a51d81668e864270b8b2c6eae459b7",
+  "generatedCount": 249,
+  "managedCount": 248,
+  "baseline": {
+    "head": "bdb23d99d974b8c60001dab30368eb0b861ba38b",
+    "parent": null,
+    "tree": "ca96ea0ea42bd64a102ab18c006700e13ca7ce4f",
+    "files": 249,
+    "clean": true
+  },
+  "baselineContentId": "0f5a2ac195992c02bee0b17436ffb67c7d9b61f132f98df7c5eda8ec9bacb3c0",
+  "baselineInventoryCount": 249,
+  "sourceRemoved": true,
+  "failure": "Owned bootstrap assertion omitted newly created pnpm-lock.yaml from its explicit bookkeeping allow-list",
+  "featurePhaseCommands": 0,
+  "acceptance": "blocked",
+  "rawJobLogSha256": "678f7950f2371aa41311b1d46c43f05d0ac1291b53d4627c77c9b377968320d1",
+  "pristineLockPresent": false,
+  "sourceHeadGuards": [
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit": 0,
+      "durationMs": 2,
+      "log": "preparation/command-source-head-before.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit": 0,
+      "durationMs": 2,
+      "log": "preparation/command-source-head-after-setup.log"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit": 0,
+      "durationMs": 3,
+      "log": "preparation/command-source-head-before-remove.log"
+    }
+  ],
+  "independentlyRecomputedRenderedCid": "616f2588e05d627c3c7b130da5fc30a469a51d81668e864270b8b2c6eae459b7"
+}

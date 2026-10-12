@@ -1,0 +1,96 @@
+{
+  "schema": 1,
+  "source": {
+    "sha": "460ad19c970adaab7231795f3438943d9158b135",
+    "contentId": "d674216f6fd7d5a03b3b0f2bbf3b54f0ee83f75779542f6b7d0a8eab62499337",
+    "dirty": false
+  },
+  "origin": {
+    "sha": "460ad19c970adaab7231795f3438943d9158b135",
+    "dirty": false,
+    "contentId": "616f2588e05d627c3c7b130da5fc30a469a51d81668e864270b8b2c6eae459b7"
+  },
+  "pristineGeneratedCount": 249,
+  "managedCount": 248,
+  "renderedOriginCid": "616f2588e05d627c3c7b130da5fc30a469a51d81668e864270b8b2c6eae459b7",
+  "baselineGit": {
+    "head": "64f83ebcb2bf8dd2523779e63b7e114eae5d5741",
+    "parent": null,
+    "tree": "ca96ea0ea42bd64a102ab18c006700e13ca7ce4f",
+    "files": 249,
+    "clean": true
+  },
+  "baselineContentId": "0f5a2ac195992c02bee0b17436ffb67c7d9b61f132f98df7c5eda8ec9bacb3c0",
+  "featureGit": {
+    "head": "4bf59dc95784811c4df11980018afa8a607eb618",
+    "parent": "64f83ebcb2bf8dd2523779e63b7e114eae5d5741",
+    "tree": "a35aa4658b05d8c78c78afc558f80ae88bf93ddb",
+    "files": 264,
+    "clean": true
+  },
+  "featureContentId": "be98e684e28316efbb59a728968bbce7f7be560029eebc0a0a8f798407ebd5e4",
+  "preservedSourceFiles": 247,
+  "authoredFiles": [
+    {
+      "path": "packages/status/src/index.ts",
+      "sha256": "516af75003f07a635075e1926b2282ca9a05f69ac30d32281c400ba84f69dc5b"
+    },
+    {
+      "path": "packages/status/README.md",
+      "sha256": "d4775e067dd6d1e9ec7a104bddb546e516ad0c0261b85151f7a06cf794e11a56"
+    },
+    {
+      "path": "packages/status/test/status.test.ts",
+      "sha256": "62d221f6e997d123d2047bfe2abc717e10946b839691780d2c87ed55ac584cfe"
+    },
+    {
+      "path": "packages/status/test/status.runtime.test.ts",
+      "sha256": "8a49957fec2b987bdcd06fcdbc62ae0a1491167ce1631e44de658fc468414b7c"
+    }
+  ],
+  "commandCount": 13,
+  "auxiliaryCount": 119,
+  "canonicalFullChecks": 12,
+  "canonicalCiChecks": 12,
+  "bundleSha256": "25358ed349b764e1ef95ebe9629d87c3c9b6a03ce59c4f2fb4ebbe45d2d2ee3e",
+  "sourceRemoved": true,
+  "devPreflight": {
+    "status": "blocked",
+    "log": "logs/12-dev-preflight.log",
+    "exit": 1,
+    "reason": "Approved dev account/credentials are absent; no remote deployment occurred"
+  },
+  "localPreflight": {
+    "contentId": "be98e684e28316efbb59a728968bbce7f7be560029eebc0a0a8f798407ebd5e4",
+    "target": "@independent-service/status",
+    "environment": "local",
+    "configSource": "packages/status/cloudflare.config.ts",
+    "artifact": "packages/status/.cloudflare/output/v0",
+    "deployed": false,
+    "smoked": false,
+    "account": null,
+    "artifactId": "1ccdd09baceab4a2fe471ff64f8fc0622a2f1e49636aaee1e570a03d1c18c528"
+  },
+  "versions": {
+    "node": "v24.21.0",
+    "pnpm": "12.11.2",
+    "@types/node": "24.19.1",
+    "knip": "6.41.0",
+    "oxc-parser": "0.153.0",
+    "typescript": "7.0.2",
+    "vite-plus": "1.1.0",
+    "vitest": "5.0.3",
+    "yaml": "2.9.1",
+    "@independent-service/contracts": "0.1.0",
+    "@independent-service/observability": "0.1.0",
+    "zod": "4.6.5",
+    "@cloudflare/build-output-utils": "0.9.0",
+    "@cloudflare/config": "0.24.1",
+    "@cloudflare/vite-plugin": "2.0.0-beta.sha-91c870c02",
+    "cf": "1.0.0-beta.14",
+    "wrangler": "4.149.0",
+    "@opentelemetry/api": "1.9.1",
+    "@opentelemetry/resources": "2.12.0",
+    "@opentelemetry/sdk-trace-base": "2.12.0"
+  }
+}

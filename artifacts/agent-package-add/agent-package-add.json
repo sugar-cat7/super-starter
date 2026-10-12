@@ -1,0 +1,1115 @@
+{
+  "schema": 1,
+  "execution": "agent",
+  "independentContext": true,
+  "status": "passed",
+  "task": "Use the generated API app generator to add GET /status with meaningful unit and real-workerd regression coverage while preserving existing applications and user files.",
+  "agent": {
+    "name": "Codex independent application Agent",
+    "version": "GPT-6 (session model; no override)",
+    "identity": "/root/final_99_add_rehearsal",
+    "authorship": "Independently authored four status files in the owning generated API project. This Agent controlled fresh generator migration and reviewed current instructions, feature diff, SDK compatibility and complete actual evidence."
+  },
+  "sha": "4bf59dc95784811c4df11980018afa8a607eb618",
+  "featureSha": "4bf59dc95784811c4df11980018afa8a607eb618",
+  "contentId": "be98e684e28316efbb59a728968bbce7f7be560029eebc0a0a8f798407ebd5e4",
+  "origin": {
+    "sha": "460ad19c970adaab7231795f3438943d9158b135",
+    "dirty": false,
+    "contentId": "616f2588e05d627c3c7b130da5fc30a469a51d81668e864270b8b2c6eae459b7"
+  },
+  "os": "linux/x64",
+  "node": "v24.21.0",
+  "versions": {
+    "node": "v24.21.0",
+    "pnpm": "12.11.2",
+    "@types/node": "24.19.1",
+    "knip": "6.41.0",
+    "oxc-parser": "0.153.0",
+    "typescript": "7.0.2",
+    "vite-plus": "1.1.0",
+    "vitest": "5.0.3",
+    "yaml": "2.9.1",
+    "@independent-service/contracts": "0.1.0",
+    "@independent-service/observability": "0.1.0",
+    "zod": "4.6.5",
+    "@cloudflare/build-output-utils": "0.9.0",
+    "@cloudflare/config": "0.24.1",
+    "@cloudflare/vite-plugin": "2.0.0-beta.sha-91c870c02",
+    "cf": "1.0.0-beta.14",
+    "wrangler": "4.149.0",
+    "@opentelemetry/api": "1.9.1",
+    "@opentelemetry/resources": "2.12.0",
+    "@opentelemetry/sdk-trace-base": "2.12.0"
+  },
+  "baselineSha": "64f83ebcb2bf8dd2523779e63b7e114eae5d5741",
+  "root": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature",
+  "commands": [
+    {
+      "phase": "setup",
+      "argv": [
+        "pnpm",
+        "env:setup"
+      ],
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T16:52:37.752Z",
+      "ended": "2026-10-12T16:52:58.230Z",
+      "durationMs": 20478,
+      "log": "logs/01-setup.log",
+      "before": {
+        "head": "64f83ebcb2bf8dd2523779e63b7e114eae5d5741",
+        "contentId": "8fb0c9f616c9eb4ad8fcd1e2754b5f33fa9668427571989faf38cccb7478fb67",
+        "origin": {
+          "sha": "460ad19c970adaab7231795f3438943d9158b135",
+          "dirty": false,
+          "contentId": "616f2588e05d627c3c7b130da5fc30a469a51d81668e864270b8b2c6eae459b7"
+        },
+        "status": "M  .template.json\nM  package.json\nA  packages/status/README.md\nA  packages/status/cloudflare.config.ts\nA  packages/status/package.json\nA  packages/status/preview.ts\nA  packages/status/src/index.ts\nA  packages/status/src/notes.ts\nA  packages/status/test/runtime.test.ts\nA  packages/status/test/status.runtime.test.ts\nA  packages/status/test/status.test.ts\nA  packages/status/test/unit.test.ts\nA  packages/status/tsconfig.json\nA  packages/status/vite.config.ts\nA  packages/status/vitest.config.ts\nA  packages/status/vitest.runtime.config.ts\nA  pnpm-lock.yaml"
+      },
+      "after": {
+        "head": "64f83ebcb2bf8dd2523779e63b7e114eae5d5741",
+        "contentId": "be98e684e28316efbb59a728968bbce7f7be560029eebc0a0a8f798407ebd5e4",
+        "origin": {
+          "sha": "460ad19c970adaab7231795f3438943d9158b135",
+          "dirty": false,
+          "contentId": "616f2588e05d627c3c7b130da5fc30a469a51d81668e864270b8b2c6eae459b7"
+        },
+        "status": "MM .template.json\nM  package.json\nA  packages/status/README.md\nAM packages/status/cloudflare.config.ts\nAM packages/status/package.json\nA  packages/status/preview.ts\nA  packages/status/src/index.ts\nAM packages/status/src/notes.ts\nAM packages/status/test/runtime.test.ts\nA  packages/status/test/status.runtime.test.ts\nA  packages/status/test/status.test.ts\nAM packages/status/test/unit.test.ts\nAM packages/status/tsconfig.json\nAM packages/status/vite.config.ts\nAM packages/status/vitest.config.ts\nAM packages/status/vitest.runtime.config.ts\nAM pnpm-lock.yaml\n M tools/quality/git-hooks/pre-commit\n M tools/quality/git-hooks/pre-push"
+      },
+      "execution": "hosted-tools",
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature"
+    },
+    {
+      "phase": "doctor",
+      "argv": [
+        "pnpm",
+        "env:doctor"
+      ],
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T16:52:58.272Z",
+      "ended": "2026-10-12T16:52:58.438Z",
+      "durationMs": 166,
+      "log": "logs/02-doctor.log",
+      "before": {
+        "head": "64f83ebcb2bf8dd2523779e63b7e114eae5d5741",
+        "contentId": "be98e684e28316efbb59a728968bbce7f7be560029eebc0a0a8f798407ebd5e4",
+        "origin": {
+          "sha": "460ad19c970adaab7231795f3438943d9158b135",
+          "dirty": false,
+          "contentId": "616f2588e05d627c3c7b130da5fc30a469a51d81668e864270b8b2c6eae459b7"
+        },
+        "status": "MM .template.json\nM  package.json\nA  packages/status/README.md\nAM packages/status/cloudflare.config.ts\nAM packages/status/package.json\nA  packages/status/preview.ts\nA  packages/status/src/index.ts\nAM packages/status/src/notes.ts\nAM packages/status/test/runtime.test.ts\nA  packages/status/test/status.runtime.test.ts\nA  packages/status/test/status.test.ts\nAM packages/status/test/unit.test.ts\nAM packages/status/tsconfig.json\nAM packages/status/vite.config.ts\nAM packages/status/vitest.config.ts\nAM packages/status/vitest.runtime.config.ts\nAM pnpm-lock.yaml\n M tools/quality/git-hooks/pre-commit\n M tools/quality/git-hooks/pre-push"
+      },
+      "after": {
+        "head": "64f83ebcb2bf8dd2523779e63b7e114eae5d5741",
+        "contentId": "be98e684e28316efbb59a728968bbce7f7be560029eebc0a0a8f798407ebd5e4",
+        "origin": {
+          "sha": "460ad19c970adaab7231795f3438943d9158b135",
+          "dirty": false,
+          "contentId": "616f2588e05d627c3c7b130da5fc30a469a51d81668e864270b8b2c6eae459b7"
+        },
+        "status": "MM .template.json\nM  package.json\nA  packages/status/README.md\nAM packages/status/cloudflare.config.ts\nAM packages/status/package.json\nA  packages/status/preview.ts\nA  packages/status/src/index.ts\nAM packages/status/src/notes.ts\nAM packages/status/test/runtime.test.ts\nA  packages/status/test/status.runtime.test.ts\nA  packages/status/test/status.test.ts\nAM packages/status/test/unit.test.ts\nAM packages/status/tsconfig.json\nAM packages/status/vite.config.ts\nAM packages/status/vitest.config.ts\nAM packages/status/vitest.runtime.config.ts\nAM pnpm-lock.yaml\n M tools/quality/git-hooks/pre-commit\n M tools/quality/git-hooks/pre-push"
+      },
+      "execution": "hosted-tools",
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature"
+    },
+    {
+      "phase": "targeted-test",
+      "argv": [
+        "pnpm",
+        "--filter",
+        "@independent-service/status",
+        "test"
+      ],
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T16:52:58.460Z",
+      "ended": "2026-10-12T16:53:02.567Z",
+      "durationMs": 4107,
+      "log": "logs/03-targeted-test.log",
+      "before": {
+        "head": "64f83ebcb2bf8dd2523779e63b7e114eae5d5741",
+        "contentId": "be98e684e28316efbb59a728968bbce7f7be560029eebc0a0a8f798407ebd5e4",
+        "origin": {
+          "sha": "460ad19c970adaab7231795f3438943d9158b135",
+          "dirty": false,
+          "contentId": "616f2588e05d627c3c7b130da5fc30a469a51d81668e864270b8b2c6eae459b7"
+        },
+        "status": "MM .template.json\nM  package.json\nA  packages/status/README.md\nAM packages/status/cloudflare.config.ts\nAM packages/status/package.json\nA  packages/status/preview.ts\nA  packages/status/src/index.ts\nAM packages/status/src/notes.ts\nAM packages/status/test/runtime.test.ts\nA  packages/status/test/status.runtime.test.ts\nA  packages/status/test/status.test.ts\nAM packages/status/test/unit.test.ts\nAM packages/status/tsconfig.json\nAM packages/status/vite.config.ts\nAM packages/status/vitest.config.ts\nAM packages/status/vitest.runtime.config.ts\nAM pnpm-lock.yaml\n M tools/quality/git-hooks/pre-commit\n M tools/quality/git-hooks/pre-push"
+      },
+      "after": {
+        "head": "64f83ebcb2bf8dd2523779e63b7e114eae5d5741",
+        "contentId": "be98e684e28316efbb59a728968bbce7f7be560029eebc0a0a8f798407ebd5e4",
+        "origin": {
+          "sha": "460ad19c970adaab7231795f3438943d9158b135",
+          "dirty": false,
+          "contentId": "616f2588e05d627c3c7b130da5fc30a469a51d81668e864270b8b2c6eae459b7"
+        },
+        "status": "MM .template.json\nM  package.json\nA  packages/status/README.md\nAM packages/status/cloudflare.config.ts\nAM packages/status/package.json\nA  packages/status/preview.ts\nA  packages/status/src/index.ts\nAM packages/status/src/notes.ts\nAM packages/status/test/runtime.test.ts\nA  packages/status/test/status.runtime.test.ts\nA  packages/status/test/status.test.ts\nAM packages/status/test/unit.test.ts\nAM packages/status/tsconfig.json\nAM packages/status/vite.config.ts\nAM packages/status/vitest.config.ts\nAM packages/status/vitest.runtime.config.ts\nAM pnpm-lock.yaml\n M tools/quality/git-hooks/pre-commit\n M tools/quality/git-hooks/pre-push"
+      },
+      "execution": "hosted-tools",
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature"
+    },
+    {
+      "phase": "targeted-runtime",
+      "argv": [
+        "pnpm",
+        "--filter",
+        "@independent-service/status",
+        "test:runtime"
+      ],
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T16:53:02.589Z",
+      "ended": "2026-10-12T16:53:06.283Z",
+      "durationMs": 3694,
+      "log": "logs/04-targeted-runtime.log",
+      "before": {
+        "head": "64f83ebcb2bf8dd2523779e63b7e114eae5d5741",
+        "contentId": "be98e684e28316efbb59a728968bbce7f7be560029eebc0a0a8f798407ebd5e4",
+        "origin": {
+          "sha": "460ad19c970adaab7231795f3438943d9158b135",
+          "dirty": false,
+          "contentId": "616f2588e05d627c3c7b130da5fc30a469a51d81668e864270b8b2c6eae459b7"
+        },
+        "status": "MM .template.json\nM  package.json\nA  packages/status/README.md\nAM packages/status/cloudflare.config.ts\nAM packages/status/package.json\nA  packages/status/preview.ts\nA  packages/status/src/index.ts\nAM packages/status/src/notes.ts\nAM packages/status/test/runtime.test.ts\nA  packages/status/test/status.runtime.test.ts\nA  packages/status/test/status.test.ts\nAM packages/status/test/unit.test.ts\nAM packages/status/tsconfig.json\nAM packages/status/vite.config.ts\nAM packages/status/vitest.config.ts\nAM packages/status/vitest.runtime.config.ts\nAM pnpm-lock.yaml\n M tools/quality/git-hooks/pre-commit\n M tools/quality/git-hooks/pre-push"
+      },
+      "after": {
+        "head": "64f83ebcb2bf8dd2523779e63b7e114eae5d5741",
+        "contentId": "be98e684e28316efbb59a728968bbce7f7be560029eebc0a0a8f798407ebd5e4",
+        "origin": {
+          "sha": "460ad19c970adaab7231795f3438943d9158b135",
+          "dirty": false,
+          "contentId": "616f2588e05d627c3c7b130da5fc30a469a51d81668e864270b8b2c6eae459b7"
+        },
+        "status": "MM .template.json\nM  package.json\nA  packages/status/README.md\nAM packages/status/cloudflare.config.ts\nAM packages/status/package.json\nA  packages/status/preview.ts\nA  packages/status/src/index.ts\nAM packages/status/src/notes.ts\nAM packages/status/test/runtime.test.ts\nA  packages/status/test/status.runtime.test.ts\nA  packages/status/test/status.test.ts\nAM packages/status/test/unit.test.ts\nAM packages/status/tsconfig.json\nAM packages/status/vite.config.ts\nAM packages/status/vitest.config.ts\nAM packages/status/vitest.runtime.config.ts\nAM pnpm-lock.yaml\n M tools/quality/git-hooks/pre-commit\n M tools/quality/git-hooks/pre-push"
+      },
+      "execution": "hosted-tools",
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature"
+    },
+    {
+      "phase": "dev",
+      "argv": [
+        "pnpm",
+        "dev",
+        "--",
+        "status"
+      ],
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T16:53:06.305Z",
+      "ended": "2026-10-12T16:53:08.950Z",
+      "durationMs": 2645,
+      "log": "logs/05-dev.log",
+      "before": {
+        "head": "64f83ebcb2bf8dd2523779e63b7e114eae5d5741",
+        "contentId": "be98e684e28316efbb59a728968bbce7f7be560029eebc0a0a8f798407ebd5e4",
+        "origin": {
+          "sha": "460ad19c970adaab7231795f3438943d9158b135",
+          "dirty": false,
+          "contentId": "616f2588e05d627c3c7b130da5fc30a469a51d81668e864270b8b2c6eae459b7"
+        },
+        "status": "MM .template.json\nM  package.json\nA  packages/status/README.md\nAM packages/status/cloudflare.config.ts\nAM packages/status/package.json\nA  packages/status/preview.ts\nA  packages/status/src/index.ts\nAM packages/status/src/notes.ts\nAM packages/status/test/runtime.test.ts\nA  packages/status/test/status.runtime.test.ts\nA  packages/status/test/status.test.ts\nAM packages/status/test/unit.test.ts\nAM packages/status/tsconfig.json\nAM packages/status/vite.config.ts\nAM packages/status/vitest.config.ts\nAM packages/status/vitest.runtime.config.ts\nAM pnpm-lock.yaml\n M tools/quality/git-hooks/pre-commit\n M tools/quality/git-hooks/pre-push"
+      },
+      "after": {
+        "head": "64f83ebcb2bf8dd2523779e63b7e114eae5d5741",
+        "contentId": "be98e684e28316efbb59a728968bbce7f7be560029eebc0a0a8f798407ebd5e4",
+        "origin": {
+          "sha": "460ad19c970adaab7231795f3438943d9158b135",
+          "dirty": false,
+          "contentId": "616f2588e05d627c3c7b130da5fc30a469a51d81668e864270b8b2c6eae459b7"
+        },
+        "status": "MM .template.json\nM  package.json\nA  packages/status/README.md\nAM packages/status/cloudflare.config.ts\nAM packages/status/package.json\nA  packages/status/preview.ts\nA  packages/status/src/index.ts\nAM packages/status/src/notes.ts\nAM packages/status/test/runtime.test.ts\nA  packages/status/test/status.runtime.test.ts\nA  packages/status/test/status.test.ts\nAM packages/status/test/unit.test.ts\nAM packages/status/tsconfig.json\nAM packages/status/vite.config.ts\nAM packages/status/vitest.config.ts\nAM packages/status/vitest.runtime.config.ts\nAM pnpm-lock.yaml\n M tools/quality/git-hooks/pre-commit\n M tools/quality/git-hooks/pre-push"
+      },
+      "execution": "hosted-tools",
+      "smokePassed": true,
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature"
+    },
+    {
+      "phase": "pre-pr",
+      "argv": [
+        "pnpm",
+        "gate:pre-pr",
+        "--",
+        "--base",
+        "64f83ebcb2bf8dd2523779e63b7e114eae5d5741"
+      ],
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T16:53:08.970Z",
+      "ended": "2026-10-12T16:54:17.921Z",
+      "durationMs": 68951,
+      "log": "logs/06-pre-pr.log",
+      "before": {
+        "head": "64f83ebcb2bf8dd2523779e63b7e114eae5d5741",
+        "contentId": "be98e684e28316efbb59a728968bbce7f7be560029eebc0a0a8f798407ebd5e4",
+        "origin": {
+          "sha": "460ad19c970adaab7231795f3438943d9158b135",
+          "dirty": false,
+          "contentId": "616f2588e05d627c3c7b130da5fc30a469a51d81668e864270b8b2c6eae459b7"
+        },
+        "status": "MM .template.json\nM  package.json\nA  packages/status/README.md\nAM packages/status/cloudflare.config.ts\nAM packages/status/package.json\nA  packages/status/preview.ts\nA  packages/status/src/index.ts\nAM packages/status/src/notes.ts\nAM packages/status/test/runtime.test.ts\nA  packages/status/test/status.runtime.test.ts\nA  packages/status/test/status.test.ts\nAM packages/status/test/unit.test.ts\nAM packages/status/tsconfig.json\nAM packages/status/vite.config.ts\nAM packages/status/vitest.config.ts\nAM packages/status/vitest.runtime.config.ts\nAM pnpm-lock.yaml\n M tools/quality/git-hooks/pre-commit\n M tools/quality/git-hooks/pre-push"
+      },
+      "after": {
+        "head": "64f83ebcb2bf8dd2523779e63b7e114eae5d5741",
+        "contentId": "be98e684e28316efbb59a728968bbce7f7be560029eebc0a0a8f798407ebd5e4",
+        "origin": {
+          "sha": "460ad19c970adaab7231795f3438943d9158b135",
+          "dirty": false,
+          "contentId": "616f2588e05d627c3c7b130da5fc30a469a51d81668e864270b8b2c6eae459b7"
+        },
+        "status": "MM .template.json\nM  package.json\nA  packages/status/README.md\nAM packages/status/cloudflare.config.ts\nAM packages/status/package.json\nA  packages/status/preview.ts\nA  packages/status/src/index.ts\nAM packages/status/src/notes.ts\nAM packages/status/test/runtime.test.ts\nA  packages/status/test/status.runtime.test.ts\nA  packages/status/test/status.test.ts\nAM packages/status/test/unit.test.ts\nAM packages/status/tsconfig.json\nAM packages/status/vite.config.ts\nAM packages/status/vitest.config.ts\nAM packages/status/vitest.runtime.config.ts\nAM pnpm-lock.yaml\n M tools/quality/git-hooks/pre-commit\n M tools/quality/git-hooks/pre-push"
+      },
+      "execution": "hosted-tools",
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature"
+    },
+    {
+      "phase": "commit",
+      "argv": [
+        "git",
+        "commit",
+        "-m",
+        "Add generated status service with GET /status"
+      ],
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T16:54:17.954Z",
+      "ended": "2026-10-12T16:54:19.133Z",
+      "durationMs": 1179,
+      "log": "logs/07-commit.log",
+      "before": {
+        "head": "64f83ebcb2bf8dd2523779e63b7e114eae5d5741",
+        "contentId": "be98e684e28316efbb59a728968bbce7f7be560029eebc0a0a8f798407ebd5e4",
+        "origin": {
+          "sha": "460ad19c970adaab7231795f3438943d9158b135",
+          "dirty": false,
+          "contentId": "616f2588e05d627c3c7b130da5fc30a469a51d81668e864270b8b2c6eae459b7"
+        },
+        "status": "M  .template.json\nM  package.json\nA  packages/status/README.md\nA  packages/status/cloudflare.config.ts\nA  packages/status/package.json\nA  packages/status/preview.ts\nA  packages/status/src/index.ts\nA  packages/status/src/notes.ts\nA  packages/status/test/runtime.test.ts\nA  packages/status/test/status.runtime.test.ts\nA  packages/status/test/status.test.ts\nA  packages/status/test/unit.test.ts\nA  packages/status/tsconfig.json\nA  packages/status/vite.config.ts\nA  packages/status/vitest.config.ts\nA  packages/status/vitest.runtime.config.ts\nA  pnpm-lock.yaml\nM  tools/quality/git-hooks/pre-commit\nM  tools/quality/git-hooks/pre-push"
+      },
+      "after": {
+        "head": "4bf59dc95784811c4df11980018afa8a607eb618",
+        "contentId": "be98e684e28316efbb59a728968bbce7f7be560029eebc0a0a8f798407ebd5e4",
+        "origin": {
+          "sha": "460ad19c970adaab7231795f3438943d9158b135",
+          "dirty": false,
+          "contentId": "616f2588e05d627c3c7b130da5fc30a469a51d81668e864270b8b2c6eae459b7"
+        },
+        "status": ""
+      },
+      "execution": "hosted-tools",
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature"
+    },
+    {
+      "phase": "push",
+      "argv": [
+        "git",
+        "push",
+        "--set-upstream",
+        "rehearsal",
+        "feat/status"
+      ],
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T16:54:19.159Z",
+      "ended": "2026-10-12T16:55:25.581Z",
+      "durationMs": 66422,
+      "log": "logs/08-push.log",
+      "before": {
+        "head": "4bf59dc95784811c4df11980018afa8a607eb618",
+        "contentId": "be98e684e28316efbb59a728968bbce7f7be560029eebc0a0a8f798407ebd5e4",
+        "origin": {
+          "sha": "460ad19c970adaab7231795f3438943d9158b135",
+          "dirty": false,
+          "contentId": "616f2588e05d627c3c7b130da5fc30a469a51d81668e864270b8b2c6eae459b7"
+        },
+        "status": ""
+      },
+      "after": {
+        "head": "4bf59dc95784811c4df11980018afa8a607eb618",
+        "contentId": "be98e684e28316efbb59a728968bbce7f7be560029eebc0a0a8f798407ebd5e4",
+        "origin": {
+          "sha": "460ad19c970adaab7231795f3438943d9158b135",
+          "dirty": false,
+          "contentId": "616f2588e05d627c3c7b130da5fc30a469a51d81668e864270b8b2c6eae459b7"
+        },
+        "status": ""
+      },
+      "execution": "hosted-tools",
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature"
+    },
+    {
+      "phase": "full",
+      "argv": [
+        "pnpm",
+        "gate:full"
+      ],
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T16:55:25.603Z",
+      "ended": "2026-10-12T16:56:33.742Z",
+      "durationMs": 68139,
+      "log": "logs/09-full.log",
+      "before": {
+        "head": "4bf59dc95784811c4df11980018afa8a607eb618",
+        "contentId": "be98e684e28316efbb59a728968bbce7f7be560029eebc0a0a8f798407ebd5e4",
+        "origin": {
+          "sha": "460ad19c970adaab7231795f3438943d9158b135",
+          "dirty": false,
+          "contentId": "616f2588e05d627c3c7b130da5fc30a469a51d81668e864270b8b2c6eae459b7"
+        },
+        "status": ""
+      },
+      "after": {
+        "head": "4bf59dc95784811c4df11980018afa8a607eb618",
+        "contentId": "be98e684e28316efbb59a728968bbce7f7be560029eebc0a0a8f798407ebd5e4",
+        "origin": {
+          "sha": "460ad19c970adaab7231795f3438943d9158b135",
+          "dirty": false,
+          "contentId": "616f2588e05d627c3c7b130da5fc30a469a51d81668e864270b8b2c6eae459b7"
+        },
+        "status": ""
+      },
+      "execution": "hosted-tools",
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature"
+    },
+    {
+      "phase": "ci",
+      "argv": [
+        "pnpm",
+        "gate:ci",
+        "--",
+        "--base",
+        "64f83ebcb2bf8dd2523779e63b7e114eae5d5741"
+      ],
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T16:56:33.760Z",
+      "ended": "2026-10-12T16:57:42.103Z",
+      "durationMs": 68343,
+      "log": "logs/10-ci.log",
+      "before": {
+        "head": "4bf59dc95784811c4df11980018afa8a607eb618",
+        "contentId": "be98e684e28316efbb59a728968bbce7f7be560029eebc0a0a8f798407ebd5e4",
+        "origin": {
+          "sha": "460ad19c970adaab7231795f3438943d9158b135",
+          "dirty": false,
+          "contentId": "616f2588e05d627c3c7b130da5fc30a469a51d81668e864270b8b2c6eae459b7"
+        },
+        "status": ""
+      },
+      "after": {
+        "head": "4bf59dc95784811c4df11980018afa8a607eb618",
+        "contentId": "be98e684e28316efbb59a728968bbce7f7be560029eebc0a0a8f798407ebd5e4",
+        "origin": {
+          "sha": "460ad19c970adaab7231795f3438943d9158b135",
+          "dirty": false,
+          "contentId": "616f2588e05d627c3c7b130da5fc30a469a51d81668e864270b8b2c6eae459b7"
+        },
+        "status": ""
+      },
+      "execution": "hosted-tools",
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature"
+    },
+    {
+      "phase": "build",
+      "argv": [
+        "pnpm",
+        "build"
+      ],
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T16:57:42.122Z",
+      "ended": "2026-10-12T16:57:46.459Z",
+      "durationMs": 4337,
+      "log": "logs/11-build.log",
+      "before": {
+        "head": "4bf59dc95784811c4df11980018afa8a607eb618",
+        "contentId": "be98e684e28316efbb59a728968bbce7f7be560029eebc0a0a8f798407ebd5e4",
+        "origin": {
+          "sha": "460ad19c970adaab7231795f3438943d9158b135",
+          "dirty": false,
+          "contentId": "616f2588e05d627c3c7b130da5fc30a469a51d81668e864270b8b2c6eae459b7"
+        },
+        "status": ""
+      },
+      "after": {
+        "head": "4bf59dc95784811c4df11980018afa8a607eb618",
+        "contentId": "be98e684e28316efbb59a728968bbce7f7be560029eebc0a0a8f798407ebd5e4",
+        "origin": {
+          "sha": "460ad19c970adaab7231795f3438943d9158b135",
+          "dirty": false,
+          "contentId": "616f2588e05d627c3c7b130da5fc30a469a51d81668e864270b8b2c6eae459b7"
+        },
+        "status": ""
+      },
+      "execution": "hosted-tools",
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature"
+    },
+    {
+      "phase": "dev-preflight",
+      "argv": [
+        "pnpm",
+        "deploy:preflight",
+        "--",
+        "--target",
+        "status",
+        "--environment",
+        "dev"
+      ],
+      "exit": 1,
+      "signal": null,
+      "started": "2026-10-12T16:57:46.478Z",
+      "ended": "2026-10-12T16:57:59.970Z",
+      "durationMs": 13492,
+      "log": "logs/12-dev-preflight.log",
+      "before": {
+        "head": "4bf59dc95784811c4df11980018afa8a607eb618",
+        "contentId": "be98e684e28316efbb59a728968bbce7f7be560029eebc0a0a8f798407ebd5e4",
+        "origin": {
+          "sha": "460ad19c970adaab7231795f3438943d9158b135",
+          "dirty": false,
+          "contentId": "616f2588e05d627c3c7b130da5fc30a469a51d81668e864270b8b2c6eae459b7"
+        },
+        "status": ""
+      },
+      "after": {
+        "head": "4bf59dc95784811c4df11980018afa8a607eb618",
+        "contentId": "be98e684e28316efbb59a728968bbce7f7be560029eebc0a0a8f798407ebd5e4",
+        "origin": {
+          "sha": "460ad19c970adaab7231795f3438943d9158b135",
+          "dirty": false,
+          "contentId": "616f2588e05d627c3c7b130da5fc30a469a51d81668e864270b8b2c6eae459b7"
+        },
+        "status": ""
+      },
+      "execution": "hosted-tools",
+      "expectedExternalBlocker": "Approved dev account/credentials are absent; no remote deployment occurred",
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature"
+    },
+    {
+      "phase": "preflight",
+      "argv": [
+        "pnpm",
+        "deploy:preflight",
+        "--",
+        "--target",
+        "status",
+        "--environment",
+        "local"
+      ],
+      "exit": 0,
+      "signal": null,
+      "started": "2026-10-12T16:57:59.990Z",
+      "ended": "2026-10-12T16:58:13.480Z",
+      "durationMs": 13490,
+      "log": "logs/13-preflight.log",
+      "before": {
+        "head": "4bf59dc95784811c4df11980018afa8a607eb618",
+        "contentId": "be98e684e28316efbb59a728968bbce7f7be560029eebc0a0a8f798407ebd5e4",
+        "origin": {
+          "sha": "460ad19c970adaab7231795f3438943d9158b135",
+          "dirty": false,
+          "contentId": "616f2588e05d627c3c7b130da5fc30a469a51d81668e864270b8b2c6eae459b7"
+        },
+        "status": ""
+      },
+      "after": {
+        "head": "4bf59dc95784811c4df11980018afa8a607eb618",
+        "contentId": "be98e684e28316efbb59a728968bbce7f7be560029eebc0a0a8f798407ebd5e4",
+        "origin": {
+          "sha": "460ad19c970adaab7231795f3438943d9158b135",
+          "dirty": false,
+          "contentId": "616f2588e05d627c3c7b130da5fc30a469a51d81668e864270b8b2c6eae459b7"
+        },
+        "status": ""
+      },
+      "execution": "hosted-tools",
+      "cwd": "/home/runner/work/super-starter/super-starter/.state/hosted-status-feature"
+    }
+  ],
+  "phases": [
+    {
+      "id": "setup",
+      "status": "passed",
+      "log": "logs/01-setup.log"
+    },
+    {
+      "id": "doctor",
+      "status": "passed",
+      "log": "logs/02-doctor.log"
+    },
+    {
+      "id": "dev",
+      "status": "passed",
+      "log": "logs/05-dev.log"
+    },
+    {
+      "id": "targeted-test",
+      "status": "passed",
+      "log": "logs/03-targeted-test.log"
+    },
+    {
+      "id": "pre-pr",
+      "status": "passed",
+      "log": "logs/06-pre-pr.log"
+    },
+    {
+      "id": "full",
+      "status": "passed",
+      "log": "logs/09-full.log"
+    },
+    {
+      "id": "build",
+      "status": "passed",
+      "log": "logs/11-build.log"
+    },
+    {
+      "id": "preflight",
+      "status": "passed",
+      "log": "logs/13-preflight.log"
+    },
+    {
+      "id": "commit",
+      "status": "passed",
+      "log": "logs/07-commit.log"
+    },
+    {
+      "id": "push",
+      "status": "passed",
+      "log": "logs/08-push.log"
+    }
+  ],
+  "additionalPhases": [
+    {
+      "id": "targeted-runtime",
+      "status": "passed",
+      "tests": 5
+    },
+    {
+      "id": "ci",
+      "status": "passed",
+      "checks": 12
+    },
+    {
+      "id": "dev-preflight",
+      "status": "blocked",
+      "exit": 1,
+      "reason": "Approved dev account/credentials are absent; no remote deployment occurred"
+    }
+  ],
+  "sourcePreparation": {
+    "classification": "Mechanical generation preparation; not accepted Agent feature commands",
+    "source": {
+      "sha": "460ad19c970adaab7231795f3438943d9158b135",
+      "contentId": "d674216f6fd7d5a03b3b0f2bbf3b54f0ee83f75779542f6b7d0a8eab62499337",
+      "dirty": false
+    },
+    "origin": {
+      "sha": "460ad19c970adaab7231795f3438943d9158b135",
+      "dirty": false,
+      "contentId": "616f2588e05d627c3c7b130da5fc30a469a51d81668e864270b8b2c6eae459b7"
+    },
+    "renderedOriginCid": "616f2588e05d627c3c7b130da5fc30a469a51d81668e864270b8b2c6eae459b7",
+    "managedFiles": 248,
+    "pristineFiles": 249,
+    "allHashesVerified": true,
+    "sourceRemovedBeforeFeature": true,
+    "initialProjectContentId": "0f5a2ac195992c02bee0b17436ffb67c7d9b61f132f98df7c5eda8ec9bacb3c0",
+    "initialLockPresent": false,
+    "commands": [
+      {
+        "argv": [
+          "git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "cwd": "/home/runner/work/super-starter/super-starter",
+        "started": "2026-10-12T16:52:09.077Z",
+        "ended": "2026-10-12T16:52:09.080Z",
+        "durationMs": 3,
+        "exit": 0,
+        "signal": null,
+        "log": "preparation/command-carrier-head-source-generation.log",
+        "execution": "hosted-tools",
+        "kind": "generation-preparation"
+      },
+      {
+        "argv": [
+          "git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "cwd": "/home/runner/work/super-starter/super-starter/.state/generation-source",
+        "started": "2026-10-12T16:52:09.082Z",
+        "ended": "2026-10-12T16:52:09.084Z",
+        "durationMs": 2,
+        "exit": 0,
+        "signal": null,
+        "log": "preparation/command-source-head-before.log",
+        "execution": "hosted-tools",
+        "kind": "generation-preparation"
+      },
+      {
+        "argv": [
+          "git",
+          "status",
+          "--porcelain=v1",
+          "--untracked-files=all"
+        ],
+        "cwd": "/home/runner/work/super-starter/super-starter/.state/generation-source",
+        "started": "2026-10-12T16:52:09.084Z",
+        "ended": "2026-10-12T16:52:09.106Z",
+        "durationMs": 22,
+        "exit": 0,
+        "signal": null,
+        "log": "preparation/command-source-clean-before.log",
+        "execution": "hosted-tools",
+        "kind": "generation-preparation"
+      },
+      {
+        "argv": [
+          "pnpm",
+          "env:setup",
+          "--",
+          "--javascript"
+        ],
+        "cwd": "/home/runner/work/super-starter/super-starter/.state/generation-source",
+        "started": "2026-10-12T16:52:09.188Z",
+        "ended": "2026-10-12T16:52:31.531Z",
+        "durationMs": 22343,
+        "exit": 0,
+        "signal": null,
+        "log": "preparation/command-source-javascript-setup.log",
+        "execution": "hosted-tools",
+        "kind": "generation-preparation"
+      },
+      {
+        "argv": [
+          "git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "cwd": "/home/runner/work/super-starter/super-starter/.state/generation-source",
+        "started": "2026-10-12T16:52:31.532Z",
+        "ended": "2026-10-12T16:52:31.535Z",
+        "durationMs": 3,
+        "exit": 0,
+        "signal": null,
+        "log": "preparation/command-source-head-after-setup.log",
+        "execution": "hosted-tools",
+        "kind": "generation-preparation"
+      },
+      {
+        "argv": [
+          "git",
+          "status",
+          "--porcelain=v1",
+          "--untracked-files=all"
+        ],
+        "cwd": "/home/runner/work/super-starter/super-starter/.state/generation-source",
+        "started": "2026-10-12T16:52:31.535Z",
+        "ended": "2026-10-12T16:52:31.541Z",
+        "durationMs": 6,
+        "exit": 0,
+        "signal": null,
+        "log": "preparation/command-source-clean-after-setup.log",
+        "execution": "hosted-tools",
+        "kind": "generation-preparation"
+      },
+      {
+        "argv": [
+          "node",
+          "tools/generators/cli.ts",
+          "init",
+          "--target",
+          "/home/runner/work/super-starter/super-starter/.state/generated-status-project",
+          "--name",
+          "independent-status-api",
+          "--scope",
+          "@independent-service",
+          "--preset",
+          "api",
+          "--no-install"
+        ],
+        "cwd": "/home/runner/work/super-starter/super-starter/.state/generation-source",
+        "started": "2026-10-12T16:52:31.549Z",
+        "ended": "2026-10-12T16:52:35.071Z",
+        "durationMs": 3522,
+        "exit": 0,
+        "signal": null,
+        "log": "preparation/command-actual-source-cli-init.log",
+        "execution": "hosted-tools",
+        "kind": "generation-preparation"
+      },
+      {
+        "argv": [
+          "git",
+          "status",
+          "--porcelain=v1",
+          "--untracked-files=all"
+        ],
+        "cwd": "/home/runner/work/super-starter/super-starter/.state/generation-source",
+        "started": "2026-10-12T16:52:35.089Z",
+        "ended": "2026-10-12T16:52:35.094Z",
+        "durationMs": 5,
+        "exit": 0,
+        "signal": null,
+        "log": "preparation/command-source-clean-after-init.log",
+        "execution": "hosted-tools",
+        "kind": "generation-preparation"
+      },
+      {
+        "argv": [
+          "git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "cwd": "/home/runner/work/super-starter/super-starter/.state/generation-source",
+        "started": "2026-10-12T16:52:35.101Z",
+        "ended": "2026-10-12T16:52:35.104Z",
+        "durationMs": 3,
+        "exit": 0,
+        "signal": null,
+        "log": "preparation/command-source-head-before-remove.log",
+        "execution": "hosted-tools",
+        "kind": "generation-preparation"
+      }
+    ]
+  },
+  "generator": {
+    "argv": [
+      "pnpm",
+      "app:new",
+      "--",
+      "--kind",
+      "api",
+      "--name",
+      "status",
+      "--no-install"
+    ],
+    "execution": "hosted-tools",
+    "noInstall": true,
+    "coldFormatKeyAbsent": true,
+    "generatedFiles": 12,
+    "authoredFiles": [
+      {
+        "path": "packages/status/src/index.ts",
+        "sha256": "516af75003f07a635075e1926b2282ca9a05f69ac30d32281c400ba84f69dc5b"
+      },
+      {
+        "path": "packages/status/README.md",
+        "sha256": "d4775e067dd6d1e9ec7a104bddb546e516ad0c0261b85151f7a06cf794e11a56"
+      },
+      {
+        "path": "packages/status/test/status.test.ts",
+        "sha256": "62d221f6e997d123d2047bfe2abc717e10946b839691780d2c87ed55ac584cfe"
+      },
+      {
+        "path": "packages/status/test/status.runtime.test.ts",
+        "sha256": "8a49957fec2b987bdcd06fcdbc62ae0a1491167ce1631e44de658fc468414b7c"
+      }
+    ]
+  },
+  "setupTransition": {
+    "beforeContentId": "8fb0c9f616c9eb4ad8fcd1e2754b5f33fa9668427571989faf38cccb7478fb67",
+    "afterContentId": "be98e684e28316efbb59a728968bbce7f7be560029eebc0a0a8f798407ebd5e4",
+    "changes": [
+      {
+        "path": "packages/status/cloudflare.config.ts",
+        "beforeSha256": "55ceded347e6623681e51c4b1b39a6b29a3dc365aa84416c99ce570c11c86c69",
+        "afterSha256": "bb643ea7c1298be6b140975c901124eb557344d3a86318c3b818c6c6adf0102e"
+      },
+      {
+        "path": "packages/status/package.json",
+        "beforeSha256": "ac3e9805b542e6565679097e1a37d33edc7405c77065b3c205e17a66912bade6",
+        "afterSha256": "97065570d25ce38b246094c117e9f9540a5dcc035b8a75368fde18f6eb7240a7"
+      },
+      {
+        "path": "packages/status/src/notes.ts",
+        "beforeSha256": "0084bd7b49c04d276315fcac3655f149ea0a4a365a26415448c0d29037cbbb04",
+        "afterSha256": "7eab544d33dc7c34c31fb1cb243bf3c3952005a05af3e4582faae7c98d1cfbfc"
+      },
+      {
+        "path": "packages/status/test/runtime.test.ts",
+        "beforeSha256": "fecdee2d96935a0f895bcbd1a7e035c922a21c77a180ce3c51fb5ad9dfcdab0d",
+        "afterSha256": "814c2dde520714b9d13f234febe9e5f68be50473fb0269f3ffe0352409f9c712"
+      },
+      {
+        "path": "packages/status/test/unit.test.ts",
+        "beforeSha256": "cd8cad18802f07feb00d5e505da02f9ba511d69d53bd0a6c9c4fad0af21908a6",
+        "afterSha256": "c09780fea87e5542454fc53bac612925040b38e974bf2931b894c175b4ea0053"
+      },
+      {
+        "path": "packages/status/tsconfig.json",
+        "beforeSha256": "63c1e1b61c9e396831e0613b0d34d780112351504e94ac52ea6d7a7842b5bd9f",
+        "afterSha256": "da8f906bbdeb8e5edcf05ecccb8d0ef428cf459d0e6a455d23334e3136608c69"
+      },
+      {
+        "path": "packages/status/vite.config.ts",
+        "beforeSha256": "7a3c1f27ac4ef018cc416d6e02ba748bbfb8e56eca07b6c4a2d4eff8a237bac6",
+        "afterSha256": "518c2b6f90c4ea32aa16182b671e1f1e53abb998dc5180178fd4c3901a0f0384"
+      },
+      {
+        "path": "packages/status/vitest.config.ts",
+        "beforeSha256": "e70f5aa492989e5b23f42efaababcc82b2505ccbdddef4d697e6078130408931",
+        "afterSha256": "e3e9913f6a5b4b59f8e42c915d3d60650a0606fd241e8d1b69788f3b69f2771f"
+      },
+      {
+        "path": "packages/status/vitest.runtime.config.ts",
+        "beforeSha256": "7662884c023183aaba008d2467b50cefaea49ac40ed436a5c8b40828c68872ba",
+        "afterSha256": "45b1cd6f72913b47e3baa5c08e1c5cf55e7c221963f07386964e843a9fe2217b"
+      },
+      {
+        "path": "pnpm-lock.yaml",
+        "beforeSha256": "e4edcab873e47b1007c6a9b1d8b18473b6a970f0891a4ceaef2ec41219fddbbc",
+        "afterSha256": "44cf13e15d288911d0a0f0073042d306267fac48a646df38198ed9528b01e212"
+      },
+      {
+        "path": ".template.json",
+        "beforeSha256": "364ccf82cee230e74aae8189ee5982ecbd159e8e52d140bdc45df038264ce3ec",
+        "afterSha256": "19ca8530e207b51fa6361972a725a8a45fae4fc86c24616a2788c6ddc8b4ee27"
+      }
+    ],
+    "authoredFiles": [
+      {
+        "path": "packages/status/src/index.ts",
+        "sha256": "516af75003f07a635075e1926b2282ca9a05f69ac30d32281c400ba84f69dc5b"
+      },
+      {
+        "path": "packages/status/README.md",
+        "sha256": "d4775e067dd6d1e9ec7a104bddb546e516ad0c0261b85151f7a06cf794e11a56"
+      },
+      {
+        "path": "packages/status/test/status.test.ts",
+        "sha256": "62d221f6e997d123d2047bfe2abc717e10946b839691780d2c87ed55ac584cfe"
+      },
+      {
+        "path": "packages/status/test/status.runtime.test.ts",
+        "sha256": "8a49957fec2b987bdcd06fcdbc62ae0a1491167ce1631e44de658fc468414b7c"
+      }
+    ],
+    "protectedSourceFiles": 264,
+    "owner": "Unchanged standard pnpm env:setup; no separate formatter or source configuration change"
+  },
+  "preservation": {
+    "existingSourceFiles": 247,
+    "authoredFiles": [
+      {
+        "path": "packages/status/src/index.ts",
+        "sha256": "516af75003f07a635075e1926b2282ca9a05f69ac30d32281c400ba84f69dc5b"
+      },
+      {
+        "path": "packages/status/README.md",
+        "sha256": "d4775e067dd6d1e9ec7a104bddb546e516ad0c0261b85151f7a06cf794e11a56"
+      },
+      {
+        "path": "packages/status/test/status.test.ts",
+        "sha256": "62d221f6e997d123d2047bfe2abc717e10946b839691780d2c87ed55ac584cfe"
+      },
+      {
+        "path": "packages/status/test/status.runtime.test.ts",
+        "sha256": "8a49957fec2b987bdcd06fcdbc62ae0a1491167ce1631e44de658fc468414b7c"
+      }
+    ],
+    "allHashesMatch": true,
+    "policy": "Only own generated status feature and generator/standard setup bookkeeping; no Source/template/threshold edits."
+  },
+  "validation": {
+    "targetedUnitTests": 13,
+    "targetedRuntimeTests": 5,
+    "realDevHttpSmoke": true,
+    "prePrChecks": 12,
+    "fullChecks": 12,
+    "ciChecks": 12,
+    "normalPushChecks": 6,
+    "toolingTestsInActualPush": 212,
+    "gitVerified": {
+      "head": "4bf59dc95784811c4df11980018afa8a607eb618",
+      "parent": "64f83ebcb2bf8dd2523779e63b7e114eae5d5741",
+      "tree": "a35aa4658b05d8c78c78afc558f80ae88bf93ddb",
+      "files": 264,
+      "clean": true
+    },
+    "baselineGitVerified": {
+      "head": "64f83ebcb2bf8dd2523779e63b7e114eae5d5741",
+      "parent": null,
+      "tree": "ca96ea0ea42bd64a102ab18c006700e13ca7ce4f",
+      "files": 249,
+      "clean": true
+    },
+    "bundleSha256": "25358ed349b764e1ef95ebe9629d87c3c9b6a03ce59c4f2fb4ebbe45d2d2ee3e"
+  },
+  "build": {
+    "status": "passed",
+    "execution": "hosted-tools",
+    "log": "logs/11-build.log"
+  },
+  "localPreflight": {
+    "status": "passed",
+    "contentId": "be98e684e28316efbb59a728968bbce7f7be560029eebc0a0a8f798407ebd5e4",
+    "target": "@independent-service/status",
+    "environment": "local",
+    "configSource": "packages/status/cloudflare.config.ts",
+    "artifact": "packages/status/.cloudflare/output/v0",
+    "deployed": false,
+    "smoked": false,
+    "account": null,
+    "artifactId": "1ccdd09baceab4a2fe471ff64f8fc0622a2f1e49636aaee1e570a03d1c18c528",
+    "log": "logs/13-preflight.log"
+  },
+  "devPreflight": {
+    "status": "blocked",
+    "log": "logs/12-dev-preflight.log",
+    "exit": 1,
+    "reason": "Approved dev account/credentials are absent; no remote deployment occurred",
+    "deployed": false,
+    "smoked": false
+  },
+  "mechanicalSupport": {
+    "execution": "hosted-tools",
+    "kind": "hosted-feature-support",
+    "runId": 38280350997,
+    "url": "https://github.com/sugar-cat7/super-starter/actions/runs/38280350997",
+    "transportSha": "4daddb6e6bf4530036d5c8c0cdcc7cb7f3ff50f3",
+    "manifestSha256": "af785254d3f5cb7263945d1cec2e1eef2f38d1b088d4af7d825e21ee84e37942",
+    "groupCount": 10,
+    "originalFiles": 174,
+    "phaseCommands": 13,
+    "auxiliaryCommands": 119,
+    "classification": "Hosted tooling supports genuine independent Agent authorship/review. Script execution, Source preparation, baseline bootstrap and REST transport commits do not substitute for an Agent or accepted feature Git events."
+  },
+  "documentation": {
+    "read": [
+      "AGENTS.md",
+      ".agents/skills/application/SKILL.md",
+      ".agents/skills/worker/SKILL.md",
+      "docs/quality.md",
+      "docs/cloudflare.md",
+      "README.md",
+      "owning manifests/configuration",
+      "tools/quality/acceptance.ts"
+    ],
+    "decision": "Use platform Response.json with explicit no-store for static metadata, preserving notes/health fallback and deny-write defaults.",
+    "official": [
+      {
+        "url": "https://developers.cloudflare.com/workers/runtime-apis/response/",
+        "checkedOn": "2026-10-12"
+      },
+      {
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API/Response/json_static",
+        "checkedOn": "2026-10-12"
+      }
+    ],
+    "compatibility": "Current SDK static/type/build checks, 13 unit tests, five actual workerd tests and standard dev HTTP smoke passed."
+  },
+  "evidence": {
+    "supportReport": "hosted/hosted-feature-support.json",
+    "verification": "verified-summary.json",
+    "mainRawLog": "hosted-jobs/main.log",
+    "rawGroupLogs": [
+      {
+        "group": 8,
+        "jobId": 114918229180,
+        "log": "hosted-jobs/group-8.log",
+        "sha256": "e1aa005c85e2770a68d777b5263afdb87bc5a3f7ad2957973321ed5a5dcbe992",
+        "envelopeSha256": "901294d0c1dc3ae53cd98b632eb3105a62f3d798bf74cd0f1e3fe81bfff8c56f"
+      },
+      {
+        "group": 7,
+        "jobId": 114918229242,
+        "log": "hosted-jobs/group-7.log",
+        "sha256": "ec11307aca390548be01a3d6e682cad311540c33538ba0cb8af47b503c6b057a",
+        "envelopeSha256": "7afe094eee19f0e23210663643f32861db15d48afa1670722683180a6cd93aff"
+      },
+      {
+        "group": 4,
+        "jobId": 114918229245,
+        "log": "hosted-jobs/group-4.log",
+        "sha256": "d3c45efbe6bed2ac033e45d5dfd5dba6c87c13aa78747eff00be60eb7680f097",
+        "envelopeSha256": "e0df8b8ecb34aff94cdc4a101d46735259df26011ea7acb828547cd90daf7fdc"
+      },
+      {
+        "group": 6,
+        "jobId": 114918229246,
+        "log": "hosted-jobs/group-6.log",
+        "sha256": "660fa3f344573e45f98b97f6fc7a22fd6751f05dc5d5abc9003647635e1f8f48",
+        "envelopeSha256": "cee2505423b482f1d0121dbd70fb211242a19080bbd7170288464bb3301a010e"
+      },
+      {
+        "group": 2,
+        "jobId": 114918229272,
+        "log": "hosted-jobs/group-2.log",
+        "sha256": "e440b2bc37d7aba2d2cc1aaf53535223aa407b9de682706b0bd84f93be28b4a3",
+        "envelopeSha256": "4b72cde9838349d8ecde1602392cd1342650157282d7db1ae38801b45c2bcb25"
+      },
+      {
+        "group": 1,
+        "jobId": 114918229290,
+        "log": "hosted-jobs/group-1.log",
+        "sha256": "40be2e8574e58c00cddf6fee981311cc1e334f70ee5d37da645fb1b2057d3a07",
+        "envelopeSha256": "031b427ef88398bc412896404be39efae9e1ad7012e3dcd7ec381d3d6660802a"
+      },
+      {
+        "group": 3,
+        "jobId": 114918229344,
+        "log": "hosted-jobs/group-3.log",
+        "sha256": "2f490fc6e87e20f4ef13f4a4a9195c56cdfe234f9f41b734c4d40fba8f0c2d1f",
+        "envelopeSha256": "51e0dc52f6a38e06f7f9b074e3ac369b9457b2d8e4a71b8c44d6f652f2bcabab"
+      },
+      {
+        "group": 9,
+        "jobId": 114918229356,
+        "log": "hosted-jobs/group-9.log",
+        "sha256": "09742a4bd8981a2ebc12a960d65ade87e1a14f579f30e48259f600f205e5d214",
+        "envelopeSha256": "f2c7b9dc0d747dcf413f148a4280fc04b6ea1909894dccbbf618441e4b4df28c"
+      },
+      {
+        "group": 5,
+        "jobId": 114918229415,
+        "log": "hosted-jobs/group-5.log",
+        "sha256": "393b64537f41593d6b23f21527acc7bcf4160305dbd10d7df2f8378d28b48563",
+        "envelopeSha256": "9d33698e174280857ba44da68c11b8069f19242c7eb68d27f880e8dfe7fc550f"
+      },
+      {
+        "group": 0,
+        "jobId": 114918229427,
+        "log": "hosted-jobs/group-0.log",
+        "sha256": "08f6f3f86e316367e92ee88d7902cd51786956e456fdfbb920488246649e3f90",
+        "envelopeSha256": "8e856617d8c687169eecb8503a623de8dd45b5200c9cc61e57e5191523d3af71"
+      }
+    ],
+    "baselineProof": "hosted/preparation/pristine-baseline-proof.json",
+    "featureProof": "hosted/verified-project.json",
+    "featureBundle": "hosted/verified-feature.bundle",
+    "sourceGeneration": "hosted/preparation/generated-origin.json",
+    "groupManifest": "group-manifest.json",
+    "allOriginalFileDigests": "original-file-index.json"
+  },
+  "historical": {
+    "source983And0f": "Original reports/negatives remain sealed; no current acceptance credit",
+    "firstCurrentAttempt": {
+      "runId": 38276795936,
+      "carrierSha": "b902a87d080eb0f15b54ad14cf81df5acf13235a",
+      "status": "failed",
+      "reason": "Owned inventory guard omitted newly created lockfile from its explicit bookkeeping set; feature phases never executed.",
+      "negativeRawSha256": "678f7950f2371aa41311b1d46c43f05d0ac1291b53d4627c77c9b377968320d1"
+    },
+    "firstCurrentSuccess": {
+      "runId": 38277755429,
+      "carrierSha": "c62df78626e1a75dac2eac1ebabe87736b481825",
+      "status": "workflow-success-artifact-not-independently-decoded",
+      "artifactId": 11760251719,
+      "artifactDigest": "sha256:832455273cf9d50495a0a3c3c859a155c336e9d3bfbd8dab3f836c9c7e491bb1",
+      "reason": "Large combined log connector failed Transport closed; not used to claim acceptance."
+    }
+  },
+  "limitations": [
+    "Execution was genuine Linux hosted tooling; no local SDK success is claimed.",
+    "Dev credentials/account are absent. No remote deployment, dev connectivity, production, permission or billing change occurred.",
+    "This independent status-feature receipt does not claim overall Source Quality or success for the other Agent contexts.",
+    "No skipped tests, hook bypass, model override, separate scaffold formatting or weakened assertions/timeouts/thresholds were used."
+  ]
+}

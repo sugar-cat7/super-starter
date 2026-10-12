@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "date": "2026-10-12",
+  "origin": {
+    "sha": "460ad19c970adaab7231795f3438943d9158b135",
+    "dirty": false,
+    "contentId": "616f2588e05d627c3c7b130da5fc30a469a51d81668e864270b8b2c6eae459b7"
+  },
+  "featureSha": "4bf59dc95784811c4df11980018afa8a607eb618",
+  "contentId": "be98e684e28316efbb59a728968bbce7f7be560029eebc0a0a8f798407ebd5e4",
+  "versions": {
+    "node": "v24.21.0",
+    "pnpm": "12.11.2",
+    "@types/node": "24.19.1",
+    "knip": "6.41.0",
+    "oxc-parser": "0.153.0",
+    "typescript": "7.0.2",
+    "vite-plus": "1.1.0",
+    "vitest": "5.0.3",
+    "yaml": "2.9.1",
+    "@independent-service/contracts": "0.1.0",
+    "@independent-service/observability": "0.1.0",
+    "zod": "4.6.5",
+    "@cloudflare/build-output-utils": "0.9.0",
+    "@cloudflare/config": "0.24.1",
+    "@cloudflare/vite-plugin": "2.0.0-beta.sha-91c870c02",
+    "cf": "1.0.0-beta.14",
+    "wrangler": "4.149.0",
+    "@opentelemetry/api": "1.9.1",
+    "@opentelemetry/resources": "2.12.0",
+    "@opentelemetry/sdk-trace-base": "2.12.0"
+  },
+  "official": [
+    {
+      "url": "https://developers.cloudflare.com/workers/runtime-apis/response/",
+      "checkedOn": "2026-10-12"
+    },
+    {
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Response/json_static",
+      "checkedOn": "2026-10-12"
+    }
+  ],
+  "decision": "Use platform Response.json with explicit no-store for static metadata, preserving notes/health fallback and deny-write defaults.",
+  "minimalActualCompatibility": {
+    "unit": 13,
+    "workerd": 5,
+    "devHttp": true,
+    "build": true,
+    "full": 12,
+    "ci": 12
+  },
+  "execution": "Agent docs/review with actual hosted-tool verification"
+}
