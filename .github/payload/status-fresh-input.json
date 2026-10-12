@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "kind": "fresh-generation-support",
+  "source": {
+    "sha": "460ad19c970adaab7231795f3438943d9158b135",
+    "contentId": "d674216f6fd7d5a03b3b0f2bbf3b54f0ee83f75779542f6b7d0a8eab62499337",
+    "dirty": false
+  },
+  "identity": {
+    "name": "independent-status-api",
+    "scope": "@independent-service",
+    "preset": "api",
+    "features": []
+  },
+  "authoredTransportSha": "6c2f0045b4b4ba2f83d5c040c548a4c1e81a2ebf",
+  "initArgv": [
+    "node",
+    "tools/generators/cli.ts",
+    "init",
+    "--target",
+    "%TARGET%",
+    "--name",
+    "independent-status-api",
+    "--scope",
+    "@independent-service",
+    "--preset",
+    "api",
+    "--no-install"
+  ],
+  "expectedRenderedContentId": null
+}

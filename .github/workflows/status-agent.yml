@@ -1,0 +1,70 @@
+name: Independent status feature support
+
+on:
+  push:
+    branches: [codex/agent-add-983]
+    paths:
+      - .github/workflows/status-agent.yml
+      - .github/scripts/status-agent-*.mjs
+      - .github/payload/status-fresh-input.json
+      - .github/payload/status-authored-files.json
+
+permissions:
+  contents: read
+
+concurrency:
+  group: status-fresh-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  generated-status-support:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/codex/agent-add-983' && github.repository == 'sugar-cat7/super-starter'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - name: Exact own mechanical carrier
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Existing pinned JavaScript tools
+        uses: jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca
+        with:
+          version: 2026.10.7
+          cache: false
+          persist_github_token: false
+      - name: Exact approved Source for generation preparation only
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: sugar-cat7/super-starter
+          ref: 460ad19c970adaab7231795f3438943d9158b135
+          path: .state/generation-source
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Normal Source JavaScript setup, actual empty API init, remove Source
+        env:
+          STATUS_AGENT_STAGE: source-generation
+        run: node .github/scripts/status-agent-generate.mjs
+      - name: Own cold status app generator and four authored files only
+        env:
+          STATUS_AGENT_STAGE: feature-bootstrap
+        run: node .github/scripts/status-agent-bootstrap.mjs
+      - name: Actual normal hooks and all unchanged standard feature phases
+        env:
+          STATUS_AGENT_STAGE: feature-validation
+        run: node .github/scripts/status-agent-run.mjs
+      - name: Digest-checked owned evidence through ordinary job logs
+        if: always()
+        run: node .github/scripts/status-agent-evidence.mjs
+      - name: Retain actual owned preparation and feature artifacts
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: hosted-fresh-status-agent-support
+          path: |
+            artifacts/hosted-agent-add
+            .state/hosted-status-feature/artifacts
+            .state/hosted-status-feature/packages/*/artifacts
+          include-hidden-files: true
+          if-no-files-found: error

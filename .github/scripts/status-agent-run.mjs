@@ -2,13 +2,14 @@ import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import { appendFileSync, existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
-import { gzipSync } from 'node:zlib';
+import { config as freshConfig, absentSource } from './status-agent-common.mjs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 // Mechanical support only. The independent Agent authored the supplied patch.
 const transport = process.cwd();
-const payload = path.join(transport, '.github/payload');
+const payload = path.join(transport, '.state/status-feature-input');
+const authored = JSON.parse(readFileSync(path.join(transport, '.github/payload/status-authored-files.json'), 'utf8'));
 const input = JSON.parse(readFileSync(path.join(payload, 'status-agent-input.json'), 'utf8'));
 const output = path.join(transport, 'artifacts/hosted-agent-add');
 const source = path.join(transport, '.state/hosted-status-feature');
@@ -19,7 +20,8 @@ const commands = [];
 const auxiliaryCommands = [];
 const report = { schema: 1, execution: 'hosted-tools', kind: 'hosted-feature-support', status: 'running', task: input.task, origin: input.origin, inputContentId: input.featureContentId, baselineSha: input.baselineSha, transportSha: process.env.GITHUB_SHA, featureSha: null, contentId: input.featureContentId, commands, auxiliaryCommands, os: `${process.platform}/${process.arch}`, node: process.version };
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
-const shellFree = (argv, cwd = transport) => {
+const shellFree = (argv, cwd = transport, preserveOutput = false) => {
+  absentSource();
   const started = new Date();
   const result = spawnSync(argv[0], argv.slice(1), { cwd, env: environment, encoding: 'utf8', timeout: 60_000 });
   const ended = new Date();
@@ -28,7 +30,7 @@ const shellFree = (argv, cwd = transport) => {
   writeFileSync(path.join(output, log), `argv: ${JSON.stringify(argv)}\ncwd: ${cwd}\n${result.stdout ?? ''}${result.stderr ?? ''}\nresult: ${JSON.stringify(entry)}\n`);
   auxiliaryCommands.push(entry);
   if (result.error || result.status !== 0) throw new Error(`${argv[0]} failed: ${result.error?.message ?? result.stderr}`);
-  return result.stdout.trim();
+  return preserveOutput ? result.stdout : result.stdout.trim();
 };
 const save = () => writeFileSync(path.join(output, 'hosted-feature-support.json'), `${JSON.stringify(report, null, 2)}\n`);
 let processTools;
@@ -72,6 +74,7 @@ const identity = () => {
   return { head: shellFree(['git', 'rev-parse', 'HEAD'], source), contentId: contentId(source), origin: state.origin, status: shellFree(['git', 'status', '--porcelain=v1', '--untracked-files=all'], source) };
 };
 const guard = () => {
+  absentSource();
   const current = identity();
   assert.equal(current.head, expectedHead, 'Exact owned HEAD changed');
   assert.equal(current.contentId, expectedContentId, 'Exact feature content changed');
@@ -209,7 +212,17 @@ try {
   assert.match(process.env.GITHUB_SHA ?? '', /^[a-f0-9]{40}$/u);
   assert.equal(process.env.GITHUB_REF, 'refs/heads/codex/agent-add-983');
   assert.equal(shellFree(['git', 'rev-parse', 'HEAD']), process.env.GITHUB_SHA);
-  assert.equal(process.env.STATUS_AGENT_INPUT_CID, input.featureContentId);
+  absentSource();
+  const generatedOriginReceipt = JSON.parse(readFileSync(path.join(output, 'preparation/generated-origin.json'), 'utf8'));
+  assert.deepEqual(generatedOriginReceipt.source, freshConfig.source);
+  assert.equal(generatedOriginReceipt.origin.sha, freshConfig.source.sha);
+  assert.equal(generatedOriginReceipt.origin.dirty, false);
+  assert.deepEqual(input.origin, generatedOriginReceipt.origin);
+  assert.deepEqual(input.authoredFiles, authored.files.map(({ path, sha256 }) => ({ path, sha256 })));
+  assert.equal(input.coldGeneratorEvidence.sourceRemoved, true);
+  assert.equal(input.coldGeneratorEvidence.formatKeyAbsent, true);
+  const originalInventory = JSON.parse(readFileSync(path.join(output, 'preparation/pristine-baseline-files.json'), 'utf8'));
+  assert.deepEqual(input.preservedBaselineFiles, originalInventory.filter((file) => !['.template.json', 'package.json', 'pnpm-lock.yaml'].includes(file.path)).map(({ path, sha256 }) => ({ path, sha256 })));
   assert.match(input.origin.sha, /^[a-f0-9]{40}$/u);
   assert.match(input.origin.contentId, /^[a-f0-9]{64}$/u);
   assert.equal(input.origin.dirty, false);
@@ -282,6 +295,31 @@ try {
     writeFileSync(path.join(output, `gate-${mode}-all-linux.json`), `${JSON.stringify(gate, null, 2)}\n`);
   }
   report.final = guard();
+  const trackedTree = shellFree(['git', 'ls-tree', '-r', '--full-tree', 'HEAD'], source, true);
+  const trackedFiles = trackedTree.trim().split('\n').map((line) => {
+    const match = /^([0-9]{6}) blob ([a-f0-9]{40})\t(.+)$/u.exec(line);
+    assert.ok(match, 'Every final owned tracked path must be an ordinary recorded blob');
+    const [, mode, gitBlobSha, file] = match;
+    assert.ok(['100644', '100755'].includes(mode), 'No unexpected symlink/submodule in final generated input');
+    assert.ok(!path.isAbsolute(file) && !file.split('/').includes('..'));
+    const bytes = readFileSync(path.join(source, file));
+    return { path: file, mode, gitBlobSha, size: bytes.length, sha256: digest(bytes), bytes: bytes.toString('base64') };
+  });
+  const commitRaw = shellFree(['git', 'cat-file', 'commit', 'HEAD'], source, true);
+  const finalProof = {
+    schema: 1, head: expectedHead,
+    parent: shellFree(['git', 'rev-parse', 'HEAD^'], source),
+    tree: shellFree(['git', 'rev-parse', 'HEAD^{tree}'], source),
+    status: shellFree(['git', 'status', '--porcelain=v1', '--untracked-files=all'], source),
+    origin: input.origin, contentId: expectedContentId,
+    commitObject: { size: Buffer.byteLength(commitRaw), sha256: digest(Buffer.from(commitRaw)), bytes: Buffer.from(commitRaw).toString('base64') },
+    trackedTree, files: trackedFiles,
+    classification: 'Actual hook-verified feature tree for independent connector-only verification; transport/bootstrap remain separate',
+  };
+  assert.equal(finalProof.parent, input.baselineSha);
+  assert.equal(finalProof.status, '');
+  writeFileSync(path.join(output, 'verified-project.json'), JSON.stringify(finalProof, null, 2) + '\n');
+  report.final = guard();
   shellFree(['git', 'bundle', 'create', path.join(output, 'verified-feature.bundle'), 'feat/status'], source);
   report.bundleSha256 = digest(readFileSync(path.join(output, 'verified-feature.bundle')));
   report.localPreflight = JSON.parse(readFileSync(path.join(source, 'artifacts/deploy-preflight.json'), 'utf8'));
@@ -295,23 +333,5 @@ try {
 } finally {
   save();
   console.log(JSON.stringify({ status: report.status, execution: report.execution, kind: report.kind, featureSha: report.featureSha, contentId: report.contentId, error: report.error }, null, 2));
-  // This exact evidence is also available through ordinary GitHub job logs if
-  // the signed artifact redirect cannot be downloaded on the approved route.
-  const files = [];
-  const collect = (directory, prefix = '') => {
-    for (const entry of readdirSync(directory, { withFileTypes: true })) {
-      const relative = path.posix.join(prefix, entry.name);
-      if (entry.isDirectory()) collect(path.join(directory, entry.name), relative);
-      else if (entry.isFile()) {
-        const bytes = readFileSync(path.join(directory, entry.name));
-        files.push({ path: relative, size: bytes.length, sha256: digest(bytes), bytes: bytes.toString('base64') });
-      }
-    }
-  };
-  collect(output);
-  const archive = gzipSync(Buffer.from(JSON.stringify({ schema: 1, execution: 'hosted-tools', transportSha: process.env.GITHUB_SHA, files })));
-  const chunks = archive.toString('base64').match(/.{1,6000}/gu) ?? [];
-  console.log(`STATUS_AGENT_ARCHIVE_BEGIN ${JSON.stringify({ encoding: 'gzip+base64', size: archive.length, sha256: digest(archive), chunks: chunks.length, transportSha: process.env.GITHUB_SHA })}`);
-  chunks.forEach((chunk, index) => console.log(`STATUS_AGENT_ARCHIVE_CHUNK ${index} ${chunk}`));
-  console.log('STATUS_AGENT_ARCHIVE_END');
+  // The separate always-run emitter also preserves preparation failures.
 }

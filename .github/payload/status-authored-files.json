@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "provenance": {
+    "ownTransportSha": "6c2f0045b4b4ba2f83d5c040c548a4c1e81a2ebf",
+    "classification": "Own previously independently authored feature bytes only; no scaffold/foundation migration"
+  },
+  "files": [
+    {
+      "path": "packages/status/src/index.ts",
+      "sha256": "516af75003f07a635075e1926b2282ca9a05f69ac30d32281c400ba84f69dc5b",
+      "content": "import { handleNotes } from './notes';\n\nexport default {\n  fetch(request: Request, env: Env): Response | Promise<Response> {\n    if (request.method === 'GET' && new URL(request.url).pathname === '/status') {\n      const body = { ok: true, service: 'status' };\n      const headers = { 'cache-control': 'no-store' };\n      return Response.json(body, { headers });\n    }\n    return handleNotes(request, env);\n  },\n} satisfies ExportedHandler<Env>;\n"
+    },
+    {
+      "path": "packages/status/README.md",
+      "sha256": "d4775e067dd6d1e9ec7a104bddb546e516ad0c0261b85151f7a06cf794e11a56",
+      "content": "# status Worker service\n\nGenerated from the API template. The Worker owns `cloudflare.config.ts` and uses the shared contracts and observability packages. Storage: Volatile sample — resets when the Worker restarts. No resource provisioning runs during setup or build.\n\nFrom the workspace root:\n\n```console\npnpm dev -- status\npnpm --filter @independent-service/status test\npnpm --filter @independent-service/status test:runtime\npnpm --filter @independent-service/status build\npnpm deploy:preflight -- --target status --environment local\npnpm --filter @independent-service/status cf --help\n```\n\n`GET /status` reports `{ \"ok\": true, \"service\": \"status\" }` with `Cache-Control: no-store`; only that exact GET path is a status probe. `GET /health` reports readiness; the generated `/api/notes` sample validates input and creates, lists and deletes notes. Local writes are allowed. Remote artifacts deny unauthenticated writes; a service without D1 uses volatile memory and resets on restart.\n\nFor approved dev delivery, configure an existing account/token and explicitly approved domain in the sole config, plus IDs for any selected resources. Run the dev preflight, then the workspace's checked `deploy` entry with its approved health URL. Local preflight/build do not establish remote deployment or connectivity. See [Cloudflare instructions](../../docs/cloudflare.md).\n"
+    },
+    {
+      "path": "packages/status/test/status.test.ts",
+      "sha256": "62d221f6e997d123d2047bfe2abc717e10946b839691780d2c87ed55ac584cfe",
+      "content": "import { describe, expect, it } from 'vitest';\nimport worker from '../src/index';\n\nconst env = { WRITE_MODE: 'deny' } as Env;\n\ndescribe('status service HTTP routing', () => {\n  it('serves status while deployment writes stay disabled', async () => {\n    const response = await worker.fetch(new Request('https://service.invalid/status'), env);\n    expect(response.status).toBe(200);\n    expect(response.headers.get('content-type')).toBe('application/json');\n    expect(response.headers.get('cache-control')).toBe('no-store');\n    expect(await response.json()).toEqual({ ok: true, service: 'status' });\n\n    const write = await worker.fetch(\n      new Request('https://service.invalid/api/notes', {\n        method: 'POST',\n        body: '{\"text\":\"blocked\"}',\n      }),\n      env,\n    );\n    expect(write.status).toBe(403);\n    expect(await write.json()).toMatchObject({ error: { code: 'writes_disabled' } });\n  });\n\n  it('routes the exact GET path and preserves health', async () => {\n    const query = await worker.fetch(\n      new Request('https://service.invalid/status?probe=ready'),\n      env,\n    );\n    expect(query.status).toBe(200);\n    expect(await query.json()).toEqual({ ok: true, service: 'status' });\n\n    for (const route of ['/status/details', '/status-extra']) {\n      const response = await worker.fetch(new Request(`https://service.invalid${route}`), env);\n      expect(response.status).toBe(404);\n      expect(await response.json()).toMatchObject({ error: { code: 'not_found' } });\n    }\n    const health = await worker.fetch(new Request('https://service.invalid/health'), env);\n    expect(health.status).toBe(200);\n    expect(await health.json()).toMatchObject({ ok: true });\n  });\n\n  it('does not answer another HTTP method as a successful status probe', async () => {\n    const response = await worker.fetch(\n      new Request('https://service.invalid/status', { method: 'POST' }),\n      { WRITE_MODE: 'allow' } as Env,\n    );\n    expect(response.status).toBe(404);\n    expect(await response.json()).toMatchObject({ error: { code: 'not_found' } });\n  });\n});\n"
+    },
+    {
+      "path": "packages/status/test/status.runtime.test.ts",
+      "sha256": "8a49957fec2b987bdcd06fcdbc62ae0a1491167ce1631e44de658fc468414b7c",
+      "content": "import { describe, expect, it } from 'vitest';\n\nconst origin = process.env.STARTER_TEST_ORIGIN;\nif (!origin) throw new Error('Use pnpm test:runtime to start real workerd before HTTP tests');\n\ndescribe('status endpoint over real workerd HTTP', () => {\n  it('returns fresh status JSON and rejects paths or methods outside its route', async () => {\n    const response = await fetch(new URL('/status?probe=ready', origin));\n    expect(response.status).toBe(200);\n    expect(response.headers.get('content-type')).toBe('application/json');\n    expect(response.headers.get('cache-control')).toBe('no-store');\n    expect(await response.json()).toEqual({ ok: true, service: 'status' });\n\n    for (const [route, method] of [\n      ['/status/details', 'GET'],\n      ['/status', 'POST'],\n    ] as const) {\n      const unexpected = await fetch(new URL(route, origin), { method });\n      expect(unexpected.status).toBe(404);\n      expect(await unexpected.json()).toMatchObject({ error: { code: 'not_found' } });\n    }\n  });\n});\n"
+    }
+  ]
+}
