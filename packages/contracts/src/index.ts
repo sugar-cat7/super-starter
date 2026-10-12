@@ -23,6 +23,7 @@ export const noteSchema = z.strictObject({
   createdAt: z.int().check(z.gte(0)),
 });
 export const notesSchema = z.array(noteSchema);
+export const noteCountSchema = z.int().check(z.gte(0));
 export const apiErrorSchema = z.strictObject({
   error: publicErrorSchema,
   requestId: z.string().check(z.uuid()),

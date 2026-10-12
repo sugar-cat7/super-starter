@@ -1,7 +1,7 @@
 {
   "version": "0.1.0",
   "kind": "project",
-  "lockPending": true,
+  "lockPending": false,
   "options": {
     "name": "independent-native-desktop",
     "scope": "@independent-native",
@@ -285,5 +285,6 @@
     "dirty": false,
     "contentId": "8d37cdc64694fb9997fd60c5df10bd412a18695ebb63480f2fd148363e835628"
   },
-  "formatKey": "cd305f168d8657c8353deaf4136f0a340792f1dff9a30ded0b9b435c8cb33c25"
+  "formatKey": "cd305f168d8657c8353deaf4136f0a340792f1dff9a30ded0b9b435c8cb33c25",
+  "lockId": "189b0b00e71800866271f964861ae470ec6089bbec86ebcda2f36914265e5f6b"
 }

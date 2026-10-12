@@ -58,6 +58,14 @@ fn new_note(text: &str) -> Result<Note, AppError> {
     })
 }
 
+fn count_note_state(notes: &Notes) -> Result<usize, AppError> {
+    Ok(notes
+        .0
+        .lock()
+        .map_err(|_| AppError::new(ErrorCode::StateUnavailable))?
+        .len())
+}
+
 fn read_notes(state: State<'_, Notes>) -> Result<Vec<Note>, AppError> {
     Ok(state
         .0
@@ -145,6 +153,14 @@ fn list_notes(
     project(operation, read_notes(state))
 }
 #[tauri::command]
+fn count_notes(
+    state: State<'_, Notes>,
+    telemetry: Option<TraceCarrier>,
+) -> Result<usize, PublicError> {
+    let operation = Operation::new(NativeOperation::Count, telemetry);
+    project(operation, count_note_state(state.inner()))
+}
+#[tauri::command]
 fn add_note(
     text: String,
     state: State<'_, Notes>,
@@ -183,6 +199,7 @@ fn main() {
     if let Err(_error) = builder
         .invoke_handler(tauri::generate_handler![
             list_notes,
+            count_notes,
             add_note,
             delete_note,
             export_notes
@@ -203,6 +220,60 @@ fn main() {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn counts_current_native_state_without_changing_notes() -> Result<(), AppError> {
+        let notes = Notes::default();
+        assert_eq!(count_note_state(&notes)?, 0);
+        let note = new_note("counted note")?;
+        {
+            let mut saved = notes
+                .0
+                .lock()
+                .map_err(|_| AppError::new(ErrorCode::StateUnavailable))?;
+            saved.push(note.clone());
+            saved.push(new_note("second note")?);
+        }
+        assert_eq!(count_note_state(&notes)?, 2);
+        {
+            let mut saved = notes
+                .0
+                .lock()
+                .map_err(|_| AppError::new(ErrorCode::StateUnavailable))?;
+            assert_eq!(saved[0], note);
+            saved.remove(0);
+        }
+        assert_eq!(count_note_state(&notes)?, 1);
+        Ok(())
+    }
+    #[test]
+    fn count_reports_poisoned_native_state_as_public_failure() {
+        let notes = Notes::default();
+        std::thread::scope(|scope| {
+            let child = scope.spawn(|| {
+                let _guard = notes.0.lock().unwrap_or_else(|error| error.into_inner());
+                panic!("deliberately poison owned test state");
+            });
+            assert!(child.join().is_err());
+        });
+        let result = project(
+            Operation::new(NativeOperation::Count, None),
+            count_note_state(&notes),
+        );
+        let Err(error) = result else {
+            panic!("poisoned state must never report zero notes")
+        };
+        assert_eq!(error.code, "unavailable");
+        assert_eq!(error.failure_class, "transient");
+        assert_eq!(error.message, "The service is unavailable.");
+        assert!(
+            error
+                .diagnostic_id
+                .bytes()
+                .all(|byte| byte.is_ascii_hexdigit())
+        );
+        assert_eq!(error.retry, "owner_only");
+        assert_eq!(error.diagnostic_id.len(), 32);
+    }
     #[test]
     fn validates_text_and_serializes_portable_contract() -> Result<(), AppError> {
         assert!(new_note("   ").is_err());

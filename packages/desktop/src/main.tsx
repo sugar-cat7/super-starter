@@ -1,7 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { NotesPanel } from '@independent-native/ui';
-import { nativeNotes } from './native';
+import { DesktopNotes } from './notes';
 import './styles.css';
 
 // The compile-time branch is removed from ordinary renderer artifacts.
@@ -13,10 +12,7 @@ if (!root) {
   createRoot(root).render(
     <StrictMode>
       <main className="p-6">
-        <NotesPanel
-          adapter={nativeNotes}
-          storage="Offline sample: notes are kept in memory until this window closes. JSON exports use the save destination you choose."
-        />
+        <DesktopNotes />
       </main>
     </StrictMode>,
   );

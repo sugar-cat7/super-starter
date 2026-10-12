@@ -17,6 +17,7 @@ pub struct TraceCarrier {
 }
 pub enum NativeOperation {
     List,
+    Count,
     Add,
     Remove,
     Export,
@@ -25,6 +26,7 @@ impl NativeOperation {
     fn name(&self) -> &'static str {
         match self {
             Self::List => "notes.list",
+            Self::Count => "notes.count",
             Self::Add => "notes.add",
             Self::Remove => "notes.remove",
             Self::Export => "notes.export",
