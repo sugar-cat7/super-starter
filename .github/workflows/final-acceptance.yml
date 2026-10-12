@@ -1,0 +1,80 @@
+name: Lightweight exact Source acceptance
+
+on:
+  push:
+    branches: [codex/final-acceptance-653]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: final-acceptance-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  unchanged-acceptance:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Exact own mechanical carrier
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Fail closed unless every immutable input is reviewed and pinned
+        id: inputs
+        run: node .github/scripts/final-acceptance.mjs plan
+      - name: Exact unchanged Source checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: 653abf13ae3a54b2434c422ab8dc6800822387c3
+          path: .state/final-source
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Original Source evidence-only immutable transport
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ steps.inputs.outputs.source_payload }}
+          path: .state/final-inputs/source
+          persist-credentials: false
+      - name: Immutable genuine Web Agent receipts and original logs
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ steps.inputs.outputs.web_api }}
+          path: .state/final-inputs/web-api
+          persist-credentials: false
+      - name: Immutable genuine Desktop Agent receipts and original logs
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ steps.inputs.outputs.desktop }}
+          path: .state/final-inputs/desktop
+          persist-credentials: false
+      - name: Immutable genuine Package Add Agent receipts and original logs
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ steps.inputs.outputs.package_add }}
+          path: .state/final-inputs/package-add
+          persist-credentials: false
+      - uses: jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca
+        with:
+          version: 2026.10.7
+          working_directory: .state/final-source
+          cache: false
+          persist_github_token: false
+      - name: Normal Source JavaScript setup before SDK imports
+        working-directory: .state/final-source
+        run: pnpm env:setup -- --javascript
+      - name: Verify original bytes and invoke the unchanged exact Source acceptance CLI
+        run: node .github/scripts/final-acceptance.mjs run
+      - name: Bounded original acceptance export, including failures
+        if: always()
+        run: node .github/scripts/final-acceptance.mjs emit
+      - name: Preserve original input manifest, CLI logs and actual acceptance result
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: lightweight-final-acceptance
+          path: |
+            artifacts/final-acceptance
+            .github/payload/final-acceptance-input.json
+          if-no-files-found: error

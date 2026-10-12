@@ -1,0 +1,125 @@
+{
+  "schema": 1,
+  "kind": "lightweight-unchanged-source-acceptance",
+  "ready": false,
+  "ownRef": "refs/heads/codex/final-acceptance-653",
+  "source": {
+    "sha": "653abf13ae3a54b2434c422ab8dc6800822387c3",
+    "contentId": "8a91208bf0be87ea59f830dd11d700618bfc46c75493dd9799b0c5c3815fff25",
+    "acceptanceCliSha256": "4e1be884282ba22f316a499cb24bb5c8e66f635f5bf397a14a7a991fe73046e4"
+  },
+  "sourcePayload": null,
+  "agents": {
+    "web-api": null,
+    "desktop": null,
+    "package-add": {
+      "commit": "8d03fa1f39cd80e5e5c57e2d8f71ca44754932bd",
+      "receiptPath": "artifacts/agent-package-add-653/agent-package-add.json",
+      "receiptSha256": "5740e5c491a3b98c041cf0db5058fbc074880c12db1803585b3cb0ab49b88245",
+      "featureSha": "b9dd5b5cbfcc2640c1ec4db72bbc46f8af78dae7",
+      "contentId": "58e2682295b3bab29eb364763b2f1dcb834d30776ac6a6549359ed7ffaadc205",
+      "originContentId": "2f42cb2359cf7e467d37e950461cd7ed11ad6969b3f06bd7a9c7287534b0426a",
+      "files": [
+        {
+          "path": "artifacts/agent-package-add-653/agent-package-add.json",
+          "target": "agents/package-add/agent-package-add.json",
+          "size": 50743,
+          "sha256": "5740e5c491a3b98c041cf0db5058fbc074880c12db1803585b3cb0ab49b88245"
+        },
+        {
+          "path": "artifacts/agent-package-add-653/logs/01-setup.log",
+          "target": "agents/package-add/logs/01-setup.log",
+          "size": 6474,
+          "sha256": "cc9517582725610c07b0fa50241f4d0d2803323a79e02bbc0353e5425b7ba3fc"
+        },
+        {
+          "path": "artifacts/agent-package-add-653/logs/02-doctor.log",
+          "target": "agents/package-add/logs/02-doctor.log",
+          "size": 4341,
+          "sha256": "8001c39a4b9bbc7ed2ab6c7ac6e7bff88582ae73726f66da3ccb07a3ac9fed06"
+        },
+        {
+          "path": "artifacts/agent-package-add-653/logs/03-targeted-test.log",
+          "target": "agents/package-add/logs/03-targeted-test.log",
+          "size": 4335,
+          "sha256": "219e4fc882063d18c1878f0d44068a21c44543b182d99b059111bc182de3f82a"
+        },
+        {
+          "path": "artifacts/agent-package-add-653/logs/04-targeted-runtime.log",
+          "target": "agents/package-add/logs/04-targeted-runtime.log",
+          "size": 5088,
+          "sha256": "a95f97d99e6c09fa6ca7a19223e7ee60fc056cdaa2f2e179e3d37164793e10d5"
+        },
+        {
+          "path": "artifacts/agent-package-add-653/logs/05-dev.log",
+          "target": "agents/package-add/logs/05-dev.log",
+          "size": 4250,
+          "sha256": "b5bb712094e0ba494fa831986443f80a44f27b913e3b2a4a66683588bfd75dae"
+        },
+        {
+          "path": "artifacts/agent-package-add-653/logs/06-pre-pr.log",
+          "target": "agents/package-add/logs/06-pre-pr.log",
+          "size": 31973,
+          "sha256": "75b53dca6db8348e072685831e0be4b506b1a5e07ae0252d80c458336bad63c3"
+        },
+        {
+          "path": "artifacts/agent-package-add-653/logs/07-commit.log",
+          "target": "agents/package-add/logs/07-commit.log",
+          "size": 3947,
+          "sha256": "1ed72771051041fe0c82314ea20a805d92f82965442d10a4eb634f387bd60195"
+        },
+        {
+          "path": "artifacts/agent-package-add-653/logs/08-push.log",
+          "target": "agents/package-add/logs/08-push.log",
+          "size": 26908,
+          "sha256": "1610fdb23eea1f4ebfb39fdff34876065cda78c5ec2317bb43f1f175455d46aa"
+        },
+        {
+          "path": "artifacts/agent-package-add-653/logs/09-full.log",
+          "target": "agents/package-add/logs/09-full.log",
+          "size": 29917,
+          "sha256": "b33c114f5faa937720b77bb4086db14aaad39b37da7c933538124ac539821025"
+        },
+        {
+          "path": "artifacts/agent-package-add-653/logs/10-ci.log",
+          "target": "agents/package-add/logs/10-ci.log",
+          "size": 30050,
+          "sha256": "dc55d8ab34cf608f888c14408b1a9453f19713cb36f7d0f1c1e30f9cc5535fd7"
+        },
+        {
+          "path": "artifacts/agent-package-add-653/logs/11-build.log",
+          "target": "agents/package-add/logs/11-build.log",
+          "size": 3918,
+          "sha256": "08dfaad70b535a0bdaf1d3399c5ac15cf870b1abc4bb271950e8f5fc50897275"
+        },
+        {
+          "path": "artifacts/agent-package-add-653/logs/12-dev-preflight.log",
+          "target": "agents/package-add/logs/12-dev-preflight.log",
+          "size": 5718,
+          "sha256": "6432866bff25c1ebafb3898db4e1821672a2dc17bbf863e1d060be9ceebb682c"
+        },
+        {
+          "path": "artifacts/agent-package-add-653/logs/13-preflight.log",
+          "target": "agents/package-add/logs/13-preflight.log",
+          "size": 5601,
+          "sha256": "57c5e4ce79b314e1233a348352df32bb0590d5a2002fb7477e87143eb6242bf9"
+        }
+      ]
+    }
+  },
+  "limits": {
+    "maxFileBytes": 33554432,
+    "maxTotalBytes": 268435456,
+    "maxFiles": 20000,
+    "maxPlainBytes": 524288
+  },
+  "classification": "Untriggered draft. Source evidence payload, Web and Desktop immutable genuine inputs remain unresolved. No accepted evidence or successful acceptance execution is claimed.",
+  "history": {
+    "failedCollectors": [
+      38300642048,
+      38302074157
+    ],
+    "historicalSource460Collector": 38284023733
+  },
+  "instructions": "Review and pin actual current Source payload manifest/files plus genuine Web/Desktop report/log files before setting ready:true. Immutable original blocked collector report stays separate from accepted evidence. Never relabel canonical Quality or Agent origins."
+}
