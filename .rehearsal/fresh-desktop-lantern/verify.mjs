@@ -31,7 +31,7 @@ if(process.argv[2]==='source'){
   }
   assert.equal(digest.digest('hex'),state.origin.contentId);
   const selected=state.packages.map(pkg=>JSON.parse(fs.readFileSync(path.join(root,'packages',pkg,'package.json'),'utf8')));
-  const applications=selected.filter(pkg=>pkg.starter?.runtime!=='library');
+  const applications=selected.filter(pkg=>(pkg.starter?.runtime??'library')!=='library');
   assert.equal(applications.length,1);
   assert.equal(applications[0].starter.runtime,'desktop');
   assert.equal(applications[0].name,'@lantern-lab/desktop');
